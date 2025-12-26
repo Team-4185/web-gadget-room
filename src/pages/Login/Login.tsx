@@ -1,6 +1,5 @@
 import { Container, Box, TextField } from '@mui/material';
 
-import { Header } from '../../components/shared/Header';
 import ArrowRight from '/icons/ArrowRight.svg';
 
 import './Login.css';
@@ -8,8 +7,6 @@ import './Login.css';
 export const Login = () => {
   return (
     <>
-      <Header page="Login" product="" orderLength={0} />
-
       <Container component="section" maxWidth="xl" disableGutters className="login-container">
         <Box className="login-main">
           {/* Левая часть */}

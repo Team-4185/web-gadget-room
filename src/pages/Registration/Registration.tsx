@@ -1,12 +1,10 @@
 import { Container, Box, TextField } from '@mui/material';
 
-import { Header } from '../../components/shared/Header';
 import ArrowRight from '/icons/ArrowRight.svg';
 
 export const Registration = () => {
   return (
     <>
-      <Header page="Register" product="" orderLength={0} />
       <Container
         component="section"
         maxWidth="xl"
