@@ -1,0 +1,142 @@
+.ordering-steps-container {
+    padding: 15px 0;
+    margin-top: 28px;
+}
+
+.ordering-steps-box {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.step-number {
+    border-radius: 50px;
+    width: 27px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.step-active {
+    background: #000;
+    color: #fff;
+    padding: 2px 9px;
+}
+
+.step-inactive {
+    border: 1px solid #727070;
+    padding: 2px 7px;
+    color: #000;
+}
+
+.step-text {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigation-logo {
+    display: flex;
+}
+
+.navigation-left {
+    display: flex;
+    gap: 5px;
+    height: 44px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation-pages {
+    display: flex;
+    gap: 28px;
+    margin-left: 93px;
+    align-items: center;
+}
+
+.navigation-page {
+    color: #000;
+    cursor: pointer;
+}
+
+.navigation-icons {
+    display: flex;
+    gap: 28px;
+}
+
+.navigation-icon img {
+    width: 29px;
+    height: 29px;
+}
+
+.navigation-auth {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation-auth a,
+.navigation-pages a {
+    font-size: 16px;
+    font-weight: 600;
+    height: max-content;
+    color: #302f2f;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 0;
+    background: none;
+    transition: 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.navigation-auth a.clicked,
+.navigation-pages a.active {
+    border-radius: 39px;
+    background: rgba(174, 165, 165, 0.37);
+    padding: 5px;
+
+}
+
+.breadcrumbs-container {
+    padding: 15px 0;
+    margin-top: 28px;
+}
+
+.breadcrumbs-box {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+    height: 20px;
+}
+
+.breadcrumbs-home {
+    display: flex;
+    gap: 2px;
+}
+
+.breadcrumbs-home span,
+.breadcrumbs-page span,
+.breadcrumbs-product {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+.breadcrumbs-link {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+}

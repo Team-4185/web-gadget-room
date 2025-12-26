@@ -1,0 +1,94 @@
+.payment-container {
+    padding: 95px 28px;
+}
+
+.payment-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-form {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-title {
+    font-weight: 600;
+    font-size: 40px;
+    color: #000;
+    margin-bottom: 50px;
+}
+
+.payment-subtitle {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.accordion {
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    padding: 0;
+    overflow: hidden;
+}
+
+.accordion.credit-card {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.accordion.paypal {
+    border-radius: 0 0 15px 15px !important;
+}
+
+.accordion-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: auto !important;
+    padding: 8px 24px;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.accordion-radio {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.accordion-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    font-family: Montserrat, sans-serif;
+}
+
+.accordion-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.accordion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin: 22px 0;
+}
+
+.accordion-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.month,
+.year {
+    width: 33%;
+}

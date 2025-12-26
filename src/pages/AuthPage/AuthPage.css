@@ -1,0 +1,210 @@
+/* === Общие стили === */
+.registration-container {
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.registration,
+.login-main {
+    display: flex;
+    max-width: 1440px;
+    width: 100%;
+    min-height: 800px;
+    background: rgba(151, 151, 151, 0.13);
+    border-radius: 50px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    /* не даём элементам вылазить */
+}
+
+/* === Левая часть (анимационная) === */
+.auth-side {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    transition: all 0.8s ease;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    overflow: hidden;
+}
+
+.auth-message {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.registration__left,
+.login-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 80px;
+}
+
+.registration__text-block,
+.login-left-text {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registration__title,
+.login-left-text span:first-child {
+    font-weight: 700;
+    font-size: 56px;
+    color: #000;
+}
+
+.registration__subtitle,
+.login-left-text span:last-child {
+    font-weight: 500;
+    font-size: 24px;
+    color: #000;
+}
+
+.registration__arrow,
+.login-left-arrow {
+    max-width: 180px;
+    align-self: flex-end;
+    margin-top: 30px;
+}
+
+/* === Правая часть === */
+.registration__right,
+.login-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    padding: 60px 40px;
+    box-sizing: border-box;
+}
+
+.auth-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* === Регистрация === */
+.registration__form-wrapper {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.registration__form-title {
+    font-weight: 600;
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 35px;
+}
+
+.registration__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registration__textfield,
+.login-textfield {
+    width: 100%;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+/* === Terms === */
+.registration__terms {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.registration__checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.registration__checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: black;
+}
+
+.registration__terms-text {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+}
+
+.registration__button,
+.login-submit {
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* === Логин === */
+.login-right-box {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-right-box span {
+    font-weight: 600;
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 35px;
+}
+
+.login-bottom {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-bottom-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-forgot {
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    font-size: 15px;
+}

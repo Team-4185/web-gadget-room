@@ -1,0 +1,161 @@
+/* Контейнер страницы */
+.login-container {
+    padding: 60px 0;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+}
+
+/* Основной блок */
+.login-main {
+    max-width: 1440px;
+    height: max-content;
+    display: flex;
+    background: rgba(151, 151, 151, 0.13);
+    border-radius: 50px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    padding-right: 58px;
+}
+
+/* Левая часть */
+.login-left {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    border-top-right-radius: 50px;
+    background: #fff;
+    align-items: start;
+    justify-content: center;
+    padding: 269px 80px 30px 80px;
+}
+
+.login-left-text {
+    width: 468px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+.login-left-text span:first-child {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 93%;
+    color: #000;
+}
+
+.login-left-text span:last-child {
+    font-weight: 500;
+    font-size: 28px;
+    color: #000;
+}
+
+.login-left-arrow {
+    max-width: 218px;
+    max-height: 222px;
+    align-self: end;
+    margin-top: 37px;
+}
+
+/* Правая часть */
+.login-right {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    padding: 98px 45px;
+    justify-content: center;
+}
+
+.login-right-box {
+    width: 535px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-right-box span {
+    font-weight: 600;
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 35px;
+}
+
+/* Текстовые поля */
+.login-textfield {
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.login-textfield .MuiOutlinedInput-root {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.login-textfield .MuiOutlinedInput-root:hover fieldset {
+    border-color: transparent;
+}
+
+.login-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: transparent;
+}
+
+.login-textfield label.MuiInputLabel-shrink {
+    transform: translateY(-10px) translateX(10px) scale(0.75);
+    color: #474747;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* Нижний блок */
+.login-bottom {
+    max-width: 549px;
+    max-height: 115px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 23px;
+}
+
+.login-bottom-top {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-remember {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.login-remember input {
+    width: 18px;
+    height: 18px;
+    accent-color: black;
+    background-color: white;
+}
+
+.login-forgot {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #939292;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Кнопка продолжения */
+.login-submit {
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    margin-top: 32px;
+    height: 36px;
+    background: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}

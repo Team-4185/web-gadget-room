@@ -1,0 +1,116 @@
+.product-card {
+    width: 244px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    cursor: pointer;
+}
+
+.product-card-home {
+    width: 300px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.product-card__image {
+    width: 244px;
+    height: 180px;
+}
+
+.product-card__image-home {
+    width: 257px;
+    height: 250px;
+}
+
+.product-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.product-card__name {
+    font-weight: 400;
+    font-size: 16px;
+    color: #000;
+}
+
+.product-card__name-home {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    line-height: 0%;
+}
+
+.product-card__price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.product-card__price-home {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 24px;
+    color: #000;
+}
+
+.product-card__actions {
+    width: 221px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card__actions-home {
+    width: 257px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card__add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    width: 188px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+    background: #fff;
+    padding: 9px 8px;
+    cursor: pointer;
+}
+
+.product-card__add-to-cart-text {
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+}
+
+.product-card__wishlist {
+    cursor: pointer;
+}
+
+.product-card__wishlist-home {
+    width: 40px;
+    height: 34px;
+    cursor: pointer;
+}

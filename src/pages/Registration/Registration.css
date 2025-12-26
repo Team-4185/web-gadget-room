@@ -1,0 +1,160 @@
+/* === Общий контейнер === */
+.registration-container {
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    height: max-content;
+}
+
+/* === Основной блок === */
+.registration {
+    display: flex;
+    max-width: 1440px;
+    height: max-content;
+    background: rgba(151, 151, 151, 0.13);
+    border-radius: 50px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 0 58px 0 0;
+}
+
+/* === Левая часть === */
+.registration__left {
+    display: flex;
+    flex-direction: column;
+    max-width: 627px;
+    border-top-right-radius: 50px;
+    background: #fff;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 269px 80px 30px 80px;
+}
+
+.registration__text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 468px;
+}
+
+.registration__title {
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 93%;
+    color: #000;
+    word-wrap: break-word;
+}
+
+.registration__subtitle {
+    font-weight: 500;
+    font-size: 28px;
+}
+
+.registration__arrow {
+    max-width: 218px;
+    max-height: 222px;
+    align-self: flex-end;
+}
+
+/* === Правая часть === */
+.registration__right {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    padding: 98px 45px;
+}
+
+/* === Форма === */
+.registration__form-wrapper {
+    width: 535px;
+    display: flex;
+    flex-direction: column;
+}
+
+.registration__form-title {
+    font-weight: 600;
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 35px;
+}
+
+.registration__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* === Кастомизация полей === */
+.registration__textfield {
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.registration__textfield .MuiOutlinedInput-root {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.registration__textfield.MuiOutlinedInput-root:hover fieldset {
+    border-color: transparent;
+}
+
+.registration__textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: transparent;
+}
+
+.registration__textfield label.MuiInputLabel-shrink {
+    transform: translateY(-15px) translateX(10px) scale(0.75);
+    color: #474747;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* === Terms === */
+.registration__terms {
+    max-width: 549px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 23px;
+}
+
+.registration__checkbox-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.registration__checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: black;
+    background-color: white;
+}
+
+.registration__terms-text {
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 0.44);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.registration__terms-text span:first-child {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+/* === Кнопка === */
+.registration__button {
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    margin-top: 32px;
+    height: 36px;
+    background: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}

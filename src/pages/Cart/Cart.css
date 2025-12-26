@@ -1,0 +1,179 @@
+.cart-container {
+    padding: 95px 30px 150px 30px;
+}
+
+.cart-content {
+    max-width: 100%;
+    display: flex;
+    /* gap: 20px; */
+    justify-content: space-between;
+}
+
+/* Левая часть */
+.cart-left {
+    width: 761px;
+    height: max-content;
+    margin-right: 25px;
+}
+
+.cart-title {
+    font-weight: 600;
+    font-size: 40px;
+    color: #000;
+    margin-bottom: 48px;
+}
+
+.cart-grid-header {
+    font-weight: 600;
+    font-size: 16px;
+    color: #727070;
+}
+
+.cart-product {
+    display: flex;
+    align-items: center;
+}
+
+.cart-product-img {
+    margin-right: 19px;
+}
+
+.cart-product_delete {
+    position: relative;
+    display: flex;
+    gap: 1px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.cart-product_delete span {
+    font-weight: 500;
+    font-size: 15px;
+    color: #727070;
+}
+
+.cart-product-info {
+    display: flex;
+    flex-direction: column;
+    width: 212px;
+    word-wrap: break-word;
+    margin-right: 40px;
+}
+
+.cart-product-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #000;
+}
+
+.cart-product-color {
+    font-weight: 600;
+    font-size: 14px;
+    color: #727070;
+}
+
+.cart-amount-box {
+    width: 100px;
+    border-radius: 22px;
+    padding: 6px 9px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 225px;
+}
+
+.cart-btn {
+    border: none;
+    background: inherit;
+    cursor: pointer;
+}
+
+.cart-subtotal {
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+}
+
+/* Правая часть */
+.cart-right {
+    width: 503px;
+    border-radius: 37px;
+    padding: 29px 30px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #f9f9f9;
+    height: max-content;
+}
+
+.cart-summary-title {
+    font-weight: 700;
+    font-size: 20px;
+    color: #000;
+}
+
+.cart-summary-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-summary-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #727070;
+}
+
+.cart-summary-value {
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.cart-total-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #727070;
+}
+
+.cart-total-value {
+    font-weight: 700;
+    font-size: 20px;
+    color: #000;
+}
+
+.cart-btn-payment {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 24px;
+    padding: 8px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+.cart-voucher-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+}
+
+.cart-voucher-optional {
+    font-family: 'Montserrat', sans-serif;
+    color: #727070;
+    margin-left: 4px;
+}

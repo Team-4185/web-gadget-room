@@ -1,0 +1,38 @@
+.input {
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.input .MuiOutlinedInput-root {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.input .MuiOutlinedInput-root:hover fieldset {
+    border-color: transparent;
+}
+
+.input .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: transparent;
+}
+
+.input label.MuiInputLabel-shrink {
+    transform: translateY(-14px) translateX(15px) scale(0.75);
+    color: #474747;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+
+.input input[type='number']::-webkit-outer-spin-button,
+.input input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.input input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.input input[type="radio"] {}
