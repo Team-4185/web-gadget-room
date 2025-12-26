@@ -2,8 +2,6 @@ import { Container, Box } from '@mui/material';
 
 import CheckMark from '/icons/checkMark.svg';
 
-import './Header.css';
-
 type OrderingStepsProps = {
   page?:
     | 'Home'

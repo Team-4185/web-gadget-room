@@ -14,8 +14,6 @@ import Voucher from '/icons/voucher.svg';
 import ExpandMoreIcon from '/icons/ExpandMore.svg';
 import type { RootState } from '../../../core/store';
 
-import '../../../pages/Cart/Cart.css';
-
 export const OrderSummary = () => {
   const amountOfProducts = useSelector((state: RootState) => state.cart.cart.length);
   const tax = 13;

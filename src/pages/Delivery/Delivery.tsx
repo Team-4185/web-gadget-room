@@ -6,8 +6,6 @@ import { Input } from '../../components/ui/Input/Input';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
 
-import './Delivery.css';
-
 export const Delivery = () => {
   const [courierActive, setCourierActive] = useState(false);
   // const [novaPostaActive, setNovaPostActive] = useState(false);

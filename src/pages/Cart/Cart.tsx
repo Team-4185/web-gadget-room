@@ -9,8 +9,6 @@ import type { RootState } from '../../core/store';
 import greyBox from '/icons/greyBox.png';
 import { decreaseAmount, increaseAmount, removeProduct } from '../../core/store/slices/cartSlice';
 
-import './Cart.css';
-
 export const Cart: React.FC = () => {
   const products = useSelector((state: RootState) => state.cart.cart);
   const cartLength = useSelector((state: RootState) => state.cart.cart.length);

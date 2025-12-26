@@ -14,8 +14,6 @@ import Rectangle from '/icons/greyRectangle.svg';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
 
-import './Payment.css';
-
 export const Payment = () => {
   const [activeCard, setActiveCard] = useState(false);
   const [activePayPal, setActivePaypal] = useState(false);

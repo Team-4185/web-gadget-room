@@ -1,5 +1,3 @@
-import './CheckBox.css';
-
 type CheckBoxProps = {
   name: string;
   id: string | undefined;

@@ -2,8 +2,6 @@ import type { ReactNode, FC } from 'react';
 import type { SelectChangeEvent } from '@mui/material';
 import { TextField } from '@mui/material';
 
-import './Input.css';
-
 type InputProps = {
   id?: string;
   label?: string;

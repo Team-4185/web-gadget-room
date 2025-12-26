@@ -3,8 +3,6 @@ import { Container, Box, TextField } from '@mui/material';
 import { Header } from '../../components/shared/Header';
 import ArrowRight from '/icons/ArrowRight.svg';
 
-import './Registration.css';
-
 export const Registration = () => {
   return (
     <>

@@ -13,8 +13,6 @@ import {
 } from '../../../core/store/slices/wishListSlice.ts';
 import type { RootState } from '../../../core/store/index.ts';
 
-import './ProductCard.css';
-
 type ProductCardProps = {
   id: number;
   image: string;

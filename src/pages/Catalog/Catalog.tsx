@@ -20,8 +20,6 @@ import { Input } from '../../components/ui/Input/Input';
 import { ProductCard } from '../../components/ui/ProductCard/ProductCard';
 import { PRODUCTS } from '../../core/constants/products';
 
-import './Catalog.css';
-
 interface Product {
   id: number;
   name: string;
