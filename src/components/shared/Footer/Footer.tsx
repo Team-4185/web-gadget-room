@@ -13,8 +13,6 @@ import GooglePay from '/icons/Payment Services/GooglePay.png';
 import NovaPost from '/icons/Payment Services/NovaPost.png';
 import DHL from '/icons/Payment Services/DHL.png';
 
-import './Footer.css';
-
 export const Footer = () => {
   return (
     <Container component="footer" disableGutters maxWidth="xl" className="footer-container">
