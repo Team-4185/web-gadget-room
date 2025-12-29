@@ -8,7 +8,7 @@ import {
   MenuItem,
 } from '@mui/material';
 
-import { OrderSummary } from '../../components/ui/Cart/OrderSummary';
+import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
 import { Input } from '../../components/ui/Input/Input';
 import Rectangle from '/icons/greyRectangle.svg';
 import RadioActive from '/icons/RadioActive.svg';

@@ -3,7 +3,7 @@ import type { RootState } from '../../../core/store';
 
 import { Box, Grid, Divider } from '@mui/material';
 
-import { ProductsCart } from '../../ui/Cart/ProductsCart';
+import { ProductsCart } from './ProductsCart';
 
 export const CartGrid = () => {
   const cartLength = useSelector((state: RootState) => state.cart.cart.length);

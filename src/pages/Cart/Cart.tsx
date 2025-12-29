@@ -1,5 +1,5 @@
-import { CartGrid } from '../../components/ui/Cart/CartGrid';
-import { OrderSummary } from '../../components/ui/Cart/OrderSummary';
+import { CartGrid } from '../../components/shared/Cart/CartGrid';
+import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
 
 import { Container, Box } from '@mui/material';
 
