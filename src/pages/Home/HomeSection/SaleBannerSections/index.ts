@@ -1,0 +1,1 @@
+export { SaleBannerSection } from './SaleBannerSection';
