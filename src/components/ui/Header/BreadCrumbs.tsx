@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { Container, Box } from '@mui/material';
 
@@ -18,7 +20,7 @@ type BreadCrumbsProps = {
   product?: string;
 };
 
-export const BreadCrumbs: React.FC<BreadCrumbsProps> = ({ page, product }) => {
+export const BreadCrumbs: FC<BreadCrumbsProps> = ({ page, product }) => {
   const catalog = page === 'Catalog';
   const navigate = useNavigate();
   return (

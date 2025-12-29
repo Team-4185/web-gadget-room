@@ -12,6 +12,7 @@ import {
   removeProductFromWishList,
 } from '../../../core/store/slices/wishListSlice.ts';
 import type { RootState } from '../../../core/store/index.ts';
+import type { FC } from 'react';
 
 type ProductCardProps = {
   id: number;
@@ -25,7 +26,7 @@ type ProductCardProps = {
   home?: boolean;
 };
 
-export const ProductCard: React.FC<ProductCardProps> = ({
+export const ProductCard: FC<ProductCardProps> = ({
   id,
   image,
   name,

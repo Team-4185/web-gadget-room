@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import { Container, Box } from '@mui/material';
 
 import CheckMark from '/icons/checkMark.svg';
@@ -15,7 +17,7 @@ type OrderingStepsProps = {
     | 'ProductPage';
 };
 
-export const OrderingSteps: React.FC<OrderingStepsProps> = ({ page }) => {
+export const OrderingSteps: FC<OrderingStepsProps> = ({ page }) => {
   const cartPage = page === 'Cart';
   const shippingPage = page === 'Delivery';
   const paymentPage = page === 'Payment';

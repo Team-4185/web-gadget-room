@@ -3,6 +3,7 @@ import { Container } from '@mui/material';
 import { OrderingSteps } from '../ui/Header/OrderingSteps';
 import { Navigation } from '../ui/Header/Navigation';
 import { BreadCrumbs } from '../ui/Header/BreadCrumbs';
+import type { FC } from 'react';
 
 type HeaderProps = {
   page?:
@@ -20,7 +21,7 @@ type HeaderProps = {
   handleLogin?: () => void;
 };
 
-export const Header: React.FC<HeaderProps> = ({ page, orderLength, product, handleLogin }) => {
+export const Header: FC<HeaderProps> = ({ page, orderLength, product, handleLogin }) => {
   return (
     <Container disableGutters maxWidth="xl" sx={{ padding: '28px 34px' }} component={'header'}>
       <Navigation orderLength={orderLength} page={page} handleLogin={handleLogin} />

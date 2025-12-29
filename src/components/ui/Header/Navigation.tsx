@@ -1,4 +1,4 @@
-import type React from 'react';
+import type { FC } from 'react';
 import { Box, Typography, Badge } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ export const PageName = {
   ProductPage: 'ProductPage',
 } as const;
 
-export const Navigation: React.FC<NavigationProps> = ({ page, orderLength, handleLogin }) => {
+export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin }) => {
   const location = useLocation();
 
   const icons = [
