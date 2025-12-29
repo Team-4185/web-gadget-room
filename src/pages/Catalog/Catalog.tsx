@@ -1,10 +1,9 @@
 import { Box, Container } from '@mui/material';
 import { PRODUCTS } from '../../core/constants/products';
 
-import { ITEMS_PER_PAGE } from '../../core/types/Catalog/catalog.constants';
+import { ITEMS_PER_PAGE } from '../../core/constants/Catalog/catalog';
 
-import { CatalogFilters } from '../../components/ui/Catalog/CatalogFilters/CatalogFilters';
-import { CatalogContent } from '../../components/ui/Catalog/CatalogContent';
+import { CatalogContent, CatalogFilters } from '../../components/shared/Catalog';
 
 import { usePagination } from '../../core/hooks/Catalog/usePagination';
 import { useCatalogProducts } from '../../core/hooks/Catalog/useCatalogProducts';

@@ -4,7 +4,7 @@ import { CatalogAccordionBrands } from './CatalogAccordionBrands';
 import { CatalogAccordionPrice } from './CatalogAccordionPrice';
 import { CatalogAccordionAvailability } from './CatalogAccordionAvailability';
 
-import type { Brand } from '../../../../core/types/Catalog/catalog.types';
+import type { Brand } from '../../../../core/types/Catalog/catalog';
 
 interface CatalogFiltersProps {
   activeBrands: Record<Brand, boolean>;

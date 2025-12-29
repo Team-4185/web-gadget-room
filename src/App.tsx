@@ -8,7 +8,7 @@ import { Home } from './pages/Home/Home.tsx';
 import { Cart } from './pages/Cart/Cart.tsx';
 import { Payment } from './pages/Payment/Payment.tsx';
 import { Delivery } from './pages/Delivery/Delivery.tsx';
-import { Catalog } from './pages/Catalog/Catalog.tsx';
+import { Catalog } from './pages/Catalog';
 import { About } from './pages/About/About.tsx';
 import { ProductPage } from './pages/ProductPage/ProductPage.tsx';
 import { Footer } from './components/shared/Footer/Footer.tsx';

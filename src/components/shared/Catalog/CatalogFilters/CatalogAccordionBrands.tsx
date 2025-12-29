@@ -1,11 +1,10 @@
-// BrandAccordion.tsx
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 
 import ExpandIcon from '/icons/ExpandMore.svg';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
 
-type Brand = 'apple' | 'samsung' | 'xiaomi' | 'oneplus' | 'honor' | 'poco';
+import type { Brand } from '../../../../core/types/Catalog/catalog';
 
 interface CatalogAccordionBrandsProps {
   brands?: Brand[];

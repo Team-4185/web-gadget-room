@@ -1,4 +1,4 @@
-import type { Brand } from './catalog.types';
+import type { Brand } from '../../types/Catalog/catalog';
 
 export const BRANDS: Brand[] = ['apple', 'samsung', 'xiaomi', 'oneplus', 'honor', 'poco'];
 
