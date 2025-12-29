@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
+
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import { PRODUCTS } from '../../core/constants/products';
 import { addProduct } from '../../core/store/slices/cartSlice';
 
@@ -11,9 +11,9 @@ import {
   NewArrivalsSection,
   PromoGridSection,
   SaleBannerSection,
-} from './HomeSection';
+} from '../../components/shared/Home/HomeSection';
 
-import { HOME_BRANDS, HOME_HERO } from './constants';
+import { HOME_BRANDS, HOME_HERO } from '../../core/constants/Home';
 
 export const Home = () => {
   const navigate = useNavigate();

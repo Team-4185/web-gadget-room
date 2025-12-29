@@ -1,4 +1,4 @@
-import type { Brand } from './sections';
+import type { Brand } from '../types/Home';
 
 export const HOME_BRANDS: Brand[] = [
   { id: 1, name: 'Apple', icon: '/icons/Brands/Apple.svg', descr: 'iphone 15 series' },
@@ -8,7 +8,7 @@ export const HOME_BRANDS: Brand[] = [
 ];
 
 export const HOME_HERO = {
-  productId: 1, 
+  productId: 1,
   title: {
     regular: 'iPhone 17',
     bold: 'Pro Max',
