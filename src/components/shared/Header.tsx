@@ -1,9 +1,9 @@
+import type { FC } from 'react';
 import { Container } from '@mui/material';
 
 import { OrderingSteps } from '../ui/Header/OrderingSteps';
 import { Navigation } from '../ui/Header/Navigation';
 import { BreadCrumbs } from '../ui/Header/BreadCrumbs';
-import type { FC } from 'react';
 
 type HeaderProps = {
   page?:

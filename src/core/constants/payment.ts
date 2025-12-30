@@ -1,4 +1,4 @@
-import type { MonthOption, PaymentMethodConfig } from '../../types/Payment/payment';
+import type { MonthOption, PaymentMethodConfig } from '../types/payment';
 
 export const MONTHS: MonthOption[] = [
   { id: 1, value: 'december', name: 'December' },

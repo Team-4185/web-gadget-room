@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
-import { OrderSummary } from '../../components/ui/Cart/OrderSummary';
+import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
 import TrashIcon from '/icons/trash.svg';
 import type { RootState } from '../../core/store';
 import greyBox from '/icons/greyBox.png';

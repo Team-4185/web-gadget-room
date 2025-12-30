@@ -4,7 +4,7 @@ import type {
   PaymentFormErrors,
   PaymentFormValues,
   PaymentFieldsKey,
-} from '../../../core/types/Payment/payment';
+} from '../../../core/types/payment';
 import { PaymentMethodAccordion } from './PaymentMethodAccordion';
 
 type Props = {

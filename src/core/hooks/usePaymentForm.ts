@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { PaymentMethod, PaymentFormErrors } from '../../types/Payment/payment';
+import type { PaymentMethod, PaymentFormErrors } from '../types/payment';
 import {
   formatCardNumber,
   formatCvv,
@@ -9,7 +9,7 @@ import {
   isValidName,
   isValidYear,
   onlyDigits,
-} from '../../utils/payment';
+} from '../utils/payment';
 
 type PaymentFormValues = {
   card: {

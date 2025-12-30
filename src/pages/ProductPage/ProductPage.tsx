@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Container } from '@mui/material';
@@ -20,8 +21,6 @@ import shop from '/icons/ProductInfoIcons/shop.svg';
 import delivery from '/icons/ProductInfoIcons/deliveryTrack.svg';
 import verify from '/icons/ProductInfoIcons/verify.svg';
 import { addProduct } from '../../core/store/slices/cartSlice';
-
-import type { FC } from 'react';
 
 export const ProductPage: FC = () => {
   const navigate = useNavigate();

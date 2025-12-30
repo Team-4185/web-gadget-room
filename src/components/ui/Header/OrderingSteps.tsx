@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-
 import { Container, Box } from '@mui/material';
 
 import CheckMark from '/icons/checkMark.svg';

@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ArrowRight from '/icons/ArrowRight.svg';
 import ArrowLeft from '/icons/ArrowLeft.svg';
 import { useEffect, useState } from 'react';
-import { useLogin } from '../../core/hooks/auth/useLogin';
-import { useRegister } from '../../core/hooks/auth/useRegister';
+import { useLogin } from '../../core/hooks/useLogin';
+import { useRegister } from '../../core/hooks/useRegister';
 import { Input } from '../../components/ui/Input/Input';
 
 // validator.js

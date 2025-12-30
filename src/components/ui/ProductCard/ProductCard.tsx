@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,7 +13,6 @@ import {
   removeProductFromWishList,
 } from '../../../core/store/slices/wishListSlice.ts';
 import type { RootState } from '../../../core/store/index.ts';
-import type { FC } from 'react';
 
 type ProductCardProps = {
   id: number;
