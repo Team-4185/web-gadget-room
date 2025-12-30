@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import type { Product, SortOption } from '../../../core/types/Catalog/catalog';
+import type { Product, SortOption } from '../../../core/types/catalog';
 import { CatalogHeader } from './CatalogHeader';
 import { CatalogProducts } from './CatalogProducts';
 import { CatalogPagination } from './CatalogPagination';

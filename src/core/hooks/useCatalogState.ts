@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import type { Brand, SortOption } from '../../types/Catalog/catalog';
-import { PRICE_MAX } from '../../constants/Catalog/catalog';
+import type { Brand, SortOption } from '../types/catalog';
+import { PRICE_MAX } from '../constants/catalog';
 
 export const useCatalogState = () => {
   const [sortBy, setSortBy] = useState<SortOption>('popularity');

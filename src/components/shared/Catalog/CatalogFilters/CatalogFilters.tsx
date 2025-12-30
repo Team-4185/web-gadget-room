@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { CatalogAccordionBrands } from './CatalogAccordionBrands';
 import { CatalogAccordionPrice } from './CatalogAccordionPrice';
 import { CatalogAccordionAvailability } from './CatalogAccordionAvailability';
-import type { Brand } from '../../../../core/types/Catalog/catalog';
+import type { Brand } from '../../../../core/types/catalog';
 
 interface CatalogFiltersProps {
   activeBrands: Record<Brand, boolean>;
