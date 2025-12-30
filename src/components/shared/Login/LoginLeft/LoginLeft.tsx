@@ -9,7 +9,7 @@ export const LoginLeft = () => {
         <span>Welcome back</span>
         <span>Please login to continue</span>
       </Box>
-      <img src={ArrowRight} alt="" className="login-left-arrow" />
+      <img src={ArrowRight} alt="Arrow Rigth" className="login-left-arrow" />
     </Box>
   );
 };

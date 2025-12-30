@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
-import { LoginForm } from '../../../../pages/Login';
-import { LoginActions } from '../../../../pages/Login';
+import { LoginForm } from '../LoginForm/LoginForm';
+import { LoginActions } from '../LoginActions/LoginActions';
 
 export const LoginRight = () => {
   return (

@@ -1,8 +1,8 @@
 import { Container, Box } from '@mui/material';
 
 import { Header } from '../../components/shared/Header';
-import { LoginLeft } from './index';
-import { LoginRight } from './index';
+import { LoginLeft } from '../../components/shared/Login/LoginLeft/LoginLeft';
+import { LoginRight } from '../../components/shared/Login/LoginRigth/LoginRigth';
 
 import './Login.css';
 
