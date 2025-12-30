@@ -1,4 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Box, Divider } from '@mui/material';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import greyBox from '/icons/greyBox.png';
+import TrashIcon from '/icons/trash.svg';
+
 import type { RootState } from '../../../core/store';
 import {
   decreaseAmount,
@@ -6,16 +12,10 @@ import {
   removeProduct,
 } from '../../../core/store/slices/cartSlice';
 
-import { Box, Divider } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-
-import greyBox from '/icons/greyBox.png';
-import TrashIcon from '/icons/trash.svg';
-
 export const ProductsCart = () => {
   const products = useSelector((state: RootState) => state.cart.cart);
   const dispatch = useDispatch();
+
   return (
     <>
       {products.map((product, idx) => (

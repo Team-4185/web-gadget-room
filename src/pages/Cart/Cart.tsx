@@ -1,9 +1,10 @@
+import type { FC } from 'react';
+import { Container, Box } from '@mui/material';
+
 import { CartGrid } from '../../components/shared/Cart/CartGrid';
 import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
 
-import { Container, Box } from '@mui/material';
-
-export const Cart: React.FC = () => {
+export const Cart: FC = () => {
   return (
     <>
       <Container disableGutters maxWidth="xl" className="cart-container">
