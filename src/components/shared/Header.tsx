@@ -1,4 +1,5 @@
 import { Container } from '@mui/material';
+import type { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
@@ -11,7 +12,7 @@ type HeaderProps = {
   handleLogin?: () => void;
 };
 
-export const Header: React.FC<HeaderProps> = ({ handleLogin }) => {
+export const Header: FC<HeaderProps> = ({ handleLogin }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const productName = location.state?.name;
