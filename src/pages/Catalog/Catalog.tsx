@@ -1,13 +1,11 @@
 import { Box, Container } from '@mui/material';
-import { PRODUCTS } from '../../core/constants/products';
-
-import { ITEMS_PER_PAGE } from '../../core/constants/Catalog/catalog';
 
 import { CatalogContent, CatalogFilters } from '../../components/shared/Catalog';
-
 import { usePagination } from '../../core/hooks/Catalog/usePagination';
 import { useCatalogProducts } from '../../core/hooks/Catalog/useCatalogProducts';
 import { useCatalogState } from '../../core/hooks/Catalog/useCatalogState';
+import { PRODUCTS } from '../../core/constants/products';
+import { ITEMS_PER_PAGE } from '../../core/constants/Catalog/catalog';
 
 export const Catalog = () => {
   const {

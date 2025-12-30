@@ -3,16 +3,13 @@ import { Box } from '@mui/material';
 import { CatalogAccordionBrands } from './CatalogAccordionBrands';
 import { CatalogAccordionPrice } from './CatalogAccordionPrice';
 import { CatalogAccordionAvailability } from './CatalogAccordionAvailability';
-
 import type { Brand } from '../../../../core/types/Catalog/catalog';
 
 interface CatalogFiltersProps {
   activeBrands: Record<Brand, boolean>;
   onToggleBrand: (brand: Brand) => void;
-
   sliderValue: number;
   onSliderChange: (_event: Event, newValue: number | number[]) => void;
-
   inStockActive: boolean;
   preOrderActive: boolean;
   onToggleInStock: () => void;

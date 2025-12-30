@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 import type { Product, SortOption } from '../../../core/types/Catalog/catalog';
-
 import { CatalogHeader } from './CatalogHeader';
 import { CatalogProducts } from './CatalogProducts';
 import { CatalogPagination } from './CatalogPagination';
@@ -10,9 +9,7 @@ import { CatalogPagination } from './CatalogPagination';
 interface CatalogContentProps {
   sortBy: SortOption;
   onSortChange: (event: SelectChangeEvent<string>) => void;
-
   items: Product[];
-
   totalPages: number;
   currentPage: number;
   onPrev: () => void;
