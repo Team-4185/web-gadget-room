@@ -1,1 +1,0 @@
-export { NewArrivalsSection } from './NewArrivalsSection';

@@ -1,1 +1,0 @@
-export { PromoGridSection } from './PromoGridSection';

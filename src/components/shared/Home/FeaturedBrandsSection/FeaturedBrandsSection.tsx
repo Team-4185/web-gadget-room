@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import type { Brand } from './index';
+import type { Brand } from '../../../../core/types/home';
 
 type Props = {
   brands: Brand[];
