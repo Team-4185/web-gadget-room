@@ -5,7 +5,6 @@ import type {
   PaymentFormValues,
   PaymentFieldsKey,
 } from '../../../core/types/Payment/payment';
-
 import { PaymentMethodAccordion } from './PaymentMethodAccordion';
 
 type Props = {

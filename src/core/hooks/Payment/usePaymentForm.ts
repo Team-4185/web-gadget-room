@@ -9,7 +9,7 @@ import {
   isValidName,
   isValidYear,
   onlyDigits,
-} from '../../utils/payment.validation';
+} from '../../utils/payment';
 
 type PaymentFormValues = {
   card: {
