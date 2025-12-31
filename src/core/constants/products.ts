@@ -433,3 +433,89 @@ export const PRODUCTS = [
     reviews: 8,
   },
 ];
+
+export const PRODUCT_GALLERY_IMAGES = [
+  {
+    id: 1,
+    src: '/icons/productImg/SmallFirst.svg',
+    alt: 'Second Image',
+  },
+  {
+    id: 2,
+    src: '/icons/productImg/SmallSecond.svg',
+    alt: 'Third Image',
+  },
+  {
+    id: 3,
+    src: '/icons/productImg/SmallThird.svg',
+    alt: 'Fourth Image',
+  },
+  {
+    id: 4,
+    src: '/icons/productImg/SmallFourth.svg',
+    alt: 'Fivth Image',
+  },
+];
+
+export const SPECS = [
+  {
+    id: 1,
+    label: 'Screen Size',
+    value: '6.7',
+    icon: '/icons/ProductInfoIcons/phone.svg',
+    alt: 'Screen icon',
+  },
+  {
+    id: 2,
+    label: 'CPU',
+    value: 'Samsung',
+    icon: '/icons/ProductInfoIcons/CPU.svg',
+    alt: 'CPU icon',
+  },
+  { id: 3, label: 'Cores', value: '6', icon: '/icons/ProductInfoIcons/core.svg', alt: 'Core icon' },
+  {
+    id: 4,
+    label: 'Main camera',
+    value: '48-12-12 MP',
+    icon: '/icons/ProductInfoIcons/camera.svg',
+    alt: 'Camera icon',
+  },
+  {
+    id: 5,
+    label: 'Front camera',
+    value: '12 MP',
+    icon: '/icons/ProductInfoIcons/frontCamera.svg',
+    alt: 'Front-camera icon',
+  },
+  {
+    id: 6,
+    label: 'Battery',
+    value: '4323 mAh',
+    icon: '/icons/ProductInfoIcons/battery.svg',
+    alt: 'Battery icon',
+  },
+];
+
+export const PRODUCT_META = [
+  {
+    id: 1,
+    label: 'Delivery',
+    value: '1-2 day',
+    icon: '/icons/ProductInfoIcons/deliveryTrack.svg',
+    alt: 'Delivery Icon',
+  },
+  {
+    id: 2,
+    label: 'In Stock',
+    value: 'Today',
+    icon: '/icons/ProductInfoIcons/shop.svg',
+    alt: 'Shop Icon',
+  },
+  {
+    id: 3,
+    label: 'Guaranteed',
+    value: '1 year',
+    icon: '/icons/ProductInfoIcons/verify.svg',
+    alt: 'Guaranteed Icon',
+  },
+];
