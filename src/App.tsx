@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import 'modern-normalize/modern-normalize.css';
 
 import { ProtectedRoute } from './routes/ProtectedRoute.tsx';
 import { Header } from './components/shared/Header.tsx';
