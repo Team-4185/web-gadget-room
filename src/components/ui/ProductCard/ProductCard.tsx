@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,7 +26,7 @@ type ProductCardProps = {
   home?: boolean;
 };
 
-export const ProductCard: React.FC<ProductCardProps> = ({
+export const ProductCard: FC<ProductCardProps> = ({
   id,
   image,
   name,
