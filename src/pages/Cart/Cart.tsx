@@ -1,15 +1,16 @@
 import { Container, Box, Grid, Divider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import type { FC } from 'react';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
-import { OrderSummary } from '../../components/ui/Cart/OrderSummary';
+import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
 import TrashIcon from '/icons/trash.svg';
 import type { RootState } from '../../core/store';
 import greyBox from '/icons/greyBox.png';
 import { decreaseAmount, increaseAmount, removeProduct } from '../../core/store/slices/cartSlice';
 
-export const Cart: React.FC = () => {
+export const Cart: FC = () => {
   const products = useSelector((state: RootState) => state.cart.cart);
   const cartLength = useSelector((state: RootState) => state.cart.cart.length);
   const dispatch = useDispatch();

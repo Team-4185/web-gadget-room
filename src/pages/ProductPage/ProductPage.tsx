@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Container } from '@mui/material';
@@ -21,7 +22,7 @@ import delivery from '/icons/ProductInfoIcons/deliveryTrack.svg';
 import verify from '/icons/ProductInfoIcons/verify.svg';
 import { addProduct } from '../../core/store/slices/cartSlice';
 
-export const ProductPage: React.FC = () => {
+export const ProductPage: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
