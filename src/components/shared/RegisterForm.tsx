@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useRegisterForm } from '../../core/hooks/useRegisterForm';
 import { Input } from '../ui/Input/Input';
-import { useRegister } from '../../core/hooks/auth/useRegister';
+import { useRegister } from '../../core/hooks/useRegister';
 
 export const RegisterForm: FC = () => {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useLoginForm } from '../../core/hooks/useLoginForm';
 import { Input } from '../ui/Input/Input';
-import { useLogin } from '../../core/hooks/auth/useLogin';
+import { useLogin } from '../../core/hooks/useLogin';
 
 export const LoginForm: FC = () => {
   const navigate = useNavigate();
