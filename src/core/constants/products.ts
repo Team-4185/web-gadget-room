@@ -23,6 +23,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 120,
+    amount: 1,
   },
   {
     id: 3,
@@ -35,6 +36,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 5,
+    amount: 1,
   },
   {
     id: 4,
@@ -47,6 +49,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 210,
+    amount: 1,
   },
   {
     id: 5,
@@ -59,6 +62,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 78,
+    amount: 1,
   },
   {
     id: 6,
@@ -71,6 +75,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 12,
+    amount: 1,
   },
   {
     id: 7,
@@ -83,6 +88,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 44,
+    amount: 1,
   },
   {
     id: 8,
@@ -95,6 +101,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 3,
+    amount: 1,
   },
   {
     id: 9,
@@ -107,6 +114,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 89,
+    amount: 1,
   },
   {
     id: 10,
@@ -119,6 +127,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 7,
+    amount: 1,
   },
   {
     id: 11,
@@ -131,6 +140,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 256,
+    amount: 1,
   },
   {
     id: 12,
@@ -143,6 +153,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 6,
+    amount: 1,
   },
   {
     id: 13,
@@ -155,6 +166,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 190,
+    amount: 1,
   },
   {
     id: 14,
@@ -167,6 +179,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 67,
+    amount: 1,
   },
   {
     id: 15,
@@ -179,6 +192,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 54,
+    amount: 1,
   },
   {
     id: 16,
@@ -191,6 +205,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 23,
+    amount: 1,
   },
   {
     id: 17,
@@ -203,6 +218,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 299,
+    amount: 1,
   },
   {
     id: 18,
@@ -215,6 +231,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 110,
+    amount: 1,
   },
   {
     id: 19,
@@ -227,6 +244,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 2,
+    amount: 1,
   },
   {
     id: 20,
@@ -239,6 +257,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 15,
+    amount: 1,
   },
   {
     id: 21,
@@ -251,6 +270,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 9,
+    amount: 1,
   },
   {
     id: 22,
@@ -263,6 +283,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 33,
+    amount: 1,
   },
   {
     id: 23,
@@ -275,6 +296,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 28,
+    amount: 1,
   },
   {
     id: 24,
@@ -287,6 +309,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 40,
+    amount: 1,
   },
   {
     id: 25,
@@ -299,6 +322,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 77,
+    amount: 1,
   },
   {
     id: 26,
@@ -311,6 +335,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 18,
+    amount: 1,
   },
   {
     id: 27,
@@ -323,6 +348,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 125,
+    amount: 1,
   },
   {
     id: 28,
@@ -335,6 +361,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 60,
+    amount: 1,
   },
   {
     id: 29,
@@ -347,6 +374,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 11,
+    amount: 1,
   },
   {
     id: 30,
@@ -359,6 +387,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 95,
+    amount: 1,
   },
   {
     id: 31,
@@ -371,6 +400,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 142,
+    amount: 1,
   },
   {
     id: 32,
@@ -383,6 +413,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 210,
+    amount: 1,
   },
   {
     id: 33,
@@ -395,6 +426,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 65,
+    amount: 1,
   },
   {
     id: 34,
@@ -407,6 +439,7 @@ export const PRODUCTS = [
     inStock: false,
     preOrder: true,
     reviews: 47,
+    amount: 1,
   },
   {
     id: 35,
@@ -419,6 +452,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 29,
+    amount: 1,
   },
   {
     id: 36,
@@ -431,6 +465,7 @@ export const PRODUCTS = [
     inStock: true,
     preOrder: false,
     reviews: 8,
+    amount: 1,
   },
 ];
 

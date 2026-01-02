@@ -1,6 +1,6 @@
-import type { Brand } from '../types/home';
+import type { BrandInfo } from '../types/product';
 
-export const HOME_BRANDS: Brand[] = [
+export const HOME_BRANDS: BrandInfo[] = [
   { id: 1, name: 'Apple', icon: '/icons/Brands/Apple.svg', descr: 'iphone 15 series' },
   { id: 2, name: 'Samsung', icon: '/icons/Brands/Samsung.svg', descr: 'Galaxy S24 Ultra' },
   { id: 3, name: 'Xiaomi', icon: '/icons/Brands/Xiaomi.svg', descr: '14T Pro' },

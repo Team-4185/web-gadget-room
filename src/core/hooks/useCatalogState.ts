@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import type { Brand, SortOption } from '../types/catalog';
+import type { BrandKey, SortOption } from '../types/product';
 import { PRICE_MAX } from '../constants/catalog';
 
 export const useCatalogState = () => {
   const [sortBy, setSortBy] = useState<SortOption>('popularity');
 
-  const [activeBrands, setActiveBrands] = useState<Record<Brand, boolean>>({
+  const [activeBrands, setActiveBrands] = useState<Record<BrandKey, boolean>>({
     apple: false,
     samsung: false,
     xiaomi: false,
@@ -20,7 +20,7 @@ export const useCatalogState = () => {
   const [preOrderActive, setPreOrderActive] = useState(false);
   const [sliderValue, setSliderValue] = useState<number>(PRICE_MAX);
 
-  const toggleBrand = (brand: Brand) => {
+  const toggleBrand = (brand: BrandKey) => {
     setActiveBrands((prev) => ({ ...prev, [brand]: !prev[brand] }));
   };
 

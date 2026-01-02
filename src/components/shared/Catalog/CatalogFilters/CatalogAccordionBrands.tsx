@@ -2,12 +2,12 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import ExpandIcon from '/icons/ExpandMore.svg';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
-import type { Brand } from '../../../../core/types/catalog';
+import type { BrandKey } from '../../../../core/types/product';
 
 interface CatalogAccordionBrandsProps {
-  brands?: Brand[];
-  active: Record<Brand, boolean>;
-  onToggle: (brand: Brand) => void;
+  brands?: BrandKey[];
+  active: Record<BrandKey, boolean>;
+  onToggle: (brand: BrandKey) => void;
   defaultExpanded?: boolean;
   className?: string;
 }

@@ -2,22 +2,10 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { ProductCard } from '../../ui/ProductCard/ProductCard';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  sale?: boolean;
-  img: string;
-  hit?: boolean;
-  newProduct?: boolean;
-  inStock?: boolean;
-  preOrder?: boolean;
-  reviews?: number;
-}
+import type { IProduct } from '../../../core/types/product';
 
 interface CatalogProductsProps {
-  items: Product[];
+  items: IProduct[];
 }
 
 export const CatalogProducts = ({ items }: CatalogProductsProps) => {

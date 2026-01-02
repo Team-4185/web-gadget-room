@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
 
 import { ProductCard } from '../../../ui/ProductCard/ProductCard';
-import type { Product } from '../../../../core/types/home';
+import type { IProduct } from '../../../../core/types/product';
 
 type Props = {
-  products: Product[];
-  onOpenProduct: (product: Product) => void;
+  products: IProduct[];
+  onOpenProduct: (product: IProduct) => void;
 };
 
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {

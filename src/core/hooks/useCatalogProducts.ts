@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
-import type { Brand, Product, SortOption } from '../types/catalog';
+import type { BrandKey, IProduct, SortOption } from '../types/product';
 import { BRANDS, PRICE_MIN } from '../constants/catalog';
 
 interface UseCatalogProductsArgs {
-  products: Product[];
+  products: IProduct[];
 
-  activeBrands: Record<Brand, boolean>;
+  activeBrands: Record<BrandKey, boolean>;
   sliderValue: number;
 
   inStockActive: boolean;
@@ -22,9 +22,9 @@ export const useCatalogProducts = ({
   inStockActive,
   preOrderActive,
   sortBy,
-}: UseCatalogProductsArgs): Product[] => {
+}: UseCatalogProductsArgs): IProduct[] => {
   return useMemo(() => {
-    let filtered: Product[] = [...products];
+    let filtered: IProduct[] = [...products];
 
     // 1) Brands
     const selectedBrands = BRANDS.filter((b) => activeBrands[b]);

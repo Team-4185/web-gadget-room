@@ -1,8 +1,9 @@
 import { useLocation, useParams } from 'react-router-dom';
 
 import { PRODUCTS } from '../constants/products';
+import type { IProduct } from '../types/product';
 
-export const useProduct = () => {
+export const useProduct = (): IProduct => {
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
 
