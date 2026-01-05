@@ -3,10 +3,12 @@ import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import type { RootState } from '../../core/store'
+import type { RootState } from '../../core/store';
 import { OrderingSteps } from '../ui/Header/OrderingSteps';
 import { Navigation } from '../ui/Header/Navigation';
 import { BreadCrumbs } from '../ui/Header/BreadCrumbs';
+
+import './Header.css';
 
 type HeaderProps = {
   handleLogin?: () => void;
@@ -31,7 +33,13 @@ export const Header: FC<HeaderProps> = ({ handleLogin }) => {
   const cartLength = useSelector((state: RootState) => state.cart.cart.length);
 
   return (
-    <Container disableGutters maxWidth="xl" sx={{ padding: '28px 34px' }} component={'header'}>
+    <Container
+      className="header"
+      disableGutters
+      maxWidth="xl"
+      sx={{ padding: '28px 34px' }}
+      component={'header'}
+    >
       <Navigation orderLength={cartLength} page={page} handleLogin={handleLogin} />
       <OrderingSteps page={page} />
       <BreadCrumbs page={page} product={productName} />

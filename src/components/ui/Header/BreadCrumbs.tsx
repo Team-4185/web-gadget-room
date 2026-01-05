@@ -25,29 +25,39 @@ export const BreadCrumbs: FC<BreadCrumbsProps> = ({ page, product }) => {
   return (
     <>
       {product ? (
-        <Container disableGutters maxWidth="xl" className="breadcrumbs-container">
-          <Box className="breadcrumbs-box">
-            <Box onClick={() => navigate('/')} component="a" href="#" className="breadcrumbs-home">
+        <Container disableGutters maxWidth="xl" className="header_breadcrumbs__container">
+          <Box className="header_breadcrumbs__box">
+            <Box
+              onClick={() => navigate('/')}
+              component="a"
+              href="#"
+              className="header_breadcrumbs__home"
+            >
               <img src={Home} alt="Home icon" />
               <span>Home</span>
             </Box>
             <img src={RightArrow} alt="arrow icon" />
-            <a onClick={() => navigate('/catalog')} href="#" className="breadcrumbs-link">
+            <a onClick={() => navigate('/catalog')} href="#" className="header_breadcrumbs__link">
               Catalog
             </a>
             <img src={RightArrow} alt="arrow icon" />
-            <span className="breadcrumbs-product">{product}</span>
+            <span className="header_breadcrumbs__product">{product}</span>
           </Box>
         </Container>
       ) : catalog ? (
-        <Container disableGutters maxWidth="xl" className="breadcrumbs-container">
-          <Box className="breadcrumbs-box">
-            <Box onClick={() => navigate('/')} component="a" href="#" className="breadcrumbs-home">
+        <Container disableGutters maxWidth="xl" className="header_breadcrumbs__container">
+          <Box className="header_breadcrumbs__box">
+            <Box
+              onClick={() => navigate('/')}
+              component="a"
+              href="#"
+              className="header_breadcrumbs__home"
+            >
               <img src={Home} alt="Home icon" />
               <span>Home</span>
             </Box>
             <img src={RightArrow} alt="arrow icon" />
-            <a href="#" className="breadcrumbs-link">
+            <a href="#" className="header_breadcrumbs__link">
               {page}
             </a>
           </Box>
