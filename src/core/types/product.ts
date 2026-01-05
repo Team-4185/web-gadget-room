@@ -1,17 +1,25 @@
-export interface Product {
+export interface IProduct {
   id: number;
   name: string;
   price: number;
-  img: string;
+  img?: string;
   sale?: boolean;
   hit?: boolean;
   newProduct?: boolean;
   inStock?: boolean;
   preOrder?: boolean;
   reviews?: number;
+  amount: number;
 }
 
-export type Brand = 'apple' | 'samsung' | 'xiaomi' | 'oneplus' | 'honor' | 'poco';
+export type BrandKey = 'apple' | 'samsung' | 'xiaomi' | 'oneplus' | 'honor' | 'poco';
+
+export type BrandInfo = {
+  id: number;
+  name: string;
+  icon: string;
+  descr: string;
+};
 
 export type SortOption =
   | 'popularity'

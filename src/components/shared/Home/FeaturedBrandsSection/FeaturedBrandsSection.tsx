@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 
-import type { Brand } from '../../../../core/types/home';
+import type { BrandInfo } from '../../../../core/types/product';
 
 type Props = {
-  brands: Brand[];
+  brands: BrandInfo[];
 };
 
 export const FeaturedBrandsSection = ({ brands }: Props) => {

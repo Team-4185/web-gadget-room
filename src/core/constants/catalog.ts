@@ -1,6 +1,6 @@
-import type { Brand } from '../types/catalog';
+import type { BrandKey } from '../types/product';
 
-export const BRANDS: Brand[] = ['apple', 'samsung', 'xiaomi', 'oneplus', 'honor', 'poco'];
+export const BRANDS: BrandKey[] = ['apple', 'samsung', 'xiaomi', 'oneplus', 'honor', 'poco'];
 
 export const ITEMS_PER_PAGE = 12;
 export const PRICE_MIN = 200;
