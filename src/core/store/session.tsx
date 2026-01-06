@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useState, useEffect } from 'react';
 
-import { tokenStorage } from '../utils/tokenStorage';
-import { http } from '../config/api';
+import { tokenStorage } from '@/core/utils/tokenStorage';
+import { http } from '@/core/config/api';
 
 type User = { userId: number; email: string } | null;
 type Session = {

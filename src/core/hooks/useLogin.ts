@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { endpoints } from '../config/endpoints';
-import { http } from '../config/api';
-import type { AuthRequestLogin, AuthResponse } from '../types/auth';
-import { useSession } from '../store/session';
+import { endpoints } from '@/core/config/endpoints';
+import { http } from '@/core/config/api';
+import type { AuthRequestLogin, AuthResponse } from '@/core/types/auth';
+import { useSession } from '@/core/store/session';
 
 export const useLogin = () => {
   const { setAuth } = useSession();

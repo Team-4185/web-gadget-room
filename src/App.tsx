@@ -1,9 +1,9 @@
 import { BrowserRouter } from 'react-router-dom';
 
-import { Header } from './components/shared/Header.tsx';
-import { ScrollToTop } from './components/shared/ScrollToTop.tsx';
-import { Footer } from './components/shared/Footer/Footer.tsx';
-import AppRoutes from './routes/AppRoutes.tsx';
+import { Header } from '@/components/shared/Header';
+import { ScrollToTop } from '@/components/shared/ScrollToTop';
+import { Footer } from '@/components/shared/Footer/Footer';
+import AppRoutes from '@/routes/AppRoutes';
 
 import 'modern-normalize/modern-normalize.css';
 import './App.css';

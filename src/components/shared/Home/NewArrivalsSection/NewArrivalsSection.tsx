@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
-import { ProductCard } from '../../ProductCard/ProductCard';
-import type { IProduct } from '../../../../core/types/product';
+import { ProductCard } from '@/components/shared/ProductCard/ProductCard';
+import type { IProduct } from '@/core/types/product';
 
 type Props = {
   products: IProduct[];

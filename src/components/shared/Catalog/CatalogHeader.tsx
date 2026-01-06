@@ -1,7 +1,7 @@
 import { Box, MenuItem } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import { Input } from '../../ui/Input/Input';
+import { Input } from '@/components/ui/Input/Input';
 
 type SortOption =
   | 'popularity'
