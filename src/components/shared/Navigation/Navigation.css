@@ -6,7 +6,7 @@
     justify-content: space-between;
 }
 
-.navigation_left {
+.navigation__left {
     width: 100%;
     max-width: 714px;
     display: flex;
@@ -15,18 +15,18 @@
     gap: 93px;
 }
 
-.navigation_logo {
+.navigation__logo {
     display: flex;
     gap: 5px;
 }
 
-.navigation_pages {
+.navigation__pages {
     display: flex;
     gap: 28px;
     align-items: center;
 }
 
-.navigation_page__p.MuiTypography-root {
+.navigation__page__p.MuiTypography-root {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -34,7 +34,7 @@
     text-transform: uppercase;
 }
 
-.navigation_icons {
+.navigation__icons {
     display: flex;
     gap: 21px;
 }

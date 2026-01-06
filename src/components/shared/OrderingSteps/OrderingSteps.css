@@ -1,32 +1,32 @@
 /*Header Ordering Steps=====================================================*/
 
-.ordering_steps__container {
+.steps {
     margin-top: 20px;
     width: 100%;
 }
 
-.ordering_steps__box {
+.steps__box {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.cart_page {
+.cart__page {
     width: 152px;
     height: 26px;
 }
 
-.shipping_Page {
+.shipping__Page {
     width: 251px;
     height: 26px;
 }
 
-.payment_Page {
+.payment__Page {
     width: 192px;
     height: 26px;
 }
 
-.MuiBox-root .step-number {
+.MuiBox-root .step__number {
     border: 1px solid #7777bf;
     border-radius: 50px;
     padding: 2px 9px;
@@ -41,7 +41,7 @@
     color: #000;
 }
 
-.MuiBox-root .step-active {
+.MuiBox-root .step__active {
     background: #7777bf;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
@@ -49,7 +49,7 @@
     font-size: 16px;
 }
 
-.MuiBox-root .step-text {
+.MuiBox-root .step__text {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;

@@ -27,7 +27,7 @@ export const BreadCrumbs: FC<BreadCrumbsProps> = ({ page, product }) => {
   return (
     <>
       {product ? (
-        <Container disableGutters maxWidth="xl" className="breadcrumbs__container">
+        <Container disableGutters maxWidth="xl" className="breadcrumbs">
           <Box className="breadcrumbs__box">
             <Box onClick={() => navigate('/')} component="a" href="#" className="breadcrumbs__home">
               <img src={Home} alt="Home icon" />

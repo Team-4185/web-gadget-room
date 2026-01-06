@@ -63,20 +63,20 @@ export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin
 
   return (
     <Box component="nav" className="navigation">
-      <Box className="navigation_left">
-        <NavLink key={0} to={'/'} className="navigation_logo">
+      <Box className="navigation__left">
+        <NavLink key={0} to={'/'} className="navigation__logo">
           <img src={Logo} alt="Logo" />
           <img src={LogoText} alt="GadgetRoom" />
         </NavLink>
         {!authPage && (
-          <Box className="navigation_pages">
+          <Box className="navigation__pages">
             {pages.map((p) => (
               <NavLink
                 key={p.href}
                 to={p.href}
                 className={({ isActive }) => `navigation-page ${isActive ? 'active' : ''}`}
               >
-                <Typography className="navigation_page__p">{p.name}</Typography>
+                <Typography className="navigation__page__p">{p.name}</Typography>
               </NavLink>
             ))}
           </Box>
@@ -84,7 +84,7 @@ export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin
       </Box>
 
       {!authPage ? (
-        <Box className="navigation_icons">
+        <Box className="navigation__icons">
           {icons.map((icon) => (
             <NavLink
               key={icon.id}

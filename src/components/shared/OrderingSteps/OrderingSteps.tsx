@@ -26,34 +26,34 @@ export const OrderingSteps: FC<OrderingStepsProps> = ({ page }) => {
   return (
     <>
       {cartPage && (
-        <Container disableGutters maxWidth="xl" className="ordering_steps__container">
-          <Box className="ordering_steps__box cart_page">
-            <span className="step-number step-active">1</span>
-            <span className="step-text">{page}</span>
-            <span className="step-number step-inactive">2</span>
-            <span className="step-number step-inactive">3</span>
+        <Container disableGutters maxWidth="xl" className="steps">
+          <Box className="steps__box cart_page">
+            <span className="step__number step__active">1</span>
+            <span className="step__text">{page}</span>
+            <span className="step__number step__inactive">2</span>
+            <span className="step__number step__inactive">3</span>
           </Box>
         </Container>
       )}
 
       {shippingPage && (
-        <Container disableGutters maxWidth="xl" className="ordering_steps__container">
-          <Box className="ordering_steps__box shipping_Page">
-            <img src={CheckMark} className="step-number step-inactive" />
-            <span className="step-number step-active">2</span>
-            <span className="step-text">{page}</span>
-            <span className="step-number step-inactive">3</span>
+        <Container disableGutters maxWidth="xl" className="steps">
+          <Box className="steps__box shipping__Page">
+            <img src={CheckMark} className="step__number step__inactive" />
+            <span className="step__number step__active">2</span>
+            <span className="step__text">{page}</span>
+            <span className="step__number step__inactive">3</span>
           </Box>
         </Container>
       )}
 
       {paymentPage && (
-        <Container disableGutters maxWidth="xl" className="ordering_steps__container">
-          <Box className="ordering_steps__box payment_Page">
-            <img src={CheckMark} className="step-number step-inactive" />
-            <img src={CheckMark} className="step-number step-inactive" />
-            <span className="step-number step-active">3</span>
-            <span className="step-text">{page}</span>
+        <Container disableGutters maxWidth="xl" className="steps">
+          <Box className="steps__box payment__Page">
+            <img src={CheckMark} className="step__number step__inactive" />
+            <img src={CheckMark} className="step__number step__inactive" />
+            <span className="step__number step__active">3</span>
+            <span className="step__text">{page}</span>
           </Box>
         </Container>
       )}
