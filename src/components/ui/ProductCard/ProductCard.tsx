@@ -7,12 +7,12 @@ import Currency from '/icons/currency.svg';
 import WhishlistIcon from '/icons/WhishlistIcon.svg';
 import WishListWhole from '/icons/wishListWhole.svg';
 import Cart from '/icons/AddToCart.svg';
-import { addProduct } from '../../../core/store/slices/cartSlice.ts';
+import { addProduct } from '@/core/store/slices/cartSlice.ts';
 import {
   addProductToWishList,
   removeProductFromWishList,
-} from '../../../core/store/slices/wishListSlice.ts';
-import type { RootState } from '../../../core/store/index.ts';
+} from '@/core/store/slices/wishListSlice.ts';
+import type { RootState } from '@/core/store';
 
 type ProductCardProps = {
   id: number;

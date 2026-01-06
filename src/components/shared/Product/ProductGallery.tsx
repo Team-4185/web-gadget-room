@@ -1,7 +1,7 @@
 import { useState, type FC } from 'react';
 import { Box } from '@mui/material';
 
-import { PRODUCT_GALLERY_IMAGES } from '../../../core/constants/products';
+import { PRODUCT_GALLERY_IMAGES } from '@/core/constants/products';
 
 export const ProductGallery: FC = () => {
   const [activeImg, setActiveImg] = useState(PRODUCT_GALLERY_IMAGES[0].src);

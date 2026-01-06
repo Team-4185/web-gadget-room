@@ -1,8 +1,8 @@
 import { Box, Grid, Divider } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import type { RootState } from '../../../core/store';
-import { ProductsCart } from './ProductsCart';
+import { ProductsCart } from '@/components/shared/Cart/ProductsCart';
+import type { RootState } from '@/core/store';
 
 export const CartGrid = () => {
   const cartLength = useSelector((state: RootState) => state.cart.cart.length);

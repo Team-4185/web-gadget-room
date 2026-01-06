@@ -1,4 +1,4 @@
-import type { BrandInfo } from '../types/product';
+import type { BrandInfo } from '@/core/types/product';
 
 export const HOME_BRANDS: BrandInfo[] = [
   { id: 1, name: 'Apple', icon: '/icons/Brands/Apple.svg', descr: 'iphone 15 series' },

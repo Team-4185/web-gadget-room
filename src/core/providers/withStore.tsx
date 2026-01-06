@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { store } from '../store';
+import store from '@/core/store';
 
 export const withStore = (Component: React.ComponentType) => () => (
   <Provider store={store}>

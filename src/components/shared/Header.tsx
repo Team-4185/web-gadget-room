@@ -3,10 +3,10 @@ import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import type { RootState } from '../../core/store'
-import { OrderingSteps } from '../ui/Header/OrderingSteps';
-import { Navigation } from '../ui/Header/Navigation';
-import { BreadCrumbs } from '../ui/Header/BreadCrumbs';
+import type { RootState } from '@/core/store';
+import { OrderingSteps } from '@/components/ui/Header/OrderingSteps';
+import { Navigation } from '@/components/ui/Header/Navigation';
+import { BreadCrumbs } from '@/components/ui/Header/BreadCrumbs';
 
 type HeaderProps = {
   handleLogin?: () => void;

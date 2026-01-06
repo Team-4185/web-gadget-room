@@ -1,8 +1,9 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+
 import ExpandIcon from '/icons/ExpandMore.svg';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
-import type { BrandKey } from '../../../../core/types/product';
+import type { BrandKey } from '@/core/types/product';
 
 interface CatalogAccordionBrandsProps {
   brands?: BrandKey[];
