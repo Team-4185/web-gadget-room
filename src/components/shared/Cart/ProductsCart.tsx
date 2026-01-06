@@ -5,12 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import greyBox from '/icons/greyBox.png';
 import TrashIcon from '/icons/trash.svg';
-import type { RootState } from '../../../core/store';
-import {
-  decreaseAmount,
-  increaseAmount,
-  removeProduct,
-} from '../../../core/store/slices/cartSlice';
+import type { RootState } from '@/core/store';
+import { decreaseAmount, increaseAmount, removeProduct } from '@/core/store/slices/cartSlice';
 
 export const ProductsCart = () => {
   const products = useSelector((state: RootState) => state.cart.cart);

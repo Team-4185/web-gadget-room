@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import type { IProduct, SortOption } from '../../../core/types/product';
-import { CatalogHeader } from './CatalogHeader';
-import { CatalogProducts } from './CatalogProducts';
-import { CatalogPagination } from './CatalogPagination';
+import type { IProduct, SortOption } from '@/core/types/product';
+import { CatalogHeader } from '@/components/shared/Catalog/CatalogHeader';
+import { CatalogProducts } from '@/components/shared/Catalog/CatalogProducts';
+import { CatalogPagination } from '@/components/shared/Catalog/CatalogPagination';
 
 interface CatalogContentProps {
   sortBy: SortOption;

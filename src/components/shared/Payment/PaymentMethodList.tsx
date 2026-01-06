@@ -1,11 +1,11 @@
+import { PaymentMethodAccordion } from '@/components/shared/Payment/PaymentMethodAccordion';
 import type {
   PaymentMethod,
   PaymentMethodConfig,
   PaymentFormErrors,
   PaymentFormValues,
   PaymentFieldsKey,
-} from '../../../core/types/payment';
-import { PaymentMethodAccordion } from './PaymentMethodAccordion';
+} from '@/core/types/payment';
 
 type Props = {
   methods: PaymentMethodConfig[];

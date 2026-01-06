@@ -12,7 +12,7 @@ import {
 import Lock from '/icons/lock.svg';
 import Voucher from '/icons/voucher.svg';
 import ExpandMoreIcon from '/icons/ExpandMore.svg';
-import type { RootState } from '../../../core/store';
+import type { RootState } from '@/core/store';
 
 type OrderSummaryProps = {
   // если передали onContinue — используем его

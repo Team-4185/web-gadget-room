@@ -1,4 +1,4 @@
-import type { BrandKey } from '../types/product';
+import type { BrandKey } from '@/core/types/product';
 
 export const BRANDS: BrandKey[] = ['apple', 'samsung', 'xiaomi', 'oneplus', 'honor', 'poco'];
 

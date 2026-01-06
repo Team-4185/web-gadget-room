@@ -3,13 +3,13 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { SPECS, PRODUCT_META } from '../../../core/constants/products';
-import { useProduct } from '../../../core/hooks/useProduct';
-import { addProduct } from '../../../core/store/slices/cartSlice';
-import { Button } from '../../ui/Button/Button';
-import { ProductSpecItem } from './ProductSpecItem';
-import { ProductMetaItem } from './ProductMetaItem';
-import { ProductTitlePrice } from './ProductTitlePrice';
+import { SPECS, PRODUCT_META } from '@/core/constants/products';
+import { Button } from '@/components/ui/Button/Button';
+import { addProduct } from '@/core/store/slices/cartSlice';
+import { useProduct } from '@/core/hooks/useProduct';
+import { ProductTitlePrice } from '@/components/shared/Product/ProductTitlePrice';
+import { ProductSpecItem } from '@/components/shared/Product/ProductSpecItem';
+import { ProductMetaItem } from '@/components/shared/Product/ProductMetaItem';
 
 export const ProductInfo: FC = () => {
   const product = useProduct();

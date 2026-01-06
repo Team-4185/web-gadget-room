@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { Box, Container } from '@mui/material';
 
-import { ProductGallery } from '../../components/shared/Product/ProductGallery';
-import { ProductInfo } from '../../components/shared/Product/ProductInfo';
+import { ProductGallery } from '@/components/shared/Product/ProductGallery';
+import { ProductInfo } from '@/components/shared/Product/ProductInfo';
 
 export const ProductPage: FC = () => {
   return (
