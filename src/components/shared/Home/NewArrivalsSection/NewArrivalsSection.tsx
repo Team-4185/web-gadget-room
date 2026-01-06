@@ -3,6 +3,8 @@ import { Box } from '@mui/material';
 import { ProductCard } from '../../../ui/ProductCard/ProductCard';
 import type { Product } from '../../../../core/types/home';
 
+import './NewArrivalsSection.css';
+
 type Props = {
   products: Product[];
   onOpenProduct: (product: Product) => void;
@@ -10,12 +12,9 @@ type Props = {
 
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
   return (
-    <Box sx={{ width: '100%', height: '634px', padding: '60px 80px' }}>
-      <span style={{ fontWeight: '700', fontSize: '48px', lineHeight: '0%', color: '#000' }}>
-        New Arrivals
-      </span>
-
-      <Box sx={{ display: 'flex', width: '100%', mt: '50px', justifyContent: 'space-between' }}>
+    <Box className="arrivals_container">
+      <span className="arrivals_title">New Arrivals</span>
+      <Box className="arrivals_cards_box">
         {products
           .filter((product) => product.newProduct)
           .slice(0, 4)

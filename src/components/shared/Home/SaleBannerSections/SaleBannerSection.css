@@ -1,0 +1,88 @@
+/*Sale Banner SECTION=========================================================*/
+
+.banner_container {
+    width: 100%;
+    margin: 0 auto;
+    background: linear-gradient(95deg, #211c24 0%, #211c24 100%);
+    padding: 51px 423px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.banner_info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 594px;
+    height: max-content;
+    gap: 30px;
+}
+
+.banner_info__title_box {
+    display: flex;
+    gap: 42px;
+    align-self: center;
+}
+
+.banner_info__title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 98%;
+    color: #fff;
+}
+
+.banner_info__title span {
+    font-weight: 800;
+}
+
+.banner_info__description {
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 36px;
+    color: #fff;
+}
+
+.banner_info__btn {
+    display: block;
+    border: 1px solid #7777bf;
+    border-radius: 12px;
+    padding: 8px;
+    width: 100%;
+    max-width: 200px;
+    height: 60px;
+    box-shadow: 0 0 7px 0 #7777bf;
+    background: linear-gradient(95deg, #211c24 0%, #211c24 100%);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 100%;
+    color: #fff;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.banner_info__btn:hover {
+    box-shadow: 0 0 7px 0 #7777bf;
+    background: #7777bf;
+}
+
+.phone_front {
+    position: absolute;
+    left: 0;
+    top: 10%;
+    width: 200px;
+    height: 350px;
+}
+
+.phone_back {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    width: 200px;
+    height: 350px;
+}

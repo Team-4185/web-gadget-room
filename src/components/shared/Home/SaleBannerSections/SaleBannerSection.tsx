@@ -1,6 +1,9 @@
 import { Box } from '@mui/material';
-
 import fire from '/icons/fire.svg';
+import PhoneFront from '/Home/PhoneFront.png';
+import PhoneBack from '/Home/PhoneBack.png';
+
+import './SaleBannerSection.css';
 
 type Props = {
   onShopDeals: () => void;
@@ -8,67 +11,23 @@ type Props = {
 
 export const SaleBannerSection = ({ onShopDeals }: Props) => {
   return (
-    <Box
-      sx={{
-        width: '100%',
-        margin: '0 auto',
-        background: '#aeaeae',
-        padding: '96px 423px',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '594px',
-          height: 'max-content',
-          gap: '30px',
-        }}
-      >
-        <Box sx={{ display: 'flex', gap: '42px', alignSelf: 'center' }}>
+    <Box className="banner_container">
+      <Box className="banner_info">
+        <Box className="banner_info__title_box">
           <img src={fire} alt="fire icon" />
-          <span style={{ fontWeight: '800', fontSize: '48px', lineHeight: '98%', color: '#000' }}>
-            Big Summer Sale
+          <span className="banner_info__title">
+            Big Summer <span>Sale</span>
           </span>
         </Box>
 
-        <span
-          style={{
-            fontStyle: 'italic',
-            fontWeight: '400',
-            fontSize: '36px',
-            color: '#000',
-            height: '32px',
-          }}
-        >
-          Up to 50% off on popular models
-        </span>
+        <span className="banner_info__description">Up to 50% off on popular models</span>
 
-        <button
-          style={{
-            display: 'block',
-            borderRadius: '15px',
-            padding: '8px',
-            width: '200px',
-            height: '60px',
-            boxShadow: '1px 10px 30px 0 rgba(0, 0, 0, 0.25)',
-            background: '#fff',
-            alignSelf: 'center',
-            border: 'none',
-            cursor: 'pointer',
-            fontWeight: '600',
-            fontSize: '24px',
-            lineHeight: '100%',
-            color: '#00',
-            fontFamily: 'Montserrat, sans-serif',
-          }}
-          onClick={onShopDeals}
-        >
+        <button className="banner_info__btn" onClick={onShopDeals}>
           Shop Deals
         </button>
       </Box>
+      <img className="phone_front" src={PhoneFront} alt="iPhone" />
+      <img className="phone_back" src={PhoneBack} alt="iPhone" />
     </Box>
   );
 };

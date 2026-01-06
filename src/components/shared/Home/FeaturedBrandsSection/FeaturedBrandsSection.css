@@ -1,0 +1,65 @@
+/*FeatureBrands SECTION=============================================================*/
+
+.featured_brands_container {
+    width: 100%;
+    padding: 80px 88px;
+    height: 444px;
+}
+
+.featured_brands__title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 0%;
+    color: #000
+}
+
+.featured_brands__cards {
+    width: 100%;
+    max-width: 1360px;
+    height: 200px;
+    display: flex;
+    margin-top: 60px;
+    justify-content: space-between;
+}
+
+.featured_brands__cards__card {
+    width: 100%;
+    max-width: 280px;
+    height: 200px;
+    background: rgba(4, 4, 255, 0.05);
+    border-radius: 20px;
+    padding: 63px 65px;
+    box-shadow: 0 0 7px 0 #7777bf;
+    border: 1px solid #7777bf;
+}
+
+.featured_brands__cards__card__title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 84%;
+    color: #000;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.featured_brands__cards__card__title__img {
+    width: 40px;
+    height: 40px;
+}
+
+.featured_brands__cards__card__description {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 107%;
+    text-align: center;
+    color: #000;
+    text-align: center;
+    margin-top: 10px;
+    display: block;
+}

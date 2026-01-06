@@ -11,6 +11,8 @@ import { PRODUCTS } from '../../core/constants/products';
 import { addProduct } from '../../core/store/slices/cartSlice';
 import { HOME_BRANDS, HOME_HERO } from '../../core/constants/home';
 
+import './Home.css';
+
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ export const Home = () => {
 
   return (
     <>
-      <Container disableGutters maxWidth="xl" sx={{ padding: '30px' }}>
+      <Container className="home_container" disableGutters maxWidth="xl">
         <HeroSection title={HOME_HERO.title} subtitle={HOME_HERO.subtitle} onBuyNow={addPhone} />
         <PromoGridSection />
         <FeaturedBrandsSection brands={HOME_BRANDS} />
