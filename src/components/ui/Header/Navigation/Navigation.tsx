@@ -9,6 +9,8 @@ import SearchIcon from '/icons/search.svg';
 import UserIcon from '/icons/user.svg';
 import LikedIcon from '/icons/liked.svg';
 
+import './Navigation.css';
+
 type NavigationProps = {
   page?:
     | 'Home'

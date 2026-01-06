@@ -1,0 +1,57 @@
+/*Header Ordering Steps=====================================================*/
+
+.header_ordering_steps__container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.header_ordering_steps__box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart_page {
+    width: 152px;
+    height: 26px;
+}
+
+.shipping_Page {
+    width: 251px;
+    height: 26px;
+}
+
+.payment_Page {
+    width: 192px;
+    height: 26px;
+}
+
+.step-number {
+    border: 1px solid #7777bf;
+    border-radius: 50px;
+    padding: 2px 9px;
+    width: 27px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    color: #000;
+}
+
+.step-active {
+    background: #7777bf;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}
+
+.step-text {
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}

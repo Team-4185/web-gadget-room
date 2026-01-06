@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 
-import { Header } from './components/shared/Header.tsx';
+import { Header } from './components/shared/Header/Header.tsx';
 import { ScrollToTop } from './components/shared/ScrollToTop.tsx';
 import { Footer } from './components/shared/Footer/Footer.tsx';
 import AppRoutes from './routes/AppRoutes.tsx';

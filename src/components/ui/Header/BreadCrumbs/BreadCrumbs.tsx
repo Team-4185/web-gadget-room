@@ -5,6 +5,8 @@ import { Container, Box } from '@mui/material';
 import Home from '/icons/Home.svg';
 import RightArrow from '/icons/SmallArrowRigth.svg';
 
+import './BreadCrumbs.css';
+
 type BreadCrumbsProps = {
   page?:
     | 'Home'
