@@ -1,18 +1,18 @@
 /*Header BreadCrumbs=====================================================*/
 
-.header_breadcrumbs__container {
+.breadcrumbs__container {
     margin-top: 20px;
     width: 100%;
     max-width: 100%;
 }
 
-.header_breadcrumbs__box {
+.breadcrumbs__box {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.header_breadcrumbs__home {
+.breadcrumbs__home {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,19 +24,19 @@
     color: #000;
 }
 
-.header_breadcrumbs__home img {
+.breadcrumbs__home img {
     width: 12px;
     height: 12px;
 }
 
-.header_breadcrumbs__link {
+.breadcrumbs__link {
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600 !important;
     font-size: 16px !important;
     color: #000;
 }
 
-.header_breadcrumbs__product {
+.breadcrumbs__product {
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 600 !important;
     font-size: 16px !important;

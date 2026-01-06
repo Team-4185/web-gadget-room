@@ -62,21 +62,21 @@ export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin
   ];
 
   return (
-    <Box component="nav" className="header_navigation">
-      <Box className="header_navigation_left">
-        <NavLink key={0} to={'/'} className="header_navigation_logo">
+    <Box component="nav" className="navigation">
+      <Box className="navigation_left">
+        <NavLink key={0} to={'/'} className="navigation_logo">
           <img src={Logo} alt="Logo" />
           <img src={LogoText} alt="GadgetRoom" />
         </NavLink>
         {!authPage && (
-          <Box className="header_navigation_pages">
+          <Box className="navigation_pages">
             {pages.map((p) => (
               <NavLink
                 key={p.href}
                 to={p.href}
                 className={({ isActive }) => `navigation-page ${isActive ? 'active' : ''}`}
               >
-                <Typography className="header_navigation_page__p">{p.name}</Typography>
+                <Typography className="navigation_page__p">{p.name}</Typography>
               </NavLink>
             ))}
           </Box>
@@ -84,7 +84,7 @@ export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin
       </Box>
 
       {!authPage ? (
-        <Box className="header_navigation_icons">
+        <Box className="navigation_icons">
           {icons.map((icon) => (
             <NavLink
               key={icon.id}
@@ -105,7 +105,7 @@ export const Navigation: FC<NavigationProps> = ({ page, orderLength, handleLogin
           ))}
         </Box>
       ) : (
-        <Box className="header_navigation__auth">
+        <Box className="navigation__auth">
           {authButtons.map((authButton) => {
             // fallback to 'login' if location.state?.mode is undefined
             const currentMode = location.state?.mode || 'login';

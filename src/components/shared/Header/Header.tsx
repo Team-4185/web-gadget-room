@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import type { RootState } from '../../../core/store';
-import { OrderingSteps } from '../../ui/Header/OrderingSteps/OrderingSteps';
-import { Navigation } from '../../ui/Header/Navigation/Navigation';
-import { BreadCrumbs } from '../../ui/Header/BreadCrumbs/BreadCrumbs';
+import { OrderingSteps } from './OrderingSteps/OrderingSteps';
+import { Navigation } from './Navigation/Navigation';
+import { BreadCrumbs } from '../../ui/BreadCrumbs/BreadCrumbs';
 
 import './Header.css';
 

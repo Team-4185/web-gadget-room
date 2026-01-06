@@ -1,11 +1,11 @@
 /*Header Ordering Steps=====================================================*/
 
-.header_ordering_steps__container {
+.ordering_steps__container {
     margin-top: 20px;
     width: 100%;
 }
 
-.header_ordering_steps__box {
+.ordering_steps__box {
     display: flex;
     align-items: center;
     gap: 12px;
