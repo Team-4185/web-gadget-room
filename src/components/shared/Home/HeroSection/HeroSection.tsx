@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+
 import Heroimg from '/Home/hero-img.png';
 
 import './HeroSection.css';

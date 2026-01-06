@@ -19,8 +19,8 @@
     gap: 24px;
 }
 
-.hero_info__title {
-    font-family: 'Montserrat', sans-serif !important;
+.MuiBox-root .hero_info__title {
+    font-family: 'Montserrat', sans-serif;
     font-style: italic;
     font-weight: 300;
     font-size: 96px;
@@ -35,15 +35,15 @@
     gap: 35px;
 }
 
-.hero_info_description__subtitle {
-    font-family: 'Montserrat', sans-serif !important;
+.MuiBox-root .hero_info_description__subtitle {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
     line-height: 150%;
     color: #fff
 }
 
-.hero_info_description__btn {
+.MuiBox-root .hero_info_description__btn {
     border: 1px solid #7777bf;
     border-radius: 12px;
     padding: 8px;
@@ -51,7 +51,7 @@
     height: 60px;
     box-shadow: 0 0 7px 0 #7777bf;
     background: linear-gradient(95deg, #211c24 0%, #211c24 100%);
-    font-family: 'Montserrat', sans-serif !important;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 20px;
     line-height: 120%;

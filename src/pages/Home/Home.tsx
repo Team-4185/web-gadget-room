@@ -11,8 +11,6 @@ import { PRODUCTS } from '../../core/constants/products';
 import { addProduct } from '../../core/store/slices/cartSlice';
 import { HOME_BRANDS, HOME_HERO } from '../../core/constants/home';
 
-import './Home.css';
-
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
