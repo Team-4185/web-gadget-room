@@ -1,0 +1,81 @@
+.footer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 43px auto 71px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.footer .footer__column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer .footer__column:first-child {
+    margin-right: 200px;
+}
+
+.footer .footer__title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer .footer__brand {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.footer .footer__text {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.footer .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-style: normal;
+}
+
+.footer .footer__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer .footer__icon {
+    width: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer .footer__mono {
+    font-variant-numeric: tabular-nums;
+}
+
+.footer .footer__copy {
+    width: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.footer .footer__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.footer .footer__pay-icon,
+.footer .footer__delivery-icon {
+    width: 20px;
+}
