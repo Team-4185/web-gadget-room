@@ -26,7 +26,7 @@
     height: 26px;
 }
 
-.step-number {
+.MuiBox-root .step-number {
     border: 1px solid #7777bf;
     border-radius: 50px;
     padding: 2px 9px;
@@ -35,22 +35,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
     color: #000;
 }
 
-.step-active {
+.MuiBox-root .step-active {
     background: #7777bf;
     color: #fff;
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
 }
 
-.step-text {
-    font-family: 'Montserrat', sans-serif !important;
+.MuiBox-root .step-text {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     font-size: 16px;
     color: #000;

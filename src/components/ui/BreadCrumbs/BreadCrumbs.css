@@ -12,33 +12,33 @@
     gap: 12px;
 }
 
-.breadcrumbs__home {
+.MuiBox-root.breadcrumbs__home {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2px;
     font-family: 'Montserrat',
-        sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
+        sans-serif;
+    font-weight: 600;
+    font-size: 16px;
     color: #000;
 }
 
-.breadcrumbs__home img {
+.MuiBox-root.breadcrumbs__home img {
     width: 12px;
     height: 12px;
 }
 
-.breadcrumbs__link {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
+.MuiBox-root .breadcrumbs__link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
     color: #000;
 }
 
-.breadcrumbs__product {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 16px !important;
+.MuiBox-root .breadcrumbs__product {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
     color: #000;
 }

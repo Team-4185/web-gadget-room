@@ -26,11 +26,11 @@
     align-items: center;
 }
 
-.navigation_page__p {
-    font-family: 'Montserrat', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 18px !important;
-    color: #000 !important;
+.navigation_page__p.MuiTypography-root {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
     text-transform: uppercase;
 }
 
