@@ -3,8 +3,7 @@ import { Container, Box, Accordion, AccordionSummary, AccordionDetails } from '@
 
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
-import { Input } from '@/components/ui/Input/Input';
-import { OrderSummary } from '@/components/shared/Cart/OrderSummary';
+import { Input, OrderSummary } from '@/components';
 
 export const Delivery = () => {
   const [courierActive, setCourierActive] = useState(false);

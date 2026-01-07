@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { isEmail, isLength } from 'validator';
 
-import { getLoginIssues } from '@/core/utils/authValidation';
+import { getLoginIssues } from '@/core/utils';
 
 export const useLoginForm = () => {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });

@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import type { RootState } from '@/core/store';
-import { OrderingSteps } from '@/components/ui/Header/OrderingSteps';
-import { Navigation } from '@/components/ui/Header/Navigation';
-import { BreadCrumbs } from '@/components/ui/Header/BreadCrumbs';
+import { BreadCrumbs, Navigation, OrderingSteps } from '@/components';
 
 type HeaderProps = {
   handleLogin?: () => void;

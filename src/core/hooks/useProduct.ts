@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
-import { PRODUCTS } from '@/core/constants/products';
-import type { IProduct } from '@/core/types/product';
+import { PRODUCTS } from '@/core/constants';
+import type { IProduct } from '@/core/types';
 
 export const useProduct = (): IProduct => {
   const { id } = useParams<{ id: string }>();

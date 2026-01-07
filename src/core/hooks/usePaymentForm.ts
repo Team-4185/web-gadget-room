@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import type { PaymentMethod, PaymentFormErrors } from '@/core/types/payment';
+import type { PaymentMethod, PaymentFormErrors } from '@/core/types';
 import {
   formatCardNumber,
   formatCvv,
@@ -10,7 +10,7 @@ import {
   isValidName,
   isValidYear,
   onlyDigits,
-} from '@/core/utils/payment';
+} from '@/core/utils';
 
 type PaymentFormValues = {
   card: {

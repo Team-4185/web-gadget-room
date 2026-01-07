@@ -1,7 +1,7 @@
 import { Box, MenuItem } from '@mui/material';
 
-import { Input } from '@/components/ui/Input/Input';
-import { MONTHS } from '@/core/constants/payment';
+import { Input } from '@/components';
+import { MONTHS } from '@/core/constants';
 
 type Fields = 'cardNumber' | 'nameOnCard' | 'month' | 'year' | 'cvv';
 

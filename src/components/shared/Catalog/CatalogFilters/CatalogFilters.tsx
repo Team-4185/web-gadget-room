@@ -1,9 +1,11 @@
 import { Box } from '@mui/material';
 
-import type { BrandKey } from '@/core/types/product';
-import { CatalogAccordionBrands } from '@/components/shared/Catalog/CatalogFilters/CatalogAccordionBrands';
-import { CatalogAccordionPrice } from '@/components/shared/Catalog/CatalogFilters/CatalogAccordionPrice';
-import { CatalogAccordionAvailability } from '@/components/shared/Catalog/CatalogFilters/CatalogAccordionAvailability';
+import type { BrandKey } from '@/core/types';
+import {
+  CatalogAccordionAvailability,
+  CatalogAccordionBrands,
+  CatalogAccordionPrice,
+} from '@/components';
 
 interface CatalogFiltersProps {
   activeBrands: Record<BrandKey, boolean>;

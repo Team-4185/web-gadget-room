@@ -3,8 +3,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Box } from '@mui/materia
 import Rectangle from '/icons/greyRectangle.svg';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
-import { PaymentFields } from './PaymentFields';
-import type { PaymentFieldIds, PaymentMethod } from '@/core/types/payment';
+import { PaymentFields } from '@/components';
+import type { PaymentFieldIds, PaymentMethod } from '@/core/types';
 
 type PaymentMethodAccordionProps = {
   method: PaymentMethod;
