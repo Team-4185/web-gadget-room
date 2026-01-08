@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
 import { Box, Container } from '@mui/material';
 
-import { usePaymentForm } from '@/core/hooks/usePaymentForm';
-import { PaymentMethodList } from '@/components/shared/Payment/PaymentMethodList';
-import { OrderSummary } from '@/components/shared/Cart/OrderSummary';
-import { PAYMENT_METHODS } from '@/core/constants/payment';
+import { usePaymentForm } from '@/core/hooks';
+import { OrderSummary, PaymentMethodList } from '@/components';
+import { PAYMENT_METHODS } from '@/core/constants';
 
 export const Payment = () => {
   const { selectedMethod, setSelectedMethod, values, errors, setField, validateSelected, payload } =

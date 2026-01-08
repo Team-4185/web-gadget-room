@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import { endpoints } from '@/core/config/endpoints';
-import { http } from '@/core/config/api';
-import type { AuthRequestRegister, AuthResponse } from '@/core/types/auth';
+import { endpoints, http } from '@/core/config';
+import type { AuthRequestRegister, AuthResponse } from '@/core/types';
 import { useSession } from '@/core/store/session';
 
 export const useRegister = () => {

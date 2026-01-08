@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import type { BrandKey, IProduct, SortOption } from '@/core/types/product';
-import { BRANDS, PRICE_MIN } from '@/core/constants/catalog';
+import type { BrandKey, IProduct, SortOption } from '@/core/types';
+import { BRANDS, PRICE_MIN } from '@/core/constants';
 
 interface UseCatalogProductsArgs {
   products: IProduct[];

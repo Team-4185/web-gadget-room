@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { ProductCard } from '@/components/shared/ProductCard/ProductCard';
-import type { IProduct } from '@/core/types/product';
+import { ProductCard } from '@/components';
+import type { IProduct } from '@/core/types';
 
 interface CatalogProductsProps {
   items: IProduct[];

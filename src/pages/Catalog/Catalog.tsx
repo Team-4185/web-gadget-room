@@ -1,11 +1,8 @@
 import { Box, Container } from '@mui/material';
 
-import { CatalogContent, CatalogFilters } from '@/components/shared/Catalog';
-import { usePagination } from '@/core/hooks/usePagination';
-import { useCatalogState } from '@/core/hooks/useCatalogState';
-import { useCatalogProducts } from '@/core/hooks/useCatalogProducts';
-import { ITEMS_PER_PAGE } from '@/core/constants/catalog';
-import { PRODUCTS } from '@/core/constants/products';
+import { CatalogContent, CatalogFilters } from '@/components';
+import { useCatalogProducts, useCatalogState, usePagination } from '@/core/hooks';
+import { ITEMS_PER_PAGE, PRODUCTS } from '@/core/constants';
 
 export const Catalog = () => {
   const {

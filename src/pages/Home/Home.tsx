@@ -2,13 +2,14 @@ import { Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { FeaturedBrandsSection } from '@/components/shared/Home/FeaturedBrandsSection/FeaturedBrandsSection';
-import { HeroSection } from '@/components/shared/Home/HeroSection/HeroSection';
-import { NewArrivalsSection } from '@/components/shared/Home/NewArrivalsSection/NewArrivalsSection';
-import { PromoGridSection } from '@/components/shared/Home/PromoGridSection/PromoGridSection';
-import { SaleBannerSection } from '@/components/shared/Home/SaleBannerSections/SaleBannerSection';
-import { HOME_BRANDS, HOME_HERO } from '@/core/constants/home';
-import { PRODUCTS } from '@/core/constants/products';
+import {
+  FeaturedBrandsSection,
+  HeroSection,
+  NewArrivalsSection,
+  PromoGridSection,
+  SaleBannerSection,
+} from '@/components';
+import { HOME_BRANDS, HOME_HERO, PRODUCTS } from '@/core/constants';
 import { addProduct } from '@/core/store/slices/cartSlice';
 
 export const Home = () => {

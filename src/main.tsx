@@ -1,8 +1,7 @@
 import ReactDOM from 'react-dom/client';
 
 import App from '@/App';
-import { withSession } from '@/core/providers/withSession';
-import { withStore } from '@/core/providers/withStore';
+import { withSession, withStore } from '@/core/providers';
 
 const Root = withSession(withStore(App));
 
