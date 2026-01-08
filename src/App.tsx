@@ -1,20 +1,24 @@
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 
 import { Footer, Header, ScrollToTop } from '@/components';
 import { AppRoutes } from '@/routes';
+import { theme } from '@/core/config';
 
-import 'modern-normalize/modern-normalize.css';
 import './App.css';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <main>
-        <ScrollToTop />
-        <AppRoutes />
-      </main>
-      <Footer />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Header />
+        <main>
+          <ScrollToTop />
+          <AppRoutes />
+        </main>
+        <Footer />
+      </ThemeProvider>
     </BrowserRouter>
   );
 };
