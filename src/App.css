@@ -1,3 +1,16 @@
+:root {
+  --white: #ffffff;
+  --ghost-white: #fdfdff;
+  --black: #000000;
+  --blue-violet: #7777bf;
+  --yellow-dark: #eaa60f;
+  --yellow-light: #ffe67d;
+  --chateau-green: #34a853;
+  --green-light: #ecfff1;
+  --red: #eb001b;
+  --blue: #4285f4;
+}
+
 ol[role='list'],
 ul[role='list'] {
   list-style: none;
