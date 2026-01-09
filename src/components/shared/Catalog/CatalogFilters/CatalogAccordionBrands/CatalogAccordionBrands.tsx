@@ -30,7 +30,10 @@ export const CatalogAccordionBrands = ({
         <span className="catalog__accordion-title">Brand</span>
       </AccordionSummary>
 
-      <AccordionDetails className="catalog__accordion-details">
+      <AccordionDetails
+        className="catalog__accordion-details"
+        onClickCapture={(e) => e.stopPropagation()}
+      >
         {BRANDS.map((brand) => {
           const isActive = active[brand];
 
