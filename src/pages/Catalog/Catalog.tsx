@@ -33,30 +33,32 @@ export const Catalog = () => {
   );
 
   return (
-    <Container maxWidth="xl" disableGutters className="catalog-container">
-      <Box className="catalog-layout">
-        <CatalogFilters
-          activeBrands={activeBrands}
-          onToggleBrand={toggleBrand}
-          sliderValue={sliderValue}
-          onSliderChange={handleSliderChange}
-          inStockActive={inStockActive}
-          preOrderActive={preOrderActive}
-          onToggleInStock={toggleInStock}
-          onTogglePreOrder={togglePreOrder}
-        />
+    <section className="catalog">
+      <Container maxWidth="xl" disableGutters className="catalog__container">
+        <Box className="catalog__layout">
+          <CatalogFilters
+            activeBrands={activeBrands}
+            onToggleBrand={toggleBrand}
+            sliderValue={sliderValue}
+            onSliderChange={handleSliderChange}
+            inStockActive={inStockActive}
+            preOrderActive={preOrderActive}
+            onToggleInStock={toggleInStock}
+            onTogglePreOrder={togglePreOrder}
+          />
 
-        <CatalogContent
-          sortBy={sortBy}
-          onSortChange={handleSortChange}
-          items={currentItems}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPrev={goPrev}
-          onNext={goNext}
-          onPageChange={goToPage}
-        />
-      </Box>
-    </Container>
+          <CatalogContent
+            sortBy={sortBy}
+            onSortChange={handleSortChange}
+            items={currentItems}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPrev={goPrev}
+            onNext={goNext}
+            onPageChange={goToPage}
+          />
+        </Box>
+      </Container>
+    </section>
   );
 };

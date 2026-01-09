@@ -1,9 +1,11 @@
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 
 import ExpandIcon from '/icons/ExpandMore.svg';
-import RadioActive from '/icons/RadioActive.svg';
-import RadioInactive from '/icons/RadioInactive.svg';
+import { BRANDS } from '@/core/constants';
 import type { BrandKey } from '@/core/types';
+import { CheckBox } from '@/components/ui';
+
+import './CatalogAccordionBrands.css';
 
 interface CatalogAccordionBrandsProps {
   brands?: BrandKey[];
@@ -14,35 +16,34 @@ interface CatalogAccordionBrandsProps {
 }
 
 export const CatalogAccordionBrands = ({
-  brands = ['apple', 'samsung', 'xiaomi', 'oneplus', 'honor', 'poco'],
   active,
   onToggle,
   defaultExpanded = true,
-  className = 'catalog-accordion',
+  className = 'catalog__accordion',
 }: CatalogAccordionBrandsProps) => {
   return (
     <Accordion defaultExpanded={defaultExpanded} className={className}>
       <AccordionSummary
         expandIcon={<img src={ExpandIcon} alt="Expand" />}
-        className="catalog-accordion-summary"
+        className="catalog__accordion-summary"
       >
-        <span className="accordion-title">Brand</span>
+        <span className="catalog__accordion-title">Brand</span>
       </AccordionSummary>
 
-      <AccordionDetails className="catalog-accordion-details">
-        {brands.map((brand) => {
+      <AccordionDetails className="catalog__accordion-details">
+        {BRANDS.map((brand) => {
           const isActive = active[brand];
 
           return (
-            <form
+            <CheckBox
               key={brand}
-              className="filter-form"
-              onClick={() => onToggle(brand)}
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <img src={isActive ? RadioActive : RadioInactive} alt="Radio button" />
-              <span className="filter-label">{brand.charAt(0).toUpperCase() + brand.slice(1)}</span>
-            </form>
+              id={brand}
+              name={brand}
+              label={brand.charAt(0).toUpperCase() + brand.slice(1)}
+              checked={isActive}
+              className="checkbox_small"
+              onChange={() => onToggle(brand)}
+            />
           );
         })}
       </AccordionDetails>

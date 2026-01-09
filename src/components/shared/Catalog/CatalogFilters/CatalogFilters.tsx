@@ -29,10 +29,10 @@ export const CatalogFilters = ({
   onTogglePreOrder,
 }: CatalogFiltersProps) => {
   return (
-    <Box className="catalog-filters">
-      <span className="catalog-filter-title">Filter:</span>
+    <aside className="catalog__filters">
+      <span className="catalog__filters-title">Filter:</span>
 
-      <Box className="catalog-accordion-list">
+      <Box className="catalog__filters-layout">
         <CatalogAccordionBrands active={activeBrands} onToggle={onToggleBrand} />
 
         <CatalogAccordionPrice value={sliderValue} onChange={onSliderChange} />
@@ -44,6 +44,6 @@ export const CatalogFilters = ({
           onTogglePreOrder={onTogglePreOrder}
         />
       </Box>
-    </Box>
+    </aside>
   );
 };
