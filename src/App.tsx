@@ -1,24 +1,22 @@
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
 
 import { Footer, Header, ScrollToTop } from '@/components';
 import { AppRoutes } from '@/routes';
-import { theme } from '@/core/config';
+import { MuiProvider } from '@/core/providers';
 
 import './App.css';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <MuiProvider>
         <Header />
         <main>
           <ScrollToTop />
           <AppRoutes />
         </main>
         <Footer />
-      </ThemeProvider>
+      </MuiProvider>
     </BrowserRouter>
   );
 };
