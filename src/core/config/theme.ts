@@ -18,5 +18,35 @@ export const theme = createTheme({
         },
       },
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          margin: 0,
+          '&.Mui-expanded': {
+            margin: 0,
+          },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        content: {
+          margin: 0,
+          '&.Mui-expanded': {
+            margin: 0,
+          },
+        },
+        root: {
+          padding: '0 8px',
+        },
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: {
+          padding: '0',
+        },
+      },
+    },
   },
 });

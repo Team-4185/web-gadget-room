@@ -1,0 +1,7 @@
+.accordion__details .checkbox:not(:first-child) {
+  margin-top: 16px;
+}
+
+.accordion__details {
+  margin-top: 20px;
+}
