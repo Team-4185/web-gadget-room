@@ -1,25 +1,65 @@
-import type { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
+import { Button as MuiButton } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  width?: number | string;
-};
+interface IProps extends ButtonProps {
+  maxWidth: string;
+  height: string;
+  fontSize?: string;
+  fontWeight?: number;
+  textTransform?: string;
+  borderRadius?: string;
+  border?: string;
+}
 
-export const Button: FC<PropsWithChildren<ButtonProps>> = ({ children, style, ...props }) => {
+export const Button = ({
+  children,
+  maxWidth,
+  height,
+  fontSize = '16px',
+  fontWeight = 600,
+  textTransform = 'none',
+  borderRadius = '8px',
+  border = '1px solid var(--blue-violet)',
+  sx,
+  ...props
+}: IProps) => {
   return (
-    <button
+    <MuiButton
       {...props}
-      style={{
-        borderRadius: '6px',
-        padding: '16px 56px',
-        fontWeight: '500',
-        fontSize: '16px',
-        cursor: 'pointer',
-        fontFamily: 'Montserrat, sans-serif',
-        textAlign: 'center',
-        ...style,
+      sx={{
+        maxWidth,
+        height,
+        fontSize,
+        fontWeight,
+        textTransform,
+        borderRadius,
+        border,
+        width: '100%',
+        boxShadow: '0px 0px 7px 0px var(--blue-violet)',
+        background: 'var(--white)',
+        lineHeight: 'normal',
+        color: 'var(--black)',
+        transition: 'all 0.7s ease',
+        '&:hover': {
+          background: 'var(--blue-violet)',
+          color: 'var(--white)',
+        },
+        '&.Mui-disabled': {
+          border: 'none',
+          boxShadow: '0px 1px 4px 0px var(--gray-light)',
+          background: 'var(--gray-light)',
+          color: 'var(--white)',
+        },
+        '&:has(.MuiButton-endIcon)': {
+          justifyContent: 'space-between',
+        },
+        '&:has(.MuiButton-startIcon)': {
+          gap: '10px',
+        },
+        ...sx,
       }}
     >
       {children}
-    </button>
+    </MuiButton>
   );
 };
