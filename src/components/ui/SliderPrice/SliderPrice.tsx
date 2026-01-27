@@ -20,7 +20,6 @@ export const SliderPrice: FC<IProps> = ({ value, min, max, step = 10, onChange, 
         sx={{
           fontSize: '20px',
           fontWeight: 500,
-          lineHeight: '24px',
           color: 'var(--black)',
           padding: '0 6px',
         }}

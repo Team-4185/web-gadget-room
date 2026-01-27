@@ -1,31 +1,29 @@
 import { useState } from 'react';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import type { BrandKey, SortOption } from '@/core/types';
+import type { SortOption } from '@/core/types';
 import { PRICE_MAX } from '@/core/constants';
 
 export const useCatalogState = () => {
   const [sortBy, setSortBy] = useState<SortOption>('popularity');
 
-  const [activeBrands, setActiveBrands] = useState<Record<BrandKey, boolean>>({
+  const [activeItems, setActiveItems] = useState<Record<string, boolean>>({
     apple: false,
     samsung: false,
     xiaomi: false,
     oneplus: false,
     honor: false,
     poco: false,
+    'in stock': false,
+    'pre-order': false,
   });
+  console.log(activeItems);
 
-  const [inStockActive, setInStockActive] = useState(false);
-  const [preOrderActive, setPreOrderActive] = useState(false);
   const [sliderValue, setSliderValue] = useState<number>(PRICE_MAX);
 
-  const toggleBrand = (brand: BrandKey) => {
-    setActiveBrands((prev) => ({ ...prev, [brand]: !prev[brand] }));
+  const toggleItems = (item: string) => {
+    setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));
   };
-
-  const toggleInStock = () => setInStockActive((prev) => !prev);
-  const togglePreOrder = () => setPreOrderActive((prev) => !prev);
 
   //  handler for Slider
   const handleSliderChange = (_event: Event, newValue: number | number[]) => {
@@ -40,15 +38,11 @@ export const useCatalogState = () => {
   return {
     // state
     sortBy,
-    activeBrands,
-    inStockActive,
-    preOrderActive,
+    activeItems,
     sliderValue,
 
     // actions
-    toggleBrand,
-    toggleInStock,
-    togglePreOrder,
+    toggleItems,
     handleSliderChange,
     handleSortChange,
   };

@@ -1,33 +1,26 @@
 import { useMemo } from 'react';
 
-import type { BrandKey, IProduct, SortOption } from '@/core/types';
+import type { IProduct, SortOption } from '@/core/types';
 import { BRANDS, PRICE_MIN } from '@/core/constants';
 
-interface UseCatalogProductsArgs {
+interface IProps {
   products: IProduct[];
-
-  activeBrands: Record<BrandKey, boolean>;
+  activeItems: Record<string, boolean>;
   sliderValue: number;
-
-  inStockActive: boolean;
-  preOrderActive: boolean;
-
   sortBy: SortOption;
 }
 
 export const useCatalogProducts = ({
   products,
-  activeBrands,
+  activeItems,
   sliderValue,
-  inStockActive,
-  preOrderActive,
   sortBy,
-}: UseCatalogProductsArgs): IProduct[] => {
+}: IProps): IProduct[] => {
   return useMemo(() => {
     let filtered: IProduct[] = [...products];
 
     // 1) Brands
-    const selectedBrands = BRANDS.filter((b) => activeBrands[b]);
+    const selectedBrands = BRANDS.filter((b) => activeItems[b]);
     if (selectedBrands.length > 0) {
       filtered = filtered.filter((product) =>
         selectedBrands.some((brand) => product.name.toLowerCase().includes(brand))
@@ -40,9 +33,9 @@ export const useCatalogProducts = ({
     );
 
     // 3) Availability
-    if (inStockActive && !preOrderActive) {
+    if (activeItems.inStockActive && !activeItems.preOrderActive) {
       filtered = filtered.filter((product) => product.inStock !== false);
-    } else if (preOrderActive && !inStockActive) {
+    } else if (activeItems.preOrderActive && !activeItems.inStockActive) {
       filtered = filtered.filter((product) => product.preOrder === true);
     }
 
@@ -69,5 +62,5 @@ export const useCatalogProducts = ({
     }
 
     return filtered;
-  }, [products, activeBrands, sliderValue, inStockActive, preOrderActive, sortBy]);
+  }, [products, activeItems, sliderValue, sortBy]);
 };

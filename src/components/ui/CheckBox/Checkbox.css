@@ -21,7 +21,7 @@
 
 .checkbox__icon {
   border-radius: 4px;
-  box-shadow: 0px 0px 4.199999809265137px 0px var(--yellow-dark);
+  box-shadow: 0px 0px 4px 0px var(--yellow-dark);
 }
 
 .checkbox_small .checkbox__icon {
@@ -32,5 +32,4 @@
 .checkbox__label {
   font-size: 20px;
   color: var(--black);
-  line-height: 24px;
 }

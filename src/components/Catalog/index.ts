@@ -1,4 +1,4 @@
-export * from './CatalogFilters';
+export { CatalogFilters } from './CatalogFilters/CatalogFilters';
 export { CatalogContent } from './CatalogContent';
 export { CatalogHeader } from './CatalogHeader';
 export { CatalogPagination } from './CatalogPagination';

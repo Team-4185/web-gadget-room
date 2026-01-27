@@ -5,25 +5,13 @@ import { useCatalogProducts, useCatalogState, usePagination } from '@/core/hooks
 import { ITEMS_PER_PAGE, PRODUCTS } from '@/core/constants';
 
 export const Catalog = () => {
-  const {
-    sortBy,
-    activeBrands,
-    toggleBrand,
-    sliderValue,
-    handleSliderChange,
-    inStockActive,
-    preOrderActive,
-    toggleInStock,
-    togglePreOrder,
-    handleSortChange,
-  } = useCatalogState();
+  const { sortBy, activeItems, toggleItems, sliderValue, handleSliderChange, handleSortChange } =
+    useCatalogState();
 
   const filteredAndSortedProducts = useCatalogProducts({
     products: PRODUCTS,
-    activeBrands,
+    activeItems,
     sliderValue,
-    inStockActive,
-    preOrderActive,
     sortBy,
   });
 
@@ -37,14 +25,10 @@ export const Catalog = () => {
       <Container maxWidth="xl" disableGutters className="catalog__container">
         <Box className="catalog__layout">
           <CatalogFilters
-            activeBrands={activeBrands}
-            onToggleBrand={toggleBrand}
+            activeItems={activeItems}
+            onToggle={toggleItems}
             sliderValue={sliderValue}
             onSliderChange={handleSliderChange}
-            inStockActive={inStockActive}
-            preOrderActive={preOrderActive}
-            onToggleInStock={toggleInStock}
-            onTogglePreOrder={togglePreOrder}
           />
 
           <CatalogContent

@@ -48,7 +48,7 @@ export const Accordion: FC<IProps> = ({
       >
         <Typography
           className="accordion__title"
-          sx={{ fontSize: '20px', fontWeight: 500, lineHeight: '24px', color: 'var(--black)' }}
+          sx={{ fontSize: '20px', fontWeight: 500, color: 'var(--black)' }}
         >
           {title}
         </Typography>
