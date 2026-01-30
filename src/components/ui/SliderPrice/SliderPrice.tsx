@@ -49,8 +49,8 @@ export const SliderPrice: FC<IProps> = ({ value, min, max, step = 10, onChange, 
             width: 13,
             height: 13,
             backgroundColor: 'var(--white)',
-            border: '3px solid var(--yellow-dark)',
-            boxShadow: '0px 0px 4px 0px var(--yellow-dark)',
+            border: '3px solid var(--dark-yellow)',
+            boxShadow: '0px 0px 4px 0px var(--dark-yellow)',
 
             '&:hover': {
               boxShadow: 'none',

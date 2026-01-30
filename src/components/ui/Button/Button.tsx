@@ -46,8 +46,8 @@ export const Button = ({
         },
         '&.Mui-disabled': {
           border: 'none',
-          boxShadow: '0px 1px 4px 0px var(--gray-light)',
-          background: 'var(--gray-light)',
+          boxShadow: '0px 1px 4px 0px var(--light-gray)',
+          background: 'var(--light-gray)',
           color: 'var(--white)',
         },
         '&:has(.MuiButton-endIcon)': {
