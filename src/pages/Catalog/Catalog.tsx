@@ -4,6 +4,8 @@ import { CatalogContent, CatalogFilters } from '@/components';
 import { useCatalogProducts, useCatalogState, usePagination } from '@/core/hooks';
 import { ITEMS_PER_PAGE, PRODUCTS } from '@/core/constants';
 
+import './Catalog.css';
+
 export const Catalog = () => {
   const { sortBy, activeItems, toggleItems, sliderValue, handleSliderChange, handleSortChange } =
     useCatalogState();
@@ -22,8 +24,8 @@ export const Catalog = () => {
 
   return (
     <section className="catalog">
-      <Container maxWidth="xl" disableGutters className="catalog__container">
-        <Box className="catalog__layout">
+      <Container disableGutters>
+        <div className="catalog__layout">
           <CatalogFilters
             activeItems={activeItems}
             onToggle={toggleItems}
@@ -41,7 +43,7 @@ export const Catalog = () => {
             onNext={goNext}
             onPageChange={goToPage}
           />
-        </Box>
+        </div>
       </Container>
     </section>
   );

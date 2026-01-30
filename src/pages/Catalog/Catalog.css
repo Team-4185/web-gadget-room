@@ -1,0 +1,4 @@
+.catalog__layout {
+  display: flex;
+  justify-content: space-between;
+}

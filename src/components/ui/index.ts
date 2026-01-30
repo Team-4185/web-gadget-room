@@ -6,3 +6,4 @@ export { OrderingSteps } from './Header/OrderingSteps';
 export { Input } from './Input/Input';
 export { Accordion } from './Accordion/Accordion';
 export { SliderPrice } from './SliderPrice/SliderPrice';
+export { Badge } from './Badge/Badge';

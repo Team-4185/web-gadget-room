@@ -17,7 +17,6 @@ export const useCatalogState = () => {
     'in stock': false,
     'pre-order': false,
   });
-  console.log(activeItems);
 
   const [sliderValue, setSliderValue] = useState<number>(PRICE_MAX);
 
