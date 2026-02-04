@@ -3,6 +3,50 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
   typography: {
     fontFamily: "'Montserrat', sans-serif",
+    h1: {
+      fontSize: '96px',
+      color: 'var(--white)',
+
+      '@media (max-width: 1200)': {
+        fontSize: '64px',
+      },
+    },
+    h2: {
+      fontSize: '64px',
+      color: 'var(--black)',
+
+      '@media (max-width: 1200)': {
+        fontSize: '36px',
+      },
+    },
+    h3: {
+      fontSize: '48px',
+      color: 'var(--black)',
+
+      '@media (max-width: 1200)': {
+        fontSize: '32px',
+      },
+    },
+    h4: {
+      fontSize: '40px',
+      color: 'var(--black)',
+
+      '@media (max-width: 1200)': {
+        fontSize: '32px',
+      },
+    },
+    h5: {
+      fontSize: '36px',
+      color: 'var(--black)',
+
+      '@media (max-width: 1200)': {
+        fontSize: '32px',
+      },
+    },
+    h6: {
+      fontSize: '32px',
+      color: 'var(--black)',
+    },
   },
   breakpoints: {
     values: {
