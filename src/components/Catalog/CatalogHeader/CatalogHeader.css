@@ -1,0 +1,12 @@
+.catalog__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.catalog__sort-by {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  max-width: 224px;
+  width: 100%;
+}
