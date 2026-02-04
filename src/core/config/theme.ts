@@ -80,5 +80,29 @@ export const theme = createTheme({
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          borderRadius: '8px',
+          boxShadow: '0 0 7px 0 var(--blue-violet)',
+          background: 'var(--white)',
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent',
+          },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'var(--blue-violet)',
+          },
+          '&:not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent',
+          },
+        },
+        select: {
+          paddingLeft: '8px',
+        },
+        icon: {
+          top: 'unset',
+        },
+      },
+    },
   },
 });
