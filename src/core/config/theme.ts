@@ -3,6 +3,9 @@ import { createTheme } from '@mui/material';
 export const theme = createTheme({
   typography: {
     fontFamily: "'Montserrat', sans-serif",
+    body1: {
+      lineHeight: 1.2,
+    },
     h1: {
       fontSize: '96px',
       color: 'var(--white)',
