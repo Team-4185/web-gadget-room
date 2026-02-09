@@ -2,7 +2,6 @@ import { useState } from 'react';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 import type { SortOption } from '@/core/types';
-import { PRICE_MAX } from '@/core/constants';
 
 export const useCatalogState = () => {
   const [sortBy, setSortBy] = useState<SortOption>('popularity');
@@ -14,11 +13,11 @@ export const useCatalogState = () => {
     oneplus: false,
     honor: false,
     poco: false,
-    'in stock': false,
-    'pre-order': false,
+    inStock: false,
+    preOrder: false,
   });
 
-  const [sliderValue, setSliderValue] = useState<number>(PRICE_MAX);
+  const [sliderValue, setSliderValue] = useState<number>(2000);
 
   const toggleItems = (item: string) => {
     setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));

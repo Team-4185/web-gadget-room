@@ -7,13 +7,14 @@ import {
 } from '@mui/material';
 
 import { CheckBox } from '@/components';
+import type { ICheckboxOption } from '@/core/types';
 import { ArrowDown } from '@/assets';
 
 import './Accordion.css';
 
 interface IProps {
   title: string;
-  items: string[];
+  items: ICheckboxOption[];
   active: Record<string, boolean>;
   onToggle: (item: string) => void;
   defaultExpanded?: boolean;
@@ -56,17 +57,17 @@ export const Accordion: FC<IProps> = ({
 
       <AccordionDetails className="accordion__details">
         {items.map((item) => {
-          const isActive = active[item];
+          const isActive = active[item.value];
 
           return (
             <CheckBox
-              key={item}
-              id={item}
-              name={item}
-              label={item.charAt(0).toUpperCase() + item.slice(1)}
+              key={item.value}
+              id={item.value}
+              name={item.value}
+              label={item.label}
               checked={isActive}
               className="checkbox_small"
-              onChange={() => onToggle(item)}
+              onChange={() => onToggle(item.value)}
             />
           );
         })}
