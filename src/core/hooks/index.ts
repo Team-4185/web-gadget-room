@@ -1,4 +1,3 @@
-export { useCatalogProducts } from './useCatalogProducts';
 export { useCatalogState } from './useCatalogState';
 export { useLogin } from './useLogin';
 export { useLoginForm } from './useLoginForm';
