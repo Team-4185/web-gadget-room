@@ -5,8 +5,6 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import { ArrowDown } from '@/assets';
 import type { ISelectOption } from '@/core/types';
 
-import './Select.css';
-
 interface IProps {
   data: ISelectOption[];
   maxWidth: string;
