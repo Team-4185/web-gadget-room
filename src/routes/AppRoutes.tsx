@@ -1,17 +1,19 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { About } from '@/pages/About/About';
-import { AuthPage } from '@/pages/AuthPage/AuthPage';
-import { Cart } from '@/pages/Cart/Cart';
-import { Catalog } from '@/pages/Catalog/Catalog';
-import { Delivery } from '@/pages/Delivery/Delivery';
-import { Home } from '@/pages/Home/Home';
-import { Payment } from '@/pages/Payment/Payment';
-import { ProductPage } from '@/pages/ProductPage/ProductPage';
-import { UserProfile } from '@/pages/UserProfile/UserProfile';
-import { ProtectedRoute } from '@/routes/ProtectedRoute';
+import {
+  About,
+  AuthPage,
+  Cart,
+  Catalog,
+  Delivery,
+  Home,
+  Payment,
+  ProductPage,
+  UserProfile,
+} from '@/pages';
+import { ProtectedRoute } from '@/routes';
 
-const AppRoutes = () => {
+export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -28,5 +30,3 @@ const AppRoutes = () => {
     </Routes>
   );
 };
-
-export default AppRoutes;

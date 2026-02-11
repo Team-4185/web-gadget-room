@@ -1,65 +1,45 @@
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
-import { CatalogContent, CatalogFilters } from '@/components/shared/Catalog';
-import { usePagination } from '@/core/hooks/usePagination';
-import { useCatalogState } from '@/core/hooks/useCatalogState';
-import { useCatalogProducts } from '@/core/hooks/useCatalogProducts';
-import { ITEMS_PER_PAGE } from '@/core/constants/catalog';
-import { PRODUCTS } from '@/core/constants/products';
+import { CatalogContent, CatalogFilters } from '@/components';
+import { useCatalogState } from '@/core/hooks';
+import { PRODUCTS } from '@/core/constants';
+
+import './Catalog.css';
+
+//TODO: Learn usePagination, useCatalogState hooks while working with pagination
 
 export const Catalog = () => {
-  const {
-    sortBy,
-    activeBrands,
-    toggleBrand,
-    sliderValue,
-    handleSliderChange,
-    inStockActive,
-    preOrderActive,
-    toggleInStock,
-    togglePreOrder,
-    handleSortChange,
-  } = useCatalogState();
+  const { sortBy, activeItems, toggleItems, sliderValue, handleSliderChange, handleSortChange } =
+    useCatalogState();
 
-  const filteredAndSortedProducts = useCatalogProducts({
-    products: PRODUCTS,
-    activeBrands,
-    sliderValue,
-    inStockActive,
-    preOrderActive,
-    sortBy,
-  });
-
-  const { currentPage, totalPages, currentItems, goPrev, goNext, goToPage } = usePagination(
-    filteredAndSortedProducts,
-    ITEMS_PER_PAGE
-  );
+  // const { currentPage, totalPages, currentItems, goPrev, goNext, goToPage } = usePagination(
+  //   PRODUCTS,
+  //   12
+  // );
 
   return (
-    <Container maxWidth="xl" disableGutters className="catalog-container">
-      <Box className="catalog-layout">
-        <CatalogFilters
-          activeBrands={activeBrands}
-          onToggleBrand={toggleBrand}
-          sliderValue={sliderValue}
-          onSliderChange={handleSliderChange}
-          inStockActive={inStockActive}
-          preOrderActive={preOrderActive}
-          onToggleInStock={toggleInStock}
-          onTogglePreOrder={togglePreOrder}
-        />
+    <section className="catalog">
+      <Container disableGutters>
+        <div className="catalog__layout">
+          <CatalogFilters
+            activeItems={activeItems}
+            onToggle={toggleItems}
+            sliderValue={sliderValue}
+            onSliderChange={handleSliderChange}
+          />
 
-        <CatalogContent
-          sortBy={sortBy}
-          onSortChange={handleSortChange}
-          items={currentItems}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPrev={goPrev}
-          onNext={goNext}
-          onPageChange={goToPage}
-        />
-      </Box>
-    </Container>
+          <CatalogContent
+            // sortBy={sortBy}
+            // onSortChange={handleSortChange}
+            items={PRODUCTS}
+            // totalPages={totalPages}
+            // currentPage={currentPage}
+            // onPrev={goPrev}
+            // onNext={goNext}
+            // onPageChange={goToPage}
+          />
+        </div>
+      </Container>
+    </section>
   );
 };

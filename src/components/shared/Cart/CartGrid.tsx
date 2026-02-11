@@ -1,7 +1,7 @@
 import { Box, Grid, Divider } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { ProductsCart } from '@/components/shared/Cart/ProductsCart';
+import { ProductsCart } from '@/components';
 import type { RootState } from '@/core/store';
 
 export const CartGrid = () => {
