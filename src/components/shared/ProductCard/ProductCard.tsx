@@ -41,7 +41,7 @@ export const ProductCard: FC<IProps> = ({ product, onClick }) => {
         src={product.img}
         alt="Product image"
       />
-      <Typography sx={{ marginTop: '16px', fontSize: '16px', color: 'var(--black)' }}>
+      <Typography sx={{ marginTop: '19px', fontSize: '16px', color: 'var(--black)' }}>
         {product.name}
       </Typography>
       <Typography sx={{ marginTop: '14px', fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>
