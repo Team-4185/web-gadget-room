@@ -1,106 +1,64 @@
 import type { FC } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import GraySquare from '/icons/GraySquare.svg';
-import Currency from '/icons/currency.svg';
-import WhishlistIcon from '/icons/WhishlistIcon.svg';
-import WishListWhole from '/icons/wishListWhole.svg';
-import Cart from '/icons/AddToCart.svg';
+import { CartAdd, Like } from '@/assets';
 import { addProduct } from '@/core/store/slices/cartSlice.ts';
 import {
   addProductToWishList,
   removeProductFromWishList,
 } from '@/core/store/slices/wishListSlice.ts';
 import type { RootState } from '@/core/store';
+import { Button } from '@/components';
+import type { IProduct } from '@/core/types';
 
-type ProductCardProps = {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  sale: number | boolean | undefined;
-  hit: boolean | undefined;
-  newProduct: boolean | undefined;
+import './ProductCard.css';
+
+interface IProps {
+  product: IProduct;
   onClick?: () => void;
-  home?: boolean;
-};
+}
 
-export const ProductCard: FC<ProductCardProps> = ({
-  id,
-  image,
-  name,
-  price,
-  sale,
-  hit,
-  newProduct,
-  home,
-  onClick,
-}) => {
-  const wishList = useSelector((state: RootState) => state.wishList.wishList);
-  const dispatch = useDispatch();
-  const addToCart = () => dispatch(addProduct({ id, name, price, amount: 1 }));
+export const ProductCard: FC<IProps> = ({ product, onClick }) => {
+  // const wishList = useSelector((state: RootState) => state.wishList.wishList);
+  // const dispatch = useDispatch();
+  // const addToCart = () => dispatch(addProduct({ id, name, price, amount: 1 }));
 
-  const toogleWishList = () => {
-    if (wishList.some((item) => item.id === id)) {
-      dispatch(removeProductFromWishList(id));
-    } else {
-      dispatch(addProductToWishList({ id, name, price, amount: 1 }));
-    }
-  };
+  // const toogleWishList = () => {
+  //   if (wishList.some((item) => item.id === id)) {
+  //     dispatch(removeProductFromWishList(id));
+  //   } else {
+  //     dispatch(addProductToWishList({ id, name, price, amount: 1 }));
+  //   }
+  // };
+
   return (
-    <Box className={home ? 'product-card-home' : 'product-card'} onClick={onClick}>
-      {sale || hit || newProduct ? (
-        <span
-          style={{
-            borderRadius: '6px',
-            padding: '8px',
-            background: '#fff',
-            position: 'absolute',
-            top: '40px',
-            left: '30px',
-            fontWeight: '500',
-            fontSize: '15px',
-            color: '#000',
-          }}
-        >
-          {sale ? 'Sale' : hit ? 'Hit' : newProduct ? 'New' : null}
-        </span>
-      ) : null}
+    <div className="product-card" onClick={onClick}>
       <img
-        className={home ? 'product-card__image-home' : 'product-card__image'}
-        src={image ? image : GraySquare}
+        className="product-card__image"
+        width={174}
+        height={174}
+        src={product.img}
         alt="Product image"
       />
-
-      <Box className="product-card__info">
-        <span className={home ? 'product-card__name-home' : 'product-card__name'}>{name}</span>
-        <Box className={home ? 'product-card__price-home' : 'product-card__price'}>
-          <img src={Currency} alt="currency icon" />
-          <span>{price}</span>
-        </Box>
-        <Box className={home ? 'product-card__actions-home' : 'product-card__actions'}>
-          <Box
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart();
-            }}
-            className="product-card__add-to-cart"
-          >
-            <span className="product-card__add-to-cart-text">Add to Cart</span>
-            <img src={Cart} alt="Cart icon" />
-          </Box>
-          <img
-            className={home ? 'product-card__wishlist-home' : 'product-card__wishlist'}
-            src={wishList.some((item) => item.id === id) ? WishListWhole : WhishlistIcon}
-            alt="whishlist icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              toogleWishList();
-            }}
-          />
-        </Box>
-      </Box>
-    </Box>
+      <Typography sx={{ marginTop: '19px', fontSize: '16px', color: 'var(--black)' }}>
+        {product.name}
+      </Typography>
+      <Typography sx={{ marginTop: '14px', fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>
+        € {product.price}
+      </Typography>
+      <div className="product-card__actions">
+        <Button
+          maxWidth="188px"
+          height="36px"
+          fontSize="15px"
+          fontWeight={500}
+          endIcon={<CartAdd />}
+        >
+          Add to Cart
+        </Button>
+        <Like className="product-card__like" />
+      </div>
+    </div>
   );
 };

@@ -1,63 +1,44 @@
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 import { CatalogContent, CatalogFilters } from '@/components';
-import { useCatalogProducts, useCatalogState, usePagination } from '@/core/hooks';
-import { ITEMS_PER_PAGE, PRODUCTS } from '@/core/constants';
+import { useCatalogState } from '@/core/hooks';
+import { PRODUCTS } from '@/core/constants';
+
+import './Catalog.css';
+
+//TODO: Learn usePagination, useCatalogState hooks while working with pagination
 
 export const Catalog = () => {
-  const {
-    sortBy,
-    activeBrands,
-    toggleBrand,
-    sliderValue,
-    handleSliderChange,
-    inStockActive,
-    preOrderActive,
-    toggleInStock,
-    togglePreOrder,
-    handleSortChange,
-  } = useCatalogState();
+  const { sortBy, activeItems, toggleItems, sliderValue, handleSliderChange, handleSortChange } =
+    useCatalogState();
 
-  const filteredAndSortedProducts = useCatalogProducts({
-    products: PRODUCTS,
-    activeBrands,
-    sliderValue,
-    inStockActive,
-    preOrderActive,
-    sortBy,
-  });
-
-  const { currentPage, totalPages, currentItems, goPrev, goNext, goToPage } = usePagination(
-    filteredAndSortedProducts,
-    ITEMS_PER_PAGE
-  );
+  // const { currentPage, totalPages, currentItems, goPrev, goNext, goToPage } = usePagination(
+  //   PRODUCTS,
+  //   12
+  // );
 
   return (
     <section className="catalog">
-      <Container maxWidth="xl" disableGutters className="catalog__container">
-        <Box className="catalog__layout">
+      <Container disableGutters>
+        <div className="catalog__layout">
           <CatalogFilters
-            activeBrands={activeBrands}
-            onToggleBrand={toggleBrand}
+            activeItems={activeItems}
+            onToggle={toggleItems}
             sliderValue={sliderValue}
             onSliderChange={handleSliderChange}
-            inStockActive={inStockActive}
-            preOrderActive={preOrderActive}
-            onToggleInStock={toggleInStock}
-            onTogglePreOrder={togglePreOrder}
           />
 
           <CatalogContent
-            sortBy={sortBy}
-            onSortChange={handleSortChange}
-            items={currentItems}
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPrev={goPrev}
-            onNext={goNext}
-            onPageChange={goToPage}
+            // sortBy={sortBy}
+            // onSortChange={handleSortChange}
+            items={PRODUCTS}
+            // totalPages={totalPages}
+            // currentPage={currentPage}
+            // onPrev={goPrev}
+            // onNext={goNext}
+            // onPageChange={goToPage}
           />
-        </Box>
+        </div>
       </Container>
     </section>
   );

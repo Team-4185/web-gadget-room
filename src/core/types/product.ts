@@ -1,18 +1,16 @@
+export type BadgeType = 'New' | 'Hit' | 'Sale';
+
 export interface IProduct {
   id: number;
   name: string;
   price: number;
-  img?: string;
-  sale?: boolean;
-  hit?: boolean;
-  newProduct?: boolean;
+  img: string;
+  badge?: BadgeType;
   inStock?: boolean;
   preOrder?: boolean;
   reviews?: number;
   amount: number;
 }
-
-export type BrandKey = 'apple' | 'samsung' | 'xiaomi' | 'oneplus' | 'honor' | 'poco';
 
 export type BrandInfo = {
   id: number;

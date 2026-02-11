@@ -1,14 +1,19 @@
 :root {
   --white: #ffffff;
   --ghost-white: #fdfdff;
+  --light-gray: #c9c9c9;
   --black: #000000;
   --blue-violet: #7777bf;
-  --yellow-dark: #eaa60f;
-  --yellow-light: #ffe67d;
+  --dark-yellow: #eaa60f;
+  --light-yellow: #ffe67d;
+  --amber: #fdc10d;
   --chateau-green: #34a853;
-  --green-light: #ecfff1;
+  --lime-green: #3fd244;
+  --light-green: #ecfff1;
   --red: #eb001b;
+  --coralRed: #ea4335;
   --blue: #4285f4;
+  --navy-blue: #001a4f;
 }
 
 ol[role='list'],
@@ -24,20 +29,4 @@ img {
 
 a {
   text-decoration: none;
-}
-
-a:visited {
-  text-decoration: none;
-  color: inherit;
-}
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.content {
-  flex: 1;
-  overflow-y: auto;
 }
