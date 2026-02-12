@@ -11,7 +11,7 @@ export const HOME_HERO = {
   productId: 1,
   title: {
     regular: 'iPhone 17',
-    bold: 'Pro Max',
+    bold: 'Pro',
   },
   subtitle: 'Created to change everything for the better. For everyone.',
 } as const;

@@ -31,10 +31,14 @@ export const Home = () => {
   };
 
   return (
-    <>
-      <Container disableGutters maxWidth="xl" sx={{ padding: '30px' }}>
+    <section className="home">
+      <Container disableGutters sx={{ maxWidth: '1440px' }} className="home__container">
         <HeroSection title={HOME_HERO.title} subtitle={HOME_HERO.subtitle} onBuyNow={addPhone} />
-        <PromoGridSection />
+        <PromoGridSection
+          title={HOME_HERO.title}
+          subtitle={HOME_HERO.subtitle}
+          onBuyNow={addPhone}
+        />
         <FeaturedBrandsSection brands={HOME_BRANDS} />
         <NewArrivalsSection
           products={PRODUCTS}
@@ -43,6 +47,6 @@ export const Home = () => {
       </Container>
 
       <SaleBannerSection onShopDeals={() => navigate('/catalog')} />
-    </>
+    </section>
   );
 };
