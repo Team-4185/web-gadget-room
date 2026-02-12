@@ -73,7 +73,7 @@ export const ProductInfo: FC = () => {
       </Box>
       <Box sx={{ width: '100%', display: 'flex', gap: '16px' }}>
         <Button
-          style={{
+          sx={{
             border: '1px solid #979797',
             width: '257px',
             background: '#fff',
@@ -86,7 +86,7 @@ export const ProductInfo: FC = () => {
         </Button>
 
         <Button
-          style={{
+          sx={{
             border: '1px solid #979797',
             width: '257px',
             background: '#979797',

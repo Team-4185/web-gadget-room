@@ -32,7 +32,7 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
         }}
       >
         <Typography
-          style={{
+          sx={{
             fontFamily: 'Montserrat, sans-serif',
             fontStyle: 'italic',
             fontWeight: '300',
@@ -46,7 +46,7 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
         </Typography>
 
         <Typography
-          style={{
+          sx={{
             fontWeight: '600',
             fontSize: '20px',
             lineHeight: '120%',

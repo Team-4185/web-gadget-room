@@ -16,14 +16,14 @@ export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const heroProduct = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
+  const hero_product = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
 
   const addPhone = () => {
     dispatch(
       addProduct({
-        id: heroProduct.id,
-        name: heroProduct.name,
-        price: heroProduct.price,
+        id: hero_product.id,
+        name: hero_product.name,
+        price: hero_product.price,
         amount: 1,
       })
     );
@@ -38,6 +38,8 @@ export const Home = () => {
           title={HOME_HERO.title}
           subtitle={HOME_HERO.subtitle}
           onBuyNow={addPhone}
+          products={PRODUCTS}
+          onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
         />
         <FeaturedBrandsSection brands={HOME_BRANDS} />
         <NewArrivalsSection

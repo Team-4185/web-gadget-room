@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import type { BrandInfo } from '@/core/types';
 
@@ -9,23 +9,24 @@ type Props = {
 export const FeaturedBrandsSection = ({ brands }: Props) => {
   return (
     <Box sx={{ width: '100%', padding: '80px 88px', height: '444px' }}>
-      <span
-        style={{
+      <Typography
+        sx={{
           fontFamily: 'Montserrat, sans-serif',
           fontWeight: '700',
           fontSize: '48px',
-          lineHeight: '0%',
+          lineHeight: 1,
           color: '#000',
         }}
       >
         Featured Brands
-      </span>
+      </Typography>
 
       <Box
         sx={{
           width: '100%',
           display: 'flex',
-          mt: '50px',
+          mt: '47px',
+          alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
@@ -35,9 +36,14 @@ export const FeaturedBrandsSection = ({ brands }: Props) => {
               sx={{
                 width: '280px',
                 height: '200px',
-                background: '#aeaeae',
+                background: 'rgba(4, 4, 255, 0.05)',
                 borderRadius: '20px',
-                padding: '63px 65px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                border: '1px solid #7777BF',
+                boxShadow: '0 0 6.9px 0 #7777BF',
               }}
             >
               <span
