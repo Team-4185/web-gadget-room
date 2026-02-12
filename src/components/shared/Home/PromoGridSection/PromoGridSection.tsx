@@ -2,6 +2,60 @@ import { Box, Grid, Typography } from '@mui/material';
 import { Button } from '@/components';
 import { PRODUCTS } from '@/core/constants';
 
+const promoLeadTextSx = {
+  fontStyle: 'italic',
+  fontWeight: 300,
+  lineHeight: 1,
+  color: 'var(--white)',
+  display: 'inline-block',
+};
+
+const promoCardTitleSx = {
+  fontWeight: 400,
+  fontSize: '24px',
+  lineHeight: '91.667%',
+  letterSpacing: '-1.44px',
+  color: 'var(--black)',
+  display: 'inline-block',
+};
+
+const inlineBoldTextSx = {
+  fontWeight: 600,
+  fontSize: 'inherit',
+  lineHeight: 'inherit',
+  letterSpacing: 'inherit',
+  fontStyle: 'inherit',
+  color: 'inherit',
+};
+
+const smallCardContainerSx = {
+  width: '100%',
+  height: '272px',
+  background: '#fff',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  paddingLeft: '23px',
+  paddingTop: '42px',
+  paddingBottom: '51px',
+};
+
+const smallCardContentSx = {
+  width: '193px',
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'flex-start',
+  flexDirection: 'column',
+};
+
+const smallCardImageSx = {
+  background: '#fff',
+  width: '50%',
+  height: '100%',
+  objectFit: 'cover',
+  marginLeft: 'auto',
+};
+
 type Props = {
   title: { regular: string; bold: string };
   subtitle: string;
@@ -19,55 +73,42 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
               width: '100%',
               height: '314px',
               background: '#797979',
-              display: 'flex',
+              display: 'grid',
+              gridTemplateColumns: '360px 1fr',
               alignItems: 'center',
-              justifyContent: 'left',
-              paddingLeft: '23px',
-              paddingTop: '39px',
-              paddingBottom: '50px',
+              columnGap: '15px',
+              overflow: 'hidden',
             }}
           >
             <Box
               sx={{
-                width: '322px',
                 display: 'flex',
                 alignItems: 'flex-start',
-                justifyContent: 'left',
+                justifyContent: 'flex-start',
                 flexDirection: 'column',
+                padding: '36px 0 47px 23px',
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'italic',
-                  fontWeight: '300',
-                  fontSize: '32px',
-                  lineHeight: '140.625%',
-                  color: '#fff',
-                }}
-              >
-                New <span style={{ fontWeight: '600' }}>Colors.</span>
+              <Typography variant="h6" sx={promoLeadTextSx}>
+                New{' '}
+                <Typography component="span" sx={inlineBoldTextSx}>
+                  Colors.
+                </Typography>
+              </Typography>
+              <Typography variant="h6" sx={{ ...promoLeadTextSx, marginTop: '7px' }}>
+                New{' '}
+                <Typography component="span" sx={inlineBoldTextSx}>
+                  Features.
+                </Typography>
               </Typography>
               <Typography
+                variant="body1"
                 sx={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontStyle: 'italic',
-                  fontWeight: '300',
-                  fontSize: '32px',
-                  lineHeight: '140.625%',
-                  color: '#fff',
-                }}
-              >
-                New <span style={{ fontWeight: '600' }}>Features.</span>
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: '300',
+                  fontWeight: 300,
                   fontSize: '15px',
                   lineHeight: '166.67%',
-                  color: '#fff',
-                  marginTop: '25px',
+                  color: 'var(--white)',
+                  marginTop: '20px',
                 }}
               >
                 An incredible camera, a titanium body and the most powerful A19 Pro chip.
@@ -82,13 +123,15 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
                 Buy Now
               </Button>
             </Box>
-            <img
-              style={{
-                background: '#fff',
-                width: '50%',
+            <Box
+              component="img"
+              src={PRODUCTS[0].img}
+              sx={{
+                justifySelf: 'end',
+                alignSelf: 'end',
                 height: '100%',
-                objectFit: 'cover',
-                marginLeft: 'auto',
+                width: 'auto',
+                objectFit: 'contain',
               }}
               alt="Promo image"
             />
@@ -96,47 +139,21 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
         </Grid>
         <Grid container size={12}>
           <Grid size={6}>
-            <Box
-              sx={{
-                width: '100%',
-                height: '272px',
-                background: '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'left',
-                paddingLeft: '23px',
-                paddingTop: '42px',
-                paddingBottom: '51px',
-              }}
-            >
-              <Box
-                sx={{
-                  width: '193px',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'left',
-                  flexDirection: 'column',
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '400',
-                    fontSize: '24px',
-                    lineHeight: '91.667%',
-                    letterSpacing: '-1.44px',
-                    color: '#000',
-                  }}
-                >
-                  Xiaomi 15 <span style={{ fontWeight: '600' }}>Pro</span>
+            <Box sx={smallCardContainerSx}>
+              <Box sx={smallCardContentSx}>
+                <Typography variant="body1" sx={promoCardTitleSx}>
+                  Xiaomi 15{' '}
+                  <Typography component="span" sx={inlineBoldTextSx}>
+                    Pro
+                  </Typography>
                 </Typography>
                 <Typography
+                  variant="body1"
                   sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '300',
+                    fontWeight: 300,
                     fontSize: '15px',
                     lineHeight: '142.857%',
-                    color: '#000',
+                    color: 'var(--black)',
                     marginTop: '15px',
                   }}
                 >
@@ -152,61 +169,25 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
                   View
                 </Button>
               </Box>
-              <img
-                style={{
-                  background: '#fff',
-                  width: 'auto',
-                  height: '100%',
-                  objectFit: 'cover',
-                  marginLeft: 'auto',
-                }}
-                src={PRODUCTS[0].img}
-                alt="Promo image"
-              />
+              <Box component="img" sx={smallCardImageSx} src={PRODUCTS[0].img} alt="Promo image" />
             </Box>
           </Grid>
           <Grid size={6}>
-            <Box
-              sx={{
-                width: '100%',
-                height: '272px',
-                background: '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'left',
-                paddingLeft: '23px',
-                paddingTop: '42px',
-                paddingBottom: '51px',
-              }}
-            >
-              <Box
-                sx={{
-                  width: '193px',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  justifyContent: 'left',
-                  flexDirection: 'column',
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '400',
-                    fontSize: '24px',
-                    lineHeight: '91.667%',
-                    letterSpacing: '-1.44px',
-                    color: '#000',
-                  }}
-                >
-                  Google Pixel 10 <span style={{ fontWeight: '600' }}>Pro</span>
+            <Box sx={smallCardContainerSx}>
+              <Box sx={smallCardContentSx}>
+                <Typography variant="body1" sx={promoCardTitleSx}>
+                  Google Pixel 10{' '}
+                  <Typography component="span" sx={inlineBoldTextSx}>
+                    Pro
+                  </Typography>
                 </Typography>
                 <Typography
+                  variant="body1"
                   sx={{
-                    fontFamily: 'Montserrat, sans-serif',
-                    fontWeight: '300',
+                    fontWeight: 300,
                     fontSize: '12px',
                     lineHeight: '125%',
-                    color: '#000',
+                    color: 'var(--black)',
                     marginTop: '15px',
                   }}
                 >
@@ -222,17 +203,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
                   View
                 </Button>
               </Box>
-              <img
-                style={{
-                  background: '#fff',
-                  width: 'auto',
-                  height: '100%',
-                  objectFit: 'cover',
-                  marginLeft: 'auto',
-                }}
-                src={PRODUCTS[1].img}
-                alt="Promo image"
-              />
+              <Box component="img" sx={smallCardImageSx} src={PRODUCTS[1].img} alt="Promo image" />
             </Box>
           </Grid>
         </Grid>
@@ -246,7 +217,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
             height: '100%',
             display: 'flex',
             alignItems: 'flex-start',
-            justifyContent: 'left',
+            justifyContent: 'flex-start',
             flexDirection: 'column',
             gap: '29px',
             paddingLeft: '65px',
@@ -254,30 +225,29 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
           }}
         >
           <Typography
+            variant="h5"
             sx={{
               display: 'block',
-              fontFamily: 'Montserrat, sans-serif',
               fontStyle: 'italic',
-              fontWeight: '300',
-              fontSize: '36px',
+              fontWeight: 300,
               lineHeight: 1,
               letterSpacing: '-0.06em',
-              color: '#fff',
+              color: 'var(--white)',
             }}
           >
             Samsung
-            <span style={{ fontWeight: '600', display: 'inline-block', lineHeight: 1 }}>
+            <Typography component="span" sx={inlineBoldTextSx}>
               Galaxy S24 Ultra
-            </span>
+            </Typography>
           </Typography>
           <Typography
+            variant="body1"
             sx={{
               display: 'block',
-              fontFamily: 'Montserrat, sans-serif',
-              fontWeight: '400',
+              fontWeight: 400,
               fontSize: '24px',
               lineHeight: 1,
-              color: '#fff',
+              color: 'var(--white)',
             }}
           >
             Shi-Revolution in your pocket.

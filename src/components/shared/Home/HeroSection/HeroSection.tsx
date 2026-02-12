@@ -32,25 +32,39 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
         }}
       >
         <Typography
+          variant="h1"
+          component="h1"
           sx={{
-            fontFamily: 'Montserrat, sans-serif',
             fontStyle: 'italic',
-            fontWeight: '300',
-            fontSize: '96px',
+            fontWeight: 300,
             lineHeight: '75%',
             letterSpacing: '-0.05em',
-            color: '#f8fcff',
+            color: 'var(--white)',
           }}
         >
-          {title.regular} <span style={{ fontWeight: '600' }}>{title.bold}</span>
+          {title.regular}{' '}
+          <Typography
+            variant="h1"
+            component="span"
+            sx={{
+              lineHeight: '75%',
+              letterSpacing: '-0.05em',
+              display: 'inline-block',
+              fontWeight: 600,
+            }}
+          >
+            {title.bold}
+          </Typography>
         </Typography>
 
         <Typography
+          variant="body1"
+          component="p"
           sx={{
-            fontWeight: '600',
+            fontWeight: 600,
             fontSize: '20px',
             lineHeight: '120%',
-            color: '#fff',
+            color: 'var(--white)',
           }}
         >
           {subtitle}

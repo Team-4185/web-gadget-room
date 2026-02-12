@@ -38,7 +38,6 @@ export const Home = () => {
           title={HOME_HERO.title}
           subtitle={HOME_HERO.subtitle}
           onBuyNow={addPhone}
-          products={PRODUCTS}
           onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
         />
         <FeaturedBrandsSection brands={HOME_BRANDS} />
