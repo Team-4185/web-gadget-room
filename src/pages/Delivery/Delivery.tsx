@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Container, Box, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 
-import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
-import { Input } from '../../components/ui/Input/Input';
 import RadioActive from '/icons/RadioActive.svg';
 import RadioInactive from '/icons/RadioInactive.svg';
+import { Input, OrderSummary } from '@/components';
 
 export const Delivery = () => {
   const [courierActive, setCourierActive] = useState(false);

@@ -5,10 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 import ArrowRight from '/icons/ArrowRight.svg';
 import ArrowLeft from '/icons/ArrowLeft.svg';
-import { LoginForm } from '../../components/shared/LoginForm';
-import { RegisterForm } from '../../components/shared/RegisterForm';
-import { WelcomeText } from '../../components/shared/WelcomeText';
-import { AuthPanel } from '../../components/shared/AuthPanel';
+import { AuthPanel, LoginForm, RegisterForm, WelcomeText } from '@/components';
 
 export const AuthPage = () => {
   const [mode, setMode] = useState<'login' | 'register'>('login');

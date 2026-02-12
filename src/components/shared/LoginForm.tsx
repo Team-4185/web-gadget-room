@@ -3,9 +3,8 @@ import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import { useLoginForm } from '../../core/hooks/useLoginForm';
-import { Input } from '../ui/Input/Input';
-import { useLogin } from '../../core/hooks/useLogin';
+import { Input } from '@/components';
+import { useLogin, useLoginForm } from '@/core/hooks';
 
 export const LoginForm: FC = () => {
   const navigate = useNavigate();

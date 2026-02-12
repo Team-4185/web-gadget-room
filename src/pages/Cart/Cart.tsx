@@ -1,8 +1,7 @@
 import type { FC } from 'react';
 import { Container, Box } from '@mui/material';
 
-import { CartGrid } from '../../components/shared/Cart/CartGrid';
-import { OrderSummary } from '../../components/shared/Cart/OrderSummary';
+import { CartGrid, OrderSummary } from '@/components';
 
 export const Cart: FC = () => {
   return (

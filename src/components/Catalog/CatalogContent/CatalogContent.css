@@ -1,0 +1,11 @@
+.catalog__content {
+  max-width: 801px;
+  width: 100%;
+}
+
+.catalog__products {
+  display: grid;
+  grid-template-columns: repeat(3, 244px);
+  gap: 35px;
+  margin-top: 45px;
+}

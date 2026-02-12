@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { isEmail, isStrongPassword } from 'validator';
 
-import { getRegisterIssues, pwdRules } from '../utils/authValidation';
+import { getRegisterIssues, pwdRules } from '@/core/utils';
 
 export const useRegisterForm = () => {
   const [regForm, setRegForm] = useState({

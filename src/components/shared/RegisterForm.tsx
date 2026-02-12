@@ -3,9 +3,8 @@ import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-import { useRegisterForm } from '../../core/hooks/useRegisterForm';
-import { Input } from '../ui/Input/Input';
-import { useRegister } from '../../core/hooks/useRegister';
+import { Input } from '@/components';
+import { useRegister, useRegisterForm } from '@/core/hooks';
 
 export const RegisterForm: FC = () => {
   const navigate = useNavigate();

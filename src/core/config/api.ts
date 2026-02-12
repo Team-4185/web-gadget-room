@@ -1,7 +1,7 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
-import { tokenStorage } from '../utils/tokenStorage';
-import { SingleFlight } from '../utils/promiseQueue';
-import type { AuthResponse, AuthRequestRefresh } from '../types/auth';
+
+import { SingleFlight, tokenStorage } from '@/core/utils';
+import type { AuthResponse, AuthRequestRefresh } from '@/core/types';
 
 const api: AxiosInstance = axios.create({
   baseURL: `${import.meta.env.VITE_BACKEND_ORIGIN}`,
