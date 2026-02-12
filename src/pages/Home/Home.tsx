@@ -19,14 +19,7 @@ export const Home = () => {
   const hero_product = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
 
   const addPhone = () => {
-    dispatch(
-      addProduct({
-        id: hero_product.id,
-        name: hero_product.name,
-        price: hero_product.price,
-        amount: 1,
-      })
-    );
+    dispatch(addProduct(hero_product));
     navigate('/cart');
   };
 
