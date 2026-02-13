@@ -5,3 +5,8 @@ export { default as Like } from './like.svg?react';
 export { default as Planet } from './planet.svg?react';
 export { default as ArrowLeft } from './arrowLeft.svg?react';
 export { default as ArrowRight } from './arrowRight.svg?react';
+export { default as Fire } from './fire.svg?react';
+export { default as AppleIcon } from './Apple.svg?react';
+export { default as SamsungIcon } from './Samsung.svg?react';
+export { default as XiaomiIcon } from './Xiaomi.svg?react';
+export { default as GoogleIcon } from './Google.svg?react';

@@ -1,10 +1,12 @@
 import type { BrandInfo } from '@/core/types';
 
+import { AppleIcon, SamsungIcon, XiaomiIcon, GoogleIcon } from '@/assets';
+
 export const HOME_BRANDS: BrandInfo[] = [
-  { id: 1, name: 'Apple', icon: '/icons/Brands/Apple.svg', descr: 'iphone 15 series' },
-  { id: 2, name: 'Samsung', icon: '/icons/Brands/Samsung.svg', descr: 'Galaxy S24 Ultra' },
-  { id: 3, name: 'Xiaomi', icon: '/icons/Brands/Xiaomi.svg', descr: '14T Pro' },
-  { id: 4, name: 'Google', icon: '/icons/Brands/Google.svg', descr: 'Pixel 8 Pro' },
+  { id: 1, name: 'Apple', icon: AppleIcon, descr: 'iphone 15 series' },
+  { id: 2, name: 'Samsung', icon: SamsungIcon, descr: 'Galaxy S24 Ultra' },
+  { id: 3, name: 'Xiaomi', icon: XiaomiIcon, descr: '14T Pro' },
+  { id: 4, name: 'Google', icon: GoogleIcon, descr: 'Pixel 8 Pro' },
 ];
 
 export const HOME_HERO = {

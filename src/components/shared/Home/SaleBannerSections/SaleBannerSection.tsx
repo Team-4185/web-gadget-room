@@ -1,62 +1,30 @@
 import { Button } from '@/components';
 import { Box, Typography } from '@mui/material';
 
-import fire from '/icons/fire.svg';
+import { Fire } from '@/assets';
 
 const sectionSx = {
   width: '100%',
-  margin: '0 auto',
-  background: '#aeaeae',
+  background: 'var(--light-gray)',
   padding: '96px 423px',
   display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
 };
 
 const contentSx = {
   display: 'flex',
   flexDirection: 'column',
   width: '594px',
-  height: 'max-content',
+  maxHeight: '209px',
   gap: '30px',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const titleRowSx = {
   display: 'flex',
-  gap: '42px',
-  alignSelf: 'center',
-  alignItems: 'center',
-};
-
-const headingSx = {
-  fontWeight: 400,
-  fontSize: '48px',
-  lineHeight: '100%',
-  color: 'var(--black)',
-};
-
-const subtitleSx = {
-  fontStyle: 'italic',
-  fontWeight: 400,
-  fontSize: '36px',
-  color: 'var(--black)',
-  lineHeight: '100%',
-};
-
-const buttonSx = {
-  alignSelf: 'center',
-  borderRadius: '15px',
-  boxShadow: '1px 10px 30px 0 rgba(0, 0, 0, 0.25)',
-  background: 'var(--white)',
-  lineHeight: '100%',
-};
-
-const inlineBoldTextSx = {
-  fontWeight: 800,
-  fontSize: 'inherit',
-  lineHeight: 'inherit',
-  letterSpacing: 'inherit',
-  fontStyle: 'inherit',
-  color: 'inherit',
+  gap: '20px',
 };
 
 type Props = {
@@ -68,16 +36,38 @@ export const SaleBannerSection = ({ onShopDeals }: Props) => {
     <Box sx={sectionSx}>
       <Box sx={contentSx}>
         <Box sx={titleRowSx}>
-          <Box component="img" src={fire} alt="fire icon" />
-          <Typography component="h4" variant="h4" sx={headingSx}>
+          <Box
+            sx={{
+              width: '60px',
+              height: '60px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Fire style={{ fill: 'var(--icon-fire)' }} />
+          </Box>
+          <Typography component="h3" variant="h3" sx={{ lineHeight: 1, color: 'var(--white)' }}>
             Big Summer{' '}
-            <Typography component="span" variant="h4" sx={inlineBoldTextSx}>
+            <Typography
+              component="span"
+              variant="h3"
+              sx={{ fontWeight: 800, color: 'var(--white)' }}
+            >
               Sale
             </Typography>
           </Typography>
         </Box>
 
-        <Typography component="h5" variant="h5" sx={subtitleSx}>
+        <Typography
+          component="h5"
+          variant="h5"
+          sx={{
+            fontStyle: 'italic',
+            lineHeight: 1,
+            color: 'var(--white)',
+          }}
+        >
           Up to 50% off on popular models
         </Typography>
 
@@ -85,10 +75,8 @@ export const SaleBannerSection = ({ onShopDeals }: Props) => {
           maxWidth="200px"
           height="60px"
           fontSize="24px"
-          fontWeight={600}
-          border="none"
           onClick={onShopDeals}
-          sx={buttonSx}
+          sx={{ background: 'var(--dark-button-background)', color: 'var(--white)' }}
         >
           Shop Deals
         </Button>
