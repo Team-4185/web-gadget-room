@@ -1,3 +1,7 @@
+.catalog {
+  margin-bottom: 154px;
+}
+
 .catalog__layout {
   display: flex;
   justify-content: space-between;
