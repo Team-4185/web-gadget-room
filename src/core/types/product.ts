@@ -1,3 +1,5 @@
+import type { ComponentType, SVGProps } from 'react';
+
 export type BadgeType = 'New' | 'Hit' | 'Sale';
 
 export interface IProduct {
@@ -15,7 +17,7 @@ export interface IProduct {
 export type BrandInfo = {
   id: number;
   name: string;
-  icon: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   descr: string;
 };
 
