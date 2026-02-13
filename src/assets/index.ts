@@ -16,3 +16,8 @@ export { default as MasterCard } from './masterCard.svg?react';
 export { default as NovaPost } from './novaPost.svg?react';
 export { default as Visa } from './visa.svg?react';
 export { default as ApplePay } from './applePay.svg?react';
+export { default as Fire } from './fire.svg?react';
+export { default as AppleIcon } from './apple.svg?react';
+export { default as SamsungIcon } from './samsung.svg?react';
+export { default as XiaomiIcon } from './xiaomi.svg?react';
+export { default as GoogleIcon } from './google.svg?react';

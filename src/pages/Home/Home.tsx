@@ -16,25 +16,23 @@ export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const heroProduct = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
+  const hero_product = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
 
   const addPhone = () => {
-    dispatch(
-      addProduct({
-        id: heroProduct.id,
-        name: heroProduct.name,
-        price: heroProduct.price,
-        amount: 1,
-      })
-    );
+    dispatch(addProduct(hero_product));
     navigate('/cart');
   };
 
   return (
-    <>
-      <Container disableGutters maxWidth="xl" sx={{ padding: '30px' }}>
+    <section className="home">
+      <Container disableGutters sx={{ maxWidth: '1440px' }} className="home__container">
         <HeroSection title={HOME_HERO.title} subtitle={HOME_HERO.subtitle} onBuyNow={addPhone} />
-        <PromoGridSection />
+        <PromoGridSection
+          title={HOME_HERO.title}
+          subtitle={HOME_HERO.subtitle}
+          onBuyNow={addPhone}
+          onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
+        />
         <FeaturedBrandsSection brands={HOME_BRANDS} />
         <NewArrivalsSection
           products={PRODUCTS}
@@ -43,6 +41,6 @@ export const Home = () => {
       </Container>
 
       <SaleBannerSection onShopDeals={() => navigate('/catalog')} />
-    </>
+    </section>
   );
 };

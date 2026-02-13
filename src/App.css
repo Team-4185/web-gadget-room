@@ -14,6 +14,9 @@
   --coralRed: #ea4335;
   --blue: #4285f4;
   --navy-blue: #001a4f;
+  --dark-background: rgba(4, 4, 255, 0.05);
+  --dark-button-background: linear-gradient(91deg, #211c24 0.64%, #211c24 101%);
+  --icon-fire: #FF5F00;;
 }
 
 ol[role='list'],
