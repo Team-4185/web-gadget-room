@@ -1,5 +1,4 @@
 export * from './Cart';
-export * from '../Home';
 export * from './Payment';
 export * from './Product';
 

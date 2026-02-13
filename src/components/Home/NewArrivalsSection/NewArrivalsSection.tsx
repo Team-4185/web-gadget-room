@@ -11,7 +11,14 @@ type Props = {
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
   return (
     <Box sx={{ width: '100%', height: '634px', padding: '100px 80px' }}>
-      <Typography sx={{ fontWeight: '700', fontSize: '48px', lineHeight: 1, color: '#000' }}>
+      <Typography
+        variant="h3"
+        component="h3"
+        sx={{
+          fontWeight: '700',
+          lineHeight: 1,
+        }}
+      >
         New Arrivals
       </Typography>
 
