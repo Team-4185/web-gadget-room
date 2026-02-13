@@ -1,5 +1,6 @@
-import { Button } from '@/components';
 import { Box, Typography } from '@mui/material';
+
+import { Button } from '@/components';
 
 type Props = {
   title: { regular: string; bold: string };
@@ -13,7 +14,7 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
       sx={{
         width: '100%',
         height: '600px',
-        background: 'var(--light-gray)',
+        background: 'var(--black)',
         paddingLeft: '81px',
         paddingRight: '758px',
         display: 'flex',

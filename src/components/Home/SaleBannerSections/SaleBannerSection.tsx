@@ -1,6 +1,6 @@
-import { Button } from '@/components';
 import { Box, Typography } from '@mui/material';
 
+import { Button } from '@/components';
 import { Fire } from '@/assets';
 
 const sectionSx = {

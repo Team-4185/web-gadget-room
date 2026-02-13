@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material';
+
 import { Button } from '@/components';
 import { PRODUCTS } from '@/core/constants';
 
@@ -6,12 +7,10 @@ const promoLeadTextSx = {
   fontStyle: 'italic',
   fontWeight: 300,
   lineHeight: 1,
-  color: 'var(--white)',
   display: 'inline-block',
 };
 
 const promoCardTitleSx = {
-  fontWeight: 400,
   fontSize: '24px',
   lineHeight: '91.667%',
   letterSpacing: '-1.44px',
@@ -21,17 +20,17 @@ const promoCardTitleSx = {
 
 const inlineBoldTextSx = {
   fontWeight: 600,
+  display: 'inline-block',
   fontSize: 'inherit',
+  fontStyle: 'normal',
   lineHeight: 'inherit',
   letterSpacing: 'inherit',
-  fontStyle: 'inherit',
-  color: 'inherit',
 };
 
 const smallCardContainerSx = {
   width: '100%',
   height: '272px',
-  background: '#fff',
+  background: 'var(--white)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
@@ -49,7 +48,7 @@ const smallCardContentSx = {
 };
 
 const smallCardImageSx = {
-  background: '#fff',
+  background: 'var(--white)',
   width: '50%',
   height: '100%',
   objectFit: 'cover',
@@ -72,7 +71,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
             sx={{
               width: '100%',
               height: '314px',
-              background: '#797979',
+              background: 'var(--light-gray)',
               display: 'grid',
               gridTemplateColumns: '360px 1fr',
               alignItems: 'center',
@@ -91,13 +90,13 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
             >
               <Typography variant="h6" sx={promoLeadTextSx}>
                 New{' '}
-                <Typography component="span" sx={inlineBoldTextSx}>
+                <Typography component="span" variant="h6" sx={inlineBoldTextSx}>
                   Colors.
                 </Typography>
               </Typography>
               <Typography variant="h6" sx={{ ...promoLeadTextSx, marginTop: '7px' }}>
                 New{' '}
-                <Typography component="span" sx={inlineBoldTextSx}>
+                <Typography component="span" variant="h6" sx={inlineBoldTextSx}>
                   Features.
                 </Typography>
               </Typography>
@@ -150,8 +149,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
                 <Typography
                   variant="body1"
                   sx={{
-                    fontWeight: 300,
-                    fontSize: '15px',
+                    fontSize: '14px',
                     lineHeight: '142.857%',
                     color: 'var(--black)',
                     marginTop: '15px',
@@ -184,7 +182,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
                 <Typography
                   variant="body1"
                   sx={{
-                    fontWeight: 300,
+                    fontWeight: 400,
                     fontSize: '12px',
                     lineHeight: '125%',
                     color: 'var(--black)',
@@ -213,7 +211,7 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
         <Box
           sx={{
             width: '100%',
-            background: '#717171',
+            background: 'var(--black)',
             height: '100%',
             display: 'flex',
             alignItems: 'flex-start',
@@ -224,34 +222,44 @@ export const PromoGridSection = ({ onBuyNow, onOpenProduct }: Props) => {
             paddingTop: '63px',
           }}
         >
-          <Typography
-            variant="h5"
+          <Box
             sx={{
-              display: 'block',
-              fontStyle: 'italic',
-              fontWeight: 300,
-              lineHeight: 1,
-              letterSpacing: '-0.06em',
-              color: 'var(--white)',
+              display: 'flex',
+              gap: '20px',
+              alignItems: 'flex-start',
+              maxWidth: '438px',
+              flexDirection: 'column',
             }}
           >
-            Samsung
-            <Typography component="span" sx={inlineBoldTextSx}>
-              Galaxy S24 Ultra
+            <Typography
+              variant="h2"
+              sx={{
+                display: 'inline-block',
+                fontStyle: 'italic',
+                fontWeight: 300,
+                lineHeight: 1,
+                letterSpacing: '-2px',
+                color: 'var(--white)',
+              }}
+            >
+              iPhone 17{' '}
+              <Typography component="span" sx={inlineBoldTextSx}>
+                Pro
+              </Typography>
             </Typography>
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              display: 'block',
-              fontWeight: 400,
-              fontSize: '24px',
-              lineHeight: 1,
-              color: 'var(--white)',
-            }}
-          >
-            Shi-Revolution in your pocket.
-          </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                display: 'inline-block',
+                fontWeight: 400,
+                fontSize: '24px',
+                lineHeight: '154.167%',
+                color: 'var(--white)',
+              }}
+            >
+              The new iPhone 17 arrives in colors that capture every side of you.
+            </Typography>
+          </Box>
         </Box>
       </Grid>
     </Grid>
