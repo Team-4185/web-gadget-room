@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/Button/Button';
 import { addProduct } from '@/core/store/slices/cartSlice';
 import { useProduct } from '@/core/hooks/useProduct';
 import { ProductTitlePrice, ProductSpecItem, ProductMetaItem } from '@/components';
+import { Typography } from '@mui/material';
 
 import './ProductInfo.css';
-import { Typography } from '@mui/material';
 
 export const ProductInfo: FC = () => {
   const product = useProduct();

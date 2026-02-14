@@ -1,7 +1,6 @@
 import type { FC } from 'react';
-import { Typography } from '@mui/material';
 
-import currency from '/icons/currency.svg';
+import { Typography } from '@mui/material';
 
 import './ProductTitlePrice.css';
 
