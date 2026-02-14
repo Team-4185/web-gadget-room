@@ -1,6 +1,5 @@
 export * from './Cart';
 export * from './Payment';
-export * from './Product';
 
 export { ProductCard } from './ProductCard/ProductCard';
 export { AuthPanel } from './AuthPanel';
