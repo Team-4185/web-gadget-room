@@ -1,3 +1,3 @@
-export { CartGrid } from './CartGrid';
-export { OrderSummary } from './OrderSummary';
-export { ProductsCart } from './ProductsCart';
+export { CartGrid } from './CartGrid/CartGrid';
+export { OrderSummary } from './OrderSummary/OrderSummary';
+export { ProductsCart } from './ProductsCart/ProductsCart';

@@ -1,0 +1,90 @@
+.cart-item {
+  width: 100%;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 9px 0;
+}
+
+.cart-item__main {
+  display: grid;
+  grid-template-columns: var(--cart-grid-columns, 97px minmax(0, 1fr) 100px 73px);
+  align-items: center;
+  gap: var(--cart-grid-gap, 19px);
+}
+
+.cart-item__media {
+  width: 96px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item__image {
+  width: 68px;
+  height: 85px;
+  object-fit: contain;
+}
+
+.cart-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.cart-item__amount {
+  justify-self: center;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 0 9px;
+  justify-content: space-between;
+}
+
+.cart-item__amount-btn {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue-violet);
+  cursor: pointer;
+  padding: 0;
+}
+
+.cart-item__amount-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cart-item__amount-btn .MuiSvgIcon-root {
+  font-size: 12px;
+}
+
+.cart-item__subtotal {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.cart-item__remove {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.cart-item__divider {
+  margin: 22px 0 20px;
+  border-top: 2px solid var(--blue-violet);
+}
+
+.cart-item__divider--last {
+  margin: 22px 0 0;
+}
