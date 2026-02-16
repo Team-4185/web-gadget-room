@@ -21,3 +21,5 @@ export { default as AppleIcon } from './apple.svg?react';
 export { default as SamsungIcon } from './samsung.svg?react';
 export { default as XiaomiIcon } from './xiaomi.svg?react';
 export { default as GoogleIcon } from './google.svg?react';
+export { default as Lock } from './lock.svg?react';
+export { default as Trash } from './trash.svg?react';

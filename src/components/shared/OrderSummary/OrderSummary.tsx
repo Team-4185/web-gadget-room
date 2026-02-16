@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import Lock from '/icons/lock.svg';
-import Voucher from '/icons/voucher.svg';
-import ExpandMoreIcon from '/icons/ExpandMore.svg';
+import { Lock } from '@/assets';
 import type { RootState } from '@/core/store';
+import { Button } from '@/components/ui';
 
 import './OrderSummary.css';
 
@@ -15,9 +14,6 @@ const rowValueSx = { fontSize: '15px', fontWeight: 500, lineHeight: 1 };
 const totalLabelSx = { fontWeight: 600, lineHeight: 1 };
 const totalValueSx = { fontSize: '20px', fontWeight: 700, lineHeight: 1 };
 const buttonTextSx = { fontWeight: 600, lineHeight: 1 };
-const voucherLabelSx = { lineHeight: 1 };
-const voucherOptionalSx = { lineHeight: 1, opacity: 0.7 };
-const accordionDetailsTextSx = { fontSize: '14px', lineHeight: 1.4 };
 
 type OrderSummaryProps = {
   onContinue?: () => void;
@@ -102,45 +98,30 @@ export const OrderSummary = ({
       </div>
 
       {showContinueButton && (
-        <button
-          className="order-summary__button"
+        <Button
+          className="order-summary__button "
+          maxWidth="425px"
+          height="56px"
+          borderRadius="24px"
           onClick={handleContinue}
           disabled={continueDisabled}
+          textTransform="upperCase"
+          sx={{
+            mt: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+          }}
         >
-          <img src={Lock} alt="Lock" />
+          <div className="order-summary__button-lock">
+            <Lock width={20} height={20} fill="currentColor" />
+          </div>
           <Typography variant="body1" component="span" sx={buttonTextSx}>
             {continueLabel}
           </Typography>
-        </button>
+        </Button>
       )}
-
-      <Accordion className="order-summary__accordion" disableGutters>
-        <AccordionSummary
-          className="order-summary__accordion-summary"
-          aria-controls="panel1-content"
-          id="panel1-header"
-          expandIcon={
-            <img src={ExpandMoreIcon} alt="Expand More" className="order-summary__expand" />
-          }
-        >
-          <div className="order-summary__voucher">
-            <img src={Voucher} alt="voucher" className="order-summary__voucher-icon" />
-            <Typography variant="body1" component="span" sx={voucherLabelSx}>
-              Use discount voucher
-            </Typography>
-            <Typography variant="body1" component="span" sx={voucherOptionalSx}>
-              (optional)
-            </Typography>
-          </div>
-        </AccordionSummary>
-
-        <AccordionDetails className="order-summary__accordion-details">
-          <Typography variant="body1" sx={accordionDetailsTextSx}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-            sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
     </div>
   );
 };

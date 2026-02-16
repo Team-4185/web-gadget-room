@@ -1,7 +1,7 @@
 .cart__grid {
   width: 100%;
-  max-width: 761px;
-  --cart-grid-columns: 97px minmax(0, 1fr) 100px 73px;
+  max-width: 737px;
+  --cart-grid-columns: 97px minmax(0, 1fr) 200px 73px;
   --cart-grid-gap: 19px;
 }
 
@@ -11,7 +11,6 @@
   grid-template-columns: var(--cart-grid-columns);
   align-items: center;
   gap: var(--cart-grid-gap);
-  padding: 0 8px;
 }
 
 .cart__header-product {
@@ -35,5 +34,4 @@
 
 .cart__items {
   width: 100%;
-  padding: 0 8px;
 }

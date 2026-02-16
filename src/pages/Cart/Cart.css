@@ -5,6 +5,6 @@
 .cart__layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 503px;
-  align-items: end;
+  align-items: start;
   gap: 20px;
 }

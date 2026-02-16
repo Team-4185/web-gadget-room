@@ -1,3 +1,3 @@
 export { CartGrid } from './CartGrid/CartGrid';
-export { OrderSummary } from './OrderSummary/OrderSummary';
+export { OrderSummary } from '../shared/OrderSummary/OrderSummary';
 export { ProductsCart } from './ProductsCart/ProductsCart';

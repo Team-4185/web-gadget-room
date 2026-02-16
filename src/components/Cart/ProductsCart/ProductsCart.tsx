@@ -3,10 +3,11 @@ import { Typography } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
-import greyBox from '/icons/greyBox.png';
-import TrashIcon from '/icons/trash.svg';
 import type { RootState } from '@/core/store';
 import { decreaseAmount, increaseAmount, removeProduct } from '@/core/store/slices/cartSlice';
+import { Trash } from '@/assets';
+
+import greyBox from '/icons/greyBox.png';
 
 import './ProductsCart.css';
 
@@ -26,11 +27,7 @@ export const ProductsCart = () => {
             </div>
 
             <div className="cart-item__info">
-              <Typography
-                variant="body1"
-                component="span"
-                sx={{ fontWeight: 600, lineHeight: 1 }}
-              >
+              <Typography variant="body1" component="span" sx={{ fontWeight: 600, lineHeight: 1 }}>
                 {product.name}
               </Typography>
               <Typography
@@ -76,12 +73,12 @@ export const ProductsCart = () => {
               className="cart-item__subtotal"
               sx={{ fontSize: '15px', fontWeight: 500, lineHeight: 1 }}
             >
-              {'\u20AC'} {product.price}
+              {'\u20AC'} {product.price * product.amount}
             </Typography>
           </div>
 
           <div onClick={() => dispatch(removeProduct(product.id))} className="cart-item__remove">
-            <img src={TrashIcon} alt="trash" />
+            <Trash width={18} height={18} />
             <Typography variant="body1" component="span" sx={{ fontSize: '15px', fontWeight: 500 }}>
               Delete
             </Typography>

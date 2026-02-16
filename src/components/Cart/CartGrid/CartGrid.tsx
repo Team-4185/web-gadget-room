@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { Typography } from '@mui/material';
 
 import { ProductsCart } from '@/components';
 import type { RootState } from '@/core/store';
@@ -19,10 +19,20 @@ export const CartGrid = () => {
         Cart {cartLength ? `(${cartLength})` : null}
       </Typography>
       <div className="cart__header">
-        <Typography variant="body1" component="span" sx={headerTextSx} className="cart__header-product">
+        <Typography
+          variant="body1"
+          component="span"
+          sx={headerTextSx}
+          className="cart__header-product"
+        >
           Product
         </Typography>
-        <Typography variant="body1" component="span" sx={headerTextSx} className="cart__header-amount">
+        <Typography
+          variant="body1"
+          component="span"
+          sx={headerTextSx}
+          className="cart__header-amount"
+        >
           Amount
         </Typography>
         <Typography
