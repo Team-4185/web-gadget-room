@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 
 import { Lock } from '@/assets';
 import type { RootState } from '@/core/store';
-import { Button } from '@/components/ui';
+import { Button } from '@/components';
 
 import './OrderSummary.css';
 
