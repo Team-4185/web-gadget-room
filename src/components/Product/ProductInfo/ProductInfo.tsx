@@ -1,13 +1,12 @@
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Typography } from '@mui/material';
 
 import { SPECS, PRODUCT_META } from '@/core/constants/products';
-import { Button } from '@/components/ui/Button/Button';
 import { addProduct } from '@/core/store/slices/cartSlice';
-import { useProduct } from '@/core/hooks/useProduct';
-import { ProductTitlePrice, ProductSpecItem, ProductMetaItem } from '@/components';
-import { Typography } from '@mui/material';
+import { useProduct } from '@/core/hooks';
+import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
 
 import './ProductInfo.css';
 

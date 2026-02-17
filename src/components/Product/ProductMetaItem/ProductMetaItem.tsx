@@ -1,5 +1,4 @@
 import type { ComponentType, FC, SVGProps } from 'react';
-
 import { Typography } from '@mui/material';
 
 import './ProductMetaItem.css';
