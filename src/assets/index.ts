@@ -25,3 +25,4 @@ export { default as Cart } from './cart.svg?react';
 export { default as User } from './user.svg?react';
 export { default as Search } from './search.svg?react';
 export { default as Liked } from './liked.svg?react';
+export { default as Home } from './home.svg?react';

@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
 
 import type { RootState } from '@/core/store';
 import { BreadCrumbs, OrderingSteps } from '@/components';
@@ -22,14 +22,17 @@ export const Header: FC = () => {
   const user = false;
   const authPage = currentPath.startsWith('/login') || currentPath.startsWith('/register');
 
+  const hiddenBreadcrumbsRoutes = ['/', '/cart', '/payment', '/delivery', '/register', '/login'];
+  const shouldShowBreadcrumbs = !hiddenBreadcrumbsRoutes.includes(currentPath);
+
   return (
     <header className="header">
       <Container disableGutters>
         <div className="header__wrapper">
           <div className="header__left">
-            <Link to={'/'} className="header__logo">
+            <RouterLink to={'/'} className="header__logo">
               <img src={Logo} alt="Logo" />
-            </Link>
+            </RouterLink>
 
             {!authPage && (
               <div className="navigation">
@@ -85,8 +88,8 @@ export const Header: FC = () => {
           )}
 
           {/* <OrderingSteps page={page} /> */}
-          {/* <BreadCrumbs page={page} product={productName} /> */}
         </div>
+        {shouldShowBreadcrumbs && <BreadCrumbs />}
       </Container>
     </header>
   );

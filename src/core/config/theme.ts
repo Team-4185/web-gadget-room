@@ -151,5 +151,22 @@ export const theme = createTheme({
         },
       },
     },
+    MuiBreadcrumbs: {
+      styleOverrides: {
+        ol: {
+          gap: '9px',
+        },
+        separator: { marginLeft: 0, marginRight: 0 },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: 'var(--black)',
+          fontWeight: 600,
+          textDecoration: 'none',
+        },
+      },
+    },
   },
 });

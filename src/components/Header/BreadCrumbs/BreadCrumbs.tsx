@@ -1,60 +1,49 @@
 import type { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Box } from '@mui/material';
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
-import Home from '/icons/Home.svg';
-import RightArrow from '/icons/SmallArrowRigth.svg';
+import { ArrowRight, Home } from '@/assets';
 
-import './BreadCrumbs.css';
+export const BreadCrumbs: FC = () => {
+  const handleClick = () => {
+    console.log(1);
+  };
 
-type BreadCrumbsProps = {
-  page?:
-    | 'Home'
-    | 'Catalog'
-    | 'About us'
-    | 'Login'
-    | 'Register'
-    | 'Cart'
-    | 'Delivery'
-    | 'Payment'
-    | 'ProductPage';
-  product?: string;
-};
-
-export const BreadCrumbs: FC<BreadCrumbsProps> = ({ page, product }) => {
-  const catalog = page === 'Catalog';
-  const navigate = useNavigate();
   return (
-    <>
-      {product ? (
-        <Container disableGutters maxWidth="xl" className="breadcrumbs">
-          <Box className="breadcrumbs__box">
-            <Box onClick={() => navigate('/')} component="a" href="#" className="breadcrumbs__home">
-              <img src={Home} alt="Home icon" />
-              <span>Home</span>
-            </Box>
-            <img src={RightArrow} alt="arrow icon" />
-            <a onClick={() => navigate('/catalog')} href="#" className="breadcrumbs__link">
-              Catalog
-            </a>
-            <img src={RightArrow} alt="arrow icon" />
-            <span className="breadcrumbs__product">{product}</span>
-          </Box>
-        </Container>
-      ) : catalog ? (
-        <Container disableGutters maxWidth="xl" className="breadcrumbs__container">
-          <Box className="breadcrumbs__box">
-            <Box onClick={() => navigate('/')} component="a" href="#" className="breadcrumbs__home">
-              <img src={Home} alt="Home icon" />
-              <span>Home</span>
-            </Box>
-            <img src={RightArrow} alt="arrow icon" />
-            <a href="#" className="breadcrumbs__link">
-              {page}
-            </a>
-          </Box>
-        </Container>
-      ) : null}
-    </>
+    <Breadcrumbs
+      sx={{
+        padding: '18px 0 18px',
+      }}
+      separator={<ArrowRight color="var(--blue-violet)" />}
+      aria-label="breadcrumb"
+    >
+      <Link
+        key="1"
+        component={RouterLink}
+        to="/"
+        onClick={handleClick}
+        sx={{
+          display: 'flex',
+          gap: '3px',
+          alignItems: 'center',
+        }}
+      >
+        <Home />
+        Home
+      </Link>
+
+      <Link key="2" component={RouterLink} to="/" onClick={handleClick}>
+        Test1
+      </Link>
+
+      <Typography
+        sx={{
+          color: 'var(--black)',
+          fontWeight: 600,
+        }}
+      >
+        Test2
+      </Typography>
+    </Breadcrumbs>
   );
 };
