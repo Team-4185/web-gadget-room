@@ -1,0 +1,33 @@
+.product-gallery {
+  display: flex;
+  gap: 48px;
+  width: 536px;
+  align-items: center;
+}
+
+.product-gallery__thumbnails {
+  display: flex;
+  flex-direction: column;
+  width: 75px;
+  gap: 24px;
+  height: 444px;
+  align-items: center;
+}
+
+.product-gallery__thumbnail {
+  width: 75px;
+  height: 93px;
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.product-gallery__thumbnail.active {
+  border: 2px solid var(--black);
+  border-radius: 8px;
+  opacity: 1;
+}
+
+.product-gallery__main-image {
+  width: 413px;
+  height: 516px;
+}

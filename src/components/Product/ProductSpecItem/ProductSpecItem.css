@@ -1,0 +1,27 @@
+.product-spec-item {
+  border-radius: 7px;
+  padding: 16px;
+  width: 100%;
+  background: var(--product-specs-background);
+  display: flex;
+  gap: 8px;
+}
+
+.product-spec-item__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.product-spec-item__icon-box {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-spec-item__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
