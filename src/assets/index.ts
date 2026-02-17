@@ -30,3 +30,7 @@ export { default as ProductInfoFrontCameraIcon } from './ProductInfoIcons/frontC
 export { default as ProductInfoPhoneIcon } from './ProductInfoIcons/phone.svg?react';
 export { default as ProductInfoShopIcon } from './ProductInfoIcons/shop.svg?react';
 export { default as ProductInfoVerifyIcon } from './ProductInfoIcons/verify.svg?react';
+export { default as Lock } from './lock.svg?react';
+export { default as Trash } from './trash.svg?react';
+export { default as Plus } from './plus.svg?react';
+export { default as Minus } from './minus.svg?react';
