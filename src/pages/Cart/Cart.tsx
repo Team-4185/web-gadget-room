@@ -1,19 +1,19 @@
 import type { FC } from 'react';
-import { Container, Box } from '@mui/material';
+import { Container } from '@mui/material';
 
 import { CartGrid, OrderSummary } from '@/components';
 
+import './Cart.css';
+
 export const Cart: FC = () => {
   return (
-    <>
-      <Container disableGutters maxWidth="xl" className="cart-container">
-        <Box className="cart-content">
-          {/* Left Side */}
+    <section className="cart">
+      <Container disableGutters>
+        <div className="cart__layout">
           <CartGrid />
-          {/* Правая часть */}
           <OrderSummary />
-        </Box>
+        </div>
       </Container>
-    </>
+    </section>
   );
 };
