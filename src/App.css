@@ -21,6 +21,7 @@
   --product-top-icon-text: #4E4E4E;
   --product-bottom-icon-text: #717171;
   --product-specs-background: #F2F2FE;
+  --box-summary-background: rgba(249, 249, 249, 0.2);
 }
 
 ol[role='list'],
