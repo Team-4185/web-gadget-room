@@ -5,7 +5,13 @@ import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
 
 import type { RootState } from '@/core/store';
 import { BreadCrumbs, OrderingSteps } from '@/components';
-import { authButtons, icons, pages } from '@/core/constants';
+import {
+  AUTHBUTTON,
+  ICONS,
+  PAGES,
+  ROUTES_WITHOUT_BREADCRUMBS,
+  ROUTES_WITH_ORDERING_STEPS,
+} from '@/core/constants';
 import { Cart } from '@/assets';
 
 import Logo from '/icons/logo.jpg';
@@ -22,8 +28,8 @@ export const Header: FC = () => {
   const user = false;
   const authPage = currentPath.startsWith('/login') || currentPath.startsWith('/register');
 
-  const hiddenBreadcrumbsRoutes = ['/', '/cart', '/payment', '/delivery', '/register', '/login'];
-  const shouldShowBreadcrumbs = !hiddenBreadcrumbsRoutes.includes(currentPath);
+  const shouldShowBreadcrumbs = !ROUTES_WITHOUT_BREADCRUMBS.includes(currentPath);
+  const shouldShowOrderingSteps = ROUTES_WITH_ORDERING_STEPS.includes(currentPath);
 
   return (
     <header className="header">
@@ -36,7 +42,7 @@ export const Header: FC = () => {
 
             {!authPage && (
               <div className="navigation">
-                {pages.map((p) => (
+                {PAGES.map((p) => (
                   <NavLink
                     key={p.href}
                     to={p.href}
@@ -51,7 +57,7 @@ export const Header: FC = () => {
 
           {user ? (
             <div className="header__icons">
-              {icons.map((icon) => {
+              {ICONS.map((icon) => {
                 const IconComponent = icon.icon;
 
                 return (
@@ -61,7 +67,7 @@ export const Header: FC = () => {
                     className={({ isActive }) => `header__icon ${isActive ? 'active' : ''}`}
                   >
                     {IconComponent === Cart ? (
-                      <Badge badgeContent={cartLength > 0 ? cartLength : 0} color="primary">
+                      <Badge badgeContent={cartLength} color="primary">
                         <IconComponent width={32} height={32} />
                       </Badge>
                     ) : (
@@ -73,7 +79,7 @@ export const Header: FC = () => {
             </div>
           ) : (
             <div className="header__auth">
-              {authButtons.map((authButton) => {
+              {AUTHBUTTON.map((authButton) => {
                 return (
                   <NavLink
                     key={authButton.id}
@@ -86,10 +92,9 @@ export const Header: FC = () => {
               })}
             </div>
           )}
-
-          {/* <OrderingSteps page={page} /> */}
         </div>
         {shouldShowBreadcrumbs && <BreadCrumbs />}
+        {shouldShowOrderingSteps && <OrderingSteps />}
       </Container>
     </header>
   );

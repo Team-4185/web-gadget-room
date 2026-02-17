@@ -1,62 +1,25 @@
-import type { FC } from 'react';
-import { Container, Box } from '@mui/material';
+import { Stepper, Step, StepButton } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import CheckMark from '/icons/checkMark.svg';
+import { STEPS } from '@/core/constants';
 
-import './OrderingSteps.css';
+export const OrderingSteps = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-type OrderingStepsProps = {
-  page?:
-    | 'Home'
-    | 'Catalog'
-    | 'About us'
-    | 'Login'
-    | 'Register'
-    | 'Cart'
-    | 'Delivery'
-    | 'Payment'
-    | 'ProductPage';
-};
-
-export const OrderingSteps: FC<OrderingStepsProps> = ({ page }) => {
-  const cartPage = page === 'Cart';
-  const shippingPage = page === 'Delivery';
-  const paymentPage = page === 'Payment';
+  const activeStep = STEPS.findIndex((step) => location.pathname === step.href) ?? 0;
 
   return (
-    <>
-      {cartPage && (
-        <Container disableGutters maxWidth="xl" className="steps">
-          <Box className="steps__box cart_page">
-            <span className="step__number step__active">1</span>
-            <span className="step__text">{page}</span>
-            <span className="step__number step__inactive">2</span>
-            <span className="step__number step__inactive">3</span>
-          </Box>
-        </Container>
-      )}
-
-      {shippingPage && (
-        <Container disableGutters maxWidth="xl" className="steps">
-          <Box className="steps__box shipping__Page">
-            <img src={CheckMark} className="step__number step__inactive" />
-            <span className="step__number step__active">2</span>
-            <span className="step__text">{page}</span>
-            <span className="step__number step__inactive">3</span>
-          </Box>
-        </Container>
-      )}
-
-      {paymentPage && (
-        <Container disableGutters maxWidth="xl" className="steps">
-          <Box className="steps__box payment__Page">
-            <img src={CheckMark} className="step__number step__inactive" />
-            <img src={CheckMark} className="step__number step__inactive" />
-            <span className="step__number step__active">3</span>
-            <span className="step__text">{page}</span>
-          </Box>
-        </Container>
-      )}
-    </>
+    <Stepper activeStep={activeStep}>
+      {STEPS.map((step, idx) => {
+        return (
+          <Step key={step.label}>
+            <StepButton onClick={() => navigate(step.href)}>
+              {activeStep === idx ? step.label : null}
+            </StepButton>
+          </Step>
+        );
+      })}
+    </Stepper>
   );
 };

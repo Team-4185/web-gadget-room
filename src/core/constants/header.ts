@@ -23,20 +23,46 @@ const PageName = {
 //   '/': 'Home',
 // };
 
-export const icons = [
+export const ICONS = [
   { id: 0, icon: Search, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
   { id: 2, icon: Liked, href: '#' },
   { id: 3, icon: Cart, href: '/cart' },
 ];
 
-export const pages = [
+export const PAGES = [
   { id: 0, name: PageName.Home, href: '/' },
   { id: 1, name: PageName.Catalog, href: '/catalog' },
   { id: 2, name: PageName.AboutUs, href: '/about' },
 ];
 
-export const authButtons = [
+export const AUTHBUTTON = [
   { id: 0, name: PageName.Login, href: '/login' },
   { id: 1, name: PageName.Register, href: '/register' },
 ];
+
+export const STEPS = [
+  {
+    label: 'Cart',
+    href: '/cart',
+  },
+  {
+    label: 'Delivery',
+    href: '/delivery',
+  },
+  {
+    label: 'Payment',
+    href: '/payment',
+  },
+];
+
+export const ROUTES_WITHOUT_BREADCRUMBS = [
+  '/',
+  '/cart',
+  '/payment',
+  '/delivery',
+  '/register',
+  '/login',
+];
+
+export const ROUTES_WITH_ORDERING_STEPS = ['/cart', '/payment', '/delivery'];

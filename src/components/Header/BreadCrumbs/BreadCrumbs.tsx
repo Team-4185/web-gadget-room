@@ -10,13 +10,7 @@ export const BreadCrumbs: FC = () => {
   };
 
   return (
-    <Breadcrumbs
-      sx={{
-        padding: '18px 0 18px',
-      }}
-      separator={<ArrowRight color="var(--blue-violet)" />}
-      aria-label="breadcrumb"
-    >
+    <Breadcrumbs separator={<ArrowRight color="var(--blue-violet)" />} aria-label="breadcrumb">
       <Link
         key="1"
         component={RouterLink}
