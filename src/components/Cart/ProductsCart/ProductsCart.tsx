@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
 
 import type { RootState } from '@/core/store';
 import { decreaseAmount, increaseAmount, removeProduct } from '@/core/store/slices/cartSlice';
-import { Trash } from '@/assets';
+import { Trash, Plus, Minus } from '@/assets';
 
 import greyBox from '/icons/greyBox.png';
 
@@ -44,7 +42,7 @@ export const ProductsCart = () => {
                 onClick={() => dispatch(decreaseAmount(product.id))}
                 className="cart-item__amount-btn"
               >
-                <RemoveIcon />
+                <Minus width={12} height={12} />
               </button>
               <Typography
                 variant="body1"
@@ -63,7 +61,7 @@ export const ProductsCart = () => {
                 onClick={() => dispatch(increaseAmount(product.id))}
                 className="cart-item__amount-btn"
               >
-                <AddIcon />
+                <Plus width={12} height={12} />
               </button>
             </div>
 

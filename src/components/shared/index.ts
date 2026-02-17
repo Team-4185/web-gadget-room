@@ -9,3 +9,4 @@ export { RegisterForm } from './RegisterForm';
 export { ScrollToTop } from './ScrollToTop';
 export { WelcomeText } from './WelcomeText';
 export { Select } from './Select/Select';
+export { OrderSummary } from './OrderSummary/OrderSummary';
