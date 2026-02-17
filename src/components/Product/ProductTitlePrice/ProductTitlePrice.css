@@ -1,0 +1,16 @@
+.product-title-price {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-title-price__amount {
+  display: flex;
+  align-items: center;
+}
+
+.product-title-price__icon {
+  margin-right: 14px;
+  width: 32px;
+  height: 32px;
+}

@@ -1,20 +1,22 @@
 import type { FC } from 'react';
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 
 import { ProductGallery, ProductInfo } from '@/components';
 
+import './ProductPage.css';
+
 export const ProductPage: FC = () => {
   return (
-    <Container disableGutters maxWidth="xl" sx={{ padding: '20px' }}>
-      <Box
-        sx={{ display: 'flex', width: '100%', gap: '112px', justifyContent: 'center', mb: '98px' }}
-      >
-        {/* Images */}
-        <ProductGallery />
+    <section className="product">
+      <Container disableGutters>
+        <div className="product__layout">
+          {/* Images */}
+          <ProductGallery />
 
-        {/* Info */}
-        <ProductInfo />
-      </Box>
-    </Container>
+          {/* Info */}
+          <ProductInfo />
+        </div>
+      </Container>
+    </section>
   );
 };

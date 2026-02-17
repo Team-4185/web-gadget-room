@@ -4,4 +4,5 @@ export * from './ui';
 export { Footer } from './Footer/Footer';
 export * from './Catalog';
 export * from './Home';
+export * from './Product';
 export * from './Cart';

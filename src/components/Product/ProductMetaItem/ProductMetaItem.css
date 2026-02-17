@@ -1,0 +1,24 @@
+.product-meta-item {
+  display: flex;
+  width: 157px;
+  gap: 16px;
+  align-items: center;
+}
+
+.product-meta-item__icon-box {
+  border-radius: 11px;
+  padding: 16px;
+  width: 56px;
+  height: 56px;
+  background: var(--product-specs-background);
+}
+
+.product-meta-item__icon {
+  width: 100%;
+  height: 100%;
+}
+
+.product-meta-item__content {
+  display: flex;
+  flex-direction: column;
+}

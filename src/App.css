@@ -17,6 +17,11 @@
   --dark-background: rgba(4, 4, 255, 0.05);
   --dark-button-background: linear-gradient(91deg, #211c24 0.64%, #211c24 101%);
   --icon-fire: #ff5f00;
+  --product-description-color: #353232;
+  --product-top-icon-text: #4e4e4e;
+  --product-bottom-icon-text: #717171;
+  --product-specs-background: #F2F2FE;
+=========
   --box-summary-background: rgba(249, 249, 249, 0.2);
 }
 

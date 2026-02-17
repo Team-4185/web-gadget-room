@@ -1,4 +1,15 @@
 import type { IProduct } from '@/core/types';
+import {
+  ProductInfoBatteryIcon,
+  ProductInfoCameraIcon,
+  ProductInfoCoreIcon,
+  ProductInfoCpuIcon,
+  ProductInfoDeliveryTrackIcon,
+  ProductInfoFrontCameraIcon,
+  ProductInfoPhoneIcon,
+  ProductInfoShopIcon,
+  ProductInfoVerifyIcon,
+} from '@/assets';
 
 export const PRODUCTS: IProduct[] = [
   {
@@ -157,36 +168,36 @@ export const SPECS = [
     id: 1,
     label: 'Screen Size',
     value: '6.7',
-    icon: '/icons/ProductInfoIcons/phone.svg',
+    icon: ProductInfoPhoneIcon,
     alt: 'Screen icon',
   },
   {
     id: 2,
     label: 'CPU',
     value: 'Samsung',
-    icon: '/icons/ProductInfoIcons/CPU.svg',
+    icon: ProductInfoCpuIcon,
     alt: 'CPU icon',
   },
-  { id: 3, label: 'Cores', value: '6', icon: '/icons/ProductInfoIcons/core.svg', alt: 'Core icon' },
+  { id: 3, label: 'Cores', value: '6', icon: ProductInfoCoreIcon, alt: 'Core icon' },
   {
     id: 4,
     label: 'Main camera',
     value: '48-12-12 MP',
-    icon: '/icons/ProductInfoIcons/camera.svg',
+    icon: ProductInfoCameraIcon,
     alt: 'Camera icon',
   },
   {
     id: 5,
     label: 'Front camera',
     value: '12 MP',
-    icon: '/icons/ProductInfoIcons/frontCamera.svg',
+    icon: ProductInfoFrontCameraIcon,
     alt: 'Front-camera icon',
   },
   {
     id: 6,
     label: 'Battery',
     value: '4323 mAh',
-    icon: '/icons/ProductInfoIcons/battery.svg',
+    icon: ProductInfoBatteryIcon,
     alt: 'Battery icon',
   },
 ];
@@ -196,21 +207,21 @@ export const PRODUCT_META = [
     id: 1,
     label: 'Delivery',
     value: '1-2 day',
-    icon: '/icons/ProductInfoIcons/deliveryTrack.svg',
+    icon: ProductInfoDeliveryTrackIcon,
     alt: 'Delivery Icon',
   },
   {
     id: 2,
     label: 'In Stock',
     value: 'Today',
-    icon: '/icons/ProductInfoIcons/shop.svg',
+    icon: ProductInfoShopIcon,
     alt: 'Shop Icon',
   },
   {
     id: 3,
     label: 'Guaranteed',
     value: '1 year',
-    icon: '/icons/ProductInfoIcons/verify.svg',
+    icon: ProductInfoVerifyIcon,
     alt: 'Guaranteed Icon',
   },
 ];
