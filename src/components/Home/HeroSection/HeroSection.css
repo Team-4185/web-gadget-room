@@ -1,0 +1,34 @@
+.home-hero {
+  width: 100%;
+  height: 600px;
+  background: var(--dark-hero-background);
+  padding: 0 758px 0 81px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.home-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero__media {
+  position: absolute;
+  right: 70px;
+  bottom: -400px;
+  width: min(48vw, 620px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.home-hero__media-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

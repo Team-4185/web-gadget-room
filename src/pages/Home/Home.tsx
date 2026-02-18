@@ -9,7 +9,15 @@ import {
   PromoGridSection,
   SaleBannerSection,
 } from '@/components';
-import { HOME_BRANDS, HOME_HERO, PRODUCTS } from '@/core/constants';
+import {
+  HOME_BRANDS,
+  HOME_HERO,
+  HOME_PROMO_LEAD,
+  HOME_PROMO_LEFT_SMALL,
+  HOME_PROMO_RIGHT_BIG,
+  HOME_PROMO_RIGHT_SMALL,
+  PRODUCTS,
+} from '@/core/constants';
 import { addProduct } from '@/core/store/slices/cartSlice';
 
 export const Home = () => {
@@ -26,10 +34,17 @@ export const Home = () => {
   return (
     <section className="home">
       <Container disableGutters sx={{ maxWidth: '1440px' }} className="home__container">
-        <HeroSection title={HOME_HERO.title} subtitle={HOME_HERO.subtitle} onBuyNow={addPhone} />
-        <PromoGridSection
+        <HeroSection
           title={HOME_HERO.title}
           subtitle={HOME_HERO.subtitle}
+          imageSrc={HOME_HERO.imageSrc}
+          onBuyNow={addPhone}
+        />
+        <PromoGridSection
+          lead={HOME_PROMO_LEAD}
+          leftSmall={HOME_PROMO_LEFT_SMALL}
+          rightSmall={HOME_PROMO_RIGHT_SMALL}
+          rightBig={HOME_PROMO_RIGHT_BIG}
           onBuyNow={addPhone}
           onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
         />

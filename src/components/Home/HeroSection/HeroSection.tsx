@@ -1,41 +1,31 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { Button } from '@/components';
+
+import './HeroSection.css';
 
 type Props = {
   title: { regular: string; bold: string };
   subtitle: string;
   onBuyNow: () => void;
+  imageSrc?: string;
+  imageAlt?: string;
 };
 
-export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
+export const HeroSection = ({
+  title,
+  subtitle,
+  onBuyNow,
+  imageSrc,
+  imageAlt = 'Hero product image',
+}: Props) => {
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height: '600px',
-        background: 'var(--black)',
-        paddingLeft: '81px',
-        paddingRight: '758px',
-        display: 'flex',
-        alignItems: 'left',
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'left',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          gap: '35px',
-        }}
-      >
+    <section className="home-hero">
+      <div className="home-hero__content">
         <Typography
           variant="h1"
           component="h1"
-          sx={{
+          style={{
             fontStyle: 'italic',
             fontWeight: 300,
             lineHeight: '75%',
@@ -46,7 +36,7 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
           <Typography
             variant="h1"
             component="span"
-            sx={{
+            style={{
               lineHeight: '75%',
               letterSpacing: '-0.05em',
               display: 'inline-block',
@@ -60,7 +50,7 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
         <Typography
           variant="body1"
           component="p"
-          sx={{
+          style={{
             fontWeight: 600,
             fontSize: '20px',
             lineHeight: '120%',
@@ -70,10 +60,22 @@ export const HeroSection = ({ title, subtitle, onBuyNow }: Props) => {
           {subtitle}
         </Typography>
 
-        <Button maxWidth="200px" height="60px" fontSize="20px" onClick={onBuyNow}>
+        <Button
+          maxWidth="200px"
+          height="60px"
+          fontSize="20px"
+          onClick={onBuyNow}
+          sx={{ background: 'var(--dark-button-background)', color: 'var(--white)' }}
+        >
           Buy Now
         </Button>
-      </Box>
-    </Box>
+      </div>
+
+      {imageSrc ? (
+        <div className="home-hero__media">
+          <img className="home-hero__media-image" src={imageSrc} alt={imageAlt} />
+        </div>
+      ) : null}
+    </section>
   );
 };

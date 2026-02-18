@@ -16,4 +16,45 @@ export const HOME_HERO = {
     bold: 'Pro',
   },
   subtitle: 'Created to change everything for the better. For everyone.',
+  imageSrc: 'src/assets/Home/hero-img.png',
+} as const;
+
+export const HOME_PROMO_LEAD = {
+  productId: 2,
+  title: {
+    regular: 'iPhone 17',
+    bold: 'Pro',
+  },
+  subtitle: 'An incredible camera, a titanium body, and the most powerful A19 Pro chip.',
+  imageSrc: 'src/assets/Home/promo-wide-box-img.png',
+} as const;
+
+export const HOME_PROMO_LEFT_SMALL = {
+  productId: 3,
+  title: {
+    regular: 'Xiaomi 15',
+    bold: 'Pro',
+  },
+  subtitle: 'Leica camera, 120W fast charging and premium design at an affordable price.',
+  imageSrc: 'src/assets/Home/promo_left_double_box_left.png',
+} as const;
+
+export const HOME_PROMO_RIGHT_SMALL = {
+  productId: 4,
+  title: {
+    regular: 'Google Pixel 10',
+    bold: 'Pro',
+  },
+  subtitle: 'Pure Android, the best AI from Google, and a camera that works magic at night.',
+  imageSrc: 'src/assets/Home/promo_left_double_box_right.png',
+} as const;
+
+export const HOME_PROMO_RIGHT_BIG = {
+  productId: 5,
+  title: {
+    regular: 'iPhone 17',
+    bold: 'Pro',
+  },
+  subtitle: 'The new iPhone 17 arrives in colors that capture every side of you.',
+  imageSrc: 'src/assets/Home/promo_right.png',
 } as const;

@@ -1,0 +1,136 @@
+.promo-grid {
+  width: 100%;
+  height: 584px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--ghost-white);
+}
+
+.promo-grid__left {
+  display: grid;
+  grid-template-rows: 314px 272px;
+}
+
+.promo-grid__lead-card {
+  width: 100%;
+  height: 314px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 36px 0 0 23px;
+}
+
+.promo-grid__lead-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  width: 322px;
+}
+
+.promo-grid__lead-media {
+  position: absolute;
+  right: 5px;
+  bottom: -50px;
+  width: 47%;
+  height: 100%;
+}
+
+.promo-grid__lead-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.promo-grid__bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.promo-grid__small-card {
+  width: 100%;
+  height: 272px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 42px 0 0 23px;
+}
+
+.promo-grid__small-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.promo-grid__small-card-content--left {
+  width: 193px;
+}
+
+.promo-grid__small-card-content--right {
+  width: 113px;
+}
+
+.promo-grid__small-media {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+}
+
+.promo-grid__small-media--left {
+  width: 47%;
+}
+
+.promo-grid__small-media--right {
+  width: 70%;
+}
+
+.promo-grid__small-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+.promo-grid__right {
+  width: 100%;
+  height: 100%;
+  background: var(--dark-hero-background);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 63px 0 0 65px;
+  z-index: 3;
+  position: relative;
+}
+
+.promo-grid__right-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  max-width: 438px;
+  flex-direction: column;
+}
+
+.promo-grid__right-media {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  width: min(48vw, 620px);
+  z-index: 2;
+}
+.promo-grid__right-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

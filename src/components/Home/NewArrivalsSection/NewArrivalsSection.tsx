@@ -1,7 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import { ProductCard } from '@/components';
 import type { IProduct } from '@/core/types';
+
+import './NewArrivalsSection.css';
 
 type Props = {
   products: IProduct[];
@@ -10,21 +12,12 @@ type Props = {
 
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
   return (
-    <Box sx={{ width: '100%', height: '634px', padding: '100px 80px' }}>
-      <Typography
-        variant="h3"
-        component="h3"
-        sx={{
-          fontWeight: '700',
-          lineHeight: 1,
-        }}
-      >
+    <section className="new-arrivals">
+      <Typography variant="h3" component="h3" style={{ fontWeight: 700, lineHeight: 1 }}>
         New Arrivals
       </Typography>
 
-      <Box
-        sx={{ display: 'flex', width: '100%', mt: '50px', justifyContent: 'center', gap: '26px' }}
-      >
+      <div className="new-arrivals__list">
         {products
           .filter((product) => product.id)
           .slice(0, 4)
@@ -35,7 +28,7 @@ export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
               onClick={() => onOpenProduct(product)}
             />
           ))}
-      </Box>
-    </Box>
+      </div>
+    </section>
   );
 };
