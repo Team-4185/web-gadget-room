@@ -151,5 +151,101 @@ export const theme = createTheme({
         },
       },
     },
+    MuiBreadcrumbs: {
+      styleOverrides: {
+        root: {
+          padding: '18px 0',
+        },
+        ol: {
+          gap: '9px',
+        },
+        separator: { marginLeft: 0, marginRight: 0 },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: 'var(--black)',
+          fontWeight: 600,
+          textDecoration: 'none',
+        },
+      },
+    },
+    MuiStepper: {
+      styleOverrides: {
+        root: {
+          padding: '15px 0',
+          gap: '12px',
+        },
+      },
+    },
+    MuiStep: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          border: '1px solid var(--blue-violet)',
+          borderRadius: '50px',
+          color: 'var(--white)',
+
+          '&.Mui-active': {
+            color: 'var(--blue-violet)',
+            border: 'none',
+          },
+          '&.Mui-completed': {
+            color: 'var(--white)',
+            background: 'var(--black)',
+          },
+          '&.Mui-active .MuiStepIcon-text': {
+            fill: 'var(--white)',
+          },
+        },
+        text: {
+          fontWeight: 600,
+          fontSize: '16px',
+          fill: 'var(--black)',
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        label: {
+          '&.Mui-active': {
+            fontWeight: 600,
+            fontSize: '16px',
+            color: 'var(--black)',
+          },
+        },
+        iconContainer: {
+          width: '27px',
+          height: '26px',
+          padding: 0,
+
+          '&.Mui-active': {
+            paddingRight: '12px',
+          },
+        },
+      },
+    },
+    MuiStepConnector: {
+      styleOverrides: {
+        root: {
+          display: 'none',
+        },
+      },
+    },
+    MuiStepButton: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          margin: 0,
+        },
+      },
+    },
   },
 });

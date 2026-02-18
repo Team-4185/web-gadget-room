@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
@@ -7,13 +7,17 @@ import ArrowRight from '/icons/ArrowRight.svg';
 import ArrowLeft from '/icons/ArrowLeft.svg';
 import { AuthPanel, LoginForm, RegisterForm, WelcomeText } from '@/components';
 
-export const AuthPage = () => {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+interface IProps {
+  mode: string;
+}
+
+export const AuthPage: FC<IProps> = ({ mode }) => {
+  // const [mode, setMode] = useState<'login' | 'register'>('login');
   const location = useLocation();
 
-  useEffect(() => {
-    if ((location as any).state?.mode) setMode((location as any).state.mode);
-  }, [location]);
+  // useEffect(() => {
+  //   if ((location as any).state?.mode) setMode((location as any).state.mode);
+  // }, [location]);
 
   return (
     <Container maxWidth="xl" disableGutters sx={{ padding: '60px 0' }}>
