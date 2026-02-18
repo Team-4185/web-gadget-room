@@ -17,6 +17,8 @@ import {
   HOME_PROMO_RIGHT_BIG,
   HOME_PROMO_RIGHT_SMALL,
   PRODUCTS,
+  HOME_BANNER_LEFT_IMAGE,
+  HOME_BANNER_RIGHT_IMAGE,
 } from '@/core/constants';
 import { addProduct } from '@/core/store/slices/cartSlice';
 
@@ -55,7 +57,11 @@ export const Home = () => {
         />
       </Container>
 
-      <SaleBannerSection onShopDeals={() => navigate('/catalog')} />
+      <SaleBannerSection
+        onShopDeals={() => navigate('/catalog')}
+        leftImageSrc={HOME_BANNER_LEFT_IMAGE}
+        rightImageSrc={HOME_BANNER_RIGHT_IMAGE}
+      />
     </section>
   );
 };

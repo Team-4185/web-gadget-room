@@ -7,11 +7,33 @@ import './SaleBannerSection.css';
 
 type Props = {
   onShopDeals: () => void;
+  leftImageSrc?: string;
+  rightImageSrc?: string;
+  leftImageAlt?: string;
+  rightImageAlt?: string;
 };
 
-export const SaleBannerSection = ({ onShopDeals }: Props) => {
+export const SaleBannerSection = ({
+  onShopDeals,
+  leftImageSrc,
+  rightImageSrc,
+  leftImageAlt = 'Sale left image',
+  rightImageAlt = 'Sale right image',
+}: Props) => {
   return (
     <section className="sale-banner">
+      {leftImageSrc ? (
+        <div className="sale-banner__media sale-banner__media--left">
+          <img className="sale-banner__media-image" src={leftImageSrc} alt={leftImageAlt} />
+        </div>
+      ) : null}
+
+      {rightImageSrc ? (
+        <div className="sale-banner__media sale-banner__media--right">
+          <img className="sale-banner__media-image" src={rightImageSrc} alt={rightImageAlt} />
+        </div>
+      ) : null}
+
       <div className="sale-banner__content">
         <div className="sale-banner__title-row">
           <div className="sale-banner__icon-wrap">
@@ -42,7 +64,7 @@ export const SaleBannerSection = ({ onShopDeals }: Props) => {
           height="60px"
           fontSize="24px"
           onClick={onShopDeals}
-          sx={{ background: 'var(--dark-button-background)', color: 'var(--white)' }}
+          sx={{ background: 'var(--dark-hero-background)', color: 'var(--white)' }}
         >
           Shop Deals
         </Button>

@@ -65,7 +65,7 @@ export const HeroSection = ({
           height="60px"
           fontSize="20px"
           onClick={onBuyNow}
-          sx={{ background: 'var(--dark-button-background)', color: 'var(--white)' }}
+          sx={{ background: 'var(--dark-hero-background)', color: 'var(--white)' }}
         >
           Buy Now
         </Button>
