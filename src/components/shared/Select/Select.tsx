@@ -2,7 +2,7 @@ import { useState, type FC, type ReactNode } from 'react';
 import { FormControl, Select as SelectMUI, MenuItem } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import { ArrowDown } from '@/assets';
+import { ChevronDown } from '@/assets';
 import type { ISelectOption } from '@/core/types';
 
 interface IProps {
@@ -27,7 +27,7 @@ export const Select: FC<IProps> = ({ data, maxWidth, height, color, fontSize, st
         sx={{ height, color, fontSize }}
         value={defaultValue}
         onChange={handleChange}
-        IconComponent={ArrowDown}
+        IconComponent={ChevronDown}
         renderValue={(selected) => {
           const item = data.find((item) => item.value === selected);
           return (

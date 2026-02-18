@@ -8,7 +8,7 @@ import {
 
 import { CheckBox } from '@/components';
 import type { ICheckboxOption } from '@/core/types';
-import { ArrowDown } from '@/assets';
+import { ChevronDown } from '@/assets';
 
 import './Accordion.css';
 
@@ -36,7 +36,7 @@ export const Accordion: FC<IProps> = ({
       className={`accordion ${className}`}
     >
       <AccordionSummary
-        expandIcon={<ArrowDown />}
+        expandIcon={<ChevronDown />}
         sx={{
           minHeight: 40,
           '&.Mui-expanded': {

@@ -14,7 +14,7 @@
 
 .checkbox__input:checked + .checkbox__icon {
   background-color: var(--dark-yellow);
-  background-image: url('/icons/check.svg');
+  background-image: url('/src/assets/check.svg');
   background-position: center;
   background-repeat: no-repeat;
 }
