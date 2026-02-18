@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 
 import type { BrandInfo } from '@/core/types';
+
 import './FeaturedBrandsSection.css';
 
 type Props = {
