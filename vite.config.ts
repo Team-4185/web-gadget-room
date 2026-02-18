@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
         svgrOptions: {
           replaceAttrValues: {
             'rgb(0,0,0)': 'currentColor',
+            black: 'currentColor',
           },
         },
       }),

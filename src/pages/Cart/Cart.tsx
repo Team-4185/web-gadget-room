@@ -11,7 +11,7 @@ export const Cart: FC = () => {
       <Container disableGutters>
         <div className="cart__layout">
           <CartGrid />
-          <OrderSummary />
+          <OrderSummary continueTo="/delivery" />
         </div>
       </Container>
     </section>
