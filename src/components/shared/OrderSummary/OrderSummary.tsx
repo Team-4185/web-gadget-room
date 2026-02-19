@@ -21,6 +21,9 @@ type OrderSummaryProps = {
   continueLabel?: string;
   continueDisabled?: boolean;
   showContinueButton?: boolean;
+  taxAmount?: number;
+  shippingAmount?: number;
+  className?: string;
 };
 
 export const OrderSummary = ({
@@ -29,16 +32,17 @@ export const OrderSummary = ({
   continueLabel = 'continue to payment',
   continueDisabled = false,
   showContinueButton = true,
+  taxAmount = 13,
+  shippingAmount = 13,
+  className,
 }: OrderSummaryProps) => {
   const amountOfProducts = useSelector((state: RootState) => state.cart.cart.length);
-  const tax = 13;
-  const shipping = 13;
 
   const subTotal = useSelector((state: RootState) =>
     state.cart.cart.reduce((sum, product) => sum + product.price * product.amount, 0)
   );
 
-  const total = tax + shipping + subTotal;
+  const total = taxAmount + shippingAmount + subTotal;
 
   const navigate = useNavigate();
 
@@ -51,7 +55,7 @@ export const OrderSummary = ({
   };
 
   return (
-    <div className="order-summary">
+    <div className={`order-summary ${className ?? ''}`}>
       <Typography variant="h6" component="h2" sx={summaryTitleSx}>
         Order Summary
       </Typography>
@@ -72,7 +76,7 @@ export const OrderSummary = ({
             Tax
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? tax.toFixed(2) : 0}
+            {'\u20AC'} {amountOfProducts ? taxAmount.toFixed(2) : 0}
           </Typography>
         </div>
 
@@ -81,7 +85,7 @@ export const OrderSummary = ({
             Delivery
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? shipping.toFixed(2) : 0}
+            {'\u20AC'} {amountOfProducts ? shippingAmount.toFixed(2) : 0}
           </Typography>
         </div>
       </div>
