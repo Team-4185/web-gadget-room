@@ -69,7 +69,7 @@ export const DeliveryCheckout = () => {
     <section className="delivery-checkout">
       <div className="delivery-checkout__layout">
         <div className="delivery-checkout__left">
-          <Typography variant="h4" component="h1" sx={{ fontSize: '40px', fontWeight: 600 }}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
             Delivery
           </Typography>
 
@@ -92,11 +92,7 @@ export const DeliveryCheckout = () => {
         </div>
 
         <div className="delivery-checkout__right">
-          <OrderSummary
-            className="delivery-checkout__summary"
-            continueTo="/payment"
-            shippingAmount={11}
-          />
+          <OrderSummary className="delivery-checkout__summary" continueTo="/payment" />
           <SmallRobots width={572} height={412} />
         </div>
       </div>
