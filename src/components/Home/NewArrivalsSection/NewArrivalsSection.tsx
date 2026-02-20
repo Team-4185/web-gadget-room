@@ -13,7 +13,7 @@ type Props = {
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
   return (
     <section className="new-arrivals">
-      <Typography variant="h3" component="h3" style={{ fontWeight: 700, lineHeight: 1 }}>
+      <Typography variant="h3" component="h3" sx={{ fontWeight: 700, lineHeight: 1 }}>
         New Arrivals
       </Typography>
 

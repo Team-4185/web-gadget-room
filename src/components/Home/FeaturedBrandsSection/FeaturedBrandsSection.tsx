@@ -11,7 +11,7 @@ type Props = {
 export const FeaturedBrandsSection = ({ brands }: Props) => {
   return (
     <section className="featured-brands">
-      <Typography variant="h3" component="h3" style={{ fontWeight: 700, lineHeight: 1 }}>
+      <Typography variant="h3" component="h3" sx={{ fontWeight: 700, lineHeight: 1 }}>
         Featured Brands
       </Typography>
 
@@ -23,7 +23,7 @@ export const FeaturedBrandsSection = ({ brands }: Props) => {
               <Typography
                 component="h6"
                 variant="h6"
-                style={{
+                sx={{
                   display: 'flex',
                   width: '100%',
                   textAlign: 'center',
@@ -40,12 +40,11 @@ export const FeaturedBrandsSection = ({ brands }: Props) => {
 
               <Typography
                 component="p"
-                style={{
+                sx={{
                   display: 'block',
                   width: '100%',
                   textAlign: 'center',
                   marginTop: '10px',
-                  fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '107%',
                 }}

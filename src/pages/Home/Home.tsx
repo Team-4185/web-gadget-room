@@ -35,21 +35,21 @@ export const Home = () => {
 
   return (
     <section className="home">
-      <Container disableGutters sx={{ maxWidth: '1440px' }} className="home__container">
-        <HeroSection
-          title={HOME_HERO.title}
-          subtitle={HOME_HERO.subtitle}
-          imageSrc={HOME_HERO.imageSrc}
-          onBuyNow={addPhone}
-        />
-        <PromoGridSection
-          lead={HOME_PROMO_LEAD}
-          leftSmall={HOME_PROMO_LEFT_SMALL}
-          rightSmall={HOME_PROMO_RIGHT_SMALL}
-          rightBig={HOME_PROMO_RIGHT_BIG}
-          onBuyNow={addPhone}
-          onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
-        />
+      <HeroSection
+        title={HOME_HERO.title}
+        subtitle={HOME_HERO.subtitle}
+        imageSrc={HOME_HERO.imageSrc}
+        onBuyNow={addPhone}
+      />
+      <PromoGridSection
+        lead={HOME_PROMO_LEAD}
+        leftSmall={HOME_PROMO_LEFT_SMALL}
+        rightSmall={HOME_PROMO_RIGHT_SMALL}
+        rightBig={HOME_PROMO_RIGHT_BIG}
+        onBuyNow={addPhone}
+        onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
+      />
+      <Container disableGutters>
         <FeaturedBrandsSection brands={HOME_BRANDS} />
         <NewArrivalsSection
           products={PRODUCTS}

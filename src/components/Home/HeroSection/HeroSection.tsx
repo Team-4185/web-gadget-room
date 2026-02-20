@@ -25,7 +25,7 @@ export const HeroSection = ({
         <Typography
           variant="h1"
           component="h1"
-          style={{
+          sx={{
             fontStyle: 'italic',
             fontWeight: 300,
             lineHeight: '75%',
@@ -36,7 +36,7 @@ export const HeroSection = ({
           <Typography
             variant="h1"
             component="span"
-            style={{
+            sx={{
               lineHeight: '75%',
               letterSpacing: '-0.05em',
               display: 'inline-block',
@@ -50,7 +50,7 @@ export const HeroSection = ({
         <Typography
           variant="body1"
           component="p"
-          style={{
+          sx={{
             fontWeight: 600,
             fontSize: '20px',
             lineHeight: '120%',
