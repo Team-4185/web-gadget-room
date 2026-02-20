@@ -24,15 +24,5 @@
 
 .delivery-checkout__summary {
   margin-top: 0;
-}
-
-@media (max-width: 1200px) {
-  .delivery-checkout__layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .delivery-checkout__left {
-    width: 100%;
-  }
+  margin-bottom: 140px;
 }

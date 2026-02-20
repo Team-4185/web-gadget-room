@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Typography } from '@mui/material';
 
-import { OrderSummary } from '@/components';
-import { DeliveryMethodSection } from '../DeliveryMethodSection/DeliveryMethodSection';
-import { PaymentSection } from '../PaymentSection/PaymentSection';
-import { RecipientSection } from '../RecipientSection/RecipientSection';
+import {
+  OrderSummary,
+  DeliveryMethodSection,
+  PaymentSection,
+  RecipientSection,
+} from '@/components';
+import { SmallRobots } from '@/assets';
 
 import './DeliveryCheckout.css';
 
@@ -94,6 +97,7 @@ export const DeliveryCheckout = () => {
             continueTo="/payment"
             shippingAmount={11}
           />
+          <SmallRobots width={572} height={412} />
         </div>
       </div>
     </section>

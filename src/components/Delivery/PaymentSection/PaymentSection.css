@@ -16,6 +16,7 @@
   border: 1px solid var(--blue-violet);
   border-radius: 8px;
   background: var(--white);
+  box-shadow: var(--inputs-box-shadow);
   padding: 10px 12px;
   display: flex;
   align-items: center;

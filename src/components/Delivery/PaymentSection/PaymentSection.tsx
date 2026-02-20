@@ -1,9 +1,7 @@
 import { Typography } from '@mui/material';
 
+import { RadioButton } from '@/components';
 import { ApplePay, GooglePay, MasterCard, Visa } from '@/assets';
-
-import RadioActive from '/icons/RadioActive.svg';
-import RadioInactive from '/icons/RadioInactive.svg';
 
 import './PaymentSection.css';
 
@@ -37,7 +35,7 @@ export const PaymentSection = ({
             onClick={() => onPaymentMethodChange('receipt')}
           >
             <div className="payment-section__option-left">
-              <img src={paymentMethod === 'receipt' ? RadioActive : RadioInactive} alt="radio" />
+              <RadioButton checked={paymentMethod === 'receipt'} />
               <Typography variant="body1" sx={{ fontWeight: 600 }}>
                 Payment upon receipt of goods
               </Typography>
@@ -52,59 +50,61 @@ export const PaymentSection = ({
             onClick={() => onPaymentMethodChange('online')}
           >
             <div className="payment-section__option-left">
-              <img src={paymentMethod === 'online' ? RadioActive : RadioInactive} alt="radio" />
+              <RadioButton checked={paymentMethod === 'online'} />
               <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                Self-pickup from the Nova Poshta
+                Online payment
               </Typography>
             </div>
           </button>
 
-          <div className="payment-section__payment-list">
-            <button
-              type="button"
-              className="payment-section__payment-item"
-              onClick={() => onOnlinePaymentChange('card')}
-            >
-              <div className="payment-section__option-left">
-                <img src={onlinePayment === 'card' ? RadioActive : RadioInactive} alt="radio" />
-                <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                  By card online
-                </Typography>
-              </div>
-              <div className="payment-section__payment-icons">
-                <Visa width={20} height={15} />
-                <MasterCard width={20} height={20} />
-              </div>
-            </button>
+          {paymentMethod === 'online' && (
+            <div className="payment-section__payment-list">
+              <button
+                type="button"
+                className="payment-section__payment-item"
+                onClick={() => onOnlinePaymentChange('card')}
+              >
+                <div className="payment-section__option-left">
+                  <RadioButton checked={onlinePayment === 'card'} />
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    By card online
+                  </Typography>
+                </div>
+                <div className="payment-section__payment-icons">
+                  <Visa width={20} height={15} />
+                  <MasterCard width={20} height={20} />
+                </div>
+              </button>
 
-            <button
-              type="button"
-              className="payment-section__payment-item"
-              onClick={() => onOnlinePaymentChange('gpay')}
-            >
-              <div className="payment-section__option-left">
-                <img src={onlinePayment === 'gpay' ? RadioActive : RadioInactive} alt="radio" />
-                <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                  Google Pay
-                </Typography>
-              </div>
-              <GooglePay width={24} height={15} />
-            </button>
+              <button
+                type="button"
+                className="payment-section__payment-item"
+                onClick={() => onOnlinePaymentChange('gpay')}
+              >
+                <div className="payment-section__option-left">
+                  <RadioButton checked={onlinePayment === 'gpay'} />
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Google Pay
+                  </Typography>
+                </div>
+                <GooglePay width={24} height={15} />
+              </button>
 
-            <button
-              type="button"
-              className="payment-section__payment-item"
-              onClick={() => onOnlinePaymentChange('apay')}
-            >
-              <div className="payment-section__option-left">
-                <img src={onlinePayment === 'apay' ? RadioActive : RadioInactive} alt="radio" />
-                <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                  Apple Pay
-                </Typography>
-              </div>
-              <ApplePay width={23} height={23} />
-            </button>
-          </div>
+              <button
+                type="button"
+                className="payment-section__payment-item"
+                onClick={() => onOnlinePaymentChange('apay')}
+              >
+                <div className="payment-section__option-left">
+                  <RadioButton checked={onlinePayment === 'apay'} />
+                  <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                    Apple Pay
+                  </Typography>
+                </div>
+                <ApplePay width={23} height={23} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

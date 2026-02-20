@@ -1,10 +1,7 @@
 import { MenuItem, Typography } from '@mui/material';
 
-import { Button, Input } from '@/components';
-import { NovaPost } from '@/assets';
-
-import RadioActive from '/icons/RadioActive.svg';
-import RadioInactive from '/icons/RadioInactive.svg';
+import { Button, Input, RadioButton } from '@/components';
+import { Map } from '@/assets';
 
 import './DeliveryMethodSection.css';
 
@@ -46,14 +43,17 @@ export const DeliveryMethodSection = ({
 
       <div className="delivery-method-section__options">
         {deliveryOptions.map((option) => (
-          <div key={option.id} className="delivery-method-section__option delivery-method-section__option--expanded">
+          <div
+            key={option.id}
+            className="delivery-method-section__option delivery-method-section__option--expanded"
+          >
             <button
               type="button"
               className="delivery-method-section__option-header"
               onClick={() => onDeliveryMethodChange(option.id)}
             >
               <div className="delivery-method-section__option-left">
-                <img src={deliveryMethod === option.id ? RadioActive : RadioInactive} alt="radio" />
+                <RadioButton checked={deliveryMethod === option.id} />
                 <Typography variant="body1" sx={{ fontWeight: 600 }}>
                   {option.title}
                 </Typography>
@@ -72,6 +72,12 @@ export const DeliveryMethodSection = ({
                   onChange={(e) => onBranchChange(option.id, String(e.target.value))}
                   className="delivery-method-section__branch"
                   size="small"
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      boxShadow: 'var(--inputs-box-shadow)',
+                      overflow: 'hidden',
+                    },
+                  }}
                 >
                   {branchesByMethod[option.id].map((item) => (
                     <MenuItem key={item} value={item}>
@@ -83,18 +89,16 @@ export const DeliveryMethodSection = ({
                 <Button
                   maxWidth="233px"
                   height="44px"
-                  textTransform="none"
                   borderRadius="8px"
                   border="none"
                   sx={{
-                    boxShadow: 'none',
                     background: 'var(--blue-violet)',
                     color: 'var(--white)',
                     '&:hover': { background: 'var(--blue-violet)', color: 'var(--white)' },
                   }}
                 >
                   <div className="delivery-method-section__map-btn">
-                    <NovaPost width={18} height={18} />
+                    <Map width={18} height={18} fill="currentColor" />
                     <span>Select on the map</span>
                   </div>
                 </Button>

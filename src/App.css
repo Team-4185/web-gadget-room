@@ -22,6 +22,7 @@
   --product-bottom-icon-text: #717171;
   --product-specs-background: #f2f2fe;
   --box-summary-background: rgba(249, 249, 249, 0.2);
+  --inputs-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 ol[role='list'],
