@@ -16,7 +16,7 @@ export const HOME_HERO = {
     bold: 'Pro',
   },
   subtitle: 'Created to change everything for the better. For everyone.',
-  imageSrc: 'src/assets/Home/heroImg.png',
+  imageSrc: 'Home/heroImg.png',
 } as const;
 
 export const HOME_PROMO_LEAD = {
@@ -26,7 +26,7 @@ export const HOME_PROMO_LEAD = {
     bold: 'Pro',
   },
   subtitle: 'An incredible camera, a titanium body, and the most powerful A19 Pro chip.',
-  imageSrc: 'src/assets/Home/promoWideBox.png',
+  imageSrc: 'Home/promoWideBox.png',
 } as const;
 
 export const HOME_PROMO_LEFT_SMALL = {
@@ -36,7 +36,7 @@ export const HOME_PROMO_LEFT_SMALL = {
     bold: 'Pro',
   },
   subtitle: 'Leica camera, 120W fast charging and premium design at an affordable price.',
-  imageSrc: 'src/assets/Home/promoLeftDoubleBoxLeft.png',
+  imageSrc: 'Home/promoLeftDoubleBoxLeft.png',
 } as const;
 
 export const HOME_PROMO_RIGHT_SMALL = {
@@ -46,7 +46,7 @@ export const HOME_PROMO_RIGHT_SMALL = {
     bold: 'Pro',
   },
   subtitle: 'Pure Android, the best AI from Google, and a camera that works magic at night.',
-  imageSrc: 'src/assets/Home/promoLeftDoubleBoxRight.png',
+  imageSrc: 'Home/promoLeftDoubleBoxRight.png',
 } as const;
 
 export const HOME_PROMO_RIGHT_BIG = {
@@ -56,8 +56,8 @@ export const HOME_PROMO_RIGHT_BIG = {
     bold: 'Pro',
   },
   subtitle: 'The new iPhone 17 arrives in colors that capture every side of you.',
-  imageSrc: 'src/assets/Home/promoRight.png',
+  imageSrc: 'Home/promoRight.png',
 } as const;
 
-export const HOME_BANNER_LEFT_IMAGE = 'src/assets/Home/phoneFront.png';
-export const HOME_BANNER_RIGHT_IMAGE = 'src/assets/Home/phoneBack.png';
+export const HOME_BANNER_LEFT_IMAGE = 'Home/phoneFront.png';
+export const HOME_BANNER_RIGHT_IMAGE = 'Home/phoneBack.png';

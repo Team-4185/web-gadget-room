@@ -39,12 +39,12 @@ export const SaleBannerSection = ({
           <div className="sale-banner__icon-wrap">
             <Fire className="sale-banner__icon" />
           </div>
-          <Typography component="h3" variant="h3" style={{ lineHeight: 1, color: 'var(--white)' }}>
+          <Typography component="h3" variant="h3" sx={{ lineHeight: 1, color: 'var(--white)' }}>
             Big Summer{' '}
             <Typography
               component="span"
               variant="h3"
-              style={{ fontWeight: 800, color: 'var(--white)' }}
+              sx={{ fontWeight: 800, color: 'var(--white)' }}
             >
               Sale
             </Typography>
@@ -54,7 +54,7 @@ export const SaleBannerSection = ({
         <Typography
           component="h5"
           variant="h5"
-          style={{ fontStyle: 'italic', lineHeight: 1, color: 'var(--white)' }}
+          sx={{ fontStyle: 'italic', lineHeight: 1, color: 'var(--white)' }}
         >
           Up to 50% off on popular models
         </Typography>

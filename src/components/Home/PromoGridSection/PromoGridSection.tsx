@@ -39,7 +39,7 @@ export const PromoGridSection = ({
           <div className="promo-grid__lead-content">
             <Typography
               variant="h6"
-              style={{
+              sx={{
                 fontStyle: 'italic',
                 fontWeight: 300,
                 lineHeight: 1,
@@ -51,7 +51,7 @@ export const PromoGridSection = ({
               <Typography
                 component="span"
                 variant="h6"
-                style={{
+                sx={{
                   fontWeight: 600,
                   display: 'inline-block',
                   fontSize: 'inherit',
@@ -66,7 +66,7 @@ export const PromoGridSection = ({
             </Typography>
             <Typography
               variant="h6"
-              style={{
+              sx={{
                 fontStyle: 'italic',
                 fontWeight: 300,
                 lineHeight: 1,
@@ -78,7 +78,7 @@ export const PromoGridSection = ({
               <Typography
                 component="span"
                 variant="h6"
-                style={{
+                sx={{
                   fontWeight: 600,
                   display: 'inline-block',
                   fontSize: 'inherit',
@@ -93,7 +93,7 @@ export const PromoGridSection = ({
             </Typography>
             <Typography
               variant="body1"
-              style={{
+              sx={{
                 fontWeight: 300,
                 fontSize: '15px',
                 lineHeight: '166.67%',
@@ -126,7 +126,7 @@ export const PromoGridSection = ({
             <div className="promo-grid__small-card-content promo-grid__small-card-content--left">
               <Typography
                 variant="body1"
-                style={{
+                sx={{
                   fontSize: '24px',
                   lineHeight: '91.667%',
                   letterSpacing: '-1.44px',
@@ -137,7 +137,7 @@ export const PromoGridSection = ({
                 {leftSmall.title.regular}{' '}
                 <Typography
                   component="span"
-                  style={{
+                  sx={{
                     fontWeight: 600,
                     display: 'inline-block',
                     fontSize: 'inherit',
@@ -151,7 +151,7 @@ export const PromoGridSection = ({
               </Typography>
               <Typography
                 variant="body1"
-                style={{
+                sx={{
                   fontSize: '14px',
                   lineHeight: '142.857%',
                   color: 'var(--black)',
@@ -183,7 +183,7 @@ export const PromoGridSection = ({
             <div className="promo-grid__small-card-content promo-grid__small-card-content--right">
               <Typography
                 variant="body1"
-                style={{
+                sx={{
                   fontSize: '24px',
                   lineHeight: '91.667%',
                   letterSpacing: '-1.44px',
@@ -194,7 +194,7 @@ export const PromoGridSection = ({
                 {rightSmall.title.regular}{' '}
                 <Typography
                   component="span"
-                  style={{
+                  sx={{
                     fontWeight: 600,
                     display: 'inline-block',
                     fontSize: 'inherit',
@@ -208,7 +208,7 @@ export const PromoGridSection = ({
               </Typography>
               <Typography
                 variant="body1"
-                style={{
+                sx={{
                   fontWeight: 400,
                   fontSize: '12px',
                   lineHeight: '125%',
@@ -243,7 +243,7 @@ export const PromoGridSection = ({
         <div className="promo-grid__right-content">
           <Typography
             variant="h2"
-            style={{
+            sx={{
               display: 'inline-block',
               fontStyle: 'italic',
               fontWeight: 300,
@@ -255,7 +255,7 @@ export const PromoGridSection = ({
             {rightBig.title.regular}{' '}
             <Typography
               component="span"
-              style={{
+              sx={{
                 fontWeight: 600,
                 display: 'inline-block',
                 fontSize: 'inherit',
@@ -269,7 +269,7 @@ export const PromoGridSection = ({
           </Typography>
           <Typography
             variant="body1"
-            style={{
+            sx={{
               display: 'inline-block',
               fontWeight: 400,
               fontSize: '24px',
