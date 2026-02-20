@@ -76,7 +76,10 @@ export const DeliveryCheckout = () => {
                 onClick={() => setDeliveryMethod('courier')}
               >
                 <div className="delivery-checkout__option-left">
-                  <img src={deliveryMethod === 'courier' ? RadioActive : RadioInactive} alt="radio" />
+                  <img
+                    src={deliveryMethod === 'courier' ? RadioActive : RadioInactive}
+                    alt="radio"
+                  />
                   <Typography variant="body1">Courier to your address</Typography>
                 </div>
                 <Typography variant="body1" sx={{ fontSize: '15px', fontWeight: 500 }}>
@@ -91,7 +94,10 @@ export const DeliveryCheckout = () => {
                   onClick={() => setDeliveryMethod('nova')}
                 >
                   <div className="delivery-checkout__option-left">
-                    <img src={deliveryMethod === 'nova' ? RadioActive : RadioInactive} alt="radio" />
+                    <img
+                      src={deliveryMethod === 'nova' ? RadioActive : RadioInactive}
+                      alt="radio"
+                    />
                     <Typography variant="body1">Self-pickup from the Nova Post</Typography>
                   </div>
                   <Typography variant="body1" sx={{ fontSize: '15px', fontWeight: 500 }}>
@@ -178,7 +184,10 @@ export const DeliveryCheckout = () => {
                 onClick={() => setPaymentMethod('receipt')}
               >
                 <div className="delivery-checkout__option-left">
-                  <img src={paymentMethod === 'receipt' ? RadioActive : RadioInactive} alt="radio" />
+                  <img
+                    src={paymentMethod === 'receipt' ? RadioActive : RadioInactive}
+                    alt="radio"
+                  />
                   <Typography variant="body1">Payment upon receipt of goods</Typography>
                 </div>
               </button>
@@ -190,7 +199,10 @@ export const DeliveryCheckout = () => {
                   onClick={() => setPaymentMethod('online')}
                 >
                   <div className="delivery-checkout__option-left">
-                    <img src={paymentMethod === 'online' ? RadioActive : RadioInactive} alt="radio" />
+                    <img
+                      src={paymentMethod === 'online' ? RadioActive : RadioInactive}
+                      alt="radio"
+                    />
                     <Typography variant="body1">Self-pickup from the Nova Poshta</Typography>
                   </div>
                 </button>
@@ -202,7 +214,10 @@ export const DeliveryCheckout = () => {
                     onClick={() => setOnlinePayment('card')}
                   >
                     <div className="delivery-checkout__option-left">
-                      <img src={onlinePayment === 'card' ? RadioActive : RadioInactive} alt="radio" />
+                      <img
+                        src={onlinePayment === 'card' ? RadioActive : RadioInactive}
+                        alt="radio"
+                      />
                       <Typography variant="body1">By card online</Typography>
                     </div>
                     <div className="delivery-checkout__payment-icons">
@@ -217,7 +232,10 @@ export const DeliveryCheckout = () => {
                     onClick={() => setOnlinePayment('gpay')}
                   >
                     <div className="delivery-checkout__option-left">
-                      <img src={onlinePayment === 'gpay' ? RadioActive : RadioInactive} alt="radio" />
+                      <img
+                        src={onlinePayment === 'gpay' ? RadioActive : RadioInactive}
+                        alt="radio"
+                      />
                       <Typography variant="body1">Google Pay</Typography>
                     </div>
                     <GooglePay width={24} height={15} />
@@ -229,7 +247,10 @@ export const DeliveryCheckout = () => {
                     onClick={() => setOnlinePayment('apay')}
                   >
                     <div className="delivery-checkout__option-left">
-                      <img src={onlinePayment === 'apay' ? RadioActive : RadioInactive} alt="radio" />
+                      <img
+                        src={onlinePayment === 'apay' ? RadioActive : RadioInactive}
+                        alt="radio"
+                      />
                       <Typography variant="body1">Apple Pay</Typography>
                     </div>
                     <ApplePay width={23} height={23} />
@@ -241,7 +262,11 @@ export const DeliveryCheckout = () => {
         </div>
 
         <div className="delivery-checkout__right">
-          <OrderSummary className="delivery-checkout__summary" continueTo="/payment" shippingAmount={11} />
+          <OrderSummary
+            className="delivery-checkout__summary"
+            continueTo="/payment"
+            shippingAmount={11}
+          />
         </div>
       </div>
     </section>
