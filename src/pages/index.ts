@@ -7,3 +7,4 @@ export { Home } from './Home/Home';
 export { Payment } from './Payment/Payment';
 export { ProductPage } from './ProductPage/ProductPage';
 export { UserProfile } from './UserProfile/UserProfile';
+export { PageNotFound } from './PageNotFound/PageNotFound';

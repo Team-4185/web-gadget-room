@@ -10,6 +10,7 @@ import {
   Payment,
   ProductPage,
   UserProfile,
+  PageNotFound,
 } from '@/pages';
 import { ProtectedRoute } from '@/routes';
 
@@ -28,6 +29,7 @@ export const AppRoutes = () => {
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/about" element={<About />} />
       <Route path="/product/:id" element={<ProductPage />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
