@@ -46,7 +46,6 @@ export const PromoGridSection = ({
                 display: 'inline-block',
               }}
             >
-              {/* {lead.title.regular}{' '} */}
               New{' '}
               <Typography
                 component="span"
@@ -60,7 +59,6 @@ export const PromoGridSection = ({
                   letterSpacing: 'inherit',
                 }}
               >
-                {/* {lead.title.bold} */}
                 Colors
               </Typography>
             </Typography>
@@ -73,7 +71,6 @@ export const PromoGridSection = ({
                 display: 'inline-block',
               }}
             >
-              {/* {lead.title.regular}{' '} */}
               New{' '}
               <Typography
                 component="span"
@@ -87,7 +84,6 @@ export const PromoGridSection = ({
                   letterSpacing: 'inherit',
                 }}
               >
-                {/* {lead.title.bold} */}
                 Features
               </Typography>
             </Typography>
