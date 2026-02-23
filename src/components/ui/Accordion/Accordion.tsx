@@ -65,8 +65,8 @@ export const Accordion: FC<IProps> = ({
               id={item.value}
               name={item.value}
               label={item.label}
+              labelSize="20px"
               checked={isActive}
-              className="checkbox_small"
               onChange={() => onToggle(item.value)}
             />
           );
