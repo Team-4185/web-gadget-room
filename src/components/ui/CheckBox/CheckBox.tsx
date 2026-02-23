@@ -1,17 +1,27 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
+import { Typography } from '@mui/material';
 
 import './Checkbox.css';
 
 type CheckBoxProps = {
   id: string | undefined;
   name: string;
-  label: string;
+  label: ReactNode;
+  labelSize?: string;
   checked: boolean;
   onChange: () => void;
   className?: string;
 };
 
-export const CheckBox: FC<CheckBoxProps> = ({ id, name, label, checked, onChange, className }) => {
+export const CheckBox: FC<CheckBoxProps> = ({
+  id,
+  name,
+  label,
+  labelSize = '16px',
+  checked,
+  onChange,
+  className,
+}) => {
   return (
     <label className={`checkbox ${className}`} htmlFor={id}>
       <input
@@ -23,7 +33,7 @@ export const CheckBox: FC<CheckBoxProps> = ({ id, name, label, checked, onChange
         onChange={onChange}
       />
       <span className="checkbox__icon" />
-      <span className="checkbox__label">{label}</span>
+      <Typography sx={{ fontSize: labelSize, color: 'var(--black)' }}>{label}</Typography>
     </label>
   );
 };
