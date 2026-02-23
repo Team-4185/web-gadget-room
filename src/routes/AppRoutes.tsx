@@ -6,6 +6,7 @@ import {
   Cart,
   Catalog,
   Delivery,
+  EmptyCart,
   Home,
   Payment,
   ProductPage,
@@ -23,6 +24,7 @@ export const AppRoutes = () => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/payment" element={<Payment />} />
       <Route path="/delivery" element={<Delivery />} />
+      <Route path="/empty-cart" element={<EmptyCart />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/userProfile" element={<UserProfile />} />
       </Route>

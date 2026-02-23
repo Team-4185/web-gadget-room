@@ -3,6 +3,7 @@ export * from './ui';
 
 export { Footer } from './Footer/Footer';
 export { NotFoundContent } from './NotFoundContent/NotFoundContent';
+export { EmptyCartContent } from './EmptyCartContent/EmptyCartContent';
 
 export * from './Catalog';
 export * from './Home';

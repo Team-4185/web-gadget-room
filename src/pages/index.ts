@@ -3,6 +3,7 @@ export { AuthPage } from './AuthPage/AuthPage';
 export { Cart } from './Cart/Cart';
 export { Catalog } from './Catalog/Catalog';
 export { Delivery } from './Delivery/Delivery';
+export { EmptyCart } from './EmptyCart/EmptyCart';
 export { Home } from './Home/Home';
 export { Payment } from './Payment/Payment';
 export { ProductPage } from './ProductPage/ProductPage';
