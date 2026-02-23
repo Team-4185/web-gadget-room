@@ -5,4 +5,4 @@ export { usePagination } from './usePagination';
 export { usePaymentForm } from './usePaymentForm';
 export { useProduct } from './useProduct';
 export { useRegister } from './useRegister';
-export { useRegisterForm } from './useRegisterForm';
+// export { useRegisterForm } from './useRegisterForm';
