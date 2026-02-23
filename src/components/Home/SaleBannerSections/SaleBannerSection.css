@@ -1,0 +1,65 @@
+.sale-banner {
+  width: 100%;
+  background: var(--dark-hero-background);
+  padding: 96px 423px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 43px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sale-banner__content {
+  display: flex;
+  flex-direction: column;
+  width: 594px;
+  max-height: 209px;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.sale-banner__title-row {
+  display: flex;
+  gap: 20px;
+}
+
+.sale-banner__icon-wrap {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sale-banner__icon {
+  fill: var(--icon-fire);
+}
+
+.sale-banner__media {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sale-banner__media--left {
+  left: 0;
+}
+
+.sale-banner__media--right {
+  right: 0;
+}
+
+.sale-banner__media-image {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
