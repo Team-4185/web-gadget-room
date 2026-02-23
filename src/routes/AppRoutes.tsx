@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import {
   About,
@@ -29,7 +29,8 @@ export const AppRoutes = () => {
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/about" element={<About />} />
       <Route path="/product/:id" element={<ProductPage />} />
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="/404" element={<PageNotFound />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };

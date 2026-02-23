@@ -7,7 +7,7 @@ export const PageNotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <Container>
+    <Container disableGutters>
       <NotFoundContent onBackHome={() => navigate('/')} />
     </Container>
   );
