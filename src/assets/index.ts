@@ -42,3 +42,5 @@ export { default as Minus } from './minus.svg?react';
 export { default as ArrowRight } from './arrowRight.svg?react';
 export { default as ArrowLeft } from './arrowLeft.svg?react';
 export { default as Check } from './check.svg?react';
+export { default as Completed } from './completed.svg?react';
+export { default as Error } from './error.svg?react';

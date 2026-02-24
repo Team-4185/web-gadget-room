@@ -39,9 +39,10 @@ export const Register: FC = () => {
         Register
       </Typography>
       <form className="register__form" action="#" onSubmit={onSubmit}>
-        <Input type="email" label="Email Address" sx={{ width: '100%' }} />
+        {/* <Input type="email" label="Email Address" sx={{ width: '100%' }} />
         <Input type="password" label="Password" sx={{ width: '100%', marginTop: '15px' }} />
-        <Input type="password" label="Repeat Password" sx={{ width: '100%', marginTop: '15px' }} />
+        <Input type="password" label="Repeat Password" sx={{ width: '100%', marginTop: '15px' }} /> */}
+        <Input type="email" label="Email address" />
 
         <CheckBox
           className="register__checkbox"
