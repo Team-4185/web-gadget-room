@@ -1,0 +1,30 @@
+.featured-brands {
+  width: 100%;
+  padding: 80px 0;
+}
+
+.featured-brands__grid {
+  width: 100%;
+  display: flex;
+  margin-top: 47px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.featured-brands__card {
+  width: 280px;
+  height: 200px;
+  background: var(--dark-background);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid var(--blue-violet);
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+}
+
+.featured-brands__icon {
+  width: 40px;
+  height: 40px;
+}
