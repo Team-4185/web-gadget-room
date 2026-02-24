@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 
 import { Input } from '@/components';
-import { Location } from '@/assets';
 
 import './RecipientSection.css';
 
@@ -25,7 +24,6 @@ export const RecipientSection = () => {
 
         <div className="recipient-section__address">
           <div className="recipient-section__address-left">
-            <Location width={20} height={20} color="var(--amber)" />
             <Typography variant="body1" component="span" sx={{ fontSize: '14px' }}>
               Kiev,Kiev region
             </Typography>
