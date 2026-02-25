@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,15 +48,11 @@ export const Home = () => {
         onBuyNow={addPhone}
         onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
       />
-      <section aria-label="Featured Brands and New Arrivals">
-        <Container disableGutters>
-          <FeaturedBrandsSection brands={HOME_BRANDS} />
-          <NewArrivalsSection
-            products={PRODUCTS}
-            onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
-          />
-        </Container>
-      </section>
+      <FeaturedBrandsSection brands={HOME_BRANDS} />
+      <NewArrivalsSection
+        products={PRODUCTS}
+        onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
+      />
 
       <SaleBannerSection
         onShopDeals={() => navigate('/catalog')}

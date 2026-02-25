@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 
 import { ProductCard } from '@/components';
 import type { IProduct } from '@/core/types';
@@ -12,23 +12,25 @@ type Props = {
 
 export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
   return (
-    <div className="new-arrivals">
-      <Typography variant="h3" component="h2" sx={{ fontWeight: 700, lineHeight: 1 }}>
-        New Arrivals
-      </Typography>
+    <section className="new-arrivals" aria-label="New Arrivals">
+      <Container disableGutters>
+        <Typography variant="h3" component="h2" sx={{ fontWeight: 700, lineHeight: 1 }}>
+          New Arrivals
+        </Typography>
 
-      <div className="new-arrivals__list">
-        {products
-          .filter((product) => product.id)
-          .slice(0, 4)
-          .map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClick={() => onOpenProduct(product)}
-            />
-          ))}
-      </div>
-    </div>
+        <div className="new-arrivals__list">
+          {products
+            .filter((product) => product.id)
+            .slice(0, 4)
+            .map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClick={() => onOpenProduct(product)}
+              />
+            ))}
+        </div>
+      </Container>
+    </section>
   );
 };
