@@ -34,7 +34,7 @@ export const Home = () => {
   };
 
   return (
-    <section className="home">
+    <>
       <HeroSection
         title={HOME_HERO.title}
         subtitle={HOME_HERO.subtitle}
@@ -49,19 +49,21 @@ export const Home = () => {
         onBuyNow={addPhone}
         onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
       />
-      <Container disableGutters>
-        <FeaturedBrandsSection brands={HOME_BRANDS} />
-        <NewArrivalsSection
-          products={PRODUCTS}
-          onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
-        />
-      </Container>
+      <section aria-label="Featured Brands and New Arrivals">
+        <Container disableGutters>
+          <FeaturedBrandsSection brands={HOME_BRANDS} />
+          <NewArrivalsSection
+            products={PRODUCTS}
+            onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
+          />
+        </Container>
+      </section>
 
       <SaleBannerSection
         onShopDeals={() => navigate('/catalog')}
         leftImageSrc={HOME_BANNER_LEFT_IMAGE}
         rightImageSrc={HOME_BANNER_RIGHT_IMAGE}
       />
-    </section>
+    </>
   );
 };

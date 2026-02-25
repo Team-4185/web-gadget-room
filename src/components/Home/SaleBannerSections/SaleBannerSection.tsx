@@ -21,7 +21,7 @@ export const SaleBannerSection = ({
   rightImageAlt = 'Sale right image',
 }: Props) => {
   return (
-    <div className="sale-banner">
+    <section className="sale-banner" aria-label="Big Summer Sale">
       {leftImageSrc ? (
         <div className="sale-banner__media sale-banner__media--left">
           <img className="sale-banner__media-image" src={leftImageSrc} alt={leftImageAlt} />
@@ -39,7 +39,7 @@ export const SaleBannerSection = ({
           <div className="sale-banner__icon-wrap">
             <Fire className="sale-banner__icon" />
           </div>
-          <Typography component="h3" variant="h3" sx={{ lineHeight: 1, color: 'var(--white)' }}>
+          <Typography component="h2" variant="h3" sx={{ lineHeight: 1, color: 'var(--white)' }}>
             Big Summer{' '}
             <Typography
               component="span"
@@ -52,7 +52,7 @@ export const SaleBannerSection = ({
         </div>
 
         <Typography
-          component="h5"
+          component="p"
           variant="h5"
           sx={{ fontStyle: 'italic', lineHeight: 1, color: 'var(--white)' }}
         >
@@ -69,6 +69,6 @@ export const SaleBannerSection = ({
           Shop Deals
         </Button>
       </div>
-    </div>
+    </section>
   );
 };

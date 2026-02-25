@@ -12,15 +12,9 @@ type Props = {
   imageAlt?: string;
 };
 
-export const HeroSection = ({
-  title,
-  subtitle,
-  onBuyNow,
-  imageSrc,
-  imageAlt = '',
-}: Props) => {
+export const HeroSection = ({ title, subtitle, onBuyNow, imageSrc, imageAlt = '' }: Props) => {
   return (
-    <div className="home-hero" aria-labelledby="home-hero-title">
+    <section className="home-hero" aria-label="Home Hero Section">
       <div className="home-hero__content">
         <Typography
           variant="h1"
@@ -77,6 +71,6 @@ export const HeroSection = ({
           <img className="home-hero__media-image" src={imageSrc} alt={imageAlt} />
         </div>
       ) : null}
-    </div>
+    </section>
   );
 };
