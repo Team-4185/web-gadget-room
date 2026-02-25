@@ -12,19 +12,14 @@ type Props = {
   imageAlt?: string;
 };
 
-export const HeroSection = ({
-  title,
-  subtitle,
-  onBuyNow,
-  imageSrc,
-  imageAlt = 'Hero product image',
-}: Props) => {
+export const HeroSection = ({ title, subtitle, onBuyNow, imageSrc, imageAlt = '' }: Props) => {
   return (
-    <section className="home-hero">
+    <section className="home-hero" aria-label="Home Hero Section">
       <div className="home-hero__content">
         <Typography
           variant="h1"
           component="h1"
+          id="home-hero-title"
           sx={{
             fontStyle: 'italic',
             fontWeight: 300,
