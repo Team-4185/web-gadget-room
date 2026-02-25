@@ -10,4 +10,5 @@ export * from './Home';
 export * from './Header';
 export * from './Product';
 export * from './Cart';
+export * from './Auth';
 export * from './Delivery';

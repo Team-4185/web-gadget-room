@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Pagination, PaginationItem, type SelectChangeEvent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowRight, ArrowLeft } from '@/assets';
+import { ChevronRight, ChevronLeft } from '@/assets';
 import type { IProduct, SortOption } from '@/core/types';
 import { Badge, CatalogHeader, ProductCard } from '@/components';
 
@@ -63,7 +63,7 @@ export const CatalogContent: FC<IProps> = ({
                   next: () => (
                     <div data-pagination="next">
                       <p>Next</p>
-                      <ArrowRight />
+                      <ChevronRight />
                     </div>
                   ),
                 }}
@@ -79,7 +79,7 @@ export const CatalogContent: FC<IProps> = ({
                 slots={{
                   previous: () => (
                     <div data-pagination="prev">
-                      <ArrowLeft />
+                      <ChevronLeft />
                     </div>
                   ),
                 }}

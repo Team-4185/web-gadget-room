@@ -18,7 +18,7 @@ import {
 import { Select } from '@/components';
 import { LANGUAGES } from '@/core/constants';
 
-import Logo from '/icons/logo.jpg';
+import Logo from '/logo.jpg';
 
 import './Footer.css';
 

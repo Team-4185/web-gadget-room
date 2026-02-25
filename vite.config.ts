@@ -15,6 +15,8 @@ export default defineConfig(({ mode }) => {
           replaceAttrValues: {
             'rgb(0,0,0)': 'currentColor',
             black: 'currentColor',
+            'url(#paint0_linear_101_3602)': 'currentColor',
+            'url(#filter0_dd_101_3602)': 'currentColor',
           },
         },
       }),

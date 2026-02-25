@@ -1,68 +1,115 @@
-import type { ReactNode, FC } from 'react';
-import { TextField } from '@mui/material';
-import type { TextFieldProps } from '@mui/material/TextField';
-import type { SxProps, Theme } from '@mui/material/styles';
+import type { FC } from 'react';
+import { InputAdornment, TextField, type SxProps, type Theme } from '@mui/material';
 
-type InputProps = {
-  inherit?: boolean;
-  className?: string;
-  children?: ReactNode;
+import { Completed, Error } from '@/assets';
+
+interface IProps {
+  maxWidth?: string;
+  type?: string;
+  label: string;
+  success?: boolean;
+  error?: boolean;
+  disabled?: boolean;
+  required?: boolean;
+  size?: 'small' | 'medium';
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   sx?: SxProps<Theme>;
-} & Omit<TextFieldProps, 'variant' | 'classes'>;
+}
 
-export const Input: FC<InputProps> = ({ inherit, className, children, sx, ...props }) => {
-  const baseSx: SxProps<Theme> = {
-    '& .MuiOutlinedInput-root': {
-      minHeight: props.multiline ? 'unset' : '44px',
-      borderRadius: '8px',
-      background: 'var(--white)',
-      '& .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'var(--blue-violet)',
-      },
-      '&:hover .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'var(--blue-violet)',
-      },
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: 'var(--blue-violet)',
-      },
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '16px',
-      color: 'var(--black)',
-      padding: '12px',
-    },
-    '& .MuiSelect-select': {
-      padding: '0 36px 0 12px !important',
-    },
-    '& .MuiSelect-icon': {
-      color: 'var(--blue-violet)',
-    },
-  };
-
-  const inheritSx: SxProps<Theme> = inherit
-    ? {
-        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'var(--blue-violet)',
-        },
-      }
-    : {};
-
-  const customSx: SxProps<Theme> = (theme) => {
-    const resolvedSx = typeof sx === 'function' ? sx(theme) : sx;
-    const normalizedResolvedSx = Array.isArray(resolvedSx)
-      ? Object.assign({}, ...resolvedSx.filter(Boolean))
-      : resolvedSx;
-
-    return {
-      ...(baseSx as Record<string, unknown>),
-      ...(inheritSx as Record<string, unknown>),
-      ...(normalizedResolvedSx as Record<string, unknown>),
-    };
-  };
+export const Input: FC<IProps> = ({
+  maxWidth = '100%',
+  type = 'text',
+  label,
+  success = false,
+  error = false,
+  disabled = false,
+  required = false,
+  size = 'small',
+  value,
+  onChange,
+  sx,
+}) => {
+  const endIcon = error ? <Error /> : success ? <Completed /> : null;
 
   return (
-    <TextField {...props} sx={customSx} variant="outlined" className={`input ${className || ''}`}>
-      {children}
-    </TextField>
+    <TextField
+      type={type}
+      value={value}
+      onChange={onChange}
+      error={error}
+      disabled={disabled}
+      required={required}
+      label={error ? 'Please enter valid email address' : label}
+      variant="filled"
+      size={size}
+      slotProps={{
+        input: {
+          endAdornment: endIcon ? <InputAdornment position="end">{endIcon}</InputAdornment> : null,
+        },
+      }}
+      sx={{
+        maxWidth,
+        width: '100%',
+
+        '& .MuiInputLabel-root': {
+          ...(success && { color: 'var(--chateau-green)' }),
+
+          '&.Mui-disabled': {
+            color: 'var(--black-opacity-13)',
+          },
+
+          '&.Mui-focused': {
+            color: success ? 'var(--chateau-green)' : 'var(--black)',
+          },
+
+          '&.Mui-error': {
+            color: 'var(--coralRed)',
+          },
+        },
+
+        '& .MuiFilledInput-root': {
+          borderRadius: '8px',
+          border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
+          backgroundColor: 'var(--white)',
+
+          '&:hover': {
+            backgroundColor: 'var(--white)',
+          },
+
+          '&.Mui-focused': {
+            backgroundColor: 'var(--white)',
+            border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--blue-violet)'}`,
+          },
+
+          '&.Mui-error': {
+            border: '1px solid var(--coralRed)',
+          },
+
+          '&.Mui-disabled': {
+            backgroundColor: 'var(--white)',
+            border: '1px solid var(--black-opacity-12)',
+
+            '&::before': {
+              borderBottomStyle: 'none',
+            },
+          },
+
+          '&::after, &::before, &:hover:not(.Mui-disabled, .Mui-error)::before': {
+            borderBottom: 'none',
+          },
+        },
+
+        '& .MuiInputBase-input': {
+          color: 'var(--black)',
+        },
+
+        '& .MuiInputBase-sizeSmall .MuiInputBase-input': {
+          paddingTop: '19px',
+        },
+
+        ...sx,
+      }}
+    />
   );
 };

@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +33,7 @@ export const Home = () => {
   };
 
   return (
-    <section className="home">
+    <>
       <HeroSection
         title={HOME_HERO.title}
         subtitle={HOME_HERO.subtitle}
@@ -49,19 +48,17 @@ export const Home = () => {
         onBuyNow={addPhone}
         onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
       />
-      <Container disableGutters>
-        <FeaturedBrandsSection brands={HOME_BRANDS} />
-        <NewArrivalsSection
-          products={PRODUCTS}
-          onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
-        />
-      </Container>
+      <FeaturedBrandsSection brands={HOME_BRANDS} />
+      <NewArrivalsSection
+        products={PRODUCTS}
+        onOpenProduct={(product) => navigate(`/product/${product.id}`, { state: product })}
+      />
 
       <SaleBannerSection
         onShopDeals={() => navigate('/catalog')}
         leftImageSrc={HOME_BANNER_LEFT_IMAGE}
         rightImageSrc={HOME_BANNER_RIGHT_IMAGE}
       />
-    </section>
+    </>
   );
 };

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Breadcrumbs, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { ArrowRight, Home } from '@/assets';
+import { ChevronRight, Home } from '@/assets';
 
 export const BreadCrumbs: FC = () => {
   const handleClick = () => {
@@ -10,7 +10,7 @@ export const BreadCrumbs: FC = () => {
   };
 
   return (
-    <Breadcrumbs separator={<ArrowRight color="var(--blue-violet)" />} aria-label="breadcrumb">
+    <Breadcrumbs separator={<ChevronRight color="var(--blue-violet)" />} aria-label="breadcrumb">
       <Link
         key="1"
         component={RouterLink}
