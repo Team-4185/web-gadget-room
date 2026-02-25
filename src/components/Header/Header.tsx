@@ -14,7 +14,7 @@ import {
 } from '@/core/constants';
 import { Cart } from '@/assets';
 
-import Logo from '/icons/logo.jpg';
+import Logo from '/logo.jpg';
 
 import './Header.css';
 

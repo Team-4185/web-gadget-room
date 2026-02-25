@@ -1,4 +1,5 @@
 .checkbox {
+  width: max-content;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -14,7 +15,7 @@
 
 .checkbox__input:checked + .checkbox__icon {
   background-color: var(--dark-yellow);
-  background-image: url('/icons/check.svg');
+  background-image: url('/src/assets/check.svg');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -24,12 +25,7 @@
   box-shadow: 0px 0px 4px 0px var(--dark-yellow);
 }
 
-.checkbox_small .checkbox__icon {
+.checkbox__icon {
   width: 18px;
   height: 18px;
-}
-
-.checkbox__label {
-  font-size: 20px;
-  color: var(--black);
 }
