@@ -21,7 +21,7 @@ export const SaleBannerSection = ({
   rightImageAlt = 'Sale right image',
 }: Props) => {
   return (
-    <section className="sale-banner">
+    <div className="sale-banner">
       {leftImageSrc ? (
         <div className="sale-banner__media sale-banner__media--left">
           <img className="sale-banner__media-image" src={leftImageSrc} alt={leftImageAlt} />
@@ -69,6 +69,6 @@ export const SaleBannerSection = ({
           Shop Deals
         </Button>
       </div>
-    </section>
+    </div>
   );
 };

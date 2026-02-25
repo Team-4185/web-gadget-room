@@ -17,14 +17,15 @@ export const HeroSection = ({
   subtitle,
   onBuyNow,
   imageSrc,
-  imageAlt = 'Hero product image',
+  imageAlt = '',
 }: Props) => {
   return (
-    <section className="home-hero">
+    <div className="home-hero" aria-labelledby="home-hero-title">
       <div className="home-hero__content">
         <Typography
           variant="h1"
           component="h1"
+          id="home-hero-title"
           sx={{
             fontStyle: 'italic',
             fontWeight: 300,
@@ -76,6 +77,6 @@ export const HeroSection = ({
           <img className="home-hero__media-image" src={imageSrc} alt={imageAlt} />
         </div>
       ) : null}
-    </section>
+    </div>
   );
 };

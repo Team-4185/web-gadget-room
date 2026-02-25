@@ -10,7 +10,7 @@ type Props = {
 
 export const FeaturedBrandsSection = ({ brands }: Props) => {
   return (
-    <section className="featured-brands">
+    <div className="featured-brands">
       <Typography variant="h3" component="h3" sx={{ fontWeight: 700, lineHeight: 1 }}>
         Featured Brands
       </Typography>
@@ -55,6 +55,6 @@ export const FeaturedBrandsSection = ({ brands }: Props) => {
           );
         })}
       </div>
-    </section>
+    </div>
   );
 };
