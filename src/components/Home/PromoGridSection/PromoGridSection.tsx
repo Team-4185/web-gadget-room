@@ -33,7 +33,7 @@ export const PromoGridSection = ({
     PRODUCTS.find((product) => product.id === id) ?? PRODUCTS[0];
 
   return (
-    <section className="promo-grid">
+    <section className="promo-grid" aria-label="Promotions">
       <div className="promo-grid__left">
         <div className="promo-grid__lead-card">
           <div className="promo-grid__lead-content">
