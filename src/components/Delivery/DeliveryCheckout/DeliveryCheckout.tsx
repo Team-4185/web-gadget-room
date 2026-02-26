@@ -8,7 +8,11 @@ import {
   RecipientSection,
 } from '@/components';
 import { SmallRobots } from '@/assets';
-import { DELIVERY_BRANCHES_BY_METHOD, DELIVERY_OPTIONS, INITIAL_DELIVERY_CHECKOUT_FORM } from '@/core/constants';
+import {
+  DELIVERY_BRANCHES_BY_METHOD,
+  DELIVERY_OPTIONS,
+  INITIAL_DELIVERY_CHECKOUT_FORM,
+} from '@/core/constants';
 import type {
   CheckoutPaymentMethod,
   DeliveryCheckoutForm,
@@ -76,37 +80,35 @@ export const DeliveryCheckout = () => {
   };
 
   return (
-    <section className="delivery-checkout">
-      <div className="delivery-checkout__layout">
-        <div className="delivery-checkout__left">
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
-            Delivery
-          </Typography>
+    <div className="delivery-checkout__layout">
+      <div className="delivery-checkout__left">
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
+          Delivery
+        </Typography>
 
-          <RecipientSection recipient={form.recipient} onRecipientChange={handleRecipientChange} />
+        <RecipientSection recipient={form.recipient} onRecipientChange={handleRecipientChange} />
 
-          <DeliveryMethodSection
-            deliveryMethod={form.delivery.method}
-            onDeliveryMethodChange={handleDeliveryMethodChange}
-            options={DELIVERY_OPTIONS}
-            branchByMethod={form.delivery.branchByMethod}
-            onBranchChange={handleBranchChange}
-            branchesByMethod={DELIVERY_BRANCHES_BY_METHOD}
-          />
+        <DeliveryMethodSection
+          deliveryMethod={form.delivery.method}
+          onDeliveryMethodChange={handleDeliveryMethodChange}
+          options={DELIVERY_OPTIONS}
+          branchByMethod={form.delivery.branchByMethod}
+          onBranchChange={handleBranchChange}
+          branchesByMethod={DELIVERY_BRANCHES_BY_METHOD}
+        />
 
-          <PaymentSection
-            paymentMethod={form.payment.method}
-            onPaymentMethodChange={handlePaymentMethodChange}
-            onlinePayment={form.payment.onlinePayment}
-            onOnlinePaymentChange={handleOnlinePaymentChange}
-          />
-        </div>
-
-        <div className="delivery-checkout__right">
-          <OrderSummary className="delivery-checkout__summary" continueTo="/payment" />
-          <SmallRobots width={572} height={412} />
-        </div>
+        <PaymentSection
+          paymentMethod={form.payment.method}
+          onPaymentMethodChange={handlePaymentMethodChange}
+          onlinePayment={form.payment.onlinePayment}
+          onOnlinePaymentChange={handleOnlinePaymentChange}
+        />
       </div>
-    </section>
+
+      <div className="delivery-checkout__right">
+        <OrderSummary className="delivery-checkout__summary" continueTo="/payment" />
+        <SmallRobots width={572} height={412} />
+      </div>
+    </div>
   );
 };

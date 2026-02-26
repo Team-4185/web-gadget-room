@@ -64,7 +64,7 @@ export const RecipientSection = ({ recipient, onRecipientChange }: RecipientSect
           value={recipient.region}
           styleVariant="subtleBorder"
           onChange={(value) => onRecipientChange('region', value)}
-          placeholder="Select Ukraine region"
+          placeholder="Select region"
         />
       </div>
     </div>
