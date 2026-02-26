@@ -128,6 +128,26 @@ export const theme = createTheme({
       },
     },
     MuiSelect: {
+      variants: [
+        {
+          props: { 'data-style-variant': 'subtleBorder' } as never,
+          style: {
+            boxShadow: 'var(--inputs-box-shadow)',
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: '1px solid var(--blue-violet)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              border: '1px solid var(--blue-violet)',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              border: '1px solid var(--blue-violet)',
+            },
+            '&:not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline': {
+              border: '1px solid var(--blue-violet)',
+            },
+          },
+        },
+      ],
       styleOverrides: {
         root: {
           borderRadius: '8px',

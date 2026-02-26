@@ -67,6 +67,7 @@ export const DeliveryMethodSection = ({
                   value={branchByMethod[option.id]}
                   onChange={(value) => onBranchChange(option.id, value)}
                   placeholder="Select the appropriate branch"
+                  styleVariant="subtleBorder"
                 />
                 <Button
                   maxWidth="233px"

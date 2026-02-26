@@ -11,6 +11,8 @@ interface IProps {
   height: string;
   color: string;
   fontSize: string;
+  styleVariant?: 'default' | 'subtleBorder';
+  selectPadding?: string;
   startIcon?: ReactNode;
   initialValue?: string;
   placeholder?: string;
@@ -24,6 +26,8 @@ export const Select: FC<IProps> = ({
   height,
   color,
   fontSize,
+  styleVariant = 'default',
+  selectPadding,
   startIcon,
   initialValue,
   placeholder,
@@ -46,10 +50,26 @@ export const Select: FC<IProps> = ({
   return (
     <FormControl sx={{ maxWidth, width: '100%' }}>
       <SelectMUI
-        sx={{ height, color, fontSize }}
+        sx={{
+          height,
+          color,
+          fontSize,
+          '& .MuiSelect-select.MuiSelect-select': {
+            padding: selectPadding,
+          },
+        }}
+        data-style-variant={styleVariant === 'subtleBorder' ? 'subtleBorder' : undefined}
         value={selectedValue}
         onChange={handleChange}
         displayEmpty
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              maxHeight: 48 * 6,
+              overflowY: 'auto',
+            },
+          },
+        }}
         IconComponent={ChevronDown}
         renderValue={(selected) => {
           if (!selected) {

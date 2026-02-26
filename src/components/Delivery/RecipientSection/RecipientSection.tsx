@@ -25,12 +25,14 @@ export const RecipientSection = ({ recipient, onRecipientChange }: RecipientSect
             onChange={(e) => onRecipientChange('firstName', e.target.value)}
             label="First Name"
             sx={{ maxWidth: '100%' }}
+            required
           />
           <Input
             value={recipient.lastName}
             onChange={(e) => onRecipientChange('lastName', e.target.value)}
             label="Last Name"
             sx={{ maxWidth: '100%' }}
+            required
           />
         </div>
 
@@ -41,22 +43,26 @@ export const RecipientSection = ({ recipient, onRecipientChange }: RecipientSect
             label="Email"
             type="email"
             sx={{ maxWidth: '100%' }}
+            required
           />
           <Input
             value={recipient.phone}
             onChange={(e) => onRecipientChange('phone', e.target.value)}
             label="Phone"
             sx={{ maxWidth: '100%' }}
+            required
           />
         </div>
 
         <Select
           data={UKRAINE_REGIONS}
           maxWidth="100%"
-          height="46x"
+          height="46px"
           color="var(--black)"
           fontSize="16px"
+          selectPadding="12px"
           value={recipient.region}
+          styleVariant="subtleBorder"
           onChange={(value) => onRecipientChange('region', value)}
           placeholder="Select Ukraine region"
         />
