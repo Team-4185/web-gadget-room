@@ -1,36 +1,29 @@
-import { MenuItem, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { Button, Input, RadioButton } from '@/components';
+import { Button, RadioButton, Select } from '@/components';
 import { Map } from '@/assets';
+import type {
+  BranchSelectionMap,
+  DeliveryBranchesMap,
+  DeliveryMethod,
+  DeliveryOptionConfig,
+} from '@/core/types';
 
 import './DeliveryMethodSection.css';
-
-type DeliveryMethod = 'courier' | 'nova' | 'ukr' | 'dhl';
-
-type DeliveryOption = {
-  id: DeliveryMethod;
-  title: string;
-  price: string;
-};
 
 type DeliveryMethodSectionProps = {
   deliveryMethod: DeliveryMethod;
   onDeliveryMethodChange: (method: DeliveryMethod) => void;
-  branchByMethod: Record<DeliveryMethod, string>;
+  options: DeliveryOptionConfig[];
+  branchByMethod: BranchSelectionMap;
   onBranchChange: (method: DeliveryMethod, branch: string) => void;
-  branchesByMethod: Record<DeliveryMethod, string[]>;
+  branchesByMethod: DeliveryBranchesMap;
 };
-
-const deliveryOptions: DeliveryOption[] = [
-  { id: 'courier', title: 'Courier to your address', price: '\u20AC 11.00' },
-  { id: 'nova', title: 'Self-pickup from the Nova Post', price: '\u20AC 11.00' },
-  { id: 'ukr', title: 'Self-pickup from the Ukr Post', price: '\u20AC 5.00' },
-  { id: 'dhl', title: 'Self-pickup from the DHL', price: '\u20AC 30.00' },
-];
 
 export const DeliveryMethodSection = ({
   deliveryMethod,
   onDeliveryMethodChange,
+  options,
   branchByMethod,
   onBranchChange,
   branchesByMethod,
@@ -42,7 +35,7 @@ export const DeliveryMethodSection = ({
       </Typography>
 
       <div className="delivery-method-section__options">
-        {deliveryOptions.map((option) => (
+        {options.map((option) => (
           <div
             key={option.id}
             className="delivery-method-section__option delivery-method-section__option--expanded"
@@ -59,33 +52,22 @@ export const DeliveryMethodSection = ({
                 </Typography>
               </div>
               <Typography variant="body1" sx={{ fontSize: '15px', fontWeight: 500 }}>
-                {option.price}
+                {'\u20AC'} {option.price.toFixed(2)}
               </Typography>
             </button>
 
             {deliveryMethod === option.id && (
               <div className="delivery-method-section__option-details">
-                <Input
-                  inherit
-                  select
+                <Select
+                  data={branchesByMethod[option.id]}
+                  maxWidth="330px"
+                  height="44px"
+                  color="var(--black)"
+                  fontSize="16px"
                   value={branchByMethod[option.id]}
-                  onChange={(e) => onBranchChange(option.id, String(e.target.value))}
-                  className="delivery-method-section__branch"
-                  size="small"
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      boxShadow: 'var(--inputs-box-shadow)',
-                      overflow: 'hidden',
-                    },
-                  }}
-                >
-                  {branchesByMethod[option.id].map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Input>
-
+                  onChange={(value) => onBranchChange(option.id, value)}
+                  placeholder="Select the appropriate branch"
+                />
                 <Button
                   maxWidth="233px"
                   height="44px"

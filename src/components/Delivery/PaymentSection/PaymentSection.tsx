@@ -2,15 +2,13 @@ import { Typography } from '@mui/material';
 
 import { RadioButton } from '@/components';
 import { ApplePay, GooglePay, MasterCard, Visa } from '@/assets';
+import type { CheckoutPaymentMethod, OnlinePaymentType } from '@/core/types';
 
 import './PaymentSection.css';
 
-type PaymentMethod = 'receipt' | 'online';
-type OnlinePaymentType = 'card' | 'gpay' | 'apay';
-
 type PaymentSectionProps = {
-  paymentMethod: PaymentMethod;
-  onPaymentMethodChange: (method: PaymentMethod) => void;
+  paymentMethod: CheckoutPaymentMethod;
+  onPaymentMethodChange: (method: CheckoutPaymentMethod) => void;
   onlinePayment: OnlinePaymentType;
   onOnlinePaymentChange: (method: OnlinePaymentType) => void;
 };

@@ -8,61 +8,71 @@ import {
   RecipientSection,
 } from '@/components';
 import { SmallRobots } from '@/assets';
+import { DELIVERY_BRANCHES_BY_METHOD, DELIVERY_OPTIONS, INITIAL_DELIVERY_CHECKOUT_FORM } from '@/core/constants';
+import type {
+  CheckoutPaymentMethod,
+  DeliveryCheckoutForm,
+  DeliveryMethod,
+  OnlinePaymentType,
+  RecipientForm,
+} from '@/core/types';
 
 import './DeliveryCheckout.css';
 
-type DeliveryMethod = 'courier' | 'nova' | 'ukr' | 'dhl';
-type PaymentMethod = 'receipt' | 'online';
-type OnlinePaymentType = 'card' | 'gpay' | 'apay';
-
-const courierBranches = [
-  'Select the appropriate branch',
-  'Courier hub #1, Kyiv',
-  'Courier hub #3, Kyiv',
-  'Courier hub #8, Kyiv',
-];
-
-const novaBranches = [
-  'Select the appropriate branch',
-  'Nova Poshta #104, Kyiv',
-  'Nova Poshta #17, Kyiv',
-  'Nova Poshta #9, Kyiv',
-];
-
-const ukrBranches = [
-  'Select the appropriate branch',
-  'Ukr Poshta #22, Kyiv',
-  'Ukr Poshta #49, Kyiv',
-  'Ukr Poshta #103, Kyiv',
-];
-
-const dhlBranches = [
-  'Select the appropriate branch',
-  'DHL Service Point #2, Kyiv',
-  'DHL Service Point #5, Kyiv',
-  'DHL Service Point #11, Kyiv',
-];
-
-const branchesByMethod: Record<DeliveryMethod, string[]> = {
-  courier: courierBranches,
-  nova: novaBranches,
-  ukr: ukrBranches,
-  dhl: dhlBranches,
-};
-
 export const DeliveryCheckout = () => {
-  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>('nova');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('online');
-  const [onlinePayment, setOnlinePayment] = useState<OnlinePaymentType>('card');
-  const [branchByMethod, setBranchByMethod] = useState<Record<DeliveryMethod, string>>({
-    courier: courierBranches[0],
-    nova: novaBranches[0],
-    ukr: ukrBranches[0],
-    dhl: dhlBranches[0],
-  });
+  const [form, setForm] = useState<DeliveryCheckoutForm>(INITIAL_DELIVERY_CHECKOUT_FORM);
+
+  const handleRecipientChange = (field: keyof RecipientForm, value: string) => {
+    setForm((prev) => ({
+      ...prev,
+      recipient: {
+        ...prev.recipient,
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleDeliveryMethodChange = (method: DeliveryMethod) => {
+    setForm((prev) => ({
+      ...prev,
+      delivery: {
+        ...prev.delivery,
+        method,
+      },
+    }));
+  };
 
   const handleBranchChange = (method: DeliveryMethod, branch: string) => {
-    setBranchByMethod((prev) => ({ ...prev, [method]: branch }));
+    setForm((prev) => ({
+      ...prev,
+      delivery: {
+        ...prev.delivery,
+        branchByMethod: {
+          ...prev.delivery.branchByMethod,
+          [method]: branch,
+        },
+      },
+    }));
+  };
+
+  const handlePaymentMethodChange = (method: CheckoutPaymentMethod) => {
+    setForm((prev) => ({
+      ...prev,
+      payment: {
+        ...prev.payment,
+        method,
+      },
+    }));
+  };
+
+  const handleOnlinePaymentChange = (onlinePayment: OnlinePaymentType) => {
+    setForm((prev) => ({
+      ...prev,
+      payment: {
+        ...prev.payment,
+        onlinePayment,
+      },
+    }));
   };
 
   return (
@@ -73,21 +83,22 @@ export const DeliveryCheckout = () => {
             Delivery
           </Typography>
 
-          <RecipientSection />
+          <RecipientSection recipient={form.recipient} onRecipientChange={handleRecipientChange} />
 
           <DeliveryMethodSection
-            deliveryMethod={deliveryMethod}
-            onDeliveryMethodChange={setDeliveryMethod}
-            branchByMethod={branchByMethod}
+            deliveryMethod={form.delivery.method}
+            onDeliveryMethodChange={handleDeliveryMethodChange}
+            options={DELIVERY_OPTIONS}
+            branchByMethod={form.delivery.branchByMethod}
             onBranchChange={handleBranchChange}
-            branchesByMethod={branchesByMethod}
+            branchesByMethod={DELIVERY_BRANCHES_BY_METHOD}
           />
 
           <PaymentSection
-            paymentMethod={paymentMethod}
-            onPaymentMethodChange={setPaymentMethod}
-            onlinePayment={onlinePayment}
-            onOnlinePaymentChange={setOnlinePayment}
+            paymentMethod={form.payment.method}
+            onPaymentMethodChange={handlePaymentMethodChange}
+            onlinePayment={form.payment.onlinePayment}
+            onOnlinePaymentChange={handleOnlinePaymentChange}
           />
         </div>
 

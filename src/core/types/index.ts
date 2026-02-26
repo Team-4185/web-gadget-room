@@ -3,3 +3,4 @@ export * from './payment';
 export * from './product';
 export * from './select';
 export * from './checkbox';
+export * from './delivery';
