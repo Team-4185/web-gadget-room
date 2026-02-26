@@ -5,3 +5,4 @@ export { Accordion } from './Accordion/Accordion';
 export { SliderPrice } from './SliderPrice/SliderPrice';
 export { Badge } from './Badge/Badge';
 export { Select } from './Select/Select';
+export { RadioButton } from './RadioButton/RadioButton';

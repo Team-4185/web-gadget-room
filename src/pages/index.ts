@@ -3,6 +3,8 @@ export { AuthPage } from './AuthPage/AuthPage';
 export { Cart } from './Cart/Cart';
 export { Catalog } from './Catalog/Catalog';
 export { Delivery } from './Delivery/Delivery';
+export { EmptyCart } from './EmptyCart/EmptyCart';
 export { Home } from './Home/Home';
 export { ProductPage } from './ProductPage/ProductPage';
 export { UserProfile } from './UserProfile/UserProfile';
+export { PageNotFound } from './PageNotFound/PageNotFound';

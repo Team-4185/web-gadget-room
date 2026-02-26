@@ -1,6 +1,17 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { About, AuthPage, Cart, Catalog, Delivery, Home, ProductPage, UserProfile } from '@/pages';
+import {
+  About,
+  AuthPage,
+  Cart,
+  Catalog,
+  Delivery,
+  EmptyCart,
+  Home,
+  ProductPage,
+  UserProfile,
+  PageNotFound,
+} from '@/pages';
 import { ProtectedRoute } from '@/routes';
 
 export const AppRoutes = () => {
@@ -11,12 +22,15 @@ export const AppRoutes = () => {
       <Route path="/login" element={<AuthPage />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/delivery" element={<Delivery />} />
+      <Route path="/empty-cart" element={<EmptyCart />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/userProfile" element={<UserProfile />} />
       </Route>
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/about" element={<About />} />
       <Route path="/product/:id" element={<ProductPage />} />
+      <Route path="/404" element={<PageNotFound />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };

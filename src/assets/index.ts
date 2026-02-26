@@ -39,6 +39,8 @@ export { default as Lock } from './lock.svg?react';
 export { default as Trash } from './trash.svg?react';
 export { default as Plus } from './plus.svg?react';
 export { default as Minus } from './minus.svg?react';
+export { default as Map } from './map.svg?react';
+export { default as SmallRobots } from './smallRobots.svg?react';
 export { default as ArrowRight } from './arrowRight.svg?react';
 export { default as ArrowLeft } from './arrowLeft.svg?react';
 export { default as Check } from './check.svg?react';
