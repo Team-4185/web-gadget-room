@@ -1,16 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import {
-  About,
-  AuthPage,
-  Cart,
-  Catalog,
-  Delivery,
-  Home,
-  Payment,
-  ProductPage,
-  UserProfile,
-} from '@/pages';
+import { About, AuthPage, Cart, Catalog, Delivery, Home, ProductPage, UserProfile } from '@/pages';
 import { ProtectedRoute } from '@/routes';
 
 export const AppRoutes = () => {
@@ -20,7 +10,6 @@ export const AppRoutes = () => {
       <Route path="/register" element={<AuthPage />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/payment" element={<Payment />} />
       <Route path="/delivery" element={<Delivery />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/userProfile" element={<UserProfile />} />
