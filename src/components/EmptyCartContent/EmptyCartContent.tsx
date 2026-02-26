@@ -11,7 +11,7 @@ type Props = {
 
 export const EmptyCartContent: FC<Props> = ({ onBackToCatalog }) => {
   return (
-    <section className="empty-cart-content">
+    <div className="empty-cart-content">
       <div className="empty-cart-content__info">
         <Typography
           variant="h3"
@@ -61,6 +61,6 @@ export const EmptyCartContent: FC<Props> = ({ onBackToCatalog }) => {
           alt="Empty cart illustration"
         />
       </div>
-    </section>
+    </div>
   );
 };

@@ -11,7 +11,7 @@ type Props = {
 
 export const NotFoundContent: FC<Props> = ({ onBackHome }) => {
   return (
-    <section className="not-found-content">
+    <div className="not-found-content">
       <div className="not-found-content__info">
         <Typography
           variant="h3"
@@ -61,6 +61,6 @@ export const NotFoundContent: FC<Props> = ({ onBackHome }) => {
           alt="404 Illustration"
         />
       </div>
-    </section>
+    </div>
   );
 };

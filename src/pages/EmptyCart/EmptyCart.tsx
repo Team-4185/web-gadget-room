@@ -7,8 +7,10 @@ export const EmptyCart = () => {
   const navigate = useNavigate();
 
   return (
-    <Container disableGutters>
-      <EmptyCartContent onBackToCatalog={() => navigate('/catalog')} />
-    </Container>
+    <section aria-label="Empty Cart">
+      <Container disableGutters>
+        <EmptyCartContent onBackToCatalog={() => navigate('/catalog')} />
+      </Container>
+    </section>
   );
 };

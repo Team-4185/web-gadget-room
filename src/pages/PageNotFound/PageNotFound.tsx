@@ -7,8 +7,10 @@ export const PageNotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <Container disableGutters>
-      <NotFoundContent onBackHome={() => navigate('/')} />
-    </Container>
+    <section aria-label="Page Not Found">
+      <Container disableGutters>
+        <NotFoundContent onBackHome={() => navigate('/')} />
+      </Container>
+    </section>
   );
 };
