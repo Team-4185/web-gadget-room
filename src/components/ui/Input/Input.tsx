@@ -1,7 +1,7 @@
-import type { FC } from 'react';
-import { InputAdornment, TextField, type SxProps, type Theme } from '@mui/material';
+import { useState, type FC } from 'react';
+import { IconButton, InputAdornment, TextField, type SxProps, type Theme } from '@mui/material';
 
-import { Completed, Error } from '@/assets';
+import { Completed, Error, Visibility, VisibilityOff } from '@/assets';
 
 interface IProps {
   maxWidth?: string;
@@ -12,6 +12,7 @@ interface IProps {
   disabled?: boolean;
   required?: boolean;
   size?: 'small' | 'medium';
+  isPassword?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   sx?: SxProps<Theme>;
@@ -26,26 +27,73 @@ export const Input: FC<IProps> = ({
   disabled = false,
   required = false,
   size = 'small',
+  isPassword,
   value,
   onChange,
   sx,
 }) => {
-  const endIcon = error ? <Error /> : success ? <Completed /> : null;
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  let endAdornment;
+
+  if (isPassword) {
+    endAdornment = (
+      <InputAdornment position="end">
+        <IconButton
+          aria-label={showPassword ? 'hide the password' : 'display the password'}
+          onClick={handleClickShowPassword}
+          onMouseDown={handleMouseDownPassword}
+          onMouseUp={handleMouseUpPassword}
+          edge="end"
+        >
+          {showPassword ? <VisibilityOff /> : <Visibility />}
+        </IconButton>
+      </InputAdornment>
+    );
+  } else if (error) {
+    endAdornment = (
+      <InputAdornment position="end">
+        <Error />
+      </InputAdornment>
+    );
+  } else if (success) {
+    endAdornment = (
+      <InputAdornment position="end">
+        <Completed />
+      </InputAdornment>
+    );
+  } else {
+    endAdornment = null;
+  }
+
+  let computedType = type;
+
+  if (isPassword) computedType = showPassword ? 'text' : 'password';
 
   return (
     <TextField
-      type={type}
+      type={computedType}
       value={value}
       onChange={onChange}
       error={error}
       disabled={disabled}
       required={required}
-      label={error ? 'Please enter valid email address' : label}
+      label={error ? 'Please enter valid data' : label}
       variant="filled"
       size={size}
       slotProps={{
         input: {
-          endAdornment: endIcon ? <InputAdornment position="end">{endIcon}</InputAdornment> : null,
+          endAdornment,
         },
       }}
       sx={{

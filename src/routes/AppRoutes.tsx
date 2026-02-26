@@ -8,7 +8,6 @@ import {
   Delivery,
   EmptyCart,
   Home,
-  Payment,
   ProductPage,
   UserProfile,
   PageNotFound,
@@ -22,7 +21,6 @@ export const AppRoutes = () => {
       <Route path="/register" element={<AuthPage />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/payment" element={<Payment />} />
       <Route path="/delivery" element={<Delivery />} />
       <Route path="/empty-cart" element={<EmptyCart />} />
       <Route element={<ProtectedRoute />}>

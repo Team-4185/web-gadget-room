@@ -46,3 +46,5 @@ export { default as ArrowLeft } from './arrowLeft.svg?react';
 export { default as Check } from './check.svg?react';
 export { default as Completed } from './completed.svg?react';
 export { default as Error } from './error.svg?react';
+export { default as Visibility } from './visibility.svg?react';
+export { default as VisibilityOff } from './visibilityOff.svg?react';
