@@ -159,9 +159,48 @@ export const PRODUCT_GALLERY_IMAGES = [
   {
     id: 4,
     src: '/icons/productImg/SmallFourth.svg',
-    alt: 'Fivth Image',
+    alt: 'Fifth Image',
   },
 ];
+
+export const PRODUCT_SPECS_META = [
+  {
+    id: 1,
+    label: 'Screen Size',
+    icon: ProductInfoPhoneIcon,
+    alt: 'Screen icon',
+  },
+  {
+    id: 2,
+    label: 'CPU',
+    icon: ProductInfoCpuIcon,
+    alt: 'CPU icon',
+  },
+  {
+    id: 3,
+    label: 'Cores',
+    icon: ProductInfoCoreIcon,
+    alt: 'Core icon',
+  },
+  {
+    id: 4,
+    label: 'Main camera',
+    icon: ProductInfoCameraIcon,
+    alt: 'Camera icon',
+  },
+  {
+    id: 5,
+    label: 'Front camera',
+    icon: ProductInfoFrontCameraIcon,
+    alt: 'Front-camera icon',
+  },
+  {
+    id: 6,
+    label: 'Battery',
+    icon: ProductInfoBatteryIcon,
+    alt: 'Battery icon',
+  },
+] as const;
 
 export const SPECS = [
   {
@@ -178,7 +217,13 @@ export const SPECS = [
     icon: ProductInfoCpuIcon,
     alt: 'CPU icon',
   },
-  { id: 3, label: 'Cores', value: '6', icon: ProductInfoCoreIcon, alt: 'Core icon' },
+  {
+    id: 3,
+    label: 'Cores',
+    value: '6',
+    icon: ProductInfoCoreIcon,
+    alt: 'Core icon',
+  },
   {
     id: 4,
     label: 'Main camera',

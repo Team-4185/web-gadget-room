@@ -3,12 +3,15 @@ import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { SingleFlight, tokenStorage } from '@/core/utils';
 import type { AuthResponse, AuthRequestRefresh } from '@/core/types';
 
+const manualAccessToken = import.meta.env.VITE_MANUAL_JWT?.trim() || null;
+const backendOrigin = import.meta.env.VITE_BACKEND_ORIGIN?.trim() || 'http://localhost:8080/api';
+
 const api: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_BACKEND_ORIGIN}`,
+  baseURL: import.meta.env.DEV ? '/api' : backendOrigin.replace(/\/+$/, ''),
   withCredentials: false,
 });
 
-let accessToken: string | null = tokenStorage.get().accessToken;
+let accessToken: string | null = manualAccessToken ?? tokenStorage.get().accessToken;
 let refreshToken: string | null = tokenStorage.get().refreshToken;
 
 const refresher = new SingleFlight<AuthResponse>();

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
 
-import { SPECS, PRODUCT_META } from '@/core/constants';
+import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
 import { addProduct } from '@/core/store/slices/cartSlice';
 import { useProduct } from '@/core/hooks';
 import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
@@ -11,7 +11,7 @@ import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/c
 import './ProductInfo.css';
 
 export const ProductInfo: FC = () => {
-  const product = useProduct();
+  const { product, specs, description, loading, error } = useProduct();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,17 +22,26 @@ export const ProductInfo: FC = () => {
     navigate('/cart');
   };
 
+  if (loading) {
+    return (
+      <div className="product-info">
+        <Typography component="p">Loading product...</Typography>
+      </div>
+    );
+  }
+
   return (
     <div className="product-info">
       <ProductTitlePrice name={product.name} price={product.price} />
+      {error && <Typography color="error">{error}</Typography>}
       <div className="product-info__specs">
-        {SPECS.map((spec) => (
+        {specs.map((spec, index) => (
           <ProductSpecItem
-            key={spec.id}
+            key={spec.label}
             label={spec.label}
             value={spec.value}
-            icon={spec.icon}
-            alt={spec.alt}
+            icon={PRODUCT_SPECS_META[index]?.icon ?? PRODUCT_SPECS_META[0].icon}
+            alt={PRODUCT_SPECS_META[index]?.alt ?? PRODUCT_SPECS_META[0].alt}
           />
         ))}
       </div>
@@ -45,9 +54,8 @@ export const ProductInfo: FC = () => {
         }}
         component="p"
       >
-        Enhanced capabilities thanks to an enlarged display of 6.7 inches and work without
-        recharging throughout the day. Incredible photos as in weak, yes and in bright light using
-        the new system with two cameras{' '}
+        {description ||
+          'Enhanced capabilities thanks to an enlarged display and all-day battery life.'}{' '}
         <span className="product-info__description-link">more...</span>
       </Typography>
       <div className="product-info__actions">

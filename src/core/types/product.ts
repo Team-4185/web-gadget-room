@@ -14,6 +14,21 @@ export interface IProduct {
   amount: number;
 }
 
+export type ApiPhone = {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number;
+  brand: string;
+  releaseYear: number;
+  cpu: string;
+  coresNumber: number;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  batteryCapacity: string;
+};
+
 export type BrandInfo = {
   id: number;
   name: string;
