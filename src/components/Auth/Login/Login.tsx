@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Input } from '@/components';
 import { useLogin, useLoginForm } from '@/core/hooks';
+import { FADEUP } from '@/core/constants/animations';
 
 export const Login: FC = () => {
   const navigate = useNavigate();
@@ -24,11 +25,9 @@ export const Login: FC = () => {
 
   return (
     <motion.div
-      key="loginForm"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
+      variants={FADEUP}
+      initial="hidden"
+      animate="visible"
       style={{ width: '100%', maxWidth: '480px' }}
     >
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>

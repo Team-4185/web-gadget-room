@@ -1,9 +1,10 @@
 import type { FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 import { Input, CheckBox, Button } from '@/components';
+import { FADEUP } from '@/core/constants/animations';
 // import { useRegister } from '@/core/hooks';
 
 import './Register.css';
@@ -27,14 +28,7 @@ export const Register: FC = () => {
   };
 
   return (
-    <motion.div
-      className="register"
-      key="registerForm"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-    >
+    <motion.div className="register" variants={FADEUP} initial="hidden" animate="visible">
       <Typography sx={{ fontWeight: '600' }} component="h5" variant="h5">
         Register
       </Typography>

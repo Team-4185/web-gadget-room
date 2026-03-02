@@ -2,6 +2,8 @@ import type { FC, SVGProps } from 'react';
 import { Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 
+import { FADEUP } from '@/core/constants/animations';
+
 import Mobile from '/registerMobile.png';
 
 import './WelcomeSection.css';
@@ -14,14 +16,7 @@ interface IProps {
 
 export const WelcomeSection: FC<IProps> = ({ title, subtitle, icon: Icon }) => {
   return (
-    <motion.div
-      key="welcomeText"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-      className="auth__welcome"
-    >
+    <motion.div className="auth__welcome" variants={FADEUP} initial="hidden" animate="visible">
       <div className="auth__content">
         <Typography
           variant="h2"
