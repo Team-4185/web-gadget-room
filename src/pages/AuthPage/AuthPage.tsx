@@ -44,20 +44,6 @@ export const AuthPage: FC = () => {
               />
             </>
           )}
-
-          {/* <AuthPanel>
-            <AnimatePresence mode="wait">
-              {currentUrl !== '/login' ? (
-                <Register />
-              ) : (
-                <WelcomeText
-                  title="Welcome back"
-                  subtitle="Please login to continue"
-                  icon={ArrowLeft}
-                />
-              )}
-            </AnimatePresence>
-          </AuthPanel> */}
         </div>
       </Container>
     </section>

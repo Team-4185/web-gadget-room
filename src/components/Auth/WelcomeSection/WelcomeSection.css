@@ -7,8 +7,24 @@
   justify-content: center;
 }
 
-.auth__content {
+.auth__welcome--register {
   padding-left: 25px;
+  align-items: start;
+}
+
+.auth__welcome--login {
+  padding-left: 25px;
+  align-items: end;
+}
+
+.auth__content--register {
+  padding-left: 25px;
+  text-align: start;
+}
+
+.auth__content--login {
+  padding-right: 25px;
+  text-align: end;
 }
 
 .auth__media {

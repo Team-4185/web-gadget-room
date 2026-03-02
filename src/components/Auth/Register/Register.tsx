@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 import { Input, CheckBox, Button } from '@/components';
-import { FADEUP } from '@/core/constants/animations';
+import { FADEUP } from '@/core/constants';
 // import { useRegister } from '@/core/hooks';
 
 import './Register.css';
@@ -40,7 +40,7 @@ export const Register: FC = () => {
         <CheckBox
           className="register__checkbox"
           id="terms"
-          name="term"
+          name="terms"
           label={
             <>
               I have read and accept the{' '}
