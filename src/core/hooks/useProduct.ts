@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { PRODUCTS, SPECS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { IProduct, UseProductResult } from '@/core/types';
-import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils/products';
+import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils';
 
 export const useProduct = (): UseProductResult => {
   const { id } = useParams<{ id: string }>();
