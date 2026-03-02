@@ -3,32 +3,8 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { PRODUCTS, SPECS } from '@/core/constants';
 import { phonesService } from '@/core/services';
-import type { ApiPhone, IProduct } from '@/core/types';
-
-const mapApiPhoneToProduct = (phone: ApiPhone): IProduct => ({
-  id: phone.id,
-  name: phone.name,
-  price: phone.price,
-  img: '/icons/GraySquare.svg',
-  amount: 1,
-});
-
-const buildSpecs = (phone: ApiPhone) => [
-  { label: 'Screen Size', value: phone.screenSize },
-  { label: 'CPU', value: phone.cpu },
-  { label: 'Cores', value: String(phone.coresNumber) },
-  { label: 'Main camera', value: phone.mainCamera },
-  { label: 'Front camera', value: phone.frontCamera },
-  { label: 'Battery', value: phone.batteryCapacity },
-];
-
-type UseProductResult = {
-  product: IProduct;
-  specs: { label: string; value: string }[];
-  description: string;
-  loading: boolean;
-  error: string | null;
-};
+import type { IProduct, UseProductResult } from '@/core/types';
+import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils/products';
 
 export const useProduct = (): UseProductResult => {
   const { id } = useParams<{ id: string }>();

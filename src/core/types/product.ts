@@ -43,3 +43,11 @@ export type SortOption =
   | 'price decreasing'
   | 'price increasing'
   | 'number of reviews';
+
+export type UseProductResult = {
+    product: IProduct;
+    specs: { label: string; value: string }[];
+    description: string;
+    loading: boolean;
+    error: string | null;
+  };
