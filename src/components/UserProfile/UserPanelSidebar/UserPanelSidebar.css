@@ -1,0 +1,107 @@
+.user-panel-sidebar {
+  min-width: 240px;
+  background: var(--white);
+  border-radius: 22px;
+  box-shadow: 0 0 7px 0 var(--blue-violet);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.user-panel-sidebar__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--light-yellow);
+}
+
+.user-panel-sidebar__avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--blue-violet);
+  color: var(--blue-violet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-panel-sidebar__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding-bottom: 16px;
+}
+
+.user-panel-sidebar__item {
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.user-panel-sidebar__item:last-child {
+  position: relative;
+  margin-top: 10px;
+}
+
+.user-panel-sidebar__item:last-child::before {
+  content: '';
+  position: absolute;
+  top: -21px;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: var(--black-opacity-13);
+}
+
+.user-panel-sidebar__item-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-panel-sidebar__item svg {
+  color: var(--blue-violet);
+}
+
+.user-panel-sidebar__item.is-active {
+  box-shadow: 0 0 7px 0 var(--blue-violet);
+}
+
+.user-panel-sidebar__badge {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-violet);
+  color: var(--white);
+  padding: 0 6px;
+}
+
+.user-panel-sidebar__logout {
+  border: 0;
+  background: transparent;
+  color: var(--red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.user-panel-sidebar__logout svg {
+  color: var(--red);
+}

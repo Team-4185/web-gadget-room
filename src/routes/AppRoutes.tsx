@@ -12,7 +12,7 @@ import {
   UserProfile,
   PageNotFound,
 } from '@/pages';
-import { ProtectedRoute } from '@/routes';
+// import { ProtectedRoute } from '@/routes';
 
 export const AppRoutes = () => {
   return (
@@ -23,9 +23,9 @@ export const AppRoutes = () => {
       <Route path="/cart" element={<Cart />} />
       <Route path="/delivery" element={<Delivery />} />
       <Route path="/empty-cart" element={<EmptyCart />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/userProfile" element={<UserProfile />} />
-      </Route>
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route path="/userProfile" element={<UserProfile />} />
+      {/* </Route> */}
       <Route path="/catalog" element={<Catalog />} />
       <Route path="/about" element={<About />} />
       <Route path="/product/:id" element={<ProductPage />} />
