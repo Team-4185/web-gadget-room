@@ -65,6 +65,7 @@ export const ROUTES_WITHOUT_BREADCRUMBS = [
   '/login',
   '/404',
   '/empty-cart',
+  '/userProfile',
 ];
 
 export const ROUTES_WITH_ORDERING_STEPS = ['/cart', '/payment', '/delivery'];

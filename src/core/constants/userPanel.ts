@@ -1,8 +1,8 @@
 import { Liked, Logout, Order, Settings, User } from '@/assets';
 import type { IUserPanelData } from '@/core/types';
+import { PRODUCTS } from '@/core/constants/products';
+import { SmallClock, SmallTruck, StatusDelivered } from '@/assets';
 
-// Temporary frontend source for User Panel.
-// Replace with API data once backend endpoint is ready.
 export const USER_PANEL_DATA: IUserPanelData = {
   greeting: 'Welcome back Taras!',
   subtitle: "Here's what's happening with your account",
@@ -63,6 +63,29 @@ export const USER_PANEL_DATA: IUserPanelData = {
         },
       ],
     },
+    {
+      id: '3',
+      orderNumber: '#ORD-8421',
+      date: 'Oct 10, 2025',
+      status: 'processing',
+      total: 1100,
+      items: [
+        {
+          id: '3-1',
+          title: 'Samsung Galaxy S24 Ultra',
+          quantity: 1,
+          price: 950,
+          image: '/icons/greyBox.png',
+        },
+        {
+          id: '3-2',
+          title: 'Samsung Galaxy S24 Ultra',
+          quantity: 1,
+          price: 950,
+          image: '/icons/greyBox.png',
+        },
+      ],
+    },
   ],
 };
 
@@ -70,3 +93,23 @@ export const USER_PANEL_LOGOUT = {
   label: 'Log Out',
   icon: Logout,
 };
+
+export const USER_PANEL_FAVORITE_PRODUCTS = PRODUCTS.slice(0, 6);
+
+export const STATUS_META = {
+  delivered: {
+    label: 'Delivered',
+    icon: StatusDelivered,
+    className: 'is-delivered',
+  },
+  shipped: {
+    label: 'Shipped',
+    icon: SmallTruck,
+    className: 'is-shipped',
+  },
+  processing: {
+    label: 'Processing',
+    icon: SmallClock,
+    className: 'is-processing',
+  },
+} as const;

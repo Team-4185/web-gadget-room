@@ -1,27 +1,14 @@
 import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
-import { StatusDelivered, SmallTruck } from '@/assets';
 import type { IUserPanelOrder } from '@/core/types';
+import { STATUS_META } from '@/core/constants';
 
 import './UserPanelOrderCard.css';
 
 interface IProps {
   order: IUserPanelOrder;
 }
-
-const STATUS_META = {
-  delivered: {
-    label: 'Delivered',
-    icon: StatusDelivered,
-    className: 'is-delivered',
-  },
-  shipped: {
-    label: 'Shipped',
-    icon: SmallTruck,
-    className: 'is-shipped',
-  },
-} as const;
 
 export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
   const status = STATUS_META[order.status];

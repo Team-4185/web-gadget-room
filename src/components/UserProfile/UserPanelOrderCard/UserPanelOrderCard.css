@@ -7,7 +7,7 @@
 
 .user-panel-order-card__header {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 8px;
   padding: 10px 14px;
 }
@@ -40,6 +40,10 @@
   background: var(--amber);
 }
 
+.user-panel-order-card__status.is-processing {
+  background: var(--blue);
+}
+
 .user-panel-order-card__total {
   text-align: right;
 }
@@ -47,8 +51,8 @@
 .user-panel-order-card__items {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 8px;
+  gap: 15px;
+  padding: 12px 8px;
 }
 
 .user-panel-order-card__item {
@@ -71,10 +75,11 @@
 .user-panel-order-card__item-image-wrapper {
   width: 67px;
   height: 67px;
-  object-fit: contain;
+  overflow: hidden;
 }
 
-.user-panel-order-card__item-main-image {
+.user-panel-order-card__item-image {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }

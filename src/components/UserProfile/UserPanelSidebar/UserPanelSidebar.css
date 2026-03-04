@@ -3,17 +3,18 @@
   background: var(--white);
   border-radius: 22px;
   box-shadow: 0 0 7px 0 var(--blue-violet);
-  padding: 24px 16px;
+  padding: 45px 23px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 40px;
+  max-height: 695px;
 }
 
 .user-panel-sidebar__profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 33px;
   border-bottom: 2px solid var(--light-yellow);
 }
 
@@ -32,11 +33,9 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding-bottom: 16px;
 }
 
 .user-panel-sidebar__item {
-  height: 42px;
   border-radius: 12px;
   border: 1px solid transparent;
   background: transparent;
@@ -46,7 +45,7 @@
   justify-content: space-between;
   gap: 8px;
   cursor: pointer;
-  padding: 0 10px;
+  padding: 12px;
 }
 
 .user-panel-sidebar__item:last-child {
@@ -99,7 +98,6 @@
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  margin-top: auto;
 }
 
 .user-panel-sidebar__logout svg {
