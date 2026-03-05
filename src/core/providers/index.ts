@@ -1,3 +1,2 @@
-// export { withSession } from './withSession';
-export { withStore } from './withStore';
+export { RTKProvider } from './rtkProvider';
 export { MuiProvider } from './muiProvider';

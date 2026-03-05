@@ -2,7 +2,7 @@
 
 // import { endpoints, http } from '@/core/config';
 // import type { AuthRequestLogin, AuthResponse } from '@/core/types';
-// import { useSession } from '@/core/store/session';
+// import { useSession } from '@/core/store';
 
 // export const useLogin = () => {
 //   const { setAuth } = useSession();

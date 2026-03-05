@@ -1,10 +1,9 @@
 import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
 
-import type { RootState } from '@/core/store';
 import { BreadCrumbs, OrderingSteps } from '@/components';
+import { useAppSelector } from '@/core/store';
 import {
   AUTHBUTTON,
   ICONS,
@@ -23,7 +22,7 @@ export const Header: FC = () => {
   const currentPath = location.pathname;
 
   // const page = pageMap[currentPath];
-  const cartLength = useSelector((state: RootState) => state.cart.cart.length);
+  const cartLength = useAppSelector((state) => state.cart.cart.length);
 
   const user = false;
   const authPage = currentPath.startsWith('/login') || currentPath.startsWith('/register');

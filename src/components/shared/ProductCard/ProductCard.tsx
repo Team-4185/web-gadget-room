@@ -1,14 +1,9 @@
 import type { FC } from 'react';
-import { Box, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { Typography } from '@mui/material';
 
 import { CartAdd, Like } from '@/assets';
-import { addProduct } from '@/core/store/slices/cartSlice.ts';
-import {
-  addProductToWishList,
-  removeProductFromWishList,
-} from '@/core/store/slices/wishListSlice.ts';
-import type { RootState } from '@/core/store';
+import { useAppDispatch, useAppSelector, cartActions, wishListActions } from '@/core/store';
+
 import { Button } from '@/components';
 import type { IProduct } from '@/core/types';
 
@@ -20,15 +15,15 @@ interface IProps {
 }
 
 export const ProductCard: FC<IProps> = ({ product, onClick }) => {
-  // const wishList = useSelector((state: RootState) => state.wishList.wishList);
-  // const dispatch = useDispatch();
-  // const addToCart = () => dispatch(addProduct({ id, name, price, amount: 1 }));
+  const wishList = useAppSelector((state) => state.wishList.wishList);
+  const dispatch = useAppDispatch();
+  // const addToCart = () => dispatch(cartActions.addProduct({ id, name, price, amount: 1 }));
 
   // const toogleWishList = () => {
   //   if (wishList.some((item) => item.id === id)) {
-  //     dispatch(removeProductFromWishList(id));
+  //     dispatch(wishListActions.removeProductFromWishList(id));
   //   } else {
-  //     dispatch(addProductToWishList({ id, name, price, amount: 1 }));
+  //     dispatch(wishListActions.addProductToWishList({ id, name, price, amount: 1 }));
   //   }
   // };
 

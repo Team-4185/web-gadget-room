@@ -1,6 +1,6 @@
 // import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-// import { useSession } from '@/core/store/session';
+// import { useSession } from '@/core/store';
 
 // export const ProtectedRoute = () => {
 // const { user } = useSession();
