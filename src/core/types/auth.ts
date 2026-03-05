@@ -1,16 +1,19 @@
-export type AuthRequestLogin = { email: string; password: string };
+import type { FormRegisterValues } from '@/core/schemas';
 
-export type AuthRequestRegister = {
+export interface IAuthRequestLogin {
   email: string;
   password: string;
-  passwordConfirmation: string;
-};
+}
 
-export type AuthRequestRefresh = { refreshToken: string };
+export interface IAuthRequestRefresh {
+  refreshToken: string;
+}
 
-export type AuthResponse = {
+export interface IAuthResponse {
   userId: number;
   email: string;
   accessToken: string;
   refreshToken: string;
-};
+}
+
+export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;

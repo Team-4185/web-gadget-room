@@ -1,28 +1,28 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-import { endpoints, http } from '@/core/config';
-import type { AuthRequestRegister, AuthResponse } from '@/core/types';
-import { useSession } from '@/core/store/session';
+// import { endpoints, http } from '@/core/config';
+// import type { AuthRequestRegister, AuthResponse } from '@/core/types';
+// import { useSession } from '@/core/store/session';
 
-export const useRegister = () => {
-  const { setAuth } = useSession();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+// export const useRegister = () => {
+//   const { setAuth } = useSession();
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState<string | null>(null);
 
-  const register = async (payload: AuthRequestRegister) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data } = await http.client.post<AuthResponse>(endpoints.register, payload);
-      setAuth(data);
-      return data;
-    } catch (e: any) {
-      setError(e?.response?.data?.body?.detail ?? 'Registration failed');
-      throw e;
-    } finally {
-      setLoading(false);
-    }
-  };
+//   const register = async (payload: AuthRequestRegister) => {
+//     setLoading(true);
+//     setError(null);
+//     try {
+//       const { data } = await http.client.post<AuthResponse>(endpoints.register, payload);
+//       setAuth(data);
+//       return data;
+//     } catch (e: any) {
+//       setError(e?.response?.data?.body?.detail ?? 'Registration failed');
+//       throw e;
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-  return { register, loading, error };
-};
+//   return { register, loading, error };
+// };

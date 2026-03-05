@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import type { ChangeEvent, FC, ReactNode, Ref } from 'react';
 import { Typography } from '@mui/material';
 
 import './Checkbox.css';
@@ -7,9 +7,10 @@ type CheckBoxProps = {
   id: string | undefined;
   name: string;
   label: ReactNode;
+  ref?: Ref<any>;
   labelSize?: string;
-  checked: boolean;
-  onChange: () => void;
+  checked?: boolean;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 };
 
@@ -17,13 +18,14 @@ export const CheckBox: FC<CheckBoxProps> = ({
   id,
   name,
   label,
+  ref,
   labelSize = '16px',
   checked,
   onChange,
   className,
 }) => {
   return (
-    <label className={`checkbox ${className}`} htmlFor={id}>
+    <label className={`checkbox ${className}`} htmlFor={id} ref={ref}>
       <input
         type="checkbox"
         name={name}
