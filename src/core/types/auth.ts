@@ -9,11 +9,18 @@ export interface IAuthRequestRefresh {
   refreshToken: string;
 }
 
-export interface IAuthResponse {
+export interface IJwtResponseDto {
   userId: number;
   email: string;
   accessToken: string;
-  refreshToken: string;
 }
 
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
+
+export interface IRegisterErrorResponse {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+}

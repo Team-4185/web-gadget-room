@@ -4,16 +4,18 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
 
 import { Button, FormInput, FormCheckbox } from '@/components';
 import { FADEUP, EMAIL_TOOLTIP, PASSWORD_TOOLTIP } from '@/core/constants';
 import { type FormRegisterValues, registerSchema } from '@/core/schemas';
-import { authService } from '@/core/services';
-// import { useRegister } from '@/core/hooks';
+import { useAppDispatch, authActions } from '@/core/store';
 
 import './Register.css';
 
 export const Register: FC = () => {
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const { control, handleSubmit, reset, formState } = useForm<FormRegisterValues>({
     resolver: zodResolver(registerSchema),
@@ -24,9 +26,7 @@ export const Register: FC = () => {
       terms: false,
     },
   });
-  // const { regForm, setRegForm, regErrors, setRegErrors, regIssues, validateRegister } =
-  //   useRegisterForm();
-  // const { register, loading: regLoading, error: regError } = useRegister();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -35,19 +35,17 @@ export const Register: FC = () => {
   }, [formState, reset]);
 
   const onSubmit: SubmitHandler<FormRegisterValues> = async (data) => {
-    // if (!validateRegister()) return;
-    // try {
-    //   await register({
-    //     email: regForm.email,
-    //     password: regForm.password,
-    //     passwordConfirmation: regForm.passwordConfirmation,
-    //   });
-    //   navigate('/userProfile', { replace: true });
-    // } catch {}
-    const { terms, ...rest } = data;
+    const resultAction = await dispatch(authActions.register(data));
 
-    const res = await authService.register(rest);
-    console.log(res);
+    if (authActions.register.fulfilled.match(resultAction)) {
+      navigate('/home', { replace: true });
+    } else {
+      if (resultAction.payload) {
+        enqueueSnackbar(resultAction.payload.detail, { variant: 'error' });
+      } else {
+        enqueueSnackbar(resultAction.error.message);
+      }
+    }
   };
 
   return (

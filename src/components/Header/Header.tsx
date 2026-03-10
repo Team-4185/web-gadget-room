@@ -25,7 +25,7 @@ export const Header: FC = () => {
   const cartLength = useAppSelector((state) => state.cart.cart.length);
 
   const user = false;
-  const authPage = currentPath.startsWith('/login') || currentPath.startsWith('/register');
+  const authPage = currentPath.startsWith('/') || currentPath.startsWith('/register');
 
   const shouldShowBreadcrumbs = !ROUTES_WITHOUT_BREADCRUMBS.includes(currentPath);
   const shouldShowOrderingSteps = ROUTES_WITH_ORDERING_STEPS.includes(currentPath);

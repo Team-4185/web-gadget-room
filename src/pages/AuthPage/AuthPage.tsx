@@ -18,23 +18,14 @@ export const AuthPage: FC = () => {
         <div className="auth__wrapper">
           <motion.div
             className="auth__switcher"
-            initial={currentUrl === '/login' ? { right: 0 } : { left: 0 }}
+            initial={currentUrl === '/register' ? { left: 0 } : { right: 0 }}
             animate={
-              currentUrl === '/login' ? { right: 0, left: 'unset' } : { right: 'unset', left: 0 }
+              currentUrl === '/register' ? { right: 'unset', left: 0 } : { right: 0, left: 'unset' }
             }
             transition={{ duration: 0.7, ease: 'easeInOut' }}
           />
 
-          {currentUrl !== '/login' ? (
-            <>
-              <WelcomeSection
-                title="Nice to meet you"
-                subtitle="Just register to join with us"
-                icon={ArrowRight}
-              />
-              <Register />
-            </>
-          ) : (
+          {currentUrl !== '/register' ? (
             <>
               <Login />
               <WelcomeSection
@@ -42,6 +33,15 @@ export const AuthPage: FC = () => {
                 subtitle="Please login to continue"
                 icon={ArrowLeft}
               />
+            </>
+          ) : (
+            <>
+              <WelcomeSection
+                title="Nice to meet you"
+                subtitle="Just register to join with us"
+                icon={ArrowRight}
+              />
+              <Register />
             </>
           )}
         </div>
