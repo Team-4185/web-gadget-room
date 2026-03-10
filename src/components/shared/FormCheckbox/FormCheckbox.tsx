@@ -18,7 +18,13 @@ export const FormCheckbox = <T extends FieldValues>({ id, name, control, label }
       control={control}
       render={({ field, fieldState }) => (
         <>
-          <CheckBox {...field} id={id} label={label} className="register__checkbox" />
+          <CheckBox
+            {...field}
+            id={id}
+            label={label}
+            checked={field.value}
+            className="register__checkbox"
+          />
           {fieldState.error && (
             <Typography sx={{ color: 'var(--coralRed)', fontSize: '14px', marginTop: '10px' }}>
               {fieldState.error.message}

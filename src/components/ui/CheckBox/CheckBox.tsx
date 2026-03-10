@@ -25,12 +25,13 @@ export const CheckBox: FC<CheckBoxProps> = ({
   className,
 }) => {
   return (
-    <label className={`checkbox ${className}`} htmlFor={id} ref={ref}>
+    <label className={`checkbox ${className}`} htmlFor={id}>
       <input
         type="checkbox"
+        ref={ref}
         name={name}
         id={id}
-        checked={checked}
+        checked={checked ?? false}
         className="checkbox__input"
         onChange={onChange}
       />
