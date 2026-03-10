@@ -1,37 +1,55 @@
-import { useState, type FC } from 'react';
-import { IconButton, InputAdornment, TextField, type SxProps, type Theme } from '@mui/material';
+import { useState, type ChangeEvent, type FC, type ReactNode, type Ref } from 'react';
+import type { FieldError } from 'react-hook-form';
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  Tooltip,
+  type SxProps,
+  type Theme,
+} from '@mui/material';
 
 import { Completed, Error, Visibility, VisibilityOff } from '@/assets';
 
 interface IProps {
+  name?: string;
+  tooltipText?: ReactNode;
   maxWidth?: string;
   type?: string;
+  ref?: Ref<any>;
   label: string;
   placeholder?: string;
   success?: boolean;
-  error?: boolean;
+  error?: FieldError;
   disabled?: boolean;
   required?: boolean;
   size?: 'small' | 'medium';
   isPassword?: boolean;
+  autoComplete: string;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: () => void;
   sx?: SxProps<Theme>;
 }
 
 export const Input: FC<IProps> = ({
+  name,
+  tooltipText,
   maxWidth = '100%',
   type = 'text',
+  ref,
   label,
   placeholder,
   success = false,
-  error = false,
+  error,
   disabled = false,
   required = false,
   size = 'small',
-  isPassword,
+  isPassword = false,
+  autoComplete,
   value,
   onChange,
+  onBlur,
   sx,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -83,91 +101,97 @@ export const Input: FC<IProps> = ({
   if (isPassword) computedType = showPassword ? 'text' : 'password';
 
   return (
-    <TextField
-      type={computedType}
-      value={value}
-      placeholder={placeholder}
-      onChange={onChange}
-      error={error}
-      disabled={disabled}
-      required={required}
-      label={error ? 'Please enter valid data' : label}
-      variant="filled"
-      size={size}
-      slotProps={{
-        input: {
-          endAdornment,
-        },
-      }}
-      sx={{
-        maxWidth,
-        width: '100%',
-
-        '& .MuiInputLabel-root': {
-          ...(success && { color: 'var(--chateau-green)' }),
-
-          '&.Mui-disabled': {
-            color: 'var(--black-opacity-13)',
+    <Tooltip title={tooltipText} arrow>
+      <TextField
+        name={name}
+        inputRef={ref}
+        type={computedType}
+        value={value}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        onChange={onChange}
+        onBlur={onBlur}
+        error={error ? true : false}
+        disabled={disabled}
+        required={required}
+        label={error ? `${error.message}` : label}
+        variant="filled"
+        size={size}
+        slotProps={{
+          input: {
+            endAdornment,
           },
+        }}
+        sx={{
+          maxWidth,
+          width: '100%',
 
-          '&.Mui-focused': {
-            color: success ? 'var(--chateau-green)' : 'var(--black)',
-          },
+          '& .MuiInputLabel-root': {
+            ...(success && { color: 'var(--chateau-green)' }),
 
-          '&.Mui-error': {
-            color: 'var(--coralRed)',
-          },
-        },
+            '&.Mui-disabled': {
+              color: 'var(--black-opacity-13)',
+            },
 
-        '& .MuiFilledInput-root': {
-          borderRadius: '8px',
-          border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
-          backgroundColor: 'var(--white)',
-          ...(size === 'medium' && {
-            minHeight: '64px',
-          }),
+            '&.Mui-focused': {
+              color: success ? 'var(--chateau-green)' : 'var(--black)',
+            },
 
-          '&:hover': {
-            backgroundColor: 'var(--white)',
-          },
-
-          '&.Mui-focused': {
-            backgroundColor: 'var(--white)',
-            border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--blue-violet)'}`,
-          },
-
-          '&.Mui-error': {
-            border: '1px solid var(--coralRed)',
-          },
-
-          '&.Mui-disabled': {
-            backgroundColor: 'var(--white)',
-            border: '1px solid var(--black-opacity-12)',
-
-            '&::before': {
-              borderBottomStyle: 'none',
+            '&.Mui-error': {
+              color: 'var(--coralRed)',
             },
           },
 
-          '&::after, &::before, &:hover:not(.Mui-disabled, .Mui-error)::before': {
-            borderBottom: 'none',
+          '& .MuiFilledInput-root': {
+            borderRadius: '8px',
+            border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
+            backgroundColor: 'var(--white)',
+            ...(size === 'medium' && {
+              minHeight: '64px',
+            }),
+
+            '&:hover': {
+              backgroundColor: 'var(--white)',
+            },
+
+            '&.Mui-focused': {
+              backgroundColor: 'var(--white)',
+              border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--blue-violet)'}`,
+            },
+
+            '&.Mui-error': {
+              border: '1px solid var(--coralRed)',
+            },
+
+            '&.Mui-disabled': {
+              backgroundColor: 'var(--white)',
+              border: '1px solid var(--black-opacity-12)',
+
+              '&::before': {
+                borderBottomStyle: 'none',
+              },
+            },
+
+            '&::after, &::before, &:hover:not(.Mui-disabled, .Mui-error)::before': {
+              borderBottom: 'none',
+            },
           },
-        },
 
-        '& .MuiInputBase-input': {
-          color: 'var(--black)',
-          ...(size === 'medium' && {
-            padding: '25px 14px 9px',
-            fontSize: '14px',
-          }),
-        },
+          '& .MuiInputBase-input': {
+            color: 'var(--black)',
+            ...(size === 'medium' && {
+              padding: '25px 14px 9px',
+              fontSize: '14px',
+            }),
+          },
 
-        '& .MuiInputBase-sizeSmall .MuiInputBase-input': {
-          paddingTop: '19px',
-        },
+          '& .MuiInputBase-sizeSmall .MuiInputBase-input': {
+            paddingTop: '19px',
+          },
 
-        ...sx,
-      }}
-    />
+          ...sx,
+        }}
+      />
+    </Tooltip>
   );
 };

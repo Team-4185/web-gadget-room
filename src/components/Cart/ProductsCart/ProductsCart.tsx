@@ -1,8 +1,6 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
-import type { RootState } from '@/core/store';
-import { decreaseAmount, increaseAmount, removeProduct } from '@/core/store/slices/cartSlice';
+import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
 import { Trash, Plus, Minus } from '@/assets';
 
 import greyBox from '/icons/greyBox.png';
@@ -10,8 +8,8 @@ import greyBox from '/icons/greyBox.png';
 import './ProductsCart.css';
 
 export const ProductsCart = () => {
-  const products = useSelector((state: RootState) => state.cart.cart);
-  const dispatch = useDispatch();
+  const products = useAppSelector((state) => state.cart.cart);
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -39,7 +37,7 @@ export const ProductsCart = () => {
 
             <div className="cart-item__amount">
               <button
-                onClick={() => dispatch(decreaseAmount(product.id))}
+                onClick={() => dispatch(cartActions.decreaseAmount(product.id))}
                 className="cart-item__amount-btn"
               >
                 <Minus width={12} height={12} />
@@ -58,7 +56,7 @@ export const ProductsCart = () => {
                 {product.amount}
               </Typography>
               <button
-                onClick={() => dispatch(increaseAmount(product.id))}
+                onClick={() => dispatch(cartActions.increaseAmount(product.id))}
                 className="cart-item__amount-btn"
               >
                 <Plus width={12} height={12} />
@@ -75,7 +73,10 @@ export const ProductsCart = () => {
             </Typography>
           </div>
 
-          <div onClick={() => dispatch(removeProduct(product.id))} className="cart-item__remove">
+          <div
+            onClick={() => dispatch(cartActions.removeProduct(product.id))}
+            className="cart-item__remove"
+          >
             <Trash width={18} height={18} />
             <Typography variant="body1" component="span" sx={{ fontSize: '15px', fontWeight: 500 }}>
               Delete

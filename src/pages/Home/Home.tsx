@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -8,6 +7,7 @@ import {
   PromoGridSection,
   SaleBannerSection,
 } from '@/components';
+import { useAppDispatch, cartActions } from '@/core/store';
 import {
   HOME_BRANDS,
   HOME_HERO,
@@ -19,16 +19,15 @@ import {
   HOME_BANNER_LEFT_IMAGE,
   HOME_BANNER_RIGHT_IMAGE,
 } from '@/core/constants';
-import { addProduct } from '@/core/store/slices/cartSlice';
 
 export const Home = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const hero_product = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
 
   const addPhone = () => {
-    dispatch(addProduct(hero_product));
+    dispatch(cartActions.addProduct(hero_product));
     navigate('/cart');
   };
 

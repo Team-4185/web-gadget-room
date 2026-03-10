@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Container } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
@@ -15,47 +15,35 @@ export const AuthPage: FC = () => {
   return (
     <section className="auth">
       <Container disableGutters>
-        <motion.div
-          className="auth__switcher"
-          animate={{ left: currentUrl !== '/login' ? '0%' : '50%' }}
-          transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-        />
         <div className="auth__wrapper">
-          <AnimatePresence mode="wait">
-            {currentUrl !== '/login' ? (
-              <>
-                <WelcomeSection
-                  title="Nice to meet you"
-                  subtitle="Just register to join with us"
-                  icon={ArrowRight}
-                />
-                <Register />
-              </>
-            ) : (
-              <>
-                <Login />
-                <WelcomeSection
-                  title="Welcome back"
-                  subtitle="Please login to continue"
-                  icon={ArrowLeft}
-                />
-              </>
-            )}
-          </AnimatePresence>
+          <motion.div
+            className="auth__switcher"
+            initial={currentUrl === '/register' ? { left: 0 } : { right: 0 }}
+            animate={
+              currentUrl === '/register' ? { right: 'unset', left: 0 } : { right: 0, left: 'unset' }
+            }
+            transition={{ duration: 0.7, ease: 'easeInOut' }}
+          />
 
-          {/* <AuthPanel>
-            <AnimatePresence mode="wait">
-              {currentUrl !== '/login' ? (
-                <Register />
-              ) : (
-                <WelcomeText
-                  title="Welcome back"
-                  subtitle="Please login to continue"
-                  icon={ArrowLeft}
-                />
-              )}
-            </AnimatePresence>
-          </AuthPanel> */}
+          {currentUrl !== '/register' ? (
+            <>
+              <Login />
+              <WelcomeSection
+                title="Welcome back"
+                subtitle="Please login to continue"
+                icon={ArrowLeft}
+              />
+            </>
+          ) : (
+            <>
+              <WelcomeSection
+                title="Nice to meet you"
+                subtitle="Just register to join with us"
+                icon={ArrowRight}
+              />
+              <Register />
+            </>
+          )}
         </div>
       </Container>
     </section>

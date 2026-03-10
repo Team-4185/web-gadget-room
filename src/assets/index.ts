@@ -48,6 +48,8 @@ export { default as Completed } from './completed.svg?react';
 export { default as Error } from './error.svg?react';
 export { default as Visibility } from './visibility.svg?react';
 export { default as VisibilityOff } from './visibilityOff.svg?react';
+export { default as CheckCircleOutlineIcon } from './checkCircleOutlineIcon.svg?react';
+export { default as InfoCircleOutlineIcon } from './infoCircleOutlineIcon.svg?react';
 export { default as Bell } from './bell.svg?react';
 export { default as Logout } from './logout.svg?react';
 export { default as Order } from './order.svg?react';
