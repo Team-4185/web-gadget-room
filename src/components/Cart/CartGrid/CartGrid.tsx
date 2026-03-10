@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
 import { ProductsCart } from '@/components';
-import type { RootState } from '@/core/store';
+import { useAppSelector } from '@/core/store';
 
 import './CartGrid.css';
 
@@ -11,7 +10,7 @@ const headerTextSx = { fontWeight: 600, lineHeight: 1 };
 const headerSubtotalSx = { ...headerTextSx, textAlign: 'right' as const };
 
 export const CartGrid = () => {
-  const cartLength = useSelector((state: RootState) => state.cart.cart.length);
+  const cartLength = useAppSelector((state) => state.cart.cart.length);
 
   return (
     <div className="cart__grid">

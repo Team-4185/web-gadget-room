@@ -2,21 +2,25 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Footer, Header, ScrollToTop } from '@/components';
 import { AppRoutes } from '@/routes';
-import { MuiProvider } from '@/core/providers';
+import { MuiProvider, RTKProvider, ToastProvider } from '@/core/providers';
 
 import './App.css';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <MuiProvider>
-        <Header />
-        <main>
-          <ScrollToTop />
-          <AppRoutes />
-        </main>
-        <Footer />
-      </MuiProvider>
+      <RTKProvider>
+        <MuiProvider>
+          <ToastProvider>
+            <Header />
+            <main>
+              <ScrollToTop />
+              <AppRoutes />
+            </main>
+            <Footer />
+          </ToastProvider>
+        </MuiProvider>
+      </RTKProvider>
     </BrowserRouter>
   );
 };

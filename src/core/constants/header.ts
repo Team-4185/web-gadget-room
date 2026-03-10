@@ -37,7 +37,7 @@ export const PAGES = [
 ];
 
 export const AUTHBUTTON = [
-  { id: 0, name: PageName.Login, href: '/login' },
+  { id: 0, name: PageName.Login, href: '/' },
   { id: 1, name: PageName.Register, href: '/register' },
 ];
 
@@ -62,9 +62,9 @@ export const ROUTES_WITHOUT_BREADCRUMBS = [
   '/payment',
   '/delivery',
   '/register',
-  '/login',
   '/404',
   '/empty-cart',
+  '/home',
 ];
 
 export const ROUTES_WITH_ORDERING_STEPS = ['/cart', '/payment', '/delivery'];

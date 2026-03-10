@@ -1,16 +1,18 @@
-.register {
+.login {
   max-width: 549px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 57px;
+  margin-left: 57px;
 }
 
-.register__form {
+.login__form {
   margin-top: 35px;
 }
 
-.register__checkbox {
+.login__actions {
+  display: flex;
+  justify-content: space-between;
   margin-top: 35px;
 }

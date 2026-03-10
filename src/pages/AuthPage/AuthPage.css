@@ -8,6 +8,7 @@
 }
 
 .auth__wrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 717px;
@@ -17,12 +18,12 @@
   border-radius: 50px;
 }
 
-/* 
 .auth__switcher {
   position: absolute;
-  top: 0;
-  width: 50%;
+  max-width: 627px;
+  width: 100%;
   height: 100%;
-  background: rgba(151, 151, 151, 0.13);
+  background: var(--gray-opacity-13);
   border-radius: 50px;
-} */
+  border: 1px solid var(--dark-yellow);
+}
