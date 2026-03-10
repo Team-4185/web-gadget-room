@@ -3,22 +3,28 @@ import { Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { ChevronRight } from '@/assets';
-import { ProductCard, UserPanelOrderCard, UserPanelSidebar, UserPanelStatCard } from '@/components';
+import {
+  ProductCard,
+  UserPanelOrderCard,
+  UserPanelSettings,
+  UserPanelSidebar,
+  UserPanelStatCard,
+} from '@/components';
 import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
 import { useUserPanelData } from '@/core/hooks';
-import { useSession } from '@/core/store/session';
+// import { useSession } from '@/core/store/session';
 import type { UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  const { logout } = useSession();
+  // const { logout } = useSession();
   const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData();
   const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
 
   const handleLogout = () => {
-    logout();
+    // logout();
     navigate('/login');
   };
 
@@ -144,16 +150,7 @@ export const UserProfile = () => {
               </div>
             )}
 
-            {isSettingsTab && (
-              <div className="user-profile__orders-header" aria-label="Account settings">
-                <Typography
-                  component="h2"
-                  sx={{ fontSize: '32px', fontWeight: 700, lineHeight: 1 }}
-                >
-                  Account settings
-                </Typography>
-              </div>
-            )}
+            {isSettingsTab && <UserPanelSettings email={profile.email} />}
           </div>
         </div>
       </Container>

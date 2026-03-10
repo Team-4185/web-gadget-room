@@ -55,3 +55,4 @@ export { default as Settings } from './settings.svg?react';
 export { default as SmallClock } from './smallClock.svg?react';
 export { default as SmallTruck } from './smallTruck.svg?react';
 export { default as StatusDelivered } from './statusDelivered.svg?react';
+export { default as Save } from './save.svg?react';

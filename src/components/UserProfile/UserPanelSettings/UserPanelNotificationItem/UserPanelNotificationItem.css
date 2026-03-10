@@ -1,0 +1,29 @@
+.user-profile__settings-notification-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.user-profile__settings-notification-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-profile__settings-checkbox {
+  gap: 0;
+}
+
+.user-profile__settings-checkbox .MuiTypography-root {
+  display: none;
+}
+
+.user-profile__settings-checkbox .checkbox__icon {
+  width: 30px;
+  height: 30px;
+}
+
+.user-profile__settings-checkbox .checkbox__input:checked + .checkbox__icon {
+  background-size: 20px 20px;
+}

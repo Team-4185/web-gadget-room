@@ -7,6 +7,7 @@ interface IProps {
   maxWidth?: string;
   type?: string;
   label: string;
+  placeholder?: string;
   success?: boolean;
   error?: boolean;
   disabled?: boolean;
@@ -22,6 +23,7 @@ export const Input: FC<IProps> = ({
   maxWidth = '100%',
   type = 'text',
   label,
+  placeholder,
   success = false,
   error = false,
   disabled = false,
@@ -84,6 +86,7 @@ export const Input: FC<IProps> = ({
     <TextField
       type={computedType}
       value={value}
+      placeholder={placeholder}
       onChange={onChange}
       error={error}
       disabled={disabled}
@@ -120,6 +123,9 @@ export const Input: FC<IProps> = ({
           borderRadius: '8px',
           border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
           backgroundColor: 'var(--white)',
+          ...(size === 'medium' && {
+            minHeight: '64px',
+          }),
 
           '&:hover': {
             backgroundColor: 'var(--white)',
@@ -150,6 +156,10 @@ export const Input: FC<IProps> = ({
 
         '& .MuiInputBase-input': {
           color: 'var(--black)',
+          ...(size === 'medium' && {
+            padding: '25px 14px 9px',
+            fontSize: '14px',
+          }),
         },
 
         '& .MuiInputBase-sizeSmall .MuiInputBase-input': {
