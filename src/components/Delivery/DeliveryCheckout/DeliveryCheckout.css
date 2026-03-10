@@ -1,0 +1,28 @@
+.delivery-checkout {
+  width: 100%;
+}
+
+.delivery-checkout__layout {
+  display: grid;
+  grid-template-columns: 632px 503px;
+  justify-content: space-between;
+  align-items: start;
+  gap: 40px;
+  margin-top: 95px;
+  margin-bottom: 97px;
+}
+
+.delivery-checkout__left {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.delivery-checkout__right {
+  margin-top: 2px;
+}
+
+.delivery-checkout__summary {
+  margin-top: 0;
+  margin-bottom: 140px;
+}

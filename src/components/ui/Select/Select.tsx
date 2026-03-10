@@ -11,29 +11,81 @@ interface IProps {
   height: string;
   color: string;
   fontSize: string;
+  styleVariant?: 'default' | 'subtleBorder';
+  selectPadding?: string;
   startIcon?: ReactNode;
+  initialValue?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-export const Select: FC<IProps> = ({ data, maxWidth, height, color, fontSize, startIcon }) => {
-  const [defaultValue, setDefaultValue] = useState<string>(data[0].value);
+export const Select: FC<IProps> = ({
+  data,
+  maxWidth,
+  height,
+  color,
+  fontSize,
+  styleVariant = 'default',
+  selectPadding,
+  startIcon,
+  initialValue,
+  placeholder,
+  value,
+  onChange,
+}) => {
+  const [defaultValue, setDefaultValue] = useState<string>(initialValue ?? data[0]?.value ?? '');
+  const selectedValue = value ?? defaultValue;
 
   const handleChange = (event: SelectChangeEvent) => {
-    setDefaultValue(event.target.value as string);
+    const nextValue = event.target.value as string;
+
+    if (value === undefined) {
+      setDefaultValue(nextValue);
+    }
+
+    onChange?.(nextValue);
   };
 
   return (
     <FormControl sx={{ maxWidth, width: '100%' }}>
       <SelectMUI
-        sx={{ height, color, fontSize }}
-        value={defaultValue}
+        sx={{
+          height,
+          color,
+          fontSize,
+          '& .MuiSelect-select.MuiSelect-select': {
+            padding: selectPadding,
+          },
+        }}
+        data-style-variant={styleVariant === 'subtleBorder' ? 'subtleBorder' : undefined}
+        value={selectedValue}
         onChange={handleChange}
+        displayEmpty
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              maxHeight: 48 * 6,
+              overflowY: 'auto',
+            },
+          },
+        }}
         IconComponent={ChevronDown}
         renderValue={(selected) => {
+          if (!selected) {
+            return (
+              <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                {startIcon && startIcon}
+                <span>{placeholder ?? ''}</span>
+              </div>
+            );
+          }
+
           const item = data.find((item) => item.value === selected);
           return (
             <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
               {startIcon && startIcon}
-              <span>{item?.name}</span>
+              <span>{item?.name ?? placeholder ?? ''}</span>
             </div>
           );
         }}

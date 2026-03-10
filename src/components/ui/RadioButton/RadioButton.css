@@ -1,0 +1,26 @@
+.radio-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--blue-violet);
+  background: var(--white);
+  box-shadow: 0 0 3.2px 0 var(--blue-violet);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.radio-button__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dark-yellow);
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+
+.radio-button--checked .radio-button__dot {
+  transform: scale(1);
+}

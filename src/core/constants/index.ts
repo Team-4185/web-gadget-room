@@ -6,3 +6,4 @@ export * from './select';
 export * from './header';
 export * from './animations';
 export * from './tooltip';
+export * from './delivery';
