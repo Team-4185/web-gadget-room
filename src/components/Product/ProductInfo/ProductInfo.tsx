@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Typography } from '@mui/material';
 
 import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
+import { useAppDispatch, cartActions } from '@/core/store';
 import { addProduct } from '@/core/store/slices/cartSlice';
 import { useProduct } from '@/core/hooks';
 import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
@@ -13,9 +13,9 @@ import './ProductInfo.css';
 export const ProductInfo: FC = () => {
   const { product, specs, description, loading, error } = useProduct();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const addToCart = () => dispatch(addProduct(product));
+  const addToCart = () => dispatch(cartActions.addProduct(product));
 
   const buyNow = () => {
     addToCart();

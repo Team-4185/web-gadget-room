@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
 import { Lock } from '@/assets';
-import type { RootState } from '@/core/store';
+import { useAppSelector } from '@/core/store';
 import { Button } from '@/components';
 
 import './OrderSummary.css';
@@ -36,9 +35,11 @@ export const OrderSummary = ({
   shippingAmount = 13,
   className,
 }: OrderSummaryProps) => {
-  const amountOfProducts = useSelector((state: RootState) => state.cart.cart.length);
+  const amountOfProducts = useAppSelector((state) => state.cart.cart.length);
+  const tax = 13;
+  const shipping = 13;
 
-  const subTotal = useSelector((state: RootState) =>
+  const subTotal = useAppSelector((state) =>
     state.cart.cart.reduce((sum, product) => sum + product.price * product.amount, 0)
   );
 

@@ -5,12 +5,26 @@
   flex-direction: column;
   position: relative;
   justify-content: center;
-  border: 1px solid var(--dark-yellow);
-  border-radius: 50px;
 }
 
-.auth__content {
+.auth__welcome--register {
   padding-left: 25px;
+  align-items: start;
+}
+
+.auth__welcome--login {
+  padding-left: 25px;
+  align-items: end;
+}
+
+.auth__content--register {
+  padding-left: 25px;
+  text-align: start;
+}
+
+.auth__content--login {
+  padding-right: 25px;
+  text-align: end;
 }
 
 .auth__media {

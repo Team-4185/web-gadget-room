@@ -1,3 +1,2 @@
-export { http } from './api';
-export { endpoints } from './endpoints';
+export { api } from './api';
 export { theme } from './theme';
