@@ -12,19 +12,16 @@ import {
 } from '@/components';
 import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
 import { useUserPanelData } from '@/core/hooks';
-// import { useSession } from '@/core/store/session';
 import type { UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  // const { logout } = useSession();
   const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData();
   const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
 
   const handleLogout = () => {
-    // logout();
     navigate('/login');
   };
 
