@@ -25,7 +25,7 @@ interface IProps {
   required?: boolean;
   size?: 'small' | 'medium';
   isPassword?: boolean;
-  autoComplete: string;
+  autoComplete?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
