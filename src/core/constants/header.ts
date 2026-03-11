@@ -64,6 +64,7 @@ export const ROUTES_WITHOUT_BREADCRUMBS = [
   '/register',
   '/404',
   '/empty-cart',
+  '/userProfile',
   '/home',
 ];
 

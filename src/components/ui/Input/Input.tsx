@@ -18,13 +18,14 @@ interface IProps {
   type?: string;
   ref?: Ref<any>;
   label: string;
+  placeholder?: string;
   success?: boolean;
   error?: FieldError;
   disabled?: boolean;
   required?: boolean;
   size?: 'small' | 'medium';
   isPassword?: boolean;
-  autoComplete: string;
+  autoComplete?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
@@ -38,6 +39,7 @@ export const Input: FC<IProps> = ({
   type = 'text',
   ref,
   label,
+  placeholder,
   success = false,
   error,
   disabled = false,
@@ -105,6 +107,7 @@ export const Input: FC<IProps> = ({
         inputRef={ref}
         type={computedType}
         value={value}
+        placeholder={placeholder}
         autoComplete={autoComplete}
         onChange={onChange}
         onBlur={onBlur}
@@ -143,6 +146,9 @@ export const Input: FC<IProps> = ({
             borderRadius: '8px',
             border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
             backgroundColor: 'var(--white)',
+            ...(size === 'medium' && {
+              minHeight: '64px',
+            }),
 
             '&:hover': {
               backgroundColor: 'var(--white)',
@@ -173,6 +179,10 @@ export const Input: FC<IProps> = ({
 
           '& .MuiInputBase-input': {
             color: 'var(--black)',
+            ...(size === 'medium' && {
+              padding: '25px 14px 9px',
+              fontSize: '14px',
+            }),
           },
 
           '& .MuiInputBase-sizeSmall .MuiInputBase-input': {

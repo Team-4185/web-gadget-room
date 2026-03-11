@@ -1,0 +1,5 @@
+.user-profile__settings-note {
+  border-radius: 8px;
+  background: var(--light-violet);
+  padding: 13px 14px;
+}

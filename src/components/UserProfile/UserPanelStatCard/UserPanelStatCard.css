@@ -1,0 +1,18 @@
+.user-panel-stat-card {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 0 7px 0 var(--blue-violet);
+  padding: 12px;
+}
+
+.user-panel-stat-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blue-violet);
+  color: var(--white);
+  margin-bottom: 12px;
+}

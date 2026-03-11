@@ -1,0 +1,16 @@
+.user-profile__settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-profile__settings-text-input {
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 7px 0 var(--blue-violet);
+  padding: 13px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 64px;
+}
