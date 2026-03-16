@@ -22,7 +22,7 @@ export const Login: FC = () => {
     defaultValues: {
       email: '',
       password: '',
-      // remember: false,
+      rememberMe: false,
     },
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -74,7 +74,7 @@ export const Login: FC = () => {
         />
 
         <div className="login__actions">
-          {/* <FormCheckbox id="remember" name="remember" control={control} label="Remember" /> */}
+          <FormCheckbox id="remember" name="rememberMe" control={control} label="Remember" />
 
           <Typography sx={{ fontWeight: 400, color: 'var(--black)' }}>Forgot Password?</Typography>
         </div>

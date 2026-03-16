@@ -18,7 +18,7 @@ const authBaseSchema = z.object({
 
 export const loginSchema = z.object({
   ...authBaseSchema.shape,
-  // remember: z.boolean().optional(),
+  rememberMe: z.boolean().optional(),
 });
 
 export const registerSchema = z
