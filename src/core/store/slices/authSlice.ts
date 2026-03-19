@@ -4,17 +4,19 @@ import { createAppSlice } from '@/core/store/createAppSlice';
 import type { FormRegisterValuesDto, IJwtResponseDto, IRegisterErrorResponse } from '@/core/types';
 import { authService } from '@/core/services';
 import type { FormLoginValues } from '@/core/schemas';
+import { setAccessToken } from '@/core/config';
 
-interface IInitialState extends IJwtResponseDto {
+interface IInitialState extends Omit<IJwtResponseDto, 'accessToken'> {
   loading: boolean;
+  authLoading: boolean;
   error: null | IRegisterErrorResponse;
 }
 
 const initialState: IInitialState = {
-  userId: 0,
+  userId: null,
   email: '',
-  accessToken: '',
   loading: false,
+  authLoading: true,
   error: null,
 };
 
@@ -49,7 +51,8 @@ export const authSlice = createAppSlice({
         fulfilled: (state, action) => {
           state.userId = action.payload.userId;
           state.email = action.payload.email;
-          state.accessToken = action.payload.accessToken;
+
+          setAccessToken(action.payload.accessToken);
         },
         settled: (state) => {
           state.loading = false;
@@ -83,10 +86,43 @@ export const authSlice = createAppSlice({
         fulfilled: (state, action) => {
           state.userId = action.payload.userId;
           state.email = action.payload.email;
-          state.accessToken = action.payload.accessToken;
+
+          setAccessToken(action.payload.accessToken);
         },
         settled: (state) => {
           state.loading = false;
+        },
+      }
+    ),
+    refreshToken: create.asyncThunk<IJwtResponseDto, void, { rejectValue: IRegisterErrorResponse }>(
+      async (_, { rejectWithValue }) => {
+        try {
+          return await authService.refreshToken();
+        } catch (err) {
+          if (axios.isAxiosError<IRegisterErrorResponse>(err)) {
+            return rejectWithValue(err.response!.data);
+          } else {
+            throw err;
+          }
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? null;
+        },
+        fulfilled: (state, action) => {
+          state.userId = action.payload.userId;
+          state.email = action.payload.email;
+
+          setAccessToken(action.payload.accessToken);
+        },
+        settled: (state) => {
+          state.loading = false;
+          state.authLoading = false;
         },
       }
     ),
