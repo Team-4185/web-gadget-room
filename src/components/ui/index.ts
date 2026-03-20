@@ -6,3 +6,4 @@ export { SliderPrice } from './SliderPrice/SliderPrice';
 export { Badge } from './Badge/Badge';
 export { Select } from './Select/Select';
 export { RadioButton } from './RadioButton/RadioButton';
+export { CircularProgress } from './CircularProgress/CircularProgress';

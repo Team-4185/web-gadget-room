@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { useAppSelector } from '@/core/store';
+import { CircularProgress } from '@/components';
 
 export const ProtectedRoutes = () => {
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const { userId, authLoading } = useAppSelector((state) => state.auth);
 
-  return accessToken ? <Outlet /> : <Navigate to="/" replace />;
+  if (authLoading) return <CircularProgress />;
+
+  return userId ? <Outlet /> : <Navigate to="/" replace />;
 };

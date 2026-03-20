@@ -1,27 +1,27 @@
-import { BrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { Footer, Header, ScrollToTop } from '@/components';
 import { AppRoutes } from '@/routes';
-import { MuiProvider, RTKProvider, ToastProvider } from '@/core/providers';
+import { useAppDispatch, authActions } from '@/core/store';
 
 import './App.css';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(authActions.refreshToken());
+  }, []);
+
   return (
-    <BrowserRouter>
-      <RTKProvider>
-        <MuiProvider>
-          <ToastProvider>
-            <Header />
-            <main>
-              <ScrollToTop />
-              <AppRoutes />
-            </main>
-            <Footer />
-          </ToastProvider>
-        </MuiProvider>
-      </RTKProvider>
-    </BrowserRouter>
+    <>
+      <Header />
+      <main>
+        <ScrollToTop />
+        <AppRoutes />
+      </main>
+      <Footer />
+    </>
   );
 };
 

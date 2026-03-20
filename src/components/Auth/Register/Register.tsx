@@ -43,7 +43,7 @@ export const Register: FC = () => {
       if (resultAction.payload) {
         enqueueSnackbar(resultAction.payload.detail, { variant: 'error' });
       } else {
-        enqueueSnackbar(resultAction.error.message);
+        enqueueSnackbar(resultAction.error.message, { variant: 'error' });
       }
     }
   };
