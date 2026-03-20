@@ -10,7 +10,7 @@ export interface IAuthRequestRefresh {
 }
 
 export interface IJwtResponseDto {
-  userId: number;
+  userId: number | null;
   email: string;
   accessToken: string;
 }
