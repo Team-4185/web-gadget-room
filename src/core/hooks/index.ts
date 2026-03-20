@@ -4,4 +4,8 @@ export { usePaymentForm } from './usePaymentForm';
 export { useProduct } from './useProduct';
 // export { useLogin } from './useLogin';
 export { useUserPanelData } from './useUserPanelData';
+export { useAdminPanelData } from './useAdminPanelData';
+export { useAdminProductManagementData } from './useAdminProductManagementData';
+export { useAdminCustomersData } from './useAdminCustomersData';
+export { useAdminOrdersData } from './useAdminOrdersData';
 // export { useLoginForm } from './useLoginForm';

@@ -1,0 +1,52 @@
+.admin-panel-brand-chart {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 16px 14px;
+}
+
+.admin-panel-brand-chart__donut-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 26px 0 22px;
+}
+
+.admin-panel-brand-chart__donut {
+  width: 134px;
+  height: 134px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.admin-panel-brand-chart__donut::after {
+  content: '';
+  position: absolute;
+  inset: 23px;
+  border-radius: 50%;
+  background: var(--white);
+}
+
+.admin-panel-brand-chart__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-panel-brand-chart__legend li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-panel-brand-chart__legend-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.admin-panel-brand-chart__legend-name span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

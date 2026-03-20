@@ -13,3 +13,4 @@ export * from './Cart';
 export * from './Auth';
 export * from './Delivery';
 export * from './UserProfile';
+export * from './AdminPanel';
