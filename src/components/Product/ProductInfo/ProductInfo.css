@@ -31,6 +31,7 @@
 
 .product-info__description {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
