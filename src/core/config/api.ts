@@ -1,20 +1,26 @@
-import axios, { AxiosError, type AxiosInstance } from 'axios';
+import axios, { AxiosError, isAxiosError, type InternalAxiosRequestConfig } from 'axios';
 
-import { SingleFlight, tokenStorage } from '@/core/utils';
-import type { AuthResponse, AuthRequestRefresh } from '@/core/types';
+import { authService } from '@/core/services';
 
-const manualAccessToken = import.meta.env.VITE_MANUAL_JWT?.trim() || null;
-const backendOrigin = import.meta.env.VITE_BACKEND_ORIGIN?.trim() || 'http://localhost:8080/api';
+interface IСustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _isRetry?: boolean;
+}
 
-const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.DEV ? '/api' : backendOrigin.replace(/\/+$/, ''),
-  withCredentials: false,
-});
+const options = {
+  baseURL: `${import.meta.env.VITE_BACKEND_ORIGIN}`,
+  timeout: 1000,
+  withCredentials: true,
+};
 
-let accessToken: string | null = manualAccessToken ?? tokenStorage.get().accessToken;
-let refreshToken: string | null = tokenStorage.get().refreshToken;
+export const apiAuth = axios.create(options);
 
-const refresher = new SingleFlight<AuthResponse>();
+export const api = axios.create(options);
+
+let accessToken: string | null = null;
+
+export const setAccessToken = (token: string | null) => {
+  accessToken = token;
+};
 
 api.interceptors.request.use((config) => {
   if (accessToken) {
@@ -25,51 +31,30 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (res) => res,
+  (response) => response,
   async (error: AxiosError) => {
-    const original = error.config!;
-    const status = error.response?.status;
+    const originalRequest = error.config as IСustomInternalAxiosRequestConfig;
 
-    if (status === 401 && refreshToken && !original.headers?.['x-retried']) {
+    if (isAxiosError(error) && error.response?.status === 401 && !originalRequest._isRetry) {
+      originalRequest._isRetry = true;
+
       try {
-        const refreshed = await refresher.do(async () => {
-          const payload: AuthRequestRefresh = { refreshToken: refreshToken! };
-          const { data } = await api.post<AuthResponse>('auth/refresh', payload);
-          accessToken = data.accessToken;
-          refreshToken = data.refreshToken;
-          tokenStorage.set({
-            accessToken: data.accessToken,
-            refreshToken: data.refreshToken,
-            email: data.email,
-            userId: data.userId,
-          });
-          return data;
-        });
+        const res = await authService.refreshToken();
 
-        original.headers = original.headers ?? {};
-        (original.headers as any)['Authorization'] = `Bearer ${refreshed.accessToken}`;
-        (original.headers as any)['x-retried'] = '1';
+        const newAccessToken = res.accessToken;
+        setAccessToken(newAccessToken);
 
-        return api.request(original);
-      } catch {
-        tokenStorage.clear();
-        accessToken = null;
-        refreshToken = null;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        return api.request(originalRequest);
+      } catch (e) {
+        console.log('Logout');
+        setAccessToken(null);
+
+        throw e;
       }
     }
 
-    return Promise.reject(error);
+    throw error;
   }
 );
-
-export const http = {
-  client: api,
-  setTokens(tokens: { accessToken: string; refreshToken: string }) {
-    accessToken = tokens.accessToken;
-    refreshToken = tokens.refreshToken;
-  },
-  clearTokens() {
-    accessToken = null;
-    refreshToken = null;
-  },
-};

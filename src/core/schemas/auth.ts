@@ -8,7 +8,7 @@ const passwordSchema = z
     error: 'Please enter valid data',
   });
 
-export const loginSchema = z.object({
+const authBaseSchema = z.object({
   email: z
     .email({ error: 'Please enter valid email address' })
     .min(10, { error: 'Please enter valid data' })
@@ -16,9 +16,14 @@ export const loginSchema = z.object({
   password: passwordSchema,
 });
 
+export const loginSchema = z.object({
+  ...authBaseSchema.shape,
+  rememberMe: z.boolean().optional(),
+});
+
 export const registerSchema = z
   .object({
-    ...loginSchema.shape,
+    ...authBaseSchema.shape,
     passwordConfirmation: passwordSchema,
     terms: z.boolean().refine((val) => val, {
       error: 'You must accept the Terms of Service.',
@@ -26,7 +31,7 @@ export const registerSchema = z
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     error: "Passwords don't match",
-    path: ['confirmPassword'],
+    path: ['passwordConfirmation'],
   });
 
 export type FormRegisterValues = z.infer<typeof registerSchema>;

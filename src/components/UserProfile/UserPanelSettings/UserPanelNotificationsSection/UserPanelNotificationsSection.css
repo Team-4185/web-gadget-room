@@ -1,0 +1,11 @@
+.user-profile__settings-card--notifications {
+  gap: 22px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.user-profile__settings-notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

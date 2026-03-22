@@ -15,7 +15,7 @@ interface IProps<T extends FieldValues> {
   required?: boolean;
   disabled?: boolean;
   isPassword?: boolean;
-  autoComplete: string;
+  autoComplete?: string;
   sx?: SxProps<Theme>;
 }
 

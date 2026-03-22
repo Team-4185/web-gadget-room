@@ -1,0 +1,11 @@
+.user-profile__settings {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.user-profile__settings-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

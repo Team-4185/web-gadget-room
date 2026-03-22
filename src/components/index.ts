@@ -12,3 +12,4 @@ export * from './Product';
 export * from './Cart';
 export * from './Auth';
 export * from './Delivery';
+export * from './UserProfile';

@@ -31,6 +31,7 @@
   --product-specs-background: #f2f2fe;
   --box-summary-background: rgba(249, 249, 249, 0.2);
   --inputs-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  --light-violet: #9595ef;
 }
 
 ol[role='list'],
@@ -46,4 +47,14 @@ img {
 
 a {
   text-decoration: none;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
