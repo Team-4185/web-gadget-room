@@ -1,12 +1,11 @@
 import type { ApiPhone, IProduct } from '@/core/types';
+import { FALLBACK_PRODUCT_IMAGE } from '@/core/constants';
 
-const FALLBACK_IMAGE = '/icons/GraySquare.svg';
-
-export const mapApiPhoneToProduct = (phone: ApiPhone): IProduct => ({
+export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_PRODUCT_IMAGE): IProduct => ({
   id: phone.id,
   name: phone.name,
   price: phone.price,
-  img: phone.images[0]?.url ?? FALLBACK_IMAGE,
+  img,
   amount: 1,
 });
 

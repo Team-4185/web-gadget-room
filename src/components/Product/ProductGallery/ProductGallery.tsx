@@ -1,15 +1,14 @@
 import { useEffect, useState, type FC, type SyntheticEvent } from 'react';
+import { FALLBACK_PRODUCT_IMAGE } from '@/core/constants';
 
 import './ProductGallery.css';
-
-const FALLBACK_IMAGE = '/icons/GraySquare.svg';
 
 interface ProductGalleryProps {
   images: string[];
 }
 
 export const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
-  const safeImages = images.length ? images : [FALLBACK_IMAGE];
+  const safeImages = images.length ? images : [FALLBACK_PRODUCT_IMAGE];
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ export const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
   }, [safeImages]);
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
-    event.currentTarget.src = FALLBACK_IMAGE;
+    event.currentTarget.src = FALLBACK_PRODUCT_IMAGE;
   };
 
   return (
@@ -36,7 +35,7 @@ export const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
       </div>
       <img
         className="product-gallery__main-image"
-        src={safeImages[activeIndex] ?? FALLBACK_IMAGE}
+        src={safeImages[activeIndex] ?? FALLBACK_PRODUCT_IMAGE}
         onError={handleImageError}
         alt="Product image"
       />

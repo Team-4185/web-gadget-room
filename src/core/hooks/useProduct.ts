@@ -1,19 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { api } from '@/core/config';
-import { PRODUCTS, SPECS } from '@/core/constants';
+import { FALLBACK_PRODUCT_IMAGE, PRODUCTS, PRODUCT_GALLERY_SIZE, SPECS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { IProduct, UseProductResult } from '@/core/types';
 import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils';
 
-const FALLBACK_IMAGE = '/icons/GraySquare.svg';
-const GALLERY_SIZE = 4;
-
 const normalizeGalleryImages = (images: string[]): string[] => {
-  const limited = images.slice(0, GALLERY_SIZE);
-  while (limited.length < GALLERY_SIZE) {
-    limited.push(FALLBACK_IMAGE);
+  const limited = images.slice(0, PRODUCT_GALLERY_SIZE);
+  while (limited.length < PRODUCT_GALLERY_SIZE) {
+    limited.push(FALLBACK_PRODUCT_IMAGE);
   }
   return limited;
 };
@@ -34,16 +30,10 @@ export const useProduct = (): UseProductResult => {
   );
   const [description, setDescription] = useState('No description');
   const [galleryImages, setGalleryImages] = useState<string[]>(
-    normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE])
+    normalizeGalleryImages([fallbackProduct.img || FALLBACK_PRODUCT_IMAGE])
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const objectUrlsRef = useRef<string[]>([]);
-
-  const revokeObjectUrls = () => {
-    objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
-    objectUrlsRef.current = [];
-  };
 
   useEffect(() => {
     // TESTING ONLY: force local constants and skip backend calls when no backend is available.
@@ -52,63 +42,42 @@ export const useProduct = (): UseProductResult => {
     const numericId = Number(id);
     if (!numericId || Number.isNaN(numericId)) return;
 
-    let cancelled = false;
+    const controller = new AbortController();
 
     const run = async () => {
       setLoading(true);
       setError(null);
       try {
-        const phone = await phonesService.getById(numericId);
-        if (cancelled) return;
-
-        const imageFetchResults = await Promise.allSettled(
-          (phone.images ?? []).map(async (image) => {
-            const { data } = await api.get<Blob>(image.url, { responseType: 'blob' });
-            return URL.createObjectURL(data);
-          })
+        const phone = await phonesService.getById(numericId, controller.signal);
+        const resolvedObjectUrls = await phonesService.getImageObjectUrls(
+          phone.images ?? [],
+          controller.signal
         );
-
-        const resolvedObjectUrls = imageFetchResults.flatMap((result) =>
-          result.status === 'fulfilled' ? [result.value] : []
-        );
-
-        if (cancelled) {
-          resolvedObjectUrls.forEach((url) => URL.revokeObjectURL(url));
-          return;
-        }
-
-        revokeObjectUrls();
-        objectUrlsRef.current = resolvedObjectUrls;
-
         const resolvedImages = normalizeGalleryImages(resolvedObjectUrls);
 
-        setProduct({ ...mapApiPhoneToProduct(phone), img: resolvedImages[0] });
+        setProduct(mapApiPhoneToProduct(phone, resolvedImages[0]));
         setSpecs(buildSpecs(phone));
         setDescription(phone.description ?? '');
         setGalleryImages(resolvedImages);
       } catch {
-        if (cancelled) return;
-        revokeObjectUrls();
+        if (controller.signal.aborted) return;
         // TESTING ONLY: fallback to local constants if backend call fails, to allow testing without a backend.
         setError(null);
-        setProduct({ ...fallbackProduct, img: fallbackProduct.img || FALLBACK_IMAGE });
+        setProduct({ ...fallbackProduct, img: fallbackProduct.img || FALLBACK_PRODUCT_IMAGE });
         setSpecs(SPECS.map(({ label, value }) => ({ label, value })));
         setDescription(
           'Enhanced capabilities thanks to an enlarged display and all-day battery life.'
         );
-        setGalleryImages(
-          normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE])
-        );
+        setGalleryImages(normalizeGalleryImages([fallbackProduct.img || FALLBACK_PRODUCT_IMAGE]));
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
 
     run();
 
     return () => {
-      cancelled = true;
-      revokeObjectUrls();
+      controller.abort();
     };
   }, [id, useTestingFallback]);
 
