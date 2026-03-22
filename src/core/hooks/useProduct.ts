@@ -1,10 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
+import { api } from '@/core/config';
 import { PRODUCTS, SPECS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { IProduct, UseProductResult } from '@/core/types';
 import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils';
+
+const FALLBACK_IMAGE = '/icons/GraySquare.svg';
+const GALLERY_SIZE = 4;
+
+const normalizeGalleryImages = (images: string[]): string[] => {
+  const limited = images.slice(0, GALLERY_SIZE);
+  while (limited.length < GALLERY_SIZE) {
+    limited.push(FALLBACK_IMAGE);
+  }
+  return limited;
+};
 
 export const useProduct = (): UseProductResult => {
   const { id } = useParams<{ id: string }>();
@@ -21,8 +33,17 @@ export const useProduct = (): UseProductResult => {
     SPECS.map(({ label, value }) => ({ label, value }))
   );
   const [description, setDescription] = useState('No description');
+  const [galleryImages, setGalleryImages] = useState<string[]>(
+    normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE])
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const objectUrlsRef = useRef<string[]>([]);
+
+  const revokeObjectUrls = () => {
+    objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    objectUrlsRef.current = [];
+  };
 
   useEffect(() => {
     // TESTING ONLY: force local constants and skip backend calls when no backend is available.
@@ -39,17 +60,44 @@ export const useProduct = (): UseProductResult => {
       try {
         const phone = await phonesService.getById(numericId);
         if (cancelled) return;
-        setProduct(mapApiPhoneToProduct(phone));
+
+        const imageFetchResults = await Promise.allSettled(
+          (phone.images ?? []).map(async (image) => {
+            const { data } = await api.get<Blob>(image.url, { responseType: 'blob' });
+            return URL.createObjectURL(data);
+          })
+        );
+
+        const resolvedObjectUrls = imageFetchResults.flatMap((result) =>
+          result.status === 'fulfilled' ? [result.value] : []
+        );
+
+        if (cancelled) {
+          resolvedObjectUrls.forEach((url) => URL.revokeObjectURL(url));
+          return;
+        }
+
+        revokeObjectUrls();
+        objectUrlsRef.current = resolvedObjectUrls;
+
+        const resolvedImages = normalizeGalleryImages(resolvedObjectUrls);
+
+        setProduct({ ...mapApiPhoneToProduct(phone), img: resolvedImages[0] });
         setSpecs(buildSpecs(phone));
         setDescription(phone.description ?? '');
+        setGalleryImages(resolvedImages);
       } catch {
         if (cancelled) return;
+        revokeObjectUrls();
         // TESTING ONLY: fallback to local constants if backend call fails, to allow testing without a backend.
         setError(null);
-        setProduct(fallbackProduct);
+        setProduct({ ...fallbackProduct, img: fallbackProduct.img || FALLBACK_IMAGE });
         setSpecs(SPECS.map(({ label, value }) => ({ label, value })));
         setDescription(
           'Enhanced capabilities thanks to an enlarged display and all-day battery life.'
+        );
+        setGalleryImages(
+          normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE])
         );
       } finally {
         if (!cancelled) setLoading(false);
@@ -60,8 +108,9 @@ export const useProduct = (): UseProductResult => {
 
     return () => {
       cancelled = true;
+      revokeObjectUrls();
     };
   }, [fallbackProduct, id, useTestingFallback]);
 
-  return { product, specs, description, loading, error };
+  return { product, specs, description, galleryImages, loading, error };
 };

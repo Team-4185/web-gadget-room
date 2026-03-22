@@ -27,6 +27,15 @@ export type ApiPhone = {
   frontCamera: string;
   mainCamera: string;
   batteryCapacity: string;
+  images: ApiPhoneImage[];
+};
+
+export type ApiPhoneImage = {
+  id: number;
+  name: string;
+  url: string;
+  size: number;
+  mimeType: string;
 };
 
 export type BrandInfo = {
@@ -45,9 +54,10 @@ export type SortOption =
   | 'number of reviews';
 
 export type UseProductResult = {
-    product: IProduct;
-    specs: { label: string; value: string }[];
-    description: string;
-    loading: boolean;
-    error: string | null;
-  };
+  product: IProduct;
+  specs: { label: string; value: string }[];
+  description: string;
+  galleryImages: string[];
+  loading: boolean;
+  error: string | null;
+};

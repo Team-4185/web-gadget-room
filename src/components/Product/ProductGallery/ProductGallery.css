@@ -22,8 +22,6 @@
 }
 
 .product-gallery__thumbnail.active {
-  border: 2px solid var(--black);
-  border-radius: 8px;
   opacity: 1;
 }
 

@@ -1,26 +1,45 @@
-import { useState, type FC } from 'react';
-
-import { PRODUCT_GALLERY_IMAGES } from '@/core/constants';
+import { useEffect, useState, type FC, type SyntheticEvent } from 'react';
 
 import './ProductGallery.css';
 
-export const ProductGallery: FC = () => {
-  const [activeImg, setActiveImg] = useState(PRODUCT_GALLERY_IMAGES[0].src);
+const FALLBACK_IMAGE = '/icons/GraySquare.svg';
+
+interface ProductGalleryProps {
+  images: string[];
+}
+
+export const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
+  const safeImages = images.length ? images : [FALLBACK_IMAGE];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [safeImages]);
+
+  const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.src = FALLBACK_IMAGE;
+  };
 
   return (
     <div className="product-gallery">
       <div className="product-gallery__thumbnails">
-        {PRODUCT_GALLERY_IMAGES.map((img) => (
+        {safeImages.map((img, index) => (
           <img
-            className={`product-gallery__thumbnail ${activeImg === img.src ? 'active' : ''}`}
-            key={img.id}
-            src={img.src}
-            onClick={() => setActiveImg(img.src)}
-            alt={img.alt}
+            className={`product-gallery__thumbnail ${activeIndex === index ? 'active' : ''}`}
+            key={`${img}-${index}`}
+            src={img}
+            onClick={() => setActiveIndex(index)}
+            onError={handleImageError}
+            alt={`Product thumbnail ${index + 1}`}
           />
         ))}
       </div>
-      <img className="product-gallery__main-image" src={activeImg} alt="Big Image" />
+      <img
+        className="product-gallery__main-image"
+        src={safeImages[activeIndex] ?? FALLBACK_IMAGE}
+        onError={handleImageError}
+        alt="Product image"
+      />
     </div>
   );
 };

@@ -4,13 +4,14 @@ import { Typography } from '@mui/material';
 
 import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
 import { useAppDispatch, cartActions } from '@/core/store';
-import { useProduct } from '@/core/hooks';
+import type { UseProductResult } from '@/core/types';
 import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
 
 import './ProductInfo.css';
 
-export const ProductInfo: FC = () => {
-  const { product, specs, description, loading, error } = useProduct();
+type ProductInfoProps = Omit<UseProductResult, 'galleryImages'>;
+
+export const ProductInfo: FC<ProductInfoProps> = ({ product, specs, description, loading, error }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
