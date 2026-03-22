@@ -1,10 +1,9 @@
-import { endpoints } from '@/core/config';
-import { baseInstance } from '@/core/services/instances/baseInstance';
+import { api } from '@/core/config';
 import type { ApiPhone } from '@/core/types';
 
 export const phonesService = {
   async getById(id: number) {
-    const { data } = await baseInstance.get<ApiPhone>(`${endpoints.phones}/${id}`);
+    const { data } = await api.get<ApiPhone>(`/api/phones/${id}`);
     return data;
   },
 };

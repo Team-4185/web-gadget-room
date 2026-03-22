@@ -4,7 +4,6 @@ import { Typography } from '@mui/material';
 
 import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
 import { useAppDispatch, cartActions } from '@/core/store';
-import { addProduct } from '@/core/store/slices/cartSlice';
 import { useProduct } from '@/core/hooks';
 import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
 
