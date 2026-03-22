@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, useRef, useState, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
@@ -20,6 +20,35 @@ interface ProductInfoProps {
 export const ProductInfo: FC<ProductInfoProps> = ({ product, specs, description, loading, error }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const measureRef = useRef<HTMLParagraphElement | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [showToggle, setShowToggle] = useState(false);
+
+  const descriptionText =
+    description || 'Enhanced capabilities thanks to an enlarged display and all-day battery life.';
+
+  useEffect(() => {
+    setIsExpanded(false);
+  }, [descriptionText]);
+
+  useEffect(() => {
+    const measureOverflow = () => {
+      const element = measureRef.current;
+      if (!element) return;
+
+      const lineHeight = Number.parseFloat(window.getComputedStyle(element).lineHeight);
+      if (!Number.isFinite(lineHeight) || lineHeight <= 0) return;
+
+      setShowToggle(element.scrollHeight > lineHeight * 3 + 1);
+    };
+
+    measureOverflow();
+    window.addEventListener('resize', measureOverflow);
+
+    return () => {
+      window.removeEventListener('resize', measureOverflow);
+    };
+  }, [descriptionText]);
 
   const addToCart = () => dispatch(cartActions.addProduct(product));
 
@@ -52,18 +81,41 @@ export const ProductInfo: FC<ProductInfoProps> = ({ product, specs, description,
         ))}
       </div>
       <Typography
+        ref={measureRef}
+        className="product-info__description-measure"
         sx={{
           fontSize: '14px',
           lineHeight: '171.429%',
           letterSpacing: '0.42px',
-          color: 'var(--product-description-color)',
         }}
         component="p"
+        aria-hidden="true"
       >
-        {description ||
-          'Enhanced capabilities thanks to an enlarged display and all-day battery life.'}{' '}
-        <span className="product-info__description-link">more...</span>
+        {descriptionText}
       </Typography>
+      <div className="product-info__description-block">
+        <Typography
+          className={`product-info__description ${isExpanded ? 'product-info__description--expanded' : ''}`}
+          sx={{
+            fontSize: '14px',
+            lineHeight: '171.429%',
+            letterSpacing: '0.42px',
+            color: 'var(--product-description-color)',
+          }}
+          component="p"
+        >
+          {descriptionText}
+        </Typography>
+        {showToggle && (
+          <button
+            type="button"
+            className="product-info__description-link"
+            onClick={() => setIsExpanded((prev) => !prev)}
+          >
+            {isExpanded ? 'less' : 'more...'}
+          </button>
+        )}
+      </div>
       <div className="product-info__actions">
         <Button maxWidth="257px" height="56px" onClick={addToCart}>
           Add To Cart
