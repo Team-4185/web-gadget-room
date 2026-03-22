@@ -110,7 +110,7 @@ export const useProduct = (): UseProductResult => {
       cancelled = true;
       revokeObjectUrls();
     };
-  }, [fallbackProduct, id, useTestingFallback]);
+  }, [id, useTestingFallback]);
 
   return { product, specs, description, galleryImages, loading, error };
 };
