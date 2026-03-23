@@ -5,7 +5,8 @@ import path from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const target = env.VITE_BACKEND_ORIGIN || 'http://localhost:8080';
+  const backendOrigin = env.VITE_BACKEND_ORIGIN || 'http://localhost:8080/api';
+  const target = backendOrigin.replace(/\/api\/?$/, '');
 
   return {
     plugins: [

@@ -14,6 +14,30 @@ export interface IProduct {
   amount: number;
 }
 
+export type ApiPhone = {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number;
+  brand: string;
+  releaseYear: number;
+  cpu: string;
+  coresNumber: number;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  batteryCapacity: string;
+  images: ApiPhoneImage[];
+};
+
+export type ApiPhoneImage = {
+  id: number;
+  name: string;
+  url: string;
+  size: number;
+  mimeType: string;
+};
+
 export type BrandInfo = {
   id: number;
   name: string;
@@ -28,3 +52,12 @@ export type SortOption =
   | 'price decreasing'
   | 'price increasing'
   | 'number of reviews';
+
+export type UseProductResult = {
+  product: IProduct;
+  specs: { label: string; value: string }[];
+  description: string;
+  galleryImages: string[];
+  loading: boolean;
+  error: string | null;
+};
