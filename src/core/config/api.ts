@@ -24,9 +24,9 @@ export const setAccessToken = (token: string | null) => {
 
 api.interceptors.request.use((config) => {
   if (accessToken) {
+    config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
-
   return config;
 });
 
