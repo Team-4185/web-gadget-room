@@ -2,7 +2,8 @@
   display: flex;
   gap: 48px;
   width: 536px;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 93px;
 }
 
 .product-gallery__thumbnails {
