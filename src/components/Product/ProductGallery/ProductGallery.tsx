@@ -1,4 +1,5 @@
 import { useEffect, useState, type FC, type SyntheticEvent } from 'react';
+
 import { FALLBACK_PRODUCT_IMAGE } from '@/core/constants';
 
 import './ProductGallery.css';
