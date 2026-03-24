@@ -1,8 +1,10 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
 
+export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
+
 export interface IAdminPanelMenuItem {
-  id: string;
+  id: AdminPanelTab;
   label: string;
   icon: ComponentType<SvgIconProps>;
   badge?: number;

@@ -58,13 +58,3 @@
   justify-content: center;
   padding: 0 6px;
 }
-
-@media (max-width: 1199px) {
-  .admin-panel-sidebar {
-    min-width: 100%;
-  }
-
-  .admin-panel-sidebar__logo {
-    font-size: 36px;
-  }
-}

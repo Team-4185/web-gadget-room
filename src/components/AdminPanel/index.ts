@@ -10,3 +10,7 @@ export { AdminCustomerKpiCard } from './AdminCustomerKpiCard/AdminCustomerKpiCar
 export { AdminCustomersTable } from './AdminCustomersTable/AdminCustomersTable';
 export { AdminOrderKpiCard } from './AdminOrderKpiCard/AdminOrderKpiCard';
 export { AdminOrdersTable } from './AdminOrdersTable/AdminOrdersTable';
+export { AdminDashboardTab } from './AdminDashboardTab/AdminDashboardTab';
+export { AdminProductsTab } from './AdminProductsTab/AdminProductsTab';
+export { AdminOrdersTab } from './AdminOrdersTab/AdminOrdersTab';
+export { AdminCustomersTab } from './AdminCustomersTab/AdminCustomersTab';

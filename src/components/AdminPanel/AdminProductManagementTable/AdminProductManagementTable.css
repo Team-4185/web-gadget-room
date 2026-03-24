@@ -192,23 +192,3 @@
   color: var(--white);
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
 }
-
-@media (max-width: 900px) {
-  .admin-product-management {
-    padding: 20px;
-  }
-
-  .admin-product-management__header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .admin-product-management__filters {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .admin-product-management__footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}

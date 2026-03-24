@@ -8,7 +8,4 @@ export { Home } from './Home/Home';
 export { ProductPage } from './ProductPage/ProductPage';
 export { UserProfile } from './UserProfile/UserProfile';
 export { AdminPanel } from './AdminPanel/AdminPanel';
-export { AdminProducts } from './AdminProducts/AdminProducts';
-export { AdminCustomers } from './AdminCustomers/AdminCustomers';
-export { AdminOrders } from './AdminOrders/AdminOrders';
 export { PageNotFound } from './PageNotFound/PageNotFound';
