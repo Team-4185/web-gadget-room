@@ -28,7 +28,7 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
         <div>
           <Typography sx={{ marginBottom: '7px', fontWeight: 500 }}>Status</Typography>
           <span className={`user-panel-order-card__status ${status.className}`}>
-            <StatusIcon width={17} height={17} fill="var(--white)" />
+            <StatusIcon width={17} height={17} style={{ color: 'var(--white)' }} />
             <Typography component="span" sx={{ fontSize: '14px', color: 'inherit' }}>
               {status.label}
             </Typography>

@@ -111,3 +111,11 @@ export interface IAdminManagedOrderItem {
   time: string;
   status: AdminOrderStatus;
 }
+
+export type AdminAnalyticsRange = 'week' | 'month' | 'year';
+
+export interface IAdminSalesAnalyticsPoint {
+  label: string;
+  revenue: number;
+  orders: number;
+}

@@ -1,25 +1,9 @@
-import {
-  DashboardOutlined,
-  Inventory2Outlined,
-  ShoppingBagOutlined,
-  GroupOutlined,
-  CurrencyExchangeOutlined,
-  ContentPasteOutlined,
-  InventoryOutlined,
-  PersonOutlineOutlined,
-  StarOutlineOutlined,
-  NorthEastOutlined,
-  AttachMoneyOutlined,
-  AccessTimeOutlined,
-  CheckCircleOutlineOutlined,
-  LocalShippingOutlined,
-  HighlightOffOutlined,
-} from '@mui/icons-material';
-
 import type {
+  AdminAnalyticsRange,
   IAdminManagedOrderItem,
   IAdminOrderKpiItem,
   IAdminPanelBrandItem,
+  IAdminSalesAnalyticsPoint,
   IAdminCustomerItem,
   IAdminCustomerKpiItem,
   IAdminPanelLowStockItem,
@@ -29,23 +13,36 @@ import type {
   IAdminPanelProductItem,
   IAdminPanelStatItem,
 } from '@/core/types';
+import {
+  ArrowRightUp,
+  Customers,
+  Dashboard,
+  Dollar,
+  Order,
+  Product,
+  SmallClock,
+  SmallTruck,
+  Star,
+  StatusCancelled,
+  StatusDelivered,
+} from '@/assets';
 
 export const ADMIN_PANEL_MENU: IAdminPanelMenuItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: DashboardOutlined },
-  { id: 'product', label: 'Product', icon: Inventory2Outlined, badge: 100 },
-  { id: 'orders', label: 'Orders', icon: ShoppingBagOutlined, badge: 10 },
-  { id: 'customers', label: 'Customers', icon: GroupOutlined },
+  { id: 'dashboard', label: 'Dashboard', icon: Dashboard },
+  { id: 'product', label: 'Product', icon: Product, badge: 100 },
+  { id: 'orders', label: 'Orders', icon: Order, badge: 10 },
+  { id: 'customers', label: 'Customers', icon: Customers },
 ];
 
 export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
   {
     id: 'revenue',
     title: 'Total revenue',
-    value: 'EUR 120,000',
+    value: '$ 120,000',
     subtitle: 'Over the last 30 days',
     trend: '+18.2%',
     isPositive: true,
-    icon: CurrencyExchangeOutlined,
+    icon: Dollar,
   },
   {
     id: 'orders',
@@ -54,7 +51,7 @@ export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
     subtitle: '124 in processing',
     trend: '+12.5%',
     isPositive: true,
-    icon: ContentPasteOutlined,
+    icon: Order,
   },
   {
     id: 'stock',
@@ -63,7 +60,7 @@ export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
     subtitle: '12 running low',
     trend: '-3.1%',
     isPositive: false,
-    icon: InventoryOutlined,
+    icon: Product,
   },
   {
     id: 'clients',
@@ -72,7 +69,7 @@ export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
     subtitle: 'This month',
     trend: '+24.8%',
     isPositive: true,
-    icon: PersonOutlineOutlined,
+    icon: Customers,
   },
 ];
 
@@ -248,10 +245,10 @@ export const ADMIN_PANEL_LOW_STOCK: IAdminPanelLowStockItem[] = [
 ];
 
 export const ADMIN_CUSTOMER_KPIS: IAdminCustomerKpiItem[] = [
-  { id: 'total', title: 'Total clients', value: '100', icon: GroupOutlined },
-  { id: 'vip', title: 'VIP clients', value: '89', icon: StarOutlineOutlined },
-  { id: 'new_month', title: 'New (month)', value: '60', icon: NorthEastOutlined },
-  { id: 'receipt', title: 'Wed receipt', value: '$2,200', icon: AttachMoneyOutlined },
+  { id: 'total', title: 'Total clients', value: '100', icon: Customers },
+  { id: 'vip', title: 'VIP clients', value: '89', icon: Star },
+  { id: 'new_month', title: 'New (month)', value: '60', icon: ArrowRightUp },
+  { id: 'receipt', title: 'Wed receipt', value: '$2,200', icon: Dollar },
 ];
 
 export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
@@ -308,10 +305,10 @@ export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
 ];
 
 export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
-  { id: 'processing', title: 'In processing', value: '23', icon: AccessTimeOutlined },
-  { id: 'delivered', title: 'Delivered', value: '856', icon: CheckCircleOutlineOutlined },
-  { id: 'delivery', title: 'In delivery', value: '60', icon: LocalShippingOutlined },
-  { id: 'cancelled', title: 'Cancelled', value: '23', icon: HighlightOffOutlined },
+  { id: 'processing', title: 'In processing', value: '23', icon: SmallClock },
+  { id: 'delivered', title: 'Delivered', value: '856', icon: StatusDelivered },
+  { id: 'delivery', title: 'In delivery', value: '60', icon: SmallTruck },
+  { id: 'cancelled', title: 'Cancelled', value: '23', icon: StatusCancelled },
 ];
 
 export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
@@ -424,3 +421,31 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     status: 'paid',
   },
 ];
+
+export const ADMIN_SALES_ANALYTICS_MOCK: Record<AdminAnalyticsRange, IAdminSalesAnalyticsPoint[]> =
+  {
+    week: [
+      { label: '1 Oct', revenue: 6400, orders: 22 },
+      { label: '8 Oct', revenue: 6600, orders: 25 },
+      { label: '15 Oct', revenue: 11200, orders: 40 },
+      { label: '22 Oct', revenue: 11400, orders: 45 },
+      { label: '29 Oct', revenue: 11000, orders: 47 },
+      { label: '5 Nov', revenue: 11300, orders: 35 },
+      { label: '12 Nov', revenue: 8300, orders: 34 },
+    ],
+    month: [
+      { label: 'Jan', revenue: 29200, orders: 122 },
+      { label: 'Feb', revenue: 30400, orders: 134 },
+      { label: 'Mar', revenue: 34100, orders: 150 },
+      { label: 'Apr', revenue: 32700, orders: 142 },
+      { label: 'May', revenue: 35900, orders: 162 },
+      { label: 'Jun', revenue: 37200, orders: 170 },
+    ],
+    year: [
+      { label: '2021', revenue: 264000, orders: 1150 },
+      { label: '2022', revenue: 312000, orders: 1320 },
+      { label: '2023', revenue: 356000, orders: 1510 },
+      { label: '2024', revenue: 402000, orders: 1660 },
+      { label: '2025', revenue: 438000, orders: 1810 },
+    ],
+  };

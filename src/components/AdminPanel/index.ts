@@ -1,16 +1,20 @@
-export { AdminPanelSidebar } from './AdminPanelSidebar/AdminPanelSidebar';
-export { AdminPanelStatCard } from './AdminPanelStatCard/AdminPanelStatCard';
-export { AdminPanelSalesChart } from './AdminPanelSalesChart/AdminPanelSalesChart';
-export { AdminPanelBrandChart } from './AdminPanelBrandChart/AdminPanelBrandChart';
-export { AdminPanelProductRow } from './AdminPanelProductRow/AdminPanelProductRow';
-export { AdminPanelRecentOrders } from './AdminPanelRecentOrders/AdminPanelRecentOrders';
-export { AdminPanelLowStock } from './AdminPanelLowStock/AdminPanelLowStock';
-export { AdminProductManagementTable } from './AdminProductManagementTable/AdminProductManagementTable';
-export { AdminCustomerKpiCard } from './AdminCustomerKpiCard/AdminCustomerKpiCard';
-export { AdminCustomersTable } from './AdminCustomersTable/AdminCustomersTable';
-export { AdminOrderKpiCard } from './AdminOrderKpiCard/AdminOrderKpiCard';
-export { AdminOrdersTable } from './AdminOrdersTable/AdminOrdersTable';
-export { AdminDashboardTab } from './AdminDashboardTab/AdminDashboardTab';
-export { AdminProductsTab } from './AdminProductsTab/AdminProductsTab';
-export { AdminOrdersTab } from './AdminOrdersTab/AdminOrdersTab';
-export { AdminCustomersTab } from './AdminCustomersTab/AdminCustomersTab';
+export { AdminPanelSidebar } from './Layout/AdminPanelSidebar/AdminPanelSidebar';
+
+export { AdminDashboardTab } from './Dashboard/AdminDashboardTab/AdminDashboardTab';
+export { AdminPanelSalesChart } from './Dashboard/AdminPanelSalesChart/AdminPanelSalesChart';
+export { AdminPanelBrandChart } from './Dashboard/AdminPanelBrandChart/AdminPanelBrandChart';
+export { AdminPanelStatCard } from './Dashboard/AdminPanelStatCard/AdminPanelStatCard';
+export { AdminPanelProductRow } from './Dashboard/AdminPanelProductRow/AdminPanelProductRow';
+export { AdminPanelRecentOrders } from './Dashboard/AdminPanelRecentOrders/AdminPanelRecentOrders';
+export { AdminPanelLowStock } from './Dashboard/AdminPanelLowStock/AdminPanelLowStock';
+
+export { AdminProductsTab } from './Products/AdminProductsTab/AdminProductsTab';
+export { AdminProductManagementTable } from './Products/AdminProductManagementTable/AdminProductManagementTable';
+
+export { AdminOrdersTab } from './Orders/AdminOrdersTab/AdminOrdersTab';
+export { AdminOrderKpiCard } from './Orders/AdminOrderKpiCard/AdminOrderKpiCard';
+export { AdminOrdersTable } from './Orders/AdminOrdersTable/AdminOrdersTable';
+
+export { AdminCustomersTab } from './Customers/AdminCustomersTab/AdminCustomersTab';
+export { AdminCustomerKpiCard } from './Customers/AdminCustomerKpiCard/AdminCustomerKpiCard';
+export { AdminCustomersTable } from './Customers/AdminCustomersTable/AdminCustomersTable';

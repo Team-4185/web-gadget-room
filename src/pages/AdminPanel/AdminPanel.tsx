@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { NotificationsNoneOutlined, PersonOutlined } from '@mui/icons-material';
 import { Container, Typography } from '@mui/material';
 
 import {
@@ -41,10 +40,10 @@ export const AdminPanel = () => {
 
           <div className="admin-panel__content">
             <div className="admin-panel__hero">
-              <Typography component="h1" sx={{ fontSize: '36px', fontWeight: 600, lineHeight: 1 }}>
+              <Typography variant="h4" component="h1" sx={{ fontWeight: 600, lineHeight: 1 }}>
                 {greeting}
               </Typography>
-              <Typography component="p" sx={{ marginTop: '6px', fontSize: '14px' }}>
+              <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
                 {subtitle}
               </Typography>
             </div>
