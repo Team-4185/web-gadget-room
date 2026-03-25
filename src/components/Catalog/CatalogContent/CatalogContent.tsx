@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Pagination, PaginationItem, type SelectChangeEvent } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { ChevronRight, ChevronLeft } from '@/assets';
 import type { IProduct, SortOption } from '@/core/types';

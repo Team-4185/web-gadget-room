@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Container } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
 import type { RootState } from '@/core/store';

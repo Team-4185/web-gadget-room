@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 
 import { PRODUCTS } from '@/core/constants';
 import type { IProduct } from '@/core/types';

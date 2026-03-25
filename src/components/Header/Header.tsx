@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
-import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, NavLink, useLocation } from 'react-router';
 
 import { BreadCrumbs, OrderingSteps } from '@/components';
 import { useAppSelector } from '@/core/store';

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 
 import { SPECS, PRODUCT_META } from '@/core/constants';

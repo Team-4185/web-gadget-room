@@ -1,7 +1,7 @@
 import type { FC, SVGProps } from 'react';
 import { Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { FADEUP } from '@/core/constants';
 
