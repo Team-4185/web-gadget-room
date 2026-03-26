@@ -1,18 +1,11 @@
-import type { FC } from 'react';
-import {
-  KeyboardArrowDownOutlined,
-  SearchOutlined,
-  VisibilityOutlined,
-  EditOutlined,
-  DeleteOutlineOutlined,
-} from '@mui/icons-material';
+import { useMemo, useState, type FC } from 'react';
 import { Typography } from '@mui/material';
 
-import type { IAdminPanelManagedProduct } from '@/core/types';
+import type { AdminProductStatus, IAdminPanelManagedProduct, ISelectOption } from '@/core/types';
 
 import './AdminProductManagementTable.css';
-import { Button } from '@/components/ui';
-import { Plus } from '@/assets';
+import { Button, Search, Select } from '@/components/ui';
+import { Edit, Plus, Trash, Visibility } from '@/assets';
 
 interface IProps {
   products: IAdminPanelManagedProduct[];
@@ -22,9 +15,49 @@ interface IProps {
 const STATUS_LABELS = {
   in_stock: 'In Stock',
   low_stock: 'Low Stock',
+  no_stock: 'No Stock',
 } as const;
 
+const STATUS_OPTIONS: ISelectOption[] = [
+  { value: '', name: 'All statuses' },
+  { value: 'in_stock', name: 'In Stock' },
+  { value: 'low_stock', name: 'Low Stock' },
+  { value: 'no_stock', name: 'No Stock' },
+];
+
 export const AdminProductManagementTable: FC<IProps> = ({ products, totalProducts }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<AdminProductStatus | ''>('');
+
+  const brandOptions = useMemo<ISelectOption[]>(
+    () => [
+      { value: '', name: 'All brands' },
+      ...Array.from(new Set(products.map((product) => product.brand))).map((brand) => ({
+        value: brand.toLowerCase(),
+        name: brand,
+      })),
+    ],
+    [products]
+  );
+
+  const filteredProducts = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    return products.filter((product) => {
+      const matchesQuery =
+        !query ||
+        product.title.toLowerCase().includes(query) ||
+        product.sku.toLowerCase().includes(query) ||
+        product.brand.toLowerCase().includes(query);
+
+      const matchesBrand = !selectedBrand || product.brand.toLowerCase() === selectedBrand;
+      const matchesStatus = !selectedStatus || product.status === selectedStatus;
+
+      return matchesQuery && matchesBrand && matchesStatus;
+    });
+  }, [products, searchQuery, selectedBrand, selectedStatus]);
+
   return (
     <section className="admin-product-management" aria-label="Product management">
       <div className="admin-product-management__header">
@@ -52,20 +85,39 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
       </div>
 
       <div className="admin-product-management__filters">
-        <label className="admin-product-management__search" aria-label="Search products">
-          <SearchOutlined sx={{ fontSize: '20px', color: 'var(--black-opacity-65)' }} />
-          <input type="text" placeholder="Search Products" />
-        </label>
+        <Search
+          className="admin-product-management__search"
+          ariaLabel="Search products"
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="Search Products"
+        />
 
-        <button type="button" className="admin-product-management__select">
-          All categories
-          <KeyboardArrowDownOutlined sx={{ fontSize: '20px' }} />
-        </button>
+        <Select
+          data={brandOptions}
+          maxWidth="100%"
+          height="46px"
+          color="var(--black)"
+          fontSize="16px"
+          selectPadding="12px"
+          value={selectedBrand}
+          styleVariant="subtleBorder"
+          onChange={setSelectedBrand}
+          placeholder="All brands"
+        />
 
-        <button type="button" className="admin-product-management__select">
-          All statuses
-          <KeyboardArrowDownOutlined sx={{ fontSize: '20px' }} />
-        </button>
+        <Select
+          data={STATUS_OPTIONS}
+          maxWidth="100%"
+          height="46px"
+          color="var(--black)"
+          fontSize="16px"
+          selectPadding="12px"
+          value={selectedStatus}
+          styleVariant="subtleBorder"
+          onChange={(value) => setSelectedStatus(value as AdminProductStatus | '')}
+          placeholder="All statuses"
+        />
       </div>
 
       <div className="admin-product-management__table-wrap">
@@ -82,7 +134,7 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id}>
                 <td className="admin-product-management__product-cell">
                   <img src={product.image} alt={product.title} />
@@ -102,13 +154,13 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
                 <td>
                   <div className="admin-product-management__actions">
                     <button type="button" aria-label={`View ${product.title}`}>
-                      <VisibilityOutlined sx={{ fontSize: '18px' }} />
+                      <Visibility />
                     </button>
                     <button type="button" aria-label={`Edit ${product.title}`}>
-                      <EditOutlined sx={{ fontSize: '18px' }} />
+                      <Edit />
                     </button>
                     <button type="button" aria-label={`Delete ${product.title}`}>
-                      <DeleteOutlineOutlined sx={{ fontSize: '18px' }} />
+                      <Trash />
                     </button>
                   </div>
                 </td>
@@ -120,7 +172,7 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
 
       <div className="admin-product-management__footer">
         <Typography variant="body2" component="p">
-          Showing <span>{products.length}</span> of <span>{totalProducts}</span> products
+          Showing <span>{filteredProducts.length}</span> of <span>{totalProducts}</span> products
         </Typography>
         <div className="admin-product-management__pager">
           <button type="button">Back</button>

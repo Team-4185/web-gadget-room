@@ -1,0 +1,18 @@
+.ui-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ui-search input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+  color: var(--black);
+}
+
+.ui-search input::placeholder {
+  color: var(--black-opacity-65);
+}

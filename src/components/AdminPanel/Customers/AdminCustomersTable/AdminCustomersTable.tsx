@@ -1,6 +1,5 @@
-import type { FC } from 'react';
+import { useMemo, useState, type FC } from 'react';
 import {
-  SearchOutlined,
   EmailOutlined,
   LocalPhoneOutlined,
   MailOutlined,
@@ -9,8 +8,10 @@ import {
 import { Typography } from '@mui/material';
 
 import type { IAdminCustomerItem } from '@/core/types';
+import { Search } from '@/components/ui';
 
 import './AdminCustomersTable.css';
+import { Mail, Trash } from '@/assets';
 
 interface IProps {
   customers: IAdminCustomerItem[];
@@ -24,6 +25,20 @@ const STATUS_LABELS = {
 } as const;
 
 export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredCustomers = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return customers;
+
+    return customers.filter(
+      (customer) =>
+        customer.name.toLowerCase().includes(query) ||
+        customer.email.toLowerCase().includes(query) ||
+        customer.phone.toLowerCase().includes(query)
+    );
+  }, [customers, searchQuery]);
+
   return (
     <section className="admin-customers-table" aria-label="Customers base">
       <div className="admin-customers-table__header">
@@ -35,10 +50,13 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
         </Typography>
       </div>
 
-      <label className="admin-customers-table__search" aria-label="Search customers">
-        <SearchOutlined sx={{ fontSize: '20px', color: 'var(--black-opacity-65)' }} />
-        <input type="text" placeholder="Search by name, email, number..." />
-      </label>
+      <Search
+        className="admin-customers-table__search"
+        ariaLabel="Search customers"
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="Search by name, email, number..."
+      />
 
       <div className="admin-customers-table__table-wrap">
         <table className="admin-customers-table__table">
@@ -54,7 +72,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
             </tr>
           </thead>
           <tbody>
-            {customers.map((customer) => (
+            {filteredCustomers.map((customer) => (
               <tr key={customer.id}>
                 <td className="is-strong">{customer.name}</td>
                 <td>
@@ -80,10 +98,10 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
                 <td>
                   <div className="admin-customers-table__actions">
                     <button type="button" aria-label={`Email ${customer.name}`}>
-                      <MailOutlined sx={{ fontSize: '18px' }} />
+                      <Mail />
                     </button>
                     <button type="button" aria-label={`Delete ${customer.name}`}>
-                      <DeleteOutlineOutlined sx={{ fontSize: '18px' }} />
+                      <Trash />
                     </button>
                   </div>
                 </td>
@@ -95,7 +113,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
 
       <div className="admin-customers-table__footer">
         <Typography variant="body2" component="p">
-          Showing <span>{customers.length}</span> of <span>{totalCustomers}</span> customer
+          Showing <span>{filteredCustomers.length}</span> of <span>{totalCustomers}</span> customer
         </Typography>
         <div className="admin-customers-table__pager">
           <button type="button">Back</button>

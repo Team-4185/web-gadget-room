@@ -36,7 +36,7 @@ export interface IAdminPanelProductItem {
   image: string;
 }
 
-export type AdminProductStatus = 'in_stock' | 'low_stock';
+export type AdminProductStatus = 'in_stock' | 'low_stock' | 'no_stock';
 
 export interface IAdminPanelManagedProduct {
   id: string;

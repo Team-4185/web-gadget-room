@@ -51,20 +51,6 @@
 
 .admin-product-management__search {
   padding: 0 10px;
-  gap: 15px;
-}
-
-.admin-product-management__search input {
-  border: 0;
-  outline: 0;
-  width: 100%;
-  font-size: 14px;
-  background: transparent;
-  color: var(--black);
-}
-
-.admin-product-management__search input::placeholder {
-  color: var(--black-opacity-65);
 }
 
 .admin-product-management__select {
@@ -136,6 +122,10 @@
 .admin-product-management__status.is-low_stock {
   background: var(--dark-yellow);
   font-size: 11px;
+}
+
+.admin-product-management__status.is-no_stock {
+  background: var(--coralRed);
 }
 
 .admin-product-management__actions {
