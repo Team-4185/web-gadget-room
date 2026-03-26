@@ -19,7 +19,7 @@ export const AdminPanelBrandChart: FC<IProps> = ({ brands }) => {
 
   return (
     <section className="admin-panel-brand-chart" aria-label="Sales by brand">
-      <Typography variant="h6" component="h3" sx={{ fontWeight: 600, lineHeight: 1 }}>
+      <Typography component="h3" sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1 }}>
         Sales by brand
       </Typography>
 

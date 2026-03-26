@@ -1,6 +1,7 @@
 import type { FC } from 'react';
-import { ErrorOutline } from '@mui/icons-material';
 import { Typography } from '@mui/material';
+
+import { Alert } from '@/assets';
 
 import type { IAdminPanelLowStockItem } from '@/core/types';
 
@@ -14,8 +15,8 @@ export const AdminPanelLowStock: FC<IProps> = ({ items }) => {
   return (
     <section className="admin-panel-low-stock" aria-label="Low stock alert">
       <div className="admin-panel-low-stock__title">
-        <ErrorOutline sx={{ fontSize: '20px', color: 'var(--red)' }} />
-        <Typography variant="h6" component="h3" sx={{ fontWeight: 600, lineHeight: 1 }}>
+        <Alert />
+        <Typography component="h3" sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1 }}>
           Low Stock Alert
         </Typography>
       </div>
@@ -27,10 +28,18 @@ export const AdminPanelLowStock: FC<IProps> = ({ items }) => {
               {item.title}
             </Typography>
             <div>
-              <Typography variant="body2" component="span" sx={{ fontWeight: 500, color: 'var(--red)' }}>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{ fontWeight: 500, color: 'var(--red)' }}
+              >
                 Left: {item.left} pcs
               </Typography>
-              <Typography variant="body2" component="span" sx={{ color: 'var(--black-opacity-65)' }}>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{ color: 'var(--black-opacity-65)' }}
+              >
                 Threshold: {item.threshold}
               </Typography>
             </div>

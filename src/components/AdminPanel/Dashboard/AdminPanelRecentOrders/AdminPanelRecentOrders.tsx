@@ -1,12 +1,13 @@
 import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
-import type { IAdminPanelOrderItem } from '@/core/types';
+import type { AdminPanelTab, IAdminPanelOrderItem } from '@/core/types';
 
 import './AdminPanelRecentOrders.css';
 
 interface IProps {
   orders: IAdminPanelOrderItem[];
+  onTabChange?: (tab: AdminPanelTab) => void;
 }
 
 const STATUS_LABELS = {
@@ -15,10 +16,10 @@ const STATUS_LABELS = {
   shipping: 'Shipping',
 } as const;
 
-export const AdminPanelRecentOrders: FC<IProps> = ({ orders }) => {
+export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
   return (
     <section className="admin-panel-recent-orders" aria-label="Recent orders">
-      <Typography variant="h6" component="h3" sx={{ fontWeight: 600, lineHeight: 1 }}>
+      <Typography component="h3" sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1 }}>
         Recent Orders
       </Typography>
 
@@ -26,10 +27,18 @@ export const AdminPanelRecentOrders: FC<IProps> = ({ orders }) => {
         {orders.map((order) => (
           <article key={order.id} className="admin-panel-recent-orders__item">
             <div className="admin-panel-recent-orders__item-top">
-              <Typography variant="subtitle2" component="span" sx={{ fontWeight: 500, color: 'var(--blue)' }}>
+              <Typography
+                variant="subtitle2"
+                component="span"
+                sx={{ fontWeight: 500, color: 'var(--blue)' }}
+              >
                 {order.orderNumber}
               </Typography>
-              <Typography variant="body2" component="span" sx={{ color: 'var(--black-opacity-65)' }}>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{ color: 'var(--black-opacity-65)' }}
+              >
                 {order.age}
               </Typography>
             </div>
@@ -50,8 +59,14 @@ export const AdminPanelRecentOrders: FC<IProps> = ({ orders }) => {
         ))}
       </div>
 
-      <button type="button" className="admin-panel-recent-orders__view-all">
-        Show all orders
+      <button
+        type="button"
+        className="admin-panel-recent-orders__view-all"
+        onClick={() => onTabChange?.('orders')}
+      >
+        <Typography variant="body2" component="span">
+          Show all orders
+        </Typography>
       </button>
     </section>
   );

@@ -7,7 +7,7 @@
 .admin-dashboard-tab__charts {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 312px;
-  gap: 10px;
+  gap: 20px;
 }
 
 .admin-dashboard-tab__bottom-grid {
@@ -54,4 +54,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.admin-dashboard-tab__add-product-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }

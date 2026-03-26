@@ -5,6 +5,7 @@ import { useAdminSalesAnalytics } from '@/core/hooks';
 import type { AdminAnalyticsRange, IAdminSalesAnalyticsPoint } from '@/core/types';
 
 import './AdminPanelSalesChart.css';
+import { Button } from '@/components/ui';
 
 const PERIOD_OPTIONS: { id: AdminAnalyticsRange; label: string }[] = [
   { id: 'week', label: 'Week' },
@@ -13,10 +14,10 @@ const PERIOD_OPTIONS: { id: AdminAnalyticsRange; label: string }[] = [
 ];
 
 const CHART = {
-  viewBoxWidth: 544,
+  viewBoxWidth: 560,
   viewBoxHeight: 320,
-  left: 42,
-  right: 498,
+  left: 76,
+  right: 516,
   top: 10,
   bottom: 280,
   gridLines: 5,
@@ -68,7 +69,8 @@ const EMPTY_CHART_MODEL: IChartModel = {
   ordersDots: [],
 };
 
-const toPolyline = (dots: Pick<IChartDot, 'cx' | 'cy'>[]) => dots.map((dot) => `${dot.cx},${dot.cy}`).join(' ');
+const toPolyline = (dots: Pick<IChartDot, 'cx' | 'cy'>[]) =>
+  dots.map((dot) => `${dot.cx},${dot.cy}`).join(' ');
 
 const buildChartModel = (points: IAdminSalesAnalyticsPoint[]): IChartModel => {
   if (!points.length) return EMPTY_CHART_MODEL;
@@ -142,7 +144,7 @@ export const AdminPanelSalesChart = () => {
     <section className="admin-panel-sales-chart" aria-label="Sales analytics chart">
       <div className="admin-panel-sales-chart__head">
         <div>
-          <Typography variant="h6" component="h3" sx={{ fontWeight: 600, lineHeight: 1 }}>
+          <Typography component="h3" sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1 }}>
             Sales Analytics
           </Typography>
           <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
@@ -152,14 +154,19 @@ export const AdminPanelSalesChart = () => {
 
         <div className="admin-panel-sales-chart__filters">
           {PERIOD_OPTIONS.map((option) => (
-            <button
+            <Button
+              maxWidth="60px"
+              height="34px"
               key={option.id}
               type="button"
+              border="none"
+              borderRadius="12px"
+              sx={{ fontSize: '15px', fontWeight: 500 }}
               className={activePeriod === option.id ? 'is-active' : ''}
               onClick={() => setActivePeriod(option.id)}
             >
               {option.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -172,7 +179,10 @@ export const AdminPanelSalesChart = () => {
 
       <div className="admin-panel-sales-chart__graph">
         {tooltip ? (
-          <div className="admin-panel-sales-chart__tooltip" style={{ left: `${tooltip.x}px`, top: `${tooltip.y}px` }}>
+          <div
+            className="admin-panel-sales-chart__tooltip"
+            style={{ left: `${tooltip.x}px`, top: `${tooltip.y}px` }}
+          >
             <span className="admin-panel-sales-chart__tooltip-title">{tooltip.label}</span>
             <span>Revenue: {formatRevenueValue(tooltip.revenue)}</span>
             <span>Orders: {formatOrdersValue(tooltip.orders)}</span>
@@ -202,11 +212,21 @@ export const AdminPanelSalesChart = () => {
             </g>
 
             {chartModel.revenueLine ? (
-              <polyline fill="none" stroke="#6b6b6b" strokeWidth="2" points={chartModel.revenueLine} />
+              <polyline
+                fill="none"
+                stroke="#6b6b6b"
+                strokeWidth="2"
+                points={chartModel.revenueLine}
+              />
             ) : null}
 
             {chartModel.ordersLine ? (
-              <polyline fill="none" stroke="#9f97f4" strokeWidth="2" points={chartModel.ordersLine} />
+              <polyline
+                fill="none"
+                stroke="#9f97f4"
+                strokeWidth="2"
+                points={chartModel.ordersLine}
+              />
             ) : null}
 
             <g fill="#f5a7a0" stroke="#f5a7a0">
@@ -241,7 +261,10 @@ export const AdminPanelSalesChart = () => {
       <div className="admin-panel-sales-chart__x-labels">
         <div
           className="admin-panel-sales-chart__x-labels-grid"
-          style={{ gridTemplateColumns: `repeat(${Math.max(chartModel.xLabels.length, 1)}, minmax(0, 1fr))` }}
+          style={{
+            paddingLeft: `${CHART.left}px`,
+            gridTemplateColumns: `repeat(${Math.max(chartModel.xLabels.length, 1)}, minmax(0, 1fr))`,
+          }}
         >
           {chartModel.xLabels.map((label, index) => (
             <span key={`${label}-${index}`}>{label}</span>
@@ -250,9 +273,15 @@ export const AdminPanelSalesChart = () => {
       </div>
 
       <div className="admin-panel-sales-chart__meta">
-        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--revenue">Revenue</span>
-        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--orders">Orders</span>
-        {isLoading ? <span className="admin-panel-sales-chart__loading">Updating chart...</span> : null}
+        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--revenue">
+          Revenue
+        </span>
+        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--orders">
+          Orders
+        </span>
+        {isLoading ? (
+          <span className="admin-panel-sales-chart__loading">Updating chart...</span>
+        ) : null}
       </div>
     </section>
   );

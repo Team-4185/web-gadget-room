@@ -40,7 +40,7 @@ export const AdminPanel = () => {
 
           <div className="admin-panel__content">
             <div className="admin-panel__hero">
-              <Typography variant="h4" component="h1" sx={{ fontWeight: 600, lineHeight: 1 }}>
+              <Typography component="h1" sx={{ fontSize: '24px', fontWeight: 600, lineHeight: 1 }}>
                 {greeting}
               </Typography>
               <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
@@ -55,6 +55,7 @@ export const AdminPanel = () => {
                 topProducts={topProducts}
                 recentOrders={recentOrders}
                 lowStock={lowStock}
+                onTabChange={setActiveTab}
               />
             )}
             {isProductTab && <AdminProductsTab products={products} totalProducts={totalProducts} />}

@@ -11,6 +11,8 @@ import { Typography } from '@mui/material';
 import type { IAdminPanelManagedProduct } from '@/core/types';
 
 import './AdminProductManagementTable.css';
+import { Button } from '@/components/ui';
+import { Plus } from '@/assets';
 
 interface IProps {
   products: IAdminPanelManagedProduct[];
@@ -27,7 +29,7 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
     <section className="admin-product-management" aria-label="Product management">
       <div className="admin-product-management__header">
         <div>
-          <Typography variant="h5" component="h2" sx={{ fontWeight: 600, lineHeight: 1 }}>
+          <Typography component="h2" sx={{ fontSize: '24px', fontWeight: 600, lineHeight: 1 }}>
             Product Management
           </Typography>
           <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
@@ -35,10 +37,18 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
           </Typography>
         </div>
 
-        <button type="button" className="admin-product-management__add-button">
-          <span>+</span>
-          Add Product
-        </button>
+        <Button
+          maxWidth="141px"
+          height="36px"
+          border="none"
+          borderRadius="12px"
+          sx={{ fontSize: '15px', fontWeight: 500 }}
+        >
+          <div className="admin-product-management__add-product-icon" aria-hidden="true">
+            <Plus color="currentColor" />
+            Add Product
+          </div>
+        </Button>
       </div>
 
       <div className="admin-product-management__filters">

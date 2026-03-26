@@ -31,9 +31,8 @@ export const AdminPanelStatCard: FC<IProps> = ({ item }) => {
         {item.title}
       </Typography>
       <Typography
-        variant="h5"
         component="p"
-        sx={{ marginTop: '4px', fontWeight: 600, lineHeight: 1 }}
+        sx={{ marginTop: '4px', fontSize: '24px', fontWeight: 600, lineHeight: 1 }}
       >
         {item.value}
       </Typography>

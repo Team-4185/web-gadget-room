@@ -1,5 +1,6 @@
-import { AddOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
+
+import { Plus } from '@/assets';
 
 import {
   AdminPanelBrandChart,
@@ -8,8 +9,10 @@ import {
   AdminPanelRecentOrders,
   AdminPanelSalesChart,
   AdminPanelStatCard,
+  Button,
 } from '@/components';
 import type {
+  AdminPanelTab,
   IAdminPanelBrandItem,
   IAdminPanelLowStockItem,
   IAdminPanelOrderItem,
@@ -22,6 +25,7 @@ import './AdminDashboardTab.css';
 interface IProps {
   brands: IAdminPanelBrandItem[];
   lowStock: IAdminPanelLowStockItem[];
+  onTabChange?: (tab: AdminPanelTab) => void;
   recentOrders: IAdminPanelOrderItem[];
   stats: IAdminPanelStatItem[];
   topProducts: IAdminPanelProductItem[];
@@ -30,6 +34,7 @@ interface IProps {
 export const AdminDashboardTab = ({
   brands,
   lowStock,
+  onTabChange,
   recentOrders,
   stats,
   topProducts,
@@ -50,13 +55,21 @@ export const AdminDashboardTab = ({
       <div className="admin-dashboard-tab__bottom-grid">
         <section className="admin-dashboard-tab__products" aria-label="Top selling products">
           <div className="admin-dashboard-tab__products-header">
-            <Typography variant="h6" component="h2" sx={{ fontWeight: 600, lineHeight: 1 }}>
+            <Typography component="h2" sx={{ fontSize: '20px', fontWeight: 600, lineHeight: 1 }}>
               Top Selling Products
             </Typography>
-            <button type="button" className="admin-dashboard-tab__add-product">
-              <AddOutlined sx={{ fontSize: '20px' }} />
-              Add Product
-            </button>
+            <Button
+              maxWidth="141px"
+              height="36px"
+              border="none"
+              borderRadius="12px"
+              sx={{ fontSize: '15px', fontWeight: 500 }}
+            >
+              <div className="admin-dashboard-tab__add-product-icon" aria-hidden="true">
+                <Plus color="currentColor" />
+                Add Product
+              </div>
+            </Button>
           </div>
 
           <div className="admin-dashboard-tab__products-list">
@@ -67,7 +80,7 @@ export const AdminDashboardTab = ({
         </section>
 
         <div className="admin-dashboard-tab__side-cards">
-          <AdminPanelRecentOrders orders={recentOrders} />
+          <AdminPanelRecentOrders orders={recentOrders} onTabChange={onTabChange} />
           <AdminPanelLowStock items={lowStock} />
         </div>
       </div>

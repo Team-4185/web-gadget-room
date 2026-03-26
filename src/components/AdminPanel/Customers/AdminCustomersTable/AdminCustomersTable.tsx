@@ -27,7 +27,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
   return (
     <section className="admin-customers-table" aria-label="Customers base">
       <div className="admin-customers-table__header">
-        <Typography variant="h5" component="h2" sx={{ fontWeight: 600, lineHeight: 1 }}>
+        <Typography component="h2" sx={{ fontSize: '24px', fontWeight: 600, lineHeight: 1 }}>
           Customers base
         </Typography>
         <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>

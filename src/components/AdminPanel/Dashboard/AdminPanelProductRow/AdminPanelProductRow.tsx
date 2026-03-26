@@ -32,7 +32,7 @@ export const AdminPanelProductRow: FC<IProps> = ({ item }) => {
           <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
             In Stock
           </Typography>
-          <Typography variant="h6" component="p" sx={{ fontWeight: 600, lineHeight: 1.1 }}>
+          <Typography component="p" sx={{ fontSize: '14px', fontWeight: 600, lineHeight: 1.1 }}>
             {item.stock}
           </Typography>
         </div>

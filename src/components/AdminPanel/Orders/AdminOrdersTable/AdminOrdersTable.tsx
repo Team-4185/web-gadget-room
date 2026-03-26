@@ -23,7 +23,7 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
   return (
     <section className="admin-orders-table" aria-label="Order management">
       <div className="admin-orders-table__head">
-        <Typography variant="h5" component="h2" sx={{ fontWeight: 600, lineHeight: 1 }}>
+        <Typography component="h2" sx={{ fontSize: '24px', fontWeight: 600, lineHeight: 1 }}>
           Order Management
         </Typography>
         <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
@@ -63,7 +63,11 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
                     <Typography variant="subtitle2" component="span" sx={{ fontWeight: 500 }}>
                       {order.customer}
                     </Typography>
-                    <Typography variant="caption" component="span" sx={{ color: 'var(--black-opacity-65)' }}>
+                    <Typography
+                      variant="caption"
+                      component="span"
+                      sx={{ color: 'var(--black-opacity-65)' }}
+                    >
                       {order.email}
                     </Typography>
                   </div>

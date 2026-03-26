@@ -28,7 +28,7 @@ export const AdminPanelSidebar: FC<IProps> = ({ menu, activeItem = 'dashboard', 
             >
               <span className="admin-panel-sidebar__item-content">
                 <Icon width={24} height={24} style={{ color: 'var(--blue-violet)' }} />
-                <Typography variant="h6" component="span" sx={{ fontWeight: 600 }}>
+                <Typography component="span" sx={{ fontSize: '20px', fontWeight: 600 }}>
                   {item.label}
                 </Typography>
               </span>
