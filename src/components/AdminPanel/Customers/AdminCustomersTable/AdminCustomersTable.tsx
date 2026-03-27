@@ -1,17 +1,11 @@
 import { useMemo, useState, type FC } from 'react';
-import {
-  EmailOutlined,
-  LocalPhoneOutlined,
-  MailOutlined,
-  DeleteOutlineOutlined,
-} from '@mui/icons-material';
 import { Typography } from '@mui/material';
 
 import type { IAdminCustomerItem } from '@/core/types';
 import { Search } from '@/components/ui';
+import { Trash, MailOutlined, PhoneOutlined } from '@/assets';
 
 import './AdminCustomersTable.css';
-import { Mail, Trash } from '@/assets';
 
 interface IProps {
   customers: IAdminCustomerItem[];
@@ -78,11 +72,11 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
                 <td>
                   <div className="admin-customers-table__contact">
                     <span>
-                      <EmailOutlined sx={{ fontSize: '10px' }} />
+                      <MailOutlined width={10} height={10} style={{ color: 'var(--black)' }} />
                       {customer.email}
                     </span>
                     <span>
-                      <LocalPhoneOutlined sx={{ fontSize: '10px' }} />
+                      <PhoneOutlined width={10} height={10} style={{ color: 'var(--black)' }} />
                       {customer.phone}
                     </span>
                   </div>
@@ -98,7 +92,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
                 <td>
                   <div className="admin-customers-table__actions">
                     <button type="button" aria-label={`Email ${customer.name}`}>
-                      <Mail />
+                      <MailOutlined style={{ color: 'var(--green)' }} />
                     </button>
                     <button type="button" aria-label={`Delete ${customer.name}`}>
                       <Trash />

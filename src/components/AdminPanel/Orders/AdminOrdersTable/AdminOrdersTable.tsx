@@ -1,8 +1,14 @@
-import type { FC } from 'react';
-import { EditOutlined, DeleteOutlineOutlined, VisibilityOutlined } from '@mui/icons-material';
+import { useMemo, useState, type FC } from 'react';
 import { Typography } from '@mui/material';
 
-import type { AdminOrderStatus, IAdminManagedOrderItem } from '@/core/types';
+import type { IAdminManagedOrderItem } from '@/core/types';
+import {
+  ADMIN_ORDER_FILTER_TABS,
+  ADMIN_ORDER_STATUS_LABELS,
+  type AdminOrderFilterId,
+} from '@/core/constants';
+import { Button } from '@/components/ui';
+import { Trash, Visibility, Edit } from '@/assets';
 
 import './AdminOrdersTable.css';
 
@@ -11,15 +17,14 @@ interface IProps {
   totalOrders: number;
 }
 
-const STATUS_LABELS: Record<AdminOrderStatus, string> = {
-  in_processing: 'In processing',
-  paid: 'Paid',
-  in_delivery: 'In Delivered',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
-};
-
 export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
+  const [activeTab, setActiveTab] = useState<AdminOrderFilterId>('all');
+
+  const filteredOrders = useMemo(() => {
+    if (activeTab === 'all') return orders;
+    return orders.filter((order) => order.status === activeTab);
+  }, [orders, activeTab]);
+
   return (
     <section className="admin-orders-table" aria-label="Order management">
       <div className="admin-orders-table__head">
@@ -32,12 +37,23 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
       </div>
 
       <div className="admin-orders-table__tabs" role="tablist" aria-label="Order filters">
-        <button type="button" className="is-active">
-          All orders
-        </button>
-        <button type="button">Processing</button>
-        <button type="button">Paid</button>
-        <button type="button">In transit</button>
+        {ADMIN_ORDER_FILTER_TABS.map((tab) => (
+          <Button
+            key={tab.id}
+            maxWidth="90px"
+            height="33px"
+            border="none"
+            fontSize="14px"
+            borderRadius="8px"
+            onClick={() => setActiveTab(tab.id)}
+            sx={{
+              color: activeTab === tab.id ? 'var(--white)' : 'var(--black)',
+              background: activeTab === tab.id ? 'var(--blue-violet)' : 'var(--white)',
+            }}
+          >
+            {tab.label}
+          </Button>
+        ))}
       </div>
 
       <div className="admin-orders-table__table-wrap">
@@ -55,7 +71,7 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {filteredOrders.map((order) => (
               <tr key={order.id}>
                 <td className="admin-orders-table__number">{order.orderNumber}</td>
                 <td>
@@ -83,19 +99,19 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
                 </td>
                 <td>
                   <span className={`admin-orders-table__status is-${order.status}`}>
-                    {STATUS_LABELS[order.status]}
+                    {ADMIN_ORDER_STATUS_LABELS[order.status]}
                   </span>
                 </td>
                 <td>
                   <div className="admin-orders-table__actions">
                     <button type="button" aria-label={`View ${order.orderNumber}`}>
-                      <VisibilityOutlined sx={{ fontSize: '18px' }} />
+                      <Visibility />
                     </button>
                     <button type="button" aria-label={`Edit ${order.orderNumber}`}>
-                      <EditOutlined sx={{ fontSize: '18px' }} />
+                      <Edit />
                     </button>
                     <button type="button" aria-label={`Delete ${order.orderNumber}`}>
-                      <DeleteOutlineOutlined sx={{ fontSize: '18px' }} />
+                      <Trash />
                     </button>
                   </div>
                 </td>
@@ -107,13 +123,27 @@ export const AdminOrdersTable: FC<IProps> = ({ orders, totalOrders }) => {
 
       <div className="admin-orders-table__footer">
         <Typography variant="body2" component="p">
-          Showing <span>{orders.length}</span> of <span>{totalOrders}</span> orders
+          Showing <span>{filteredOrders.length}</span> of <span>{totalOrders}</span> orders
         </Typography>
         <div className="admin-orders-table__pager">
-          <button type="button">Back</button>
-          <button type="button" className="is-primary">
+          <Button
+            maxWidth="55px"
+            height="34px"
+            border="none"
+            borderRadius="12px"
+            sx={{ fontSize: '14px', fontWeight: 500 }}
+          >
+            Back
+          </Button>
+          <Button
+            maxWidth="55px"
+            height="34px"
+            border="none"
+            borderRadius="12px"
+            sx={{ fontSize: '14px', fontWeight: 500 }}
+          >
             Next
-          </button>
+          </Button>
         </div>
       </div>
     </section>

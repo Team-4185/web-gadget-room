@@ -3,9 +3,9 @@ import { Typography } from '@mui/material';
 
 import { useAdminSalesAnalytics } from '@/core/hooks';
 import type { AdminAnalyticsRange, IAdminSalesAnalyticsPoint } from '@/core/types';
+import { Button } from '@/components/ui';
 
 import './AdminPanelSalesChart.css';
-import { Button } from '@/components/ui';
 
 const PERIOD_OPTIONS: { id: AdminAnalyticsRange; label: string }[] = [
   { id: 'week', label: 'Week' },

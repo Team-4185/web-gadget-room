@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 
 import { Plus } from '@/assets';
-
 import {
   AdminPanelBrandChart,
   AdminPanelLowStock,

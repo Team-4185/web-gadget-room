@@ -1,4 +1,5 @@
 import type {
+  AdminOrderStatus,
   AdminAnalyticsRange,
   IAdminManagedOrderItem,
   IAdminOrderKpiItem,
@@ -310,6 +311,25 @@ export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
   { id: 'delivery', title: 'In delivery', value: '60', icon: SmallTruck },
   { id: 'cancelled', title: 'Cancelled', value: '23', icon: StatusCancelled },
 ];
+
+export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
+  in_processing: 'In processing',
+  paid: 'Paid',
+  in_delivery: 'In transit',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled',
+};
+
+export const ADMIN_ORDER_FILTER_TABS = [
+  { id: 'all', label: 'All orders' },
+  { id: 'in_processing', label: 'Processing' },
+  { id: 'paid', label: 'Paid' },
+  { id: 'in_delivery', label: 'In transit' },
+  { id: 'delivered', label: 'Delivered' },
+  { id: 'cancelled', label: 'Cancelled' },
+] as const;
+
+export type AdminOrderFilterId = (typeof ADMIN_ORDER_FILTER_TABS)[number]['id'];
 
 export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
   {

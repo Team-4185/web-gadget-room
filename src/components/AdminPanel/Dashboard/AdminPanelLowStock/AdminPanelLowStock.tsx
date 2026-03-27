@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import { Alert } from '@/assets';
-
 import type { IAdminPanelLowStockItem } from '@/core/types';
 
 import './AdminPanelLowStock.css';

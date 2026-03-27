@@ -7,25 +7,8 @@
 
 .admin-orders-table__tabs {
   margin-top: 30px;
-  display: inline-flex;
+  display: flex;
   gap: 10px;
-}
-
-.admin-orders-table__tabs button {
-  border: 0;
-  border-radius: 8px;
-  background: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-  font-size: 14px;
-  font-weight: 600;
-  min-height: 33px;
-  padding: 8px 10px;
-  cursor: pointer;
-}
-
-.admin-orders-table__tabs button.is-active {
-  background: var(--blue-violet);
-  color: var(--white);
 }
 
 .admin-orders-table__table-wrap {
@@ -149,21 +132,4 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-}
-
-.admin-orders-table__pager button {
-  border: 0;
-  border-radius: 12px;
-  padding: 8px;
-  min-height: 34px;
-  min-width: 52px;
-  background: var(--white);
-  box-shadow: 0 0 2px 0 var(--blue-violet);
-  cursor: pointer;
-}
-
-.admin-orders-table__pager button.is-primary {
-  background: var(--blue-violet);
-  color: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
 }

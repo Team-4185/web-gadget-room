@@ -68,3 +68,5 @@ export { default as Customers } from './customers.svg?react';
 export { default as Euro } from './euro.svg?react';
 export { default as Alert } from './alert.svg?react';
 export { default as ArrowRightUp } from './arrowRightUp.svg?react';
+export { default as MailOutlined } from './mailOutlined.svg?react';
+export { default as PhoneOutlined } from './phoneOutlined.svg?react';
