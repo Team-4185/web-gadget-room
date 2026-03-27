@@ -1,5 +1,6 @@
 import type { ChangeEvent, FC } from 'react';
-import { SearchOutlined } from '@mui/icons-material';
+
+import { Search as SearchIcon } from '@/assets';
 
 import './Search.css';
 
@@ -24,7 +25,7 @@ export const Search: FC<IProps> = ({
 
   return (
     <label className={`ui-search ${className ?? ''}`.trim()} aria-label={ariaLabel}>
-      <SearchOutlined sx={{ fontSize: '20px', color: 'var(--black-opacity-65)' }} />
+      <SearchIcon style={{ color: 'var(--black)' }} />
       <input type="text" value={value} onChange={handleChange} placeholder={placeholder} />
     </label>
   );
