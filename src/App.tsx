@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { Outlet } from 'react-router';
 
 import { Footer, Header, ScrollToTop } from '@/components';
-import { AppRoutes } from '@/routes';
 import { useAppDispatch, authActions } from '@/core/store';
 
 import './App.css';
@@ -18,7 +18,7 @@ const App = () => {
       <Header />
       <main>
         <ScrollToTop />
-        <AppRoutes />
+        <Outlet />
       </main>
       <Footer />
     </>

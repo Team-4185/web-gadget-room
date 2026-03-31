@@ -38,16 +38,13 @@ export const CatalogContent: FC<IProps> = ({
         {items.map((product) =>
           product.badge ? (
             <Badge key={product.id} text={product.badge}>
-              <ProductCard
-                product={product}
-                onClick={() => navigate(`/product/${product.id}`, { state: product })}
-              />
+              <ProductCard product={product} onClick={() => navigate(`/product/${product.id}`)} />
             </Badge>
           ) : (
             <ProductCard
               key={product.id}
               product={product}
-              onClick={() => navigate(`/product/${product.id}`, { state: product })}
+              onClick={() => navigate(`/product/${product.id}`)}
             />
           )
         )}

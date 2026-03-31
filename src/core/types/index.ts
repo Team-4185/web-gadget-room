@@ -5,3 +5,4 @@ export * from './select';
 export * from './checkbox';
 export * from './delivery';
 export * from './userPanel';
+export * from './router';
