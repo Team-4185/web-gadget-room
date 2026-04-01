@@ -1,1 +1,2 @@
-export { AppRoutes } from './AppRoutes';
+export { router } from './AppRoutes';
+export { ProtectedRoutes } from './ProtectedRoute';

@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Pagination, PaginationItem, type SelectChangeEvent } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { ChevronRight, ChevronLeft } from '@/assets';
 import type { IProduct, SortOption } from '@/core/types';
@@ -38,16 +38,13 @@ export const CatalogContent: FC<IProps> = ({
         {items.map((product) =>
           product.badge ? (
             <Badge key={product.id} text={product.badge}>
-              <ProductCard
-                product={product}
-                onClick={() => navigate(`/product/${product.id}`, { state: product })}
-              />
+              <ProductCard product={product} onClick={() => navigate(`/product/${product.id}`)} />
             </Badge>
           ) : (
             <ProductCard
               key={product.id}
               product={product}
-              onClick={() => navigate(`/product/${product.id}`, { state: product })}
+              onClick={() => navigate(`/product/${product.id}`)}
             />
           )
         )}

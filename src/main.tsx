@@ -1,20 +1,18 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 
-import App from '@/App';
 import { MuiProvider, RTKProvider, ToastProvider } from '@/core/providers';
+import { router } from '@/routes';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <RTKProvider>
-        <MuiProvider>
-          <ToastProvider>
-            <App />
-          </ToastProvider>
-        </MuiProvider>
-      </RTKProvider>
-    </BrowserRouter>
+    <RTKProvider>
+      <MuiProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </MuiProvider>
+    </RTKProvider>
   </StrictMode>
 );

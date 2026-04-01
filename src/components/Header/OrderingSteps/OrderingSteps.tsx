@@ -1,5 +1,5 @@
 import { Stepper, Step, StepButton } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 import { STEPS } from '@/core/constants';
 

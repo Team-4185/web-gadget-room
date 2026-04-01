@@ -12,17 +12,6 @@ const PageName = {
   ProductPage: 'ProductPage',
 } as const;
 
-// export const pageMap: Record<string, any> = {
-//   '/cart': 'Cart',
-//   '/register': 'Register',
-//   '/login': 'Login',
-//   '/delivery': 'Delivery',
-//   '/payment': 'Payment',
-//   '/catalog': 'Catalog',
-//   '/product/:id': 'ProductPage',
-//   '/': 'Home',
-// };
-
 export const ICONS = [
   { id: 0, icon: Search, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
@@ -31,7 +20,7 @@ export const ICONS = [
 ];
 
 export const PAGES = [
-  { id: 0, name: PageName.Home, href: '/' },
+  { id: 0, name: PageName.Home, href: '/home' },
   { id: 1, name: PageName.Catalog, href: '/catalog' },
   { id: 2, name: PageName.AboutUs, href: '/about' },
 ];
