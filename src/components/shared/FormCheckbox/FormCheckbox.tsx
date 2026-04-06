@@ -9,22 +9,23 @@ interface IProps<T extends FieldValues> {
   name: FieldPath<T>;
   control: Control<T>;
   label: ReactNode;
+  className?: string;
 }
 
-export const FormCheckbox = <T extends FieldValues>({ id, name, control, label }: IProps<T>) => {
+export const FormCheckbox = <T extends FieldValues>({
+  id,
+  name,
+  control,
+  label,
+  className = '',
+}: IProps<T>) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
         <>
-          <CheckBox
-            {...field}
-            id={id}
-            label={label}
-            checked={field.value}
-            className="register__checkbox"
-          />
+          <CheckBox {...field} id={id} label={label} checked={field.value} className={className} />
           {fieldState.error && (
             <Typography sx={{ color: 'var(--coralRed)', fontSize: '14px', marginTop: '10px' }}>
               {fieldState.error.message}

@@ -1,7 +1,7 @@
 import { useEffect, type FC } from 'react';
-import { Typography } from '@mui/material';
+import { Typography, Link } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link as RouterLink } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
@@ -76,7 +76,13 @@ export const Login: FC = () => {
         <div className="login__actions">
           <FormCheckbox id="remember" name="rememberMe" control={control} label="Remember" />
 
-          <Typography sx={{ fontWeight: 400, color: 'var(--black)' }}>Forgot Password?</Typography>
+          <Link
+            component={RouterLink}
+            to="/forgot-password"
+            sx={{ fontWeight: 400, color: 'var(--black)' }}
+          >
+            Forgot Password?
+          </Link>
         </div>
 
         <Button

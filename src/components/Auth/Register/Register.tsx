@@ -87,6 +87,7 @@ export const Register: FC = () => {
 
         <FormCheckbox
           id="terms"
+          className="register__checkbox"
           name="terms"
           control={control}
           label={
