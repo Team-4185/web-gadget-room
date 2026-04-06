@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 
 import { Lock } from '@/assets';

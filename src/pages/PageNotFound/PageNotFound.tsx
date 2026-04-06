@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { NotFoundContent } from '@/components';
 

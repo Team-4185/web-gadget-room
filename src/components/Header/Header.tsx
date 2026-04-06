@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
-import { Link as RouterLink, NavLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, NavLink, useLocation } from 'react-router';
 
 import { BreadCrumbs, OrderingSteps } from '@/components';
 import { useAppSelector } from '@/core/store';
@@ -21,11 +21,10 @@ export const Header: FC = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  // const page = pageMap[currentPath];
   const cartLength = useAppSelector((state) => state.cart.cart.length);
+  const user = useAppSelector((state) => state.auth.userId);
 
-  const user = false;
-  const authPage = currentPath.startsWith('/') || currentPath.startsWith('/register');
+  const authPage = currentPath === '/' || currentPath === '/register';
 
   const shouldShowBreadcrumbs = !ROUTES_WITHOUT_BREADCRUMBS.includes(currentPath);
   const shouldShowOrderingSteps = ROUTES_WITH_ORDERING_STEPS.includes(currentPath);
@@ -35,7 +34,7 @@ export const Header: FC = () => {
       <Container disableGutters>
         <div className="header__wrapper">
           <div className="header__left">
-            <RouterLink to={'/'} className="header__logo">
+            <RouterLink to={'/home'} className="header__logo">
               <img src={Logo} alt="Logo" />
             </RouterLink>
 

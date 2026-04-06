@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 
 import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
@@ -17,7 +17,13 @@ interface ProductInfoProps {
   error: string | null;
 }
 
-export const ProductInfo: FC<ProductInfoProps> = ({ product, specs, description, loading, error }) => {
+export const ProductInfo: FC<ProductInfoProps> = ({
+  product,
+  specs,
+  description,
+  loading,
+  error,
+}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const measureRef = useRef<HTMLParagraphElement | null>(null);
