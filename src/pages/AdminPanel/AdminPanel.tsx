@@ -23,7 +23,21 @@ export const AdminPanel = () => {
 
   const { greeting, subtitle, menu, stats, brands, topProducts, recentOrders, lowStock } =
     useAdminPanelData();
-  const { products, totalProducts } = useAdminProductManagementData();
+  const {
+    products,
+    totalProducts,
+    currentPage,
+    totalPages,
+    isFirstPage,
+    isLastPage,
+    isLoading: isProductsLoading,
+    searchQuery,
+    selectedBrand,
+    goToPreviousPage,
+    goToNextPage,
+    onSearchChange,
+    onBrandChange,
+  } = useAdminProductManagementData();
   const { kpis: ordersKpis, orders, totalOrders } = useAdminOrdersData();
   const { kpis: customersKpis, customers, totalCustomers } = useAdminCustomersData();
 
@@ -58,7 +72,23 @@ export const AdminPanel = () => {
                 onTabChange={setActiveTab}
               />
             )}
-            {isProductTab && <AdminProductsTab products={products} totalProducts={totalProducts} />}
+            {isProductTab && (
+              <AdminProductsTab
+                products={products}
+                totalProducts={totalProducts}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                isFirstPage={isFirstPage}
+                isLastPage={isLastPage}
+                isLoading={isProductsLoading}
+                searchQuery={searchQuery}
+                selectedBrand={selectedBrand}
+                onPreviousPage={goToPreviousPage}
+                onNextPage={goToNextPage}
+                onSearchChange={onSearchChange}
+                onBrandChange={onBrandChange}
+              />
+            )}
             {isOrdersTab && (
               <AdminOrdersTab kpis={ordersKpis} orders={orders} totalOrders={totalOrders} />
             )}

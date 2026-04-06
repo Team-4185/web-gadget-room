@@ -119,3 +119,32 @@ export interface IAdminSalesAnalyticsPoint {
   revenue: number;
   orders: number;
 }
+
+export type ApiAdminProduct = {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  releaseYear: number;
+  previewImage: string | null;
+  sku?: string | null;
+  stock?: number | null;
+  status?: AdminProductStatus | null;
+};
+
+export type ApiAdminProductsPage = {
+  content: ApiAdminProduct[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+};
+
+export type AdminProductsRequestParams = {
+  page: number;
+  size: number;
+  search: string;
+  brand: string;
+};

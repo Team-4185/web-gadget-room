@@ -55,6 +55,10 @@ export const router = createBrowserRouter([
             Component: UserProfile,
           },
           {
+            path: 'adminPanel',
+            Component: AdminPanel,
+          },
+          {
             path: 'catalog',
             Component: Catalog,
             handle: {

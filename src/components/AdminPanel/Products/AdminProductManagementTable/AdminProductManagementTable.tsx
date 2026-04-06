@@ -10,6 +10,17 @@ import { Edit, Plus, Trash, Visibility } from '@/assets';
 interface IProps {
   products: IAdminPanelManagedProduct[];
   totalProducts: number;
+  currentPage: number;
+  totalPages: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  isLoading: boolean;
+  searchQuery: string;
+  selectedBrand: string;
+  onPreviousPage: () => void;
+  onNextPage: () => void;
+  onSearchChange: (value: string) => void;
+  onBrandChange: (value: string) => void;
 }
 
 const STATUS_LABELS = {
@@ -25,9 +36,21 @@ const STATUS_OPTIONS: ISelectOption[] = [
   { value: 'no_stock', name: 'No Stock' },
 ];
 
-export const AdminProductManagementTable: FC<IProps> = ({ products, totalProducts }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedBrand, setSelectedBrand] = useState('');
+export const AdminProductManagementTable: FC<IProps> = ({
+  products,
+  totalProducts,
+  currentPage,
+  totalPages,
+  isFirstPage,
+  isLastPage,
+  isLoading,
+  searchQuery,
+  selectedBrand,
+  onPreviousPage,
+  onNextPage,
+  onSearchChange,
+  onBrandChange,
+}) => {
   const [selectedStatus, setSelectedStatus] = useState<AdminProductStatus | ''>('');
 
   const brandOptions = useMemo<ISelectOption[]>(
@@ -42,21 +65,12 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
   );
 
   const filteredProducts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
     return products.filter((product) => {
-      const matchesQuery =
-        !query ||
-        product.title.toLowerCase().includes(query) ||
-        product.sku.toLowerCase().includes(query) ||
-        product.brand.toLowerCase().includes(query);
-
-      const matchesBrand = !selectedBrand || product.brand.toLowerCase() === selectedBrand;
       const matchesStatus = !selectedStatus || product.status === selectedStatus;
 
-      return matchesQuery && matchesBrand && matchesStatus;
+      return matchesStatus;
     });
-  }, [products, searchQuery, selectedBrand, selectedStatus]);
+  }, [products, selectedStatus]);
 
   return (
     <section className="admin-product-management" aria-label="Product management">
@@ -89,7 +103,7 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
           className="admin-product-management__search"
           ariaLabel="Search products"
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={onSearchChange}
           placeholder="Search Products"
         />
 
@@ -102,7 +116,7 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
           selectPadding="12px"
           value={selectedBrand}
           styleVariant="subtleBorder"
-          onChange={setSelectedBrand}
+          onChange={onBrandChange}
           placeholder="All brands"
         />
 
@@ -173,10 +187,18 @@ export const AdminProductManagementTable: FC<IProps> = ({ products, totalProduct
       <div className="admin-product-management__footer">
         <Typography variant="body2" component="p">
           Showing <span>{filteredProducts.length}</span> of <span>{totalProducts}</span> products
+          {` - Page ${currentPage} of ${totalPages}`}
         </Typography>
         <div className="admin-product-management__pager">
-          <button type="button">Back</button>
-          <button type="button" className="is-primary">
+          <button type="button" onClick={onPreviousPage} disabled={isFirstPage || isLoading}>
+            Back
+          </button>
+          <button
+            type="button"
+            className="is-primary"
+            onClick={onNextPage}
+            disabled={isLastPage || isLoading}
+          >
             Next
           </button>
         </div>
