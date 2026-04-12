@@ -1,7 +1,20 @@
 .about-testimonials {
   margin-top: 88px;
-  padding: 80px 0;
+  padding: 54px 0 70px;
   background: linear-gradient(90deg, #211c24 0.64%, #211c24 101%);
+  position: relative;
+}
+
+.about-testimonials::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #fefeff;
 }
 
 .about-testimonials__eyebrow {
@@ -20,28 +33,39 @@
   color: var(--white);
 }
 
+.about-testimonials__description {
+  margin: 14px auto 0;
+  max-width: 680px;
+  text-align: center;
+  color: #c5c5d6;
+  font-size: 15px;
+  line-height: 24px;
+}
+
 .about-testimonials__grid {
-  margin-top: 34px;
+  margin-top: 42px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 .about-testimonials__card {
-  padding: 10px 8px;
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  background: linear-gradient(180deg, rgba(52, 52, 76, 0.22) 0%, rgba(52, 52, 76, 0.1) 100%);
 }
 
 .about-testimonials__stars {
   color: var(--amber);
-  font-size: 18px;
-  letter-spacing: 2px;
+  font-size: 15px;
+  letter-spacing: 1.5px;
 }
 
 .about-testimonials__review {
-  margin-top: 12px;
+  margin-top: 10px;
   color: #8f8faf;
-  line-height: 30px;
-  font-size: 16px;
+  line-height: 32px;
+  font-size: 15px;
 }
 
 .about-testimonials__author {
@@ -49,13 +73,10 @@
   align-items: center;
   gap: 10px;
   margin-top: 20px;
-}
-
-.about-testimonials__author > span {
+.about-testimonials__author-badge {
   width: 36px;
   height: 36px;
   border-radius: 100%;
-  background: linear-gradient(135deg, #fdc10d 10%, #7777bf 90%);
   color: var(--white);
   font-size: 13px;
   font-weight: 700;
@@ -64,15 +85,29 @@
   justify-content: center;
 }
 
+.about-testimonials__author-badge--teal {
+  background: #2f90ad;
+}
+
+.about-testimonials__author-badge--yellow {
+  background: #cab45b;
+}
+
+.about-testimonials__author-badge--blue {
+  background: #5c8ef5;
+}
+
 .about-testimonials__author h3 {
   color: var(--white);
   font-size: 14px;
+  line-height: 16px;
 }
 
 .about-testimonials__author p {
   margin-top: 2px;
   color: #8d8d8d;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 14px;
 }
 
 @media (max-width: 1200px) {
@@ -86,4 +121,3 @@
     grid-template-columns: 1fr;
   }
 }
-

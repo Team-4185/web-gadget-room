@@ -1,5 +1,6 @@
 import {
   AboutHeroSection,
+  AboutMissionSection,
   AboutMetricsSection,
   AboutCoreValuesSection,
   AboutProcessSection,
@@ -15,6 +16,7 @@ export const About = () => {
   return (
     <section className="about">
       <AboutHeroSection />
+      <AboutMissionSection />
       <AboutMetricsSection />
       <AboutCoreValuesSection />
       <AboutProcessSection />
