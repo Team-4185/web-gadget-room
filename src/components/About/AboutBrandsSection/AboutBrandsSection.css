@@ -1,0 +1,35 @@
+.about-brands {
+  padding-top: 88px;
+}
+
+.about-brands__eyebrow {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--blue-violet);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-brands__grid {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  justify-content: center;
+}
+
+.about-brands__pill {
+  height: 56px;
+  min-width: 154px;
+  border-radius: 20px;
+  background: #f9f9ff;
+  color: #525f7c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  font-size: 18px;
+}
+

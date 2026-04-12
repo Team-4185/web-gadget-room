@@ -1,0 +1,36 @@
+.about-metrics {
+  background: #211c24;
+}
+
+.about-metrics__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.about-metrics__item {
+  text-align: center;
+}
+
+.about-metrics__item span {
+  display: block;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.about-metrics__item p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--light-gray);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .about-metrics__grid {
+    grid-template-columns: 1fr;
+  }
+}
+

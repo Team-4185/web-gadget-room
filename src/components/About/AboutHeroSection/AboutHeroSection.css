@@ -1,0 +1,60 @@
+.about-hero {
+  background: var(--dark-hero-background);
+  padding: 42px 0 50px;
+}
+
+.about-hero__layout {
+  display: grid;
+  grid-template-columns: 330px 1fr 420px;
+  gap: 28px;
+  align-items: center;
+}
+
+.about-hero__media {
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 17px 29px 48px 0 var(--black-opacity-25);
+  min-height: 360px;
+}
+
+.about-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-hero__badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.about-hero__badge-card {
+  background: var(--white);
+  border: 1px solid var(--gray-opacity-13);
+  box-shadow: 0 0 4px 0 var(--black-opacity-12);
+  border-radius: 12px;
+  padding: 14px 14px 18px;
+  min-height: 120px;
+}
+
+@media (max-width: 1200px) {
+  .about-hero__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero__media {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 32px 0 42px;
+  }
+
+  .about-hero__badges {
+    grid-template-columns: 1fr;
+  }
+}
+
