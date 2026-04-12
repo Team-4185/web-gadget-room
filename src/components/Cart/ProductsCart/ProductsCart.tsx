@@ -9,6 +9,7 @@ import './ProductsCart.css';
 
 export const ProductsCart = () => {
   const products = useAppSelector((state) => state.cart.cart);
+  const cartLoading = useAppSelector((state) => state.cart.loading);
   const dispatch = useAppDispatch();
 
   return (
@@ -39,6 +40,7 @@ export const ProductsCart = () => {
               <button
                 onClick={() => dispatch(cartActions.decreaseAmount(product.id))}
                 className="cart-item__amount-btn"
+                disabled={cartLoading}
               >
                 <Minus width={12} height={12} />
               </button>
@@ -58,6 +60,7 @@ export const ProductsCart = () => {
               <button
                 onClick={() => dispatch(cartActions.increaseAmount(product.id))}
                 className="cart-item__amount-btn"
+                disabled={cartLoading}
               >
                 <Plus width={12} height={12} />
               </button>
@@ -74,8 +77,12 @@ export const ProductsCart = () => {
           </div>
 
           <div
-            onClick={() => dispatch(cartActions.removeProduct(product.id))}
+            onClick={() => {
+              if (cartLoading) return;
+              dispatch(cartActions.removeProduct(product.id));
+            }}
             className="cart-item__remove"
+            aria-disabled={cartLoading}
           >
             <Trash width={18} height={18} />
             <Typography variant="body1" component="span" sx={{ fontSize: '15px', fontWeight: 500 }}>

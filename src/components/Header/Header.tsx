@@ -21,7 +21,7 @@ export const Header: FC = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const cartLength = useAppSelector((state) => state.cart.cart.length);
+  const cartLength = useAppSelector((state) => state.cart.totalAmount);
   const user = useAppSelector((state) => state.auth.userId);
 
   const authPage = currentPath === '/' || currentPath === '/register';
