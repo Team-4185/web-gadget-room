@@ -25,7 +25,7 @@ export const AboutHeroSection = () => {
               fontSize: '96px',
               lineHeight: '72px',
               letterSpacing: '-2px',
-              color: '#f8fcff',
+              color: 'var(--white)',
               fontWeight: 700,
             }}
           >
@@ -62,7 +62,12 @@ export const AboutHeroSection = () => {
           <div className="about-hero__stat-label">
             <Typography
               component="span"
-              sx={{ color: 'var(--light-gray)', fontSize: '12px', lineHeight: '15px', fontWeight: 700 }}
+              sx={{
+                color: 'var(--light-gray)',
+                fontSize: '12px',
+                lineHeight: '15px',
+                fontWeight: 700,
+              }}
             >
               HAPPY CUSTOMERS
             </Typography>
@@ -80,7 +85,12 @@ export const AboutHeroSection = () => {
           <div className="about-hero__stat-label">
             <Typography
               component="span"
-              sx={{ color: 'var(--light-gray)', fontSize: '12px', lineHeight: '15px', fontWeight: 700 }}
+              sx={{
+                color: 'var(--light-gray)',
+                fontSize: '12px',
+                lineHeight: '15px',
+                fontWeight: 700,
+              }}
             >
               PRODUCTS
             </Typography>
@@ -98,7 +108,12 @@ export const AboutHeroSection = () => {
           <div className="about-hero__stat-label">
             <Typography
               component="span"
-              sx={{ color: 'var(--light-gray)', fontSize: '12px', lineHeight: '15px', fontWeight: 700 }}
+              sx={{
+                color: 'var(--light-gray)',
+                fontSize: '12px',
+                lineHeight: '15px',
+                fontWeight: 700,
+              }}
             >
               ON MARKET
             </Typography>
@@ -113,7 +128,8 @@ export const AboutHeroSection = () => {
             fontSize: '19px',
             lineHeight: '19px',
             letterSpacing: '0.8px',
-            color: 'var(--white-opacity-4)',
+            color: 'var(--white)',
+            fontWeight: 500,
           }}
         >
           We are an online store of smartphones.
@@ -125,11 +141,11 @@ export const AboutHeroSection = () => {
       </div>
 
       <div className="about-hero__media about-hero__media--left">
-        <img src="/icons/greyBox.png" alt="Smartphone close-up" />
+        <img src="/About/heroLeft.png" alt="Smartphone close-up" />
       </div>
 
       <div className="about-hero__media about-hero__media--right">
-        <img src="/Home/phoneBack.png" alt="Phone side view" />
+        <img src="/About/heroRight.png" alt="Phone side view" />
       </div>
     </div>
   );

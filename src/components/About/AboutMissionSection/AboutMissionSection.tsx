@@ -16,7 +16,13 @@ export const AboutMissionSection = () => {
           <div className="about-mission__content">
             <Typography
               component="p"
-              sx={{ fontSize: '24px', fontWeight: 600, lineHeight: '26px', color: '#525f7c', letterSpacing: '-2px' }}
+              sx={{
+                fontSize: '24px',
+                fontWeight: 600,
+                lineHeight: '26px',
+                color: '#525f7c',
+                letterSpacing: '-2px',
+              }}
             >
               OUR MISSION
             </Typography>
@@ -24,24 +30,47 @@ export const AboutMissionSection = () => {
               <Typography
                 variant="h2"
                 component="h2"
-                sx={{ color: '#2d2d2d', fontSize: '48px', lineHeight: '56px' }}
+                sx={{
+                  fontSize: '48px',
+                  lineHeight: '56px',
+                  fontWeight: 700,
+                  color: 'var(--black)',
+                  letterSpacing: '-2px',
+                }}
               >
-                Simplifying tech for <span className="about-mission__title-highlight">every Ukrainian</span>
+                Simplifying tech for{' '}
+                <span className="about-mission__title-highlight">every Ukrainian</span>
               </Typography>
             </div>
             <div className="about-mission__paragraph about-mission__paragraph--first">
-              <Typography component="p" sx={{ fontSize: '20px', lineHeight: '34px', color: 'var(--black)', letterSpacing: '-1px' }}>
+              <Typography
+                component="p"
+                sx={{
+                  fontSize: '24px',
+                  lineHeight: '34px',
+                  color: 'var(--black)',
+                  letterSpacing: '-1px',
+                }}
+              >
                 We believe that quality technology shouldn't be complicated or inaccessible.
                 <br />
-                <strong>GadgetRoom</strong> was founded with a single vision: to be the most trusted place to
-                buy smartphones and gadgets in Ukraine.
+                <strong>GADGETROOM</strong> was founded with a single vision: to be the most trusted
+                place to buy smartphones and gadgets in Ukraine.
               </Typography>
             </div>
             <div className="about-mission__paragraph about-mission__paragraph--second">
-              <Typography component="p" sx={{ fontSize: '20px', lineHeight: '34px', color: 'var(--black)', letterSpacing: '-1px' }}>
-                We work only with verified suppliers, test every product before listing, and back every
-                purchase with a clear warranty and fast support. Clear specifications, fair prices, and
-                reliable support - that's what <strong>GADGETROOM</strong> stands for.
+              <Typography
+                component="p"
+                sx={{
+                  fontSize: '24px',
+                  lineHeight: '34px',
+                  color: 'var(--black)',
+                  letterSpacing: '-1px',
+                }}
+              >
+                We work only with verified suppliers, test every product before listing, and back
+                every purchase with a clear warranty and fast support. Clear specifications, fair
+                prices, and reliable support - that's what <strong>GADGETROOM</strong> stands for.
               </Typography>
             </div>
             <Button
@@ -58,53 +87,80 @@ export const AboutMissionSection = () => {
             <article className="about-mission__card about-mission__card--original">
               <div className="about-mission__card-header">
                 <VerifiedUserOutlinedIcon className="about-mission__card-icon" />
-                <Typography component="h3" sx={{ fontSize: '20px', lineHeight: '27px', color: '#2d2d2d', fontWeight: 700 }}>
+                <Typography
+                  component="h3"
+                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
+                >
                   Original Devices
                 </Typography>
               </div>
               <div className="about-mission__card-copy">
-                <Typography component="p" sx={{ fontSize: '16px', lineHeight: '20px', color: '#3b3a3a' }}>
-                  Only verified suppliers and tested smartphones. Every product is authenticated before
-                  listing.
+                <Typography
+                  component="p"
+                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+                >
+                  Only verified suppliers and tested smartphones. Every product is authenticated
+                  before listing.
                 </Typography>
               </div>
             </article>
             <article className="about-mission__card about-mission__card--warranty">
               <div className="about-mission__card-header">
                 <GppGoodOutlinedIcon className="about-mission__card-icon" />
-                <Typography component="h3" sx={{ fontSize: '20px', lineHeight: '27px', color: '#2d2d2d', fontWeight: 700 }}>
+                <Typography
+                  component="h3"
+                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
+                >
                   Warranty
                 </Typography>
               </div>
               <div className="about-mission__card-copy">
-                <Typography component="p" sx={{ fontSize: '16px', lineHeight: '20px', color: '#3b3a3a' }}>
-                  Clear warranty policy and fast support response. We stand behind every product we sell.
+                <Typography
+                  component="p"
+                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+                >
+                  Clear warranty policy and fast support response. We stand behind every product we
+                  sell.
                 </Typography>
               </div>
             </article>
             <article className="about-mission__card about-mission__card--payment">
               <div className="about-mission__card-header">
                 <PaymentsOutlinedIcon className="about-mission__card-icon" />
-                <Typography component="h3" sx={{ fontSize: '20px', lineHeight: '27px', color: '#2d2d2d', fontWeight: 700 }}>
+                <Typography
+                  component="h3"
+                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
+                >
                   Secure Payment
                 </Typography>
               </div>
               <div className="about-mission__card-copy">
-                <Typography component="p" sx={{ fontSize: '16px', lineHeight: '20px', color: '#3b3a3a' }}>
-                  Safe and popular payment methods. Visa, Mastercard, Apple Pay, Google Pay and more.
+                <Typography
+                  component="p"
+                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+                >
+                  Safe and popular payment methods. Visa, Mastercard, Apple Pay, Google Pay and
+                  more.
                 </Typography>
               </div>
             </article>
             <article className="about-mission__card about-mission__card--delivery">
               <div className="about-mission__card-header">
                 <LocalShippingOutlinedIcon className="about-mission__card-icon" />
-                <Typography component="h3" sx={{ fontSize: '20px', lineHeight: '27px', color: '#2d2d2d', fontWeight: 700 }}>
+                <Typography
+                  component="h3"
+                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
+                >
                   Fast Delivery
                 </Typography>
               </div>
               <div className="about-mission__card-copy">
-                <Typography component="p" sx={{ fontSize: '16px', lineHeight: '20px', color: '#3b3a3a' }}>
-                  Clear warranty policy and fast support response. We stand behind every product we sell.
+                <Typography
+                  component="p"
+                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+                >
+                  Clear warranty policy and fast support response. We stand behind every product we
+                  sell.
                 </Typography>
               </div>
             </article>
