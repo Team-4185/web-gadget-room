@@ -8,7 +8,20 @@ export const AboutBrandsSection = () => {
   return (
     <section className="about-brands" aria-label="Official Brands Section">
       <Container disableGutters>
-        <Typography className="about-brands__eyebrow">OFFICIAL PARTNERS & BRANDS WE CARRY</Typography>
+        <div className="about-brands__eyebrow-wrap">
+          <Typography
+            sx={{
+              fontSize: '12px',
+              fontWeight: 700,
+              lineHeight: '20px',
+              color: 'var(--blue-violet)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+            }}
+          >
+            OFFICIAL PARTNERS & BRANDS WE CARRY
+          </Typography>
+        </div>
         <div className="about-brands__grid">
           {brands.map((brand) => (
             <div key={brand} className="about-brands__pill">

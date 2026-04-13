@@ -2,33 +2,19 @@
   padding-top: 82px;
 }
 
-.about-values__eyebrow {
+.about-values__eyebrow-wrap,
+.about-values__title-wrap,
+.about-values__description-wrap {
   text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 26px;
-  color: #525f7c;
-  letter-spacing: -2px;
 }
 
-.about-values__title {
-  text-align: center;
+.about-values__title-wrap {
   margin-top: 25px;
-  color: #2d2d2d;
-  font-size: 56px;
-  line-height: 56px;
-  letter-spacing: -2px;
-  font-weight: 700;
 }
 
-.about-values__description {
+.about-values__description-wrap {
   margin: 19px auto 0;
   max-width: 687px;
-  text-align: center;
-  color: #8f8faf;
-  font-size: 24px;
-  line-height: 26px;
-  letter-spacing: -1px;
 }
 
 .about-values__grid {
@@ -48,17 +34,18 @@
   box-shadow: 0 0 4px 0 var(--black-opacity-12);
 }
 
-.about-values__index {
-  color: #7c7c97;
-  font-size: 15px;
-  line-height: 20px;
-  text-transform: uppercase;
-}
-
 .about-values__icon-wrap {
   width: 66px;
   height: 64px;
   margin-top: 19px;
+}
+
+.about-values__card-title-wrap {
+  margin-top: 24px;
+}
+
+.about-values__card-text-wrap {
+  margin-top: 39px;
 }
 
 .about-values__icon {
@@ -95,48 +82,10 @@
   background: #7c44e3;
 }
 
-.about-values__card-title {
-  margin-top: 24px;
-  font-size: 32px;
-  line-height: 32px;
-  color: #252537;
-  font-weight: 700;
-  letter-spacing: -1px;
-}
-
-.about-values__card-text {
-  margin-top: 39px;
-  font-size: 24px;
-  line-height: 34px;
-  color: #8888a8;
-  letter-spacing: -1px;
-}
-
 @media (max-width: 1200px) {
-  .about-values__title {
-    font-size: 42px;
-    line-height: 52px;
-  }
-
-  .about-values__description {
-    font-size: 16px;
-    line-height: 26px;
-  }
-
   .about-values__card {
     min-height: 320px;
     padding: 28px 20px 28px;
-  }
-
-  .about-values__card-title {
-    font-size: 24px;
-    line-height: 28px;
-  }
-
-  .about-values__card-text {
-    margin-top: 18px;
-    font-size: 16px;
-    line-height: 24px;
   }
 
   .about-values__grid {
@@ -146,37 +95,6 @@
 }
 
 @media (max-width: 768px) {
-  .about-values__eyebrow {
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .about-values__title {
-    font-size: 34px;
-    line-height: 42px;
-    letter-spacing: -1px;
-  }
-
-  .about-values__description {
-    font-size: 14px;
-    line-height: 22px;
-    letter-spacing: 0;
-  }
-
-  .about-values__card-title {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .about-values__card-text {
-    font-size: 14px;
-    line-height: 26px;
-    margin-top: 12px;
-    letter-spacing: 0;
-  }
-
   .about-values__grid {
     grid-template-columns: 1fr;
   }

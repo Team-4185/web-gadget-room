@@ -10,39 +10,24 @@
   align-items: end;
 }
 
-.about-mission__eyebrow {
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 26px;
-  color: #525f7c;
-  letter-spacing: -2px;
-}
-
-.about-mission__title {
+.about-mission__title-wrap {
   margin-top: 20px;
   max-width: 608px;
-  color: #2d2d2d;
-  font-size: 48px;
-  line-height: 56px;
 }
 
-.about-mission__title span {
+.about-mission__title-highlight {
   color: var(--blue-violet);
 }
 
 .about-mission__paragraph {
   max-width: 699px;
-  font-size: 20px;
-  line-height: 34px;
-  color: var(--black);
-  letter-spacing: -1px;
 }
 
-.about-mission__paragraph:first-of-type {
+.about-mission__paragraph--first {
   margin-top: 30px;
 }
 
-.about-mission__paragraph + .about-mission__paragraph {
+.about-mission__paragraph--second {
   margin-top: 40px;
 }
 
@@ -107,18 +92,8 @@
   font-size: 27px !important;
 }
 
-.about-mission__card-title {
-  font-size: 20px;
-  line-height: 27px;
-  color: #2d2d2d;
-  font-weight: 700;
-}
-
-.about-mission__card-text {
+.about-mission__card-copy {
   margin-top: 16px;
-  font-size: 16px;
-  line-height: 20px;
-  color: #3b3a3a;
 }
 
 @media (max-width: 1200px) {
@@ -144,16 +119,6 @@
 @media (max-width: 768px) {
   .about-mission {
     padding: 42px 0;
-  }
-
-  .about-mission__title {
-    font-size: 34px;
-    line-height: 42px;
-  }
-
-  .about-mission__paragraph {
-    font-size: 16px;
-    line-height: 26px;
   }
 
   .about-mission__cards {

@@ -12,26 +12,13 @@
   gap: 30px;
 }
 
-.about-cta__eyebrow {
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 20px;
-  color: var(--blue-violet);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.about-cta__title {
+.about-cta__title-wrap {
   margin-top: 6px;
-  color: #2d2d2d;
 }
 
-.about-cta__text {
+.about-cta__text-wrap {
   margin-top: 12px;
   max-width: 720px;
-  color: #8f8faf;
-  font-size: 20px;
-  line-height: 32px;
 }
 
 @media (max-width: 1200px) {
@@ -44,11 +31,6 @@
 @media (max-width: 768px) {
   .about-cta__card {
     padding: 24px;
-  }
-
-  .about-cta__text {
-    font-size: 16px;
-    line-height: 26px;
   }
 }
 

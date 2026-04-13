@@ -2,14 +2,8 @@
   padding-top: 88px;
 }
 
-.about-brands__eyebrow {
+.about-brands__eyebrow-wrap {
   text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 20px;
-  color: var(--blue-violet);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .about-brands__grid {

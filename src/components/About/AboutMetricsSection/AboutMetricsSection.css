@@ -19,28 +19,12 @@
   text-align: center;
 }
 
-.about-metrics__item span {
-  display: block;
-  font-size: 44px;
-  line-height: 1;
-  font-weight: 700;
-  color: var(--amber);
-}
-
-.about-metrics__label {
+.about-metrics__label-wrap {
   margin-top: 8px;
-  font-size: 12px;
-  color: var(--white);
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 16px;
 }
 
-.about-metrics__caption {
+.about-metrics__caption-wrap {
   margin-top: 6px;
-  font-size: 13px;
-  color: #bfc0d6;
-  line-height: 18px;
 }
 
 @media (max-width: 768px) {
@@ -56,9 +40,5 @@
   .about-metrics__grid {
     grid-template-columns: 1fr;
     gap: 18px;
-  }
-
-  .about-metrics__item span {
-    font-size: 34px;
   }
 }

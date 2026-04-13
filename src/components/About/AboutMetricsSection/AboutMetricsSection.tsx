@@ -37,13 +37,22 @@ export const AboutMetricsSection = () => {
           <div className="about-metrics__grid">
             {metrics.map((item) => (
               <div key={item.id} className="about-metrics__item">
-                <Typography component="span">{item.value}</Typography>
-                <Typography component="p" className="about-metrics__label">
-                  {item.label}
+                <Typography component="p" sx={{ fontSize: '44px', lineHeight: 1, fontWeight: 700, color: 'var(--amber)' }}>
+                  {item.value}
                 </Typography>
-                <Typography component="p" className="about-metrics__caption">
-                  {item.caption}
-                </Typography>
+                <div className="about-metrics__label-wrap">
+                  <Typography
+                    component="p"
+                    sx={{ fontSize: '12px', color: 'var(--white)', fontWeight: 700, textTransform: 'uppercase', lineHeight: '16px' }}
+                  >
+                    {item.label}
+                  </Typography>
+                </div>
+                <div className="about-metrics__caption-wrap">
+                  <Typography component="p" sx={{ fontSize: '13px', color: '#bfc0d6', lineHeight: '18px' }}>
+                    {item.caption}
+                  </Typography>
+                </div>
               </div>
             ))}
           </div>

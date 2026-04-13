@@ -7,6 +7,11 @@
   --gray-opacity-13: rgba(151, 151, 151, 0.13);
   --amber-opacity-89: rgba(251, 188, 4, 0.89);
 
+  --blue-opacity-30: rgba(119, 119, 191, 0.3);
+  --blue-opacity-40: rgba(119, 119, 191, 0.4);
+  --blue-opacity-45: rgba(119, 119, 191, 0.45);
+  --blue-opacity-50: rgba(119, 119, 191, 0.5);
+
   --white: #ffffff;
   --ghost-white: #fdfdff;
   --light-gray: #c9c9c9;

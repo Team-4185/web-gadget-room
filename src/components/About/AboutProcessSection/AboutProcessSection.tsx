@@ -41,13 +41,30 @@ export const AboutProcessSection = () => {
   return (
     <section className="about-process" aria-label="How We Work Section">
       <Container disableGutters>
-        <Typography className="about-process__eyebrow">OUR PROCESS</Typography>
-        <Typography variant="h2" component="h2" className="about-process__title">
-          How We Work
-        </Typography>
-        <Typography className="about-process__description">
-          From selecting products to delivering them at your door - here's how GadgetRoom operates.
-        </Typography>
+        <div className="about-process__eyebrow-wrap">
+          <Typography
+            sx={{
+              fontSize: '12px',
+              fontWeight: 700,
+              lineHeight: '20px',
+              color: 'var(--blue-violet)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+            }}
+          >
+            OUR PROCESS
+          </Typography>
+        </div>
+        <div className="about-process__title-wrap">
+          <Typography variant="h2" component="h2" sx={{ color: '#2d2d2d' }}>
+            How We Work
+          </Typography>
+        </div>
+        <div className="about-process__description-wrap">
+          <Typography sx={{ color: '#8f8faf', fontSize: '18px', lineHeight: '28px' }}>
+            From selecting products to delivering them at your door - here's how GadgetRoom operates.
+          </Typography>
+        </div>
 
         <div className="about-process__line">
           {processSteps.map((step) => (
@@ -55,12 +72,14 @@ export const AboutProcessSection = () => {
               <div className={`about-process__dot about-process__dot--${step.tone}`}>
                 <step.Icon sx={{ fontSize: '20px' }} />
               </div>
-              <Typography component="h3" className="about-process__item-title">
+              <Typography component="h3" sx={{ fontSize: '31px', lineHeight: '28px', color: '#2f2f42', fontWeight: 600 }}>
                 {step.title}
               </Typography>
-              <Typography component="p" className="about-process__item-text">
-                {step.text}
-              </Typography>
+              <div className="about-process__item-text-wrap">
+                <Typography component="p" sx={{ fontSize: '13px', lineHeight: '19px', color: '#8f8faf' }}>
+                  {step.text}
+                </Typography>
+              </div>
             </article>
           ))}
         </div>

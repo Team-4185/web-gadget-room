@@ -2,33 +2,19 @@
   padding-top: 88px;
 }
 
-.about-team__eyebrow {
+.about-team__eyebrow-wrap,
+.about-team__title-wrap,
+.about-team__description-wrap {
   text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 20px;
-  color: var(--blue-violet);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
-.about-team__eyebrow span {
-  color: var(--blue-violet);
-}
-
-.about-team__title {
-  text-align: center;
+.about-team__title-wrap {
   margin-top: 6px;
-  color: #2d2d2d;
 }
 
-.about-team__description {
+.about-team__description-wrap {
   margin: 14px auto 0;
   max-width: 760px;
-  text-align: center;
-  color: #8f8faf;
-  font-size: 18px;
-  line-height: 28px;
 }
 
 .about-team__grid {
@@ -67,39 +53,17 @@
   font-size: 22px;
 }
 
-.about-team__name {
-  font-size: 34px;
-  line-height: 34px;
-  color: #2d2d2d;
-}
-
-.about-team__role {
+.about-team__role-wrap {
   margin-top: 8px;
-  color: #5d68a8;
-  font-size: 20px;
-  line-height: 20px;
 }
 
-.about-team__text {
+.about-team__text-wrap {
   margin-top: 12px;
-  color: #8f8faf;
-  font-size: 14px;
-  line-height: 20px;
 }
 
 @media (max-width: 1200px) {
   .about-team__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .about-team__name {
-    font-size: 24px;
-    line-height: 28px;
-  }
-
-  .about-team__role {
-    font-size: 16px;
-    line-height: 18px;
   }
 
   .about-team__card {
@@ -110,10 +74,5 @@
 @media (max-width: 768px) {
   .about-team__grid {
     grid-template-columns: 1fr;
-  }
-
-  .about-team__description {
-    font-size: 14px;
-    line-height: 22px;
   }
 }
