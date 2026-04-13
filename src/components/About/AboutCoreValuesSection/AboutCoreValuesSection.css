@@ -1,47 +1,50 @@
 .about-values {
-  padding-top: 84px;
+  padding-top: 82px;
 }
 
 .about-values__eyebrow {
   text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 26px;
   color: #525f7c;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -2px;
 }
 
 .about-values__title {
   text-align: center;
-  margin-top: 6px;
+  margin-top: 25px;
   color: #2d2d2d;
-  font-size: 48px;
+  font-size: 56px;
   line-height: 56px;
+  letter-spacing: -2px;
+  font-weight: 700;
 }
 
 .about-values__description {
-  margin: 14px auto 0;
-  max-width: 730px;
+  margin: 19px auto 0;
+  max-width: 687px;
   text-align: center;
   color: #8f8faf;
-  font-size: 18px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 26px;
+  letter-spacing: -1px;
 }
 
 .about-values__grid {
-  margin-top: 42px;
+  margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px 18px;
+  grid-template-columns: repeat(3, 409px);
+  gap: 36px 26px;
+  justify-content: center;
 }
 
 .about-values__card {
   border: 1px solid #c8c8eb;
   border-radius: 20px;
   background: var(--white);
-  padding: 20px 22px 28px;
-  min-height: 300px;
+  padding: 36px 23px 46px;
+  min-height: 435px;
   box-shadow: 0 0 4px 0 var(--black-opacity-12);
 }
 
@@ -52,6 +55,12 @@
   text-transform: uppercase;
 }
 
+.about-values__icon-wrap {
+  width: 66px;
+  height: 64px;
+  margin-top: 19px;
+}
+
 .about-values__icon {
   width: 49px;
   height: 49px;
@@ -60,7 +69,6 @@
   align-items: center;
   justify-content: center;
   color: var(--white);
-  margin-top: 14px;
 }
 
 .about-values__icon--violet {
@@ -88,17 +96,20 @@
 }
 
 .about-values__card-title {
-  margin-top: 18px;
-  font-size: 18px;
-  line-height: 24px;
+  margin-top: 24px;
+  font-size: 32px;
+  line-height: 32px;
   color: #252537;
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
 .about-values__card-text {
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 24px;
+  margin-top: 39px;
+  font-size: 24px;
+  line-height: 34px;
   color: #8888a8;
+  letter-spacing: -1px;
 }
 
 @media (max-width: 1200px) {
@@ -113,43 +124,57 @@
   }
 
   .about-values__card {
-    min-height: 260px;
+    min-height: 320px;
+    padding: 28px 20px 28px;
   }
 
   .about-values__card-title {
-    font-size: 17px;
-    line-height: 22px;
+    font-size: 24px;
+    line-height: 28px;
   }
 
   .about-values__card-text {
-    font-size: 14px;
-    line-height: 22px;
+    margin-top: 18px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .about-values__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 }
 
 @media (max-width: 768px) {
+  .about-values__eyebrow {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .about-values__title {
     font-size: 34px;
     line-height: 42px;
+    letter-spacing: -1px;
   }
 
   .about-values__description {
     font-size: 14px;
     line-height: 22px;
+    letter-spacing: 0;
   }
 
   .about-values__card-title {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 24px;
   }
 
   .about-values__card-text {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 26px;
+    margin-top: 12px;
+    letter-spacing: 0;
   }
 
   .about-values__grid {

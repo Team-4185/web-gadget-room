@@ -78,8 +78,10 @@ export const AboutCoreValuesSection = () => {
               <Typography component="p" className="about-values__index">
                 {value.valueLabel}
               </Typography>
-              <div className={`about-values__icon about-values__icon--${value.tone}`}>
-                <value.Icon sx={{ fontSize: '17px' }} />
+              <div className="about-values__icon-wrap">
+                <div className={`about-values__icon about-values__icon--${value.tone}`}>
+                  <value.Icon sx={{ fontSize: '26px' }} />
+                </div>
               </div>
               <Typography component="h3" className="about-values__card-title">
                 {value.title}
