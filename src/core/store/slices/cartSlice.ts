@@ -1,9 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
 
 import { PRODUCTS } from '@/core/constants';
 import { cartService } from '@/core/services';
-import type { RootState } from '@/core/store';
+import { createAppSlice } from '@/core/store/createAppSlice';
 import type { ICartDto, IProduct } from '@/core/types';
 import { cartStorage } from '@/core/utils';
 
@@ -14,6 +13,11 @@ type CartState = {
   totalAmount: number;
   loading: boolean;
   error: string | null;
+};
+
+type RemoveProductPayload = {
+  phoneId: number;
+  amount: number;
 };
 
 const initialState: CartState = {
@@ -67,176 +71,159 @@ const fetchAndStoreServerCart = async () => {
   return cart;
 };
 
-export const hydrateFromLocal = createAsyncThunk<ICartDto | null>('cart/hydrateFromLocal', () => {
-  return cartStorage.get();
-});
-
-export const fetchCart = createAsyncThunk<ICartDto, void, { rejectValue: string }>(
-  'cart/fetchCart',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await fetchAndStoreServerCart();
-    } catch (error) {
-      return rejectWithValue(toErrorMessage(error, 'Failed to fetch cart'));
-    }
-  }
-);
-
-export const addProduct = createAsyncThunk<ICartDto, number, { rejectValue: string }>(
-  'cart/addProduct',
-  async (phoneId, { rejectWithValue }) => {
-    try {
-      await cartService.putItem({ phoneId, amount: 1 });
-      return await fetchAndStoreServerCart();
-    } catch (error) {
-      return rejectWithValue(toErrorMessage(error, 'Failed to add product'));
-    }
-  }
-);
-
-export const increaseAmount = createAsyncThunk<ICartDto, number, { rejectValue: string }>(
-  'cart/increaseAmount',
-  async (phoneId, { rejectWithValue }) => {
-    try {
-      await cartService.putItem({ phoneId, amount: 1 });
-      return await fetchAndStoreServerCart();
-    } catch (error) {
-      return rejectWithValue(toErrorMessage(error, 'Failed to increase amount'));
-    }
-  }
-);
-
-export const decreaseAmount = createAsyncThunk<ICartDto, number, { rejectValue: string }>(
-  'cart/decreaseAmount',
-  async (phoneId, { rejectWithValue }) => {
-    try {
-      await cartService.removeItem({ phoneId, amount: 1 });
-      return await fetchAndStoreServerCart();
-    } catch (error) {
-      return rejectWithValue(toErrorMessage(error, 'Failed to decrease amount'));
-    }
-  }
-);
-
-export const removeProduct = createAsyncThunk<ICartDto, number, { rejectValue: string; state: RootState }>(
-  'cart/removeProduct',
-  async (phoneId, { getState, rejectWithValue }) => {
-    try {
-      const state = getState();
-      const amount = state.cart.cart.find((product) => product.id === phoneId)?.amount ?? 1;
-
-      await cartService.removeItem({ phoneId, amount });
-      return await fetchAndStoreServerCart();
-    } catch (error) {
-      return rejectWithValue(toErrorMessage(error, 'Failed to remove product'));
-    }
-  }
-);
-
-const cartSlice = createSlice({
+const cartSlice = createAppSlice({
   name: 'cart',
   initialState,
-  reducers: {
-    clearCartLocal(state) {
+  reducers: (create) => ({
+    hydrateFromLocal: create.asyncThunk<ICartDto | null, void, { rejectValue: string }>(
+      async (_, { rejectWithValue }) => {
+        try {
+          return cartStorage.get();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to hydrate cart from local storage'));
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          if (!action.payload) return;
+          applyCartState(state, action.payload);
+        },
+      }
+    ),
+    fetchCart: create.asyncThunk<ICartDto, void, { rejectValue: string }>(
+      async (_, { rejectWithValue }) => {
+        try {
+          return await fetchAndStoreServerCart();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to fetch cart'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload);
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? 'Failed to fetch cart';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    addProduct: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+      async (phoneId, { rejectWithValue }) => {
+        try {
+          await cartService.putItem({ phoneId, amount: 1 });
+          return await fetchAndStoreServerCart();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to add product'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload);
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? 'Failed to add product';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    increaseAmount: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+      async (phoneId, { rejectWithValue }) => {
+        try {
+          await cartService.putItem({ phoneId, amount: 1 });
+          return await fetchAndStoreServerCart();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to increase amount'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload);
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? 'Failed to increase amount';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    decreaseAmount: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+      async (phoneId, { rejectWithValue }) => {
+        try {
+          await cartService.removeItem({ phoneId, amount: 1 });
+          return await fetchAndStoreServerCart();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to decrease amount'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload);
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? 'Failed to decrease amount';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    removeProduct: create.asyncThunk<ICartDto, RemoveProductPayload, { rejectValue: string }>(
+      async ({ phoneId, amount }, { rejectWithValue }) => {
+        try {
+          await cartService.removeItem({ phoneId, amount });
+          return await fetchAndStoreServerCart();
+        } catch (error) {
+          return rejectWithValue(toErrorMessage(error, 'Failed to remove product'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload);
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? 'Failed to remove product';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    clearCartLocal: create.reducer((state) => {
       state.cart = [];
       state.cartId = null;
       state.totalAmount = 0;
       state.totalPrice = 0;
       state.error = null;
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(hydrateFromLocal.fulfilled, (state, action) => {
-        if (!action.payload) return;
-        applyCartState(state, action.payload);
-      })
-      .addCase(fetchCart.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchCart.fulfilled, (state, action) => {
-        applyCartState(state, action.payload);
-      })
-      .addCase(fetchCart.rejected, (state, action) => {
-        state.error = action.payload ?? 'Failed to fetch cart';
-      })
-      .addCase(addProduct.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(addProduct.fulfilled, (state, action) => {
-        applyCartState(state, action.payload);
-      })
-      .addCase(addProduct.rejected, (state, action) => {
-        state.error = action.payload ?? 'Failed to add product';
-      })
-      .addCase(increaseAmount.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(increaseAmount.fulfilled, (state, action) => {
-        applyCartState(state, action.payload);
-      })
-      .addCase(increaseAmount.rejected, (state, action) => {
-        state.error = action.payload ?? 'Failed to increase amount';
-      })
-      .addCase(decreaseAmount.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(decreaseAmount.fulfilled, (state, action) => {
-        applyCartState(state, action.payload);
-      })
-      .addCase(decreaseAmount.rejected, (state, action) => {
-        state.error = action.payload ?? 'Failed to decrease amount';
-      })
-      .addCase(removeProduct.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(removeProduct.fulfilled, (state, action) => {
-        applyCartState(state, action.payload);
-      })
-      .addCase(removeProduct.rejected, (state, action) => {
-        state.error = action.payload ?? 'Failed to remove product';
-      })
-      .addMatcher(
-        (action) =>
-          action.type.endsWith('/fulfilled') &&
-          (action.type.startsWith('cart/fetchCart') ||
-            action.type.startsWith('cart/addProduct') ||
-            action.type.startsWith('cart/increaseAmount') ||
-            action.type.startsWith('cart/decreaseAmount') ||
-            action.type.startsWith('cart/removeProduct')),
-        (state) => {
-          state.loading = false;
-        }
-      )
-      .addMatcher(
-        (action) =>
-          action.type.endsWith('/rejected') &&
-          (action.type.startsWith('cart/fetchCart') ||
-            action.type.startsWith('cart/addProduct') ||
-            action.type.startsWith('cart/increaseAmount') ||
-            action.type.startsWith('cart/decreaseAmount') ||
-            action.type.startsWith('cart/removeProduct')),
-        (state) => {
-          state.loading = false;
-        }
-      );
-  },
+    }),
+  }),
 });
 
-export const cartActions = {
-  ...cartSlice.actions,
-  hydrateFromLocal,
-  fetchCart,
-  addProduct,
-  increaseAmount,
-  decreaseAmount,
-  removeProduct,
-};
-
+export const cartActions = cartSlice.actions;
 export default cartSlice.reducer;
 

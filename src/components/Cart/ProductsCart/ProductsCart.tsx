@@ -79,7 +79,7 @@ export const ProductsCart = () => {
           <div
             onClick={() => {
               if (cartLoading) return;
-              dispatch(cartActions.removeProduct(product.id));
+              dispatch(cartActions.removeProduct({ phoneId: product.id, amount: product.amount }));
             }}
             className="cart-item__remove"
             aria-disabled={cartLoading}
