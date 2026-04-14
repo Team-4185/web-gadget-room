@@ -1,8 +1,8 @@
-import type { FC } from 'react';
+import type { FC, MouseEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { CartAdd, Like } from '@/assets';
-import { useAppDispatch, useAppSelector, cartActions, wishListActions } from '@/core/store';
+import { useAppDispatch, cartActions } from '@/core/store';
 
 import { Button } from '@/components';
 import type { IProduct } from '@/core/types';
@@ -15,17 +15,12 @@ interface IProps {
 }
 
 export const ProductCard: FC<IProps> = ({ product, onClick }) => {
-  const wishList = useAppSelector((state) => state.wishList.wishList);
   const dispatch = useAppDispatch();
-  // const addToCart = () => dispatch(cartActions.addProduct({ id, name, price, amount: 1 }));
 
-  // const toogleWishList = () => {
-  //   if (wishList.some((item) => item.id === id)) {
-  //     dispatch(wishListActions.removeProductFromWishList(id));
-  //   } else {
-  //     dispatch(wishListActions.addProductToWishList({ id, name, price, amount: 1 }));
-  //   }
-  // };
+  const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    dispatch(cartActions.addProduct(product.id));
+  };
 
   return (
     <div className="product-card" onClick={onClick}>
@@ -49,6 +44,7 @@ export const ProductCard: FC<IProps> = ({ product, onClick }) => {
           fontSize="15px"
           fontWeight={500}
           endIcon={<CartAdd />}
+          onClick={addToCart}
         >
           Add to Cart
         </Button>
