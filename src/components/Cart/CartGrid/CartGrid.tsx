@@ -10,7 +10,7 @@ const headerTextSx = { fontWeight: 600, lineHeight: 1 };
 const headerSubtotalSx = { ...headerTextSx, textAlign: 'right' as const };
 
 export const CartGrid = () => {
-  const cartLength = useAppSelector((state) => state.cart.cart.length);
+  const cartLength = useAppSelector((state) => state.cart.totalAmount);
 
   return (
     <div className="cart__grid">

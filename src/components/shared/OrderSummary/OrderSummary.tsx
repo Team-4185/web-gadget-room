@@ -35,13 +35,8 @@ export const OrderSummary = ({
   shippingAmount = 13,
   className,
 }: OrderSummaryProps) => {
-  const amountOfProducts = useAppSelector((state) => state.cart.cart.length);
-  const tax = 13;
-  const shipping = 13;
-
-  const subTotal = useAppSelector((state) =>
-    state.cart.cart.reduce((sum, product) => sum + product.price * product.amount, 0)
-  );
+  const amountOfProducts = useAppSelector((state) => state.cart.totalAmount);
+  const subTotal = useAppSelector((state) => state.cart.totalPrice);
 
   const total = taxAmount + shippingAmount + subTotal;
 
