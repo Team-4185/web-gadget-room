@@ -26,12 +26,12 @@
 }
 
 .about-values__card {
-  border: 1px solid #c8c8eb;
+  border: 0;
   border-radius: 20px;
   background: var(--white);
-  padding: 36px 23px 46px;
+  padding: 36px 23px 20px;
   min-height: 435px;
-  box-shadow: 0 0 4px 0 var(--black-opacity-12);
+  box-shadow: 0 0 6.9px 0 var(--light-violet);
 }
 
 .about-values__icon-wrap {

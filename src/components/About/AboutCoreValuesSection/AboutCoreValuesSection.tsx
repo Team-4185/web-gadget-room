@@ -64,17 +64,36 @@ export const AboutCoreValuesSection = () => {
     <section className="about-values" aria-label="Core Values Section">
       <Container disableGutters>
         <div className="about-values__eyebrow-wrap">
-          <Typography sx={{ fontSize: '24px', fontWeight: 600, lineHeight: '26px', color: '#525f7c', letterSpacing: '-2px' }}>
+          <Typography
+            sx={{
+              fontSize: '24px',
+              fontWeight: 600,
+              lineHeight: '26px',
+              color: 'var(--grey-violet)',
+              letterSpacing: '-2px',
+            }}
+          >
             WHAT WE STAND FOR
           </Typography>
         </div>
         <div className="about-values__title-wrap">
-          <Typography variant="h2" component="h2" sx={{ color: '#2d2d2d', fontSize: '56px', lineHeight: '56px', letterSpacing: '-2px', fontWeight: 700 }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{ fontSize: '56px', lineHeight: '56px', letterSpacing: '-2px', fontWeight: 700 }}
+          >
             Our Core Values
           </Typography>
         </div>
         <div className="about-values__description-wrap">
-          <Typography sx={{ color: '#8f8faf', fontSize: '24px', lineHeight: '26px', letterSpacing: '-1px' }}>
+          <Typography
+            sx={{
+              color: 'var(--grey-violet)',
+              fontSize: '24px',
+              lineHeight: '26px',
+              letterSpacing: '-1px',
+            }}
+          >
             These principles guide every decision we make - from which products we list to how we
             handle customer support.
           </Typography>
@@ -83,7 +102,15 @@ export const AboutCoreValuesSection = () => {
         <div className="about-values__grid">
           {coreValues.map((value) => (
             <article key={value.id} className="about-values__card">
-              <Typography component="p" sx={{ color: '#7c7c97', fontSize: '15px', lineHeight: '20px', textTransform: 'uppercase' }}>
+              <Typography
+                component="p"
+                sx={{
+                  color: 'var(--grey-violet)',
+                  fontSize: '15px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                }}
+              >
                 {value.valueLabel}
               </Typography>
               <div className="about-values__icon-wrap">
@@ -92,12 +119,28 @@ export const AboutCoreValuesSection = () => {
                 </div>
               </div>
               <div className="about-values__card-title-wrap">
-                <Typography component="h3" sx={{ fontSize: '32px', lineHeight: '32px', color: '#252537', fontWeight: 700, letterSpacing: '-1px' }}>
+                <Typography
+                  component="h3"
+                  sx={{
+                    fontSize: '32px',
+                    lineHeight: '32px',
+                    fontWeight: 700,
+                    letterSpacing: '-1px',
+                  }}
+                >
                   {value.title}
                 </Typography>
               </div>
               <div className="about-values__card-text-wrap">
-                <Typography component="p" sx={{ fontSize: '24px', lineHeight: '34px', color: '#8888a8', letterSpacing: '-1px' }}>
+                <Typography
+                  component="p"
+                  sx={{
+                    fontSize: '24px',
+                    lineHeight: '34px',
+                    color: 'var(--grey-violet)',
+                    letterSpacing: '-1px',
+                  }}
+                >
                   {value.text}
                 </Typography>
               </div>

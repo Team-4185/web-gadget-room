@@ -15,7 +15,7 @@
   top: 135px;
   border-radius: 381px;
   background: var(--blue-opacity-30);
-  filter: blur(140.0500030517578px);
+  filter: blur(140px);
 }
 
 .about-hero__media {
