@@ -10,8 +10,6 @@ import {
   AboutCTASection,
 } from '@/components';
 
-import './About.css';
-
 export const About = () => {
   return (
     <>
