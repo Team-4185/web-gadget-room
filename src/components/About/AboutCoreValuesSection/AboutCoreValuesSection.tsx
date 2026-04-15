@@ -1,10 +1,13 @@
 import { Container, Typography } from '@mui/material';
-import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
-import PersonIcon from '@mui/icons-material/Person';
-import SyncAltIcon from '@mui/icons-material/SyncAlt';
-import FmdGoodIcon from '@mui/icons-material/FmdGood';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+
+import {
+  AboutCardIcon,
+  AboutFocusedIcon,
+  AboutGrowthIcon,
+  AboutQualityIcon,
+  AboutTransparencyIcon,
+  AboutUserIcon,
+} from '@/assets';
 
 import './AboutCoreValuesSection.css';
 
@@ -15,7 +18,7 @@ const coreValues = [
     title: 'Transparency',
     text: 'No hidden fees, no misleading specs. We show complete and honest product information so you can make confident buying decisions.',
     tone: 'violet',
-    Icon: VerifiedUserOutlinedIcon,
+    Icon: AboutTransparencyIcon,
   },
   {
     id: 2,
@@ -23,7 +26,7 @@ const coreValues = [
     title: 'Customer First',
     text: 'Every feature, policy, and process is designed around the customer. Your satisfaction is not a metric - it is our mission.',
     tone: 'lavender',
-    Icon: PersonIcon,
+    Icon: AboutUserIcon,
   },
   {
     id: 3,
@@ -31,7 +34,7 @@ const coreValues = [
     title: 'Quality Assurance',
     text: 'Each product is sourced from certified suppliers and passes quality checks before appearing in our catalog.',
     tone: 'green',
-    Icon: SyncAltIcon,
+    Icon: AboutQualityIcon,
   },
   {
     id: 4,
@@ -39,7 +42,7 @@ const coreValues = [
     title: 'Ukraine-Focused',
     text: 'Based in Kyiv, we understand Ukrainian customers. Fast domestic delivery, local support, and UAH pricing with no surprises.',
     tone: 'orange',
-    Icon: FmdGoodIcon,
+    Icon: AboutFocusedIcon,
   },
   {
     id: 5,
@@ -47,7 +50,7 @@ const coreValues = [
     title: 'Secure Payments',
     text: 'All transactions are encrypted and processed through certified payment gateways. Your financial data is always protected.',
     tone: 'blue',
-    Icon: CreditCardIcon,
+    Icon: AboutCardIcon,
   },
   {
     id: 6,
@@ -55,7 +58,7 @@ const coreValues = [
     title: 'Continuous Growth',
     text: 'We constantly expand our catalog, improve delivery speeds, and train our team to offer you the best possible experience.',
     tone: 'purple',
-    Icon: TrendingUpIcon,
+    Icon: AboutGrowthIcon,
   },
 ] as const;
 
@@ -64,9 +67,7 @@ export const AboutCoreValuesSection = () => {
     <section className="about-values" aria-label="Core Values Section">
       <Container disableGutters>
         <div className="about-values__eyebrow-wrap">
-          <Typography variant="aboutSectionHeading">
-            WHAT WE STAND FOR
-          </Typography>
+          <Typography variant="aboutSectionHeading">WHAT WE STAND FOR</Typography>
         </div>
         <div className="about-values__title-wrap">
           <Typography
@@ -107,7 +108,7 @@ export const AboutCoreValuesSection = () => {
               </Typography>
               <div className="about-values__icon-wrap">
                 <div className={`about-values__icon about-values__icon--${value.tone}`}>
-                  <value.Icon sx={{ fontSize: '26px' }} />
+                  <value.Icon className="about-values__icon-svg" />
                 </div>
               </div>
               <div className="about-values__card-title-wrap">

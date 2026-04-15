@@ -88,8 +88,9 @@
 }
 
 .about-mission__card-icon {
-  color: var(--blue-violet);
-  font-size: 27px !important;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
 }
 
 .about-mission__card-copy {

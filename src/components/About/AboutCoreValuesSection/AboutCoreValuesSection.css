@@ -50,8 +50,8 @@
 }
 
 .about-values__icon {
-  width: 49px;
-  height: 49px;
+  width: 66px;
+  height: 64px;
   border-radius: 100%;
   display: inline-flex;
   align-items: center;
@@ -59,12 +59,17 @@
   color: var(--white);
 }
 
+.about-values__icon-svg {
+  width: 40px;
+  height: 40px;
+}
+
 .about-values__icon--violet {
-  background: var(--blue-violet);
+  background: var(--dark-blue);
 }
 
 .about-values__icon--lavender {
-  background: #7f7fc7;
+  background: var(--blue-violet);
 }
 
 .about-values__icon--green {
@@ -80,7 +85,7 @@
 }
 
 .about-values__icon--purple {
-  background: #7c44e3;
+  background: var(--light-violet);
 }
 
 @media (max-width: 1200px) {

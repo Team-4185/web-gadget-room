@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router';
 
 import { Container, Typography } from '@mui/material';
-import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
-import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
-import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import {
+  AboutFastDeliveryIcon,
+  AboutPhoneInHandIcon,
+  AboutSecurePaymentIcon,
+  AboutWarrantyIcon,
+} from '@/assets';
 
 import { Button } from '@/components';
 
@@ -82,7 +84,7 @@ export const AboutMissionSection = () => {
           <div className="about-mission__cards">
             <article className="about-mission__card about-mission__card--original">
               <div className="about-mission__card-header">
-                <VerifiedUserOutlinedIcon className="about-mission__card-icon" />
+                <AboutPhoneInHandIcon className="about-mission__card-icon" />
                 <Typography
                   component="h3"
                   sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
@@ -102,7 +104,7 @@ export const AboutMissionSection = () => {
             </article>
             <article className="about-mission__card about-mission__card--warranty">
               <div className="about-mission__card-header">
-                <GppGoodOutlinedIcon className="about-mission__card-icon" />
+                <AboutWarrantyIcon className="about-mission__card-icon" />
                 <Typography
                   component="h3"
                   sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
@@ -122,7 +124,7 @@ export const AboutMissionSection = () => {
             </article>
             <article className="about-mission__card about-mission__card--payment">
               <div className="about-mission__card-header">
-                <PaymentsOutlinedIcon className="about-mission__card-icon" />
+                <AboutSecurePaymentIcon className="about-mission__card-icon" />
                 <Typography
                   component="h3"
                   sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
@@ -142,7 +144,7 @@ export const AboutMissionSection = () => {
             </article>
             <article className="about-mission__card about-mission__card--delivery">
               <div className="about-mission__card-header">
-                <LocalShippingOutlinedIcon className="about-mission__card-icon" />
+                <AboutFastDeliveryIcon className="about-mission__card-icon" />
                 <Typography
                   component="h3"
                   sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}

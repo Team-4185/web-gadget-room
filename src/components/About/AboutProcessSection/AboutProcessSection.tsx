@@ -1,8 +1,5 @@
 import { Container, Typography } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
-import CheckIcon from '@mui/icons-material/Check';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import { AboutCardIcon, AboutDeliveryIcon, AboutUserIcon, Check } from '@/assets';
 
 import './AboutProcessSection.css';
 
@@ -12,28 +9,28 @@ const processSteps = [
     title: 'Supplier Vetting',
     text: 'We partner only with certified, authorized suppliers. Every vendor undergoes strict quality screening.',
     tone: 'lavender',
-    Icon: PersonIcon,
+    Icon: AboutUserIcon,
   },
   {
     id: 2,
     title: 'Quality Check',
     text: 'Every product is inspected and verified. Accessories are tested, specs are confirmed accurate.',
     tone: 'blue',
-    Icon: CheckIcon,
+    Icon: Check,
   },
   {
     id: 3,
     title: 'Catalog Listing',
     text: 'Products are listed with full specs, real photos, honest pricing, and clear warranty information.',
     tone: 'amber',
-    Icon: CreditCardIcon,
+    Icon: AboutCardIcon,
   },
   {
     id: 4,
     title: 'Delivery & Support',
     text: 'Fast shipping across Ukraine. Post-sale support and hassle-free returns within 14 days.',
     tone: 'green',
-    Icon: LocalShippingIcon,
+    Icon: AboutDeliveryIcon,
   },
 ] as const;
 
@@ -42,9 +39,7 @@ export const AboutProcessSection = () => {
     <section className="about-process" aria-label="How We Work Section">
       <Container disableGutters>
         <div className="about-process__eyebrow-wrap">
-          <Typography variant="aboutSectionHeading">
-            OUR PROCESS
-          </Typography>
+          <Typography variant="aboutSectionHeading">OUR PROCESS</Typography>
         </div>
         <div className="about-process__title-wrap">
           <Typography
@@ -66,7 +61,7 @@ export const AboutProcessSection = () => {
           {processSteps.map((step) => (
             <article key={step.id} className="about-process__item">
               <div className={`about-process__dot about-process__dot--${step.tone}`}>
-                <step.Icon sx={{ fontSize: '20px' }} />
+                <step.Icon className="about-process__dot-icon" />
               </div>
               <Typography
                 component="h3"
