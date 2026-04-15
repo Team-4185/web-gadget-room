@@ -1,5 +1,6 @@
 .about-brands {
-  padding-top: 88px;
+  padding-top: 36px;
+  padding-bottom: 72px;
 }
 
 .about-brands__eyebrow-wrap {
@@ -11,7 +12,7 @@
   max-width: 1110px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px 26px;
+  gap: 40px 26px;
   justify-items: center;
 }
 
@@ -19,8 +20,8 @@
   height: 56px;
   width: 154px;
   border-radius: 20px;
-  background: #f9f9ff;
-  color: #525f7c;
+  background: var(--product-specs-background);
+  color: var(--grey-violet);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -35,27 +36,10 @@
 
 .about-brands__pill:nth-child(2),
 .about-brands__pill:nth-child(7) {
-  transform: translateY(22px) rotate(-3deg);
+  transform: translateY(22px) translateX(-20px) rotate(-3deg);
 }
 
 .about-brands__pill:nth-child(4),
 .about-brands__pill:nth-child(8) {
-  transform: translateY(18px) rotate(4deg);
-}
-
-@media (max-width: 1200px) {
-  .about-brands__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .about-brands__grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .about-brands__pill {
-    transform: none !important;
-  }
+  transform: translateY(18px) translateX(20px) rotate(4deg);
 }

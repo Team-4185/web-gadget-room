@@ -1,5 +1,6 @@
 .about-team {
-  padding-top: 88px;
+  padding-top: 53px;
+  padding-bottom: 78px;
 }
 
 .about-team__eyebrow-wrap,
@@ -9,16 +10,16 @@
 }
 
 .about-team__title-wrap {
-  margin-top: 6px;
+  margin-top: 15px;
 }
 
 .about-team__description-wrap {
-  margin: 14px auto 0;
+  margin: 19px auto 0;
   max-width: 760px;
 }
 
 .about-team__grid {
-  margin-top: 40px;
+  margin-top: 80px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;

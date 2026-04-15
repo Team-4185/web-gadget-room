@@ -1,5 +1,6 @@
 .about-process {
   padding-top: 88px;
+  padding-bottom: 132px;
 }
 
 .about-process__eyebrow-wrap,
@@ -9,11 +10,11 @@
 }
 
 .about-process__title-wrap {
-  margin-top: 6px;
+  margin-top: 15px;
 }
 
 .about-process__description-wrap {
-  margin: 14px auto 0;
+  margin: 19px auto 0;
   max-width: 720px;
 }
 

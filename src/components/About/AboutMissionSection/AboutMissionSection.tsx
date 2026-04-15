@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+
 import { Container, Typography } from '@mui/material';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
@@ -9,6 +11,8 @@ import { Button } from '@/components';
 import './AboutMissionSection.css';
 
 export const AboutMissionSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="about-mission" aria-label="About Mission Section">
       <Container disableGutters>
@@ -68,7 +72,8 @@ export const AboutMissionSection = () => {
               maxWidth="190px"
               height="56px"
               fontSize="16px"
-              sx={{ background: 'var(--blue-violet)', color: 'var(--white)', border: 'none' }}
+              borderRadius="30px"
+              onClick={() => navigate('/catalog')}
             >
               GO TO CATALOG
             </Button>

@@ -1,7 +1,6 @@
 .about-testimonials {
-  margin-top: 88px;
-  padding: 54px 0 70px;
-  background: linear-gradient(90deg, #211c24 0.64%, #211c24 101%);
+  padding: 91px 0 148px;
+  background: var(--dark-hero-background-no-gradient);
   position: relative;
 }
 
@@ -9,12 +8,12 @@
   content: '';
   position: absolute;
   left: 50%;
-  top: -22px;
+  top: -65px;
   transform: translateX(-50%);
-  width: 62px;
-  height: 62px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  background: #fefeff;
+  background: var(--white);
 }
 
 .about-testimonials__eyebrow-wrap,
@@ -24,40 +23,40 @@
 }
 
 .about-testimonials__title-wrap {
-  margin-top: 6px;
+  margin-top: 15px;
 }
 
 .about-testimonials__description-wrap {
-  margin: 14px auto 0;
-  max-width: 680px;
+  margin: 19px auto 0;
 }
 
 .about-testimonials__grid {
-  margin-top: 42px;
+  margin-top: 80px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  min-height: 316px;
+  gap: 28px;
 }
 
 .about-testimonials__card {
   border-radius: 20px;
-  padding: 18px 18px 16px;
-  background: linear-gradient(180deg, rgba(52, 52, 76, 0.22) 0%, rgba(52, 52, 76, 0.1) 100%);
+  padding: 28px;
+  background: var(--about-metrics-background);
 }
 
 .about-testimonials__review-wrap {
-  margin-top: 10px;
+  margin-top: 26px;
 }
 
 .about-testimonials__author {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 33px;
 }
 
 .about-testimonials__city-wrap {
-  margin-top: 2px;
+  margin-top: 5px;
 }
 
 .about-testimonials__author-badge {
@@ -73,25 +72,13 @@
 }
 
 .about-testimonials__author-badge--teal {
-  background: #2f90ad;
+  background: var(--chateau-green);
 }
 
 .about-testimonials__author-badge--yellow {
-  background: #cab45b;
+  background: var(--dark-yellow);
 }
 
 .about-testimonials__author-badge--blue {
-  background: #5c8ef5;
-}
-
-@media (max-width: 1200px) {
-  .about-testimonials__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .about-testimonials__grid {
-    grid-template-columns: 1fr;
-  }
+  background: var(--blue);
 }

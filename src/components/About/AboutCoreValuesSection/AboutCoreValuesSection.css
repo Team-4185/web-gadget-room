@@ -1,5 +1,6 @@
 .about-values {
   padding-top: 82px;
+  padding-bottom: 82px;
 }
 
 .about-values__eyebrow-wrap,
@@ -9,7 +10,7 @@
 }
 
 .about-values__title-wrap {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .about-values__description-wrap {

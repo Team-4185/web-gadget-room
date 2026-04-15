@@ -51,7 +51,7 @@ export const theme = createTheme({
       color: 'var(--black)',
     },
     aboutHeading: {
-      fontSize: '56px',
+      fontSize: '48px',
       lineHeight: '56px',
       fontWeight: 700,
       letterSpacing: '-2px',

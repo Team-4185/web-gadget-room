@@ -7,7 +7,7 @@ const testimonials = [
     id: 1,
     author: 'Mykola H.',
     city: 'Kyiv',
-    initials: 'KH',
+    initials: 'MH',
     tone: 'teal',
     text: '"Ordered an iPhone 15 Pro - arrived in Kyiv within 2 days, original packaging, official warranty card. GadgetRoom is now my go-to for everything tech!"',
   },
@@ -23,7 +23,7 @@ const testimonials = [
     id: 3,
     author: 'Roman P.',
     city: 'Odesa',
-    initials: 'RM',
+    initials: 'RP',
     tone: 'blue',
     text: '"Had a small issue with my order - wrong color sent. They replaced it next day, no questions asked. That kind of service is rare. Respect to the whole team!"',
   },
@@ -34,8 +34,8 @@ export const AboutTestimonialsSection = () => {
     <section className="about-testimonials" aria-label="Customer Testimonials">
       <Container disableGutters>
         <div className="about-testimonials__eyebrow-wrap">
-          <Typography variant="aboutSectionHeading" sx={{ color: 'var(--light-yellow)' }}>
-            CUSTUMER STORIES
+          <Typography variant="aboutSectionHeading" sx={{ color: 'var(--dark-yellow)' }}>
+            CUSTOMER STORIES
           </Typography>
         </div>
         <div className="about-testimonials__title-wrap">
@@ -44,31 +44,54 @@ export const AboutTestimonialsSection = () => {
           </Typography>
         </div>
         <div className="about-testimonials__description-wrap">
-          <Typography sx={{ color: '#c5c5d6', fontSize: '15px', lineHeight: '24px' }}>
+          <Typography
+            sx={{
+              color: 'var(--light-gray)',
+              fontSize: '24px',
+              lineHeight: '24px',
+              letterSpacing: '-1px',
+            }}
+          >
             Real reviews from real buyers. We don't edit or filter - you see everything.
           </Typography>
         </div>
         <div className="about-testimonials__grid">
           {testimonials.map((review) => (
             <article key={review.id} className="about-testimonials__card">
-              <Typography component="p" sx={{ color: 'var(--amber)', fontSize: '15px', letterSpacing: '1.5px' }}>
+              <Typography
+                component="p"
+                sx={{ color: 'var(--amber)', fontSize: '15px', letterSpacing: '1.5px' }}
+              >
                 ★★★★★
               </Typography>
               <div className="about-testimonials__review-wrap">
-                <Typography component="p" sx={{ color: '#8f8faf', lineHeight: '32px', fontSize: '15px' }}>
+                <Typography
+                  component="p"
+                  sx={{
+                    color: 'var(--grey-violet)',
+                    lineHeight: '34px',
+                    fontSize: '18px',
+                    letterSpacing: '-1px',
+                  }}
+                >
                   {review.text}
                 </Typography>
               </div>
               <div className="about-testimonials__author">
-                <span className={`about-testimonials__author-badge about-testimonials__author-badge--${review.tone}`}>
+                <span
+                  className={`about-testimonials__author-badge about-testimonials__author-badge--${review.tone}`}
+                >
                   {review.initials}
                 </span>
                 <div>
-                  <Typography component="h3" sx={{ color: 'var(--white)', fontSize: '14px', lineHeight: '16px' }}>
+                  <Typography component="h3" sx={{ color: 'var(--white)', lineHeight: '16px' }}>
                     {review.author}
                   </Typography>
                   <div className="about-testimonials__city-wrap">
-                    <Typography component="p" sx={{ color: '#8d8d8d', fontSize: '12px', lineHeight: '14px' }}>
+                    <Typography
+                      component="p"
+                      sx={{ color: 'var(--grey-violet)', lineHeight: '14px' }}
+                    >
                       {review.city}
                     </Typography>
                   </div>
