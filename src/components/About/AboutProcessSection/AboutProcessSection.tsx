@@ -1,4 +1,5 @@
 import { Container, Typography } from '@mui/material';
+
 import { AboutCardIcon, AboutDeliveryIcon, AboutUserIcon, Check } from '@/assets';
 
 import './AboutProcessSection.css';

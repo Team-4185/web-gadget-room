@@ -4,7 +4,7 @@ import './AboutHeroSection.css';
 
 export const AboutHeroSection = () => {
   return (
-    <div className="about-hero" aria-label="About Hero Section">
+    <section className="about-hero" aria-label="About Hero Section">
       <div className="about-hero__title-wrap">
         <div className="about-hero__title">
           <Typography
@@ -147,6 +147,6 @@ export const AboutHeroSection = () => {
       <div className="about-hero__media about-hero__media--right">
         <img src="/About/heroRight.png" alt="Phone side view" />
       </div>
-    </div>
+    </section>
   );
 };

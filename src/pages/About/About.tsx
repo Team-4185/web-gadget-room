@@ -14,7 +14,7 @@ import './About.css';
 
 export const About = () => {
   return (
-    <section className="about">
+    <>
       <AboutHeroSection />
       <AboutMissionSection />
       <AboutMetricsSection />
@@ -24,7 +24,6 @@ export const About = () => {
       <AboutTestimonialsSection />
       <AboutBrandsSection />
       <AboutCTASection />
-    </section>
+    </>
   );
 };
-

@@ -69,3 +69,4 @@ export { default as AboutSecurePaymentIcon } from './About/securePayment.svg?rea
 export { default as AboutTransparencyIcon } from './About/transparency.svg?react';
 export { default as AboutWarrantyIcon } from './About/warranty.svg?react';
 export { default as AboutUserIcon } from './About/user.svg?react';
+export { default as AboutStarIcon } from './About/star.svg?react';

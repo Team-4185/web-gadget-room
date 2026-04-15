@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router';
-
 import { Container, Typography } from '@mui/material';
+
 import {
   AboutFastDeliveryIcon,
   AboutPhoneInHandIcon,
   AboutSecurePaymentIcon,
   AboutWarrantyIcon,
 } from '@/assets';
-
 import { Button } from '@/components';
 
 import './AboutMissionSection.css';

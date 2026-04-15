@@ -1,5 +1,7 @@
 import { Container, Typography } from '@mui/material';
 
+import { AboutStarIcon } from '@/assets';
+
 import './AboutTestimonialsSection.css';
 
 const testimonials = [
@@ -28,6 +30,8 @@ const testimonials = [
     text: '"Had a small issue with my order - wrong color sent. They replaced it next day, no questions asked. That kind of service is rare. Respect to the whole team!"',
   },
 ] as const;
+
+const stars = Array.from({ length: 5 });
 
 export const AboutTestimonialsSection = () => {
   return (
@@ -58,12 +62,11 @@ export const AboutTestimonialsSection = () => {
         <div className="about-testimonials__grid">
           {testimonials.map((review) => (
             <article key={review.id} className="about-testimonials__card">
-              <Typography
-                component="p"
-                sx={{ color: 'var(--amber)', fontSize: '15px', letterSpacing: '1.5px' }}
-              >
-                ★★★★★
-              </Typography>
+              <div className="about-testimonials__stars" aria-hidden>
+                {stars.map((_, index) => (
+                  <AboutStarIcon key={index} className="about-testimonials__star-icon" />
+                ))}
+              </div>
               <div className="about-testimonials__review-wrap">
                 <Typography
                   component="p"

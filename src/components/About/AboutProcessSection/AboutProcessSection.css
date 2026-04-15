@@ -100,20 +100,3 @@
 .about-process__item-text-wrap {
   margin-top: 12px;
 }
-
-@media (max-width: 1200px) {
-  .about-process__line {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-  }
-
-  .about-process__line::before {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-process__line {
-    grid-template-columns: 1fr;
-  }
-}
