@@ -9,16 +9,7 @@ export const AboutBrandsSection = () => {
     <section className="about-brands" aria-label="Official Brands Section">
       <Container disableGutters>
         <div className="about-brands__eyebrow-wrap">
-          <Typography
-            sx={{
-              fontSize: '12px',
-              fontWeight: 700,
-              lineHeight: '20px',
-              color: 'var(--blue-violet)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-            }}
-          >
+          <Typography variant="aboutSectionHeading" sx={{ color: 'var(--blue-violet)' }}>
             OFFICIAL PARTNERS & BRANDS WE CARRY
           </Typography>
         </div>

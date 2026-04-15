@@ -14,21 +14,12 @@ export const AboutMissionSection = () => {
       <Container disableGutters>
         <div className="about-mission__layout">
           <div className="about-mission__content">
-            <Typography
-              component="p"
-              sx={{
-                fontSize: '24px',
-                fontWeight: 600,
-                lineHeight: '26px',
-                color: '#525f7c',
-                letterSpacing: '-2px',
-              }}
-            >
+            <Typography variant="aboutSectionHeading" component="p">
               OUR MISSION
             </Typography>
             <div className="about-mission__title-wrap">
               <Typography
-                variant="h2"
+                variant="aboutHeading"
                 component="h2"
                 sx={{
                   fontSize: '48px',

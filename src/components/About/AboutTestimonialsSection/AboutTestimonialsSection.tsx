@@ -34,21 +34,12 @@ export const AboutTestimonialsSection = () => {
     <section className="about-testimonials" aria-label="Customer Testimonials">
       <Container disableGutters>
         <div className="about-testimonials__eyebrow-wrap">
-          <Typography
-            sx={{
-              fontSize: '12px',
-              fontWeight: 700,
-              lineHeight: '20px',
-              color: 'var(--light-yellow)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-            }}
-          >
+          <Typography variant="aboutSectionHeading" sx={{ color: 'var(--light-yellow)' }}>
             CUSTUMER STORIES
           </Typography>
         </div>
         <div className="about-testimonials__title-wrap">
-          <Typography variant="h2" component="h2" sx={{ color: 'var(--white)' }}>
+          <Typography variant="aboutHeading" component="h2" sx={{ color: 'var(--white)' }}>
             What Our Customers Say
           </Typography>
         </div>

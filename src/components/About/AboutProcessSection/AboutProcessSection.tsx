@@ -42,27 +42,23 @@ export const AboutProcessSection = () => {
     <section className="about-process" aria-label="How We Work Section">
       <Container disableGutters>
         <div className="about-process__eyebrow-wrap">
-          <Typography
-            sx={{
-              fontSize: '12px',
-              fontWeight: 700,
-              lineHeight: '20px',
-              color: 'var(--blue-violet)',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-            }}
-          >
+          <Typography variant="aboutSectionHeading">
             OUR PROCESS
           </Typography>
         </div>
         <div className="about-process__title-wrap">
-          <Typography variant="h2" component="h2" sx={{ color: '#2d2d2d' }}>
+          <Typography
+            variant="aboutHeading"
+            component="h2"
+            sx={{ fontSize: '48px', lineHeight: '56px', fontWeight: 700 }}
+          >
             How We Work
           </Typography>
         </div>
         <div className="about-process__description-wrap">
-          <Typography sx={{ color: '#8f8faf', fontSize: '18px', lineHeight: '28px' }}>
-            From selecting products to delivering them at your door - here's how GadgetRoom operates.
+          <Typography sx={{ color: 'var(--grey-violet)', fontSize: '24px', lineHeight: '28px' }}>
+            From selecting products to delivering them at your door - here's how{' '}
+            <span style={{ fontWeight: 600 }}>GadgetRoom</span> operates.
           </Typography>
         </div>
 
@@ -72,11 +68,22 @@ export const AboutProcessSection = () => {
               <div className={`about-process__dot about-process__dot--${step.tone}`}>
                 <step.Icon sx={{ fontSize: '20px' }} />
               </div>
-              <Typography component="h3" sx={{ fontSize: '31px', lineHeight: '28px', color: '#2f2f42', fontWeight: 600 }}>
+              <Typography
+                component="h3"
+                sx={{ fontSize: '24px', lineHeight: '28px', fontWeight: 600 }}
+              >
                 {step.title}
               </Typography>
               <div className="about-process__item-text-wrap">
-                <Typography component="p" sx={{ fontSize: '13px', lineHeight: '19px', color: '#8f8faf' }}>
+                <Typography
+                  component="p"
+                  sx={{
+                    fontSize: '16px',
+                    lineHeight: '19px',
+                    color: 'var(--grey-violet)',
+                    letterSpacing: '-1px',
+                  }}
+                >
                   {step.text}
                 </Typography>
               </div>

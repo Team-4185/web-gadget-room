@@ -13,20 +13,11 @@ export const AboutCTASection = () => {
       <Container disableGutters>
         <div className="about-cta__card">
           <div>
-            <Typography
-              sx={{
-                fontSize: '12px',
-                fontWeight: 700,
-                lineHeight: '20px',
-                color: 'var(--blue-violet)',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-              }}
-            >
+            <Typography variant="aboutSectionHeading" sx={{ color: 'var(--blue-violet)' }}>
               READY TO SHOP?
             </Typography>
             <div className="about-cta__title-wrap">
-              <Typography variant="h2" component="h2" sx={{ color: '#2d2d2d' }}>
+              <Typography variant="aboutHeading" component="h2" sx={{ color: '#2d2d2d' }}>
                 Find your perfect device today
               </Typography>
             </div>

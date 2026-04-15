@@ -64,23 +64,15 @@ export const AboutCoreValuesSection = () => {
     <section className="about-values" aria-label="Core Values Section">
       <Container disableGutters>
         <div className="about-values__eyebrow-wrap">
-          <Typography
-            sx={{
-              fontSize: '24px',
-              fontWeight: 600,
-              lineHeight: '26px',
-              color: 'var(--grey-violet)',
-              letterSpacing: '-2px',
-            }}
-          >
+          <Typography variant="aboutSectionHeading">
             WHAT WE STAND FOR
           </Typography>
         </div>
         <div className="about-values__title-wrap">
           <Typography
-            variant="h2"
+            variant="aboutHeading"
             component="h2"
-            sx={{ fontSize: '56px', lineHeight: '56px', letterSpacing: '-2px', fontWeight: 700 }}
+            sx={{ fontSize: '48px', lineHeight: '56px', letterSpacing: '-2px', fontWeight: 700 }}
           >
             Our Core Values
           </Typography>
