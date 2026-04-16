@@ -1,13 +1,8 @@
 import { useNavigate } from 'react-router';
 import { Container, Typography } from '@mui/material';
 
-import {
-  AboutFastDeliveryIcon,
-  AboutPhoneInHandIcon,
-  AboutSecurePaymentIcon,
-  AboutWarrantyIcon,
-} from '@/assets';
 import { Button } from '@/components';
+import { aboutMissionCards } from '@/core/constants';
 
 import './AboutMissionSection.css';
 
@@ -81,89 +76,34 @@ export const AboutMissionSection = () => {
           </div>
 
           <div className="about-mission__cards">
-            <article className="about-mission__card about-mission__card--original">
-              <div className="about-mission__card-header">
-                <AboutPhoneInHandIcon className="about-mission__card-icon" />
-                <Typography
-                  component="h3"
-                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
-                >
-                  Original Devices
-                </Typography>
-              </div>
-              <div className="about-mission__card-copy">
-                <Typography
-                  component="p"
-                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
-                >
-                  Only verified suppliers and tested smartphones. Every product is authenticated
-                  before listing.
-                </Typography>
-              </div>
-            </article>
-            <article className="about-mission__card about-mission__card--warranty">
-              <div className="about-mission__card-header">
-                <AboutWarrantyIcon className="about-mission__card-icon" />
-                <Typography
-                  component="h3"
-                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
-                >
-                  Warranty
-                </Typography>
-              </div>
-              <div className="about-mission__card-copy">
-                <Typography
-                  component="p"
-                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
-                >
-                  Clear warranty policy and fast support response. We stand behind every product we
-                  sell.
-                </Typography>
-              </div>
-            </article>
-            <article className="about-mission__card about-mission__card--payment">
-              <div className="about-mission__card-header">
-                <AboutSecurePaymentIcon className="about-mission__card-icon" />
-                <Typography
-                  component="h3"
-                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
-                >
-                  Secure Payment
-                </Typography>
-              </div>
-              <div className="about-mission__card-copy">
-                <Typography
-                  component="p"
-                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
-                >
-                  Safe and popular payment methods. Visa, Mastercard, Apple Pay, Google Pay and
-                  more.
-                </Typography>
-              </div>
-            </article>
-            <article className="about-mission__card about-mission__card--delivery">
-              <div className="about-mission__card-header">
-                <AboutFastDeliveryIcon className="about-mission__card-icon" />
-                <Typography
-                  component="h3"
-                  sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
-                >
-                  Fast Delivery
-                </Typography>
-              </div>
-              <div className="about-mission__card-copy">
-                <Typography
-                  component="p"
-                  sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
-                >
-                  Clear warranty policy and fast support response. We stand behind every product we
-                  sell.
-                </Typography>
-              </div>
-            </article>
+            {aboutMissionCards.map((card) => (
+              <article
+                key={card.id}
+                className={`about-mission__card about-mission__card--${card.id}`}
+              >
+                <div className="about-mission__card-header">
+                  <card.Icon className="about-mission__card-icon" />
+                  <Typography
+                    component="h3"
+                    sx={{ fontSize: '20px', lineHeight: '27px', fontWeight: 700 }}
+                  >
+                    {card.title}
+                  </Typography>
+                </div>
+                <div className="about-mission__card-copy">
+                  <Typography
+                    component="p"
+                    sx={{ fontSize: '16px', lineHeight: '20px', fontWeight: 500 }}
+                  >
+                    {card.text}
+                  </Typography>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </Container>
     </section>
   );
 };
+

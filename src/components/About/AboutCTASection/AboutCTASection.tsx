@@ -23,7 +23,7 @@ export const AboutCTASection = () => {
             <div className="about-cta__text-wrap">
               <Typography
                 sx={{
-                  color: 'var(--grey-violet)',
+                  color: 'var(--muted-violet)',
                   fontSize: '24px',
                   lineHeight: '34px',
                   letterSpacing: '-1px',
@@ -48,3 +48,4 @@ export const AboutCTASection = () => {
     </section>
   );
 };
+

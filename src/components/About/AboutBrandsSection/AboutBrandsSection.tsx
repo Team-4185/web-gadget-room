@@ -1,17 +1,8 @@
 import { Container, Typography } from '@mui/material';
 
-import './AboutBrandsSection.css';
+import { aboutBrands } from '@/core/constants';
 
-const brands = [
-  'Apple',
-  'Samsung',
-  'Xiaomi',
-  'Google Pixel',
-  'OnePlus',
-  'Huawei',
-  'Sony',
-  'Motorola',
-] as const;
+import './AboutBrandsSection.css';
 
 export const AboutBrandsSection = () => {
   return (
@@ -21,7 +12,7 @@ export const AboutBrandsSection = () => {
           <Typography variant="aboutSectionHeading">OFFICIAL PARTNERS & BRANDS WE CARRY</Typography>
         </div>
         <div className="about-brands__grid">
-          {brands.map((brand) => (
+          {aboutBrands.map((brand) => (
             <div key={brand} className="about-brands__pill">
               {brand}
             </div>
@@ -31,3 +22,4 @@ export const AboutBrandsSection = () => {
     </section>
   );
 };
+

@@ -24,7 +24,7 @@
   width: 154px;
   border-radius: 20px;
   background: var(--product-specs-background);
-  color: var(--grey-violet);
+  color: var(--muted-violet);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -41,3 +41,4 @@
 .about-brands__pill:nth-child(6) { --x: -60px; }
 .about-brands__pill:nth-child(7) { --x: -60px; --y: 22px; --r: -3deg; }
 .about-brands__pill:nth-child(8) { --x: -60px; --y: 18px; --r: 4deg; }
+

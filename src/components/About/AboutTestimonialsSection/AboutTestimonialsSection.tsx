@@ -1,37 +1,9 @@
 import { Container, Typography } from '@mui/material';
 
 import { AboutStarIcon } from '@/assets';
+import { aboutStars, aboutTestimonials } from '@/core/constants';
 
 import './AboutTestimonialsSection.css';
-
-const testimonials = [
-  {
-    id: 1,
-    author: 'Mykola H.',
-    city: 'Kyiv',
-    initials: 'MH',
-    tone: 'teal',
-    text: '"Ordered an iPhone 15 Pro - arrived in Kyiv within 2 days, original packaging, official warranty card. GadgetRoom is now my go-to for everything tech!"',
-  },
-  {
-    id: 2,
-    author: 'Sofiya D.',
-    city: 'Lviv',
-    initials: 'SD',
-    tone: 'yellow',
-    text: '"Compared prices across 6 stores. GadgetRoom was cheapest AND had the best warranty terms. Support answered my questions instantly, 10/10 recommend!"',
-  },
-  {
-    id: 3,
-    author: 'Roman P.',
-    city: 'Odesa',
-    initials: 'RP',
-    tone: 'blue',
-    text: '"Had a small issue with my order - wrong color sent. They replaced it next day, no questions asked. That kind of service is rare. Respect to the whole team!"',
-  },
-] as const;
-
-const stars = Array.from({ length: 5 });
 
 export const AboutTestimonialsSection = () => {
   return (
@@ -60,10 +32,10 @@ export const AboutTestimonialsSection = () => {
           </Typography>
         </div>
         <div className="about-testimonials__grid">
-          {testimonials.map((review) => (
+          {aboutTestimonials.map((review) => (
             <article key={review.id} className="about-testimonials__card">
               <div className="about-testimonials__stars" aria-hidden>
-                {stars.map((_, index) => (
+                {aboutStars.map((_, index) => (
                   <AboutStarIcon key={index} className="about-testimonials__star-icon" />
                 ))}
               </div>
@@ -71,7 +43,7 @@ export const AboutTestimonialsSection = () => {
                 <Typography
                   component="p"
                   sx={{
-                    color: 'var(--grey-violet)',
+                    color: 'var(--muted-violet)',
                     lineHeight: '34px',
                     fontSize: '18px',
                     letterSpacing: '-1px',
@@ -93,7 +65,7 @@ export const AboutTestimonialsSection = () => {
                   <div className="about-testimonials__city-wrap">
                     <Typography
                       component="p"
-                      sx={{ color: 'var(--grey-violet)', lineHeight: '14px' }}
+                      sx={{ color: 'var(--muted-violet)', lineHeight: '14px' }}
                     >
                       {review.city}
                     </Typography>
@@ -107,3 +79,4 @@ export const AboutTestimonialsSection = () => {
     </section>
   );
 };
+
