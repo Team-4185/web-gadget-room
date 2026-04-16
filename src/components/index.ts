@@ -7,6 +7,7 @@ export { EmptyCartContent } from './EmptyCartContent/EmptyCartContent';
 
 export * from './Catalog';
 export * from './Home';
+export * from './About';
 export * from './Header';
 export * from './Product';
 export * from './Cart';

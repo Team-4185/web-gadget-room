@@ -1,8 +1,27 @@
+import {
+  AboutHeroSection,
+  AboutMissionSection,
+  AboutMetricsSection,
+  AboutCoreValuesSection,
+  AboutProcessSection,
+  AboutTeamSection,
+  AboutTestimonialsSection,
+  AboutBrandsSection,
+  AboutCTASection,
+} from '@/components';
+
 export const About = () => {
   return (
-    <div>
-      About
-    </div>
+    <>
+      <AboutHeroSection />
+      <AboutMissionSection />
+      <AboutMetricsSection />
+      <AboutCoreValuesSection />
+      <AboutProcessSection />
+      <AboutTeamSection />
+      <AboutTestimonialsSection />
+      <AboutBrandsSection />
+      <AboutCTASection />
+    </>
   );
 };
-
