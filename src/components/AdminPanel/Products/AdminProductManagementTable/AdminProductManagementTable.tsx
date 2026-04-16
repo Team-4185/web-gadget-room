@@ -2,10 +2,10 @@ import { useMemo, useState, type FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { AdminProductStatus, IAdminPanelManagedProduct, ISelectOption } from '@/core/types';
-
-import './AdminProductManagementTable.css';
 import { Button, Search, Select } from '@/components/ui';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
+
+import './AdminProductManagementTable.css';
 
 interface IProps {
   products: IAdminPanelManagedProduct[];
