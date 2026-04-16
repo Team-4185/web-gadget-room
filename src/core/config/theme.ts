@@ -191,14 +191,6 @@ export const theme = createTheme({
         },
       },
     },
-    MuiStepper: {
-      styleOverrides: {
-        root: {
-          padding: '15px 0',
-          gap: '12px',
-        },
-      },
-    },
     MuiStep: {
       styleOverrides: {
         root: {
@@ -206,56 +198,21 @@ export const theme = createTheme({
         },
       },
     },
-    MuiStepIcon: {
-      styleOverrides: {
-        root: {
-          border: '1px solid var(--blue-violet)',
-          borderRadius: '50px',
-          color: 'var(--white)',
-
-          '&.Mui-active': {
-            color: 'var(--blue-violet)',
-            border: 'none',
-          },
-          '&.Mui-completed': {
-            color: 'var(--white)',
-            background: 'var(--black)',
-          },
-          '&.Mui-active .MuiStepIcon-text': {
-            fill: 'var(--white)',
-          },
-        },
-        text: {
-          fontWeight: 600,
-          fontSize: '16px',
-          fill: 'var(--black)',
-        },
-      },
-    },
     MuiStepLabel: {
       styleOverrides: {
-        label: {
-          '&.Mui-active': {
-            fontWeight: 600,
-            fontSize: '16px',
-            color: 'var(--black)',
-          },
-        },
         iconContainer: {
-          width: '27px',
-          height: '26px',
           padding: 0,
-
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '50px',
+          border: '1px solid var(--blue-violet)',
           '&.Mui-active': {
-            paddingRight: '12px',
+            background: 'var(--blue-violet)',
+            border: 'none',
           },
-        },
-      },
-    },
-    MuiStepConnector: {
-      styleOverrides: {
-        root: {
-          display: 'none',
+          '&.Mui-active p': {
+            color: 'var(--white)',
+          },
         },
       },
     },

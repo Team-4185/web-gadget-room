@@ -9,3 +9,4 @@ export * from './tooltip';
 export * from './delivery';
 export * from './userPanel';
 export * from './productMedia';
+export * from './stepper';
