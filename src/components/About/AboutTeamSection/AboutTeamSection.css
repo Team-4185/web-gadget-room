@@ -1,0 +1,67 @@
+.about-team {
+  padding-top: 53px;
+  padding-bottom: 78px;
+}
+
+.about-team__eyebrow-wrap,
+.about-team__title-wrap,
+.about-team__description-wrap {
+  text-align: center;
+}
+
+.about-team__title-wrap {
+  margin-top: 15px;
+}
+
+.about-team__description-wrap {
+  margin: 19px auto 0;
+  max-width: 760px;
+}
+
+.about-team__grid {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.about-team__card {
+  background: var(--white-opacity-10);
+  border-radius: 20px;
+  text-align: center;
+  padding: 43px 26px 53px;
+  min-height: 390px;
+  border: 0;
+  box-shadow: 0 0 6.9px 0 var(--light-violet);
+}
+
+.about-team__avatar-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.about-team__avatar {
+  width: 132px;
+  height: 132px;
+  border-radius: 100%;
+  background: var(--light-gray);
+  color: var(--white);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.about-team__name-wrap {
+  margin-top: 26px;
+}
+
+.about-team__role-wrap {
+  margin-top: 8px;
+}
+
+.about-team__text-wrap {
+  margin-top: 19px;
+}
+

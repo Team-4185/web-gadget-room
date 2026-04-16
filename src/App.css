@@ -4,8 +4,13 @@
   --black-opacity-13: rgba(0, 0, 0, 0.13);
   --black-opacity-65: rgba(0, 0, 0, 0.65);
   --white-opacity-4: rgba(255, 255, 255, 0.4);
+  --white-opacity-10: rgba(255, 255, 255, 0.1);
   --gray-opacity-13: rgba(151, 151, 151, 0.13);
   --amber-opacity-89: rgba(251, 188, 4, 0.89);
+  --blue-opacity-30: rgba(119, 119, 191, 0.3);
+  --blue-opacity-40: rgba(119, 119, 191, 0.4);
+  --blue-opacity-45: rgba(119, 119, 191, 0.45);
+  --blue-opacity-50: rgba(119, 119, 191, 0.5);
 
   --white: #ffffff;
   --ghost-white: #fdfdff;
@@ -21,9 +26,12 @@
   --red: #eb001b;
   --coralRed: #ea4335;
   --blue: #4285f4;
+  --dark-blue: #172b85;
   --navy-blue: #001a4f;
   --dark-background: rgba(4, 4, 255, 0.05);
   --dark-hero-background: linear-gradient(91deg, #211c24 0.64%, #211c24 101%);
+  --dark-hero-background-no-gradient: #211c24;
+  --about-metrics-background: rgba(51, 64, 91, 0.2);
   --icon-fire: #ff5f00;
   --product-description-color: #353232;
   --product-top-icon-text: #4e4e4e;
@@ -32,6 +40,8 @@
   --box-summary-background: rgba(249, 249, 249, 0.2);
   --inputs-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   --light-violet: #9595ef;
+  --grey-violet: #8f8faf;
+  --muted-violet: #8f8faf;
 }
 
 ol[role='list'],
