@@ -4,3 +4,4 @@ export * from './promiseQueue';
 export * from './tokenStorage';
 export * from './formatDisplayName';
 export * from './products';
+export * from './cartStorage';

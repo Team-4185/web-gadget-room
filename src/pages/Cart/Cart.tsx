@@ -9,7 +9,7 @@ import { CartGrid, OrderSummary } from '@/components';
 import './Cart.css';
 
 export const Cart: FC = () => {
-  const cartLength = useSelector((state: RootState) => state.cart.cart.length);
+  const cartLength = useSelector((state: RootState) => state.cart.totalAmount);
 
   if (!cartLength) {
     return <Navigate to="/empty-cart" replace />;
