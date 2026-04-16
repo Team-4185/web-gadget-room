@@ -10,6 +10,7 @@ export { AdminPanelLowStock } from './Dashboard/AdminPanelLowStock/AdminPanelLow
 
 export { AdminProductsTab } from './Products/AdminProductsTab/AdminProductsTab';
 export { AdminProductManagementTable } from './Products/AdminProductManagementTable/AdminProductManagementTable';
+export { AdminProductModal } from './Products/AdminProductModal/AdminProductModal';
 
 export { AdminOrdersTab } from './Orders/AdminOrdersTab/AdminOrdersTab';
 export { AdminOrderKpiCard } from './Orders/AdminOrderKpiCard/AdminOrderKpiCard';

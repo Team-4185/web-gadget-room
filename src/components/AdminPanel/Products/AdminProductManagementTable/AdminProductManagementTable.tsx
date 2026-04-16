@@ -1,9 +1,13 @@
-import { useMemo, useState, type FC } from 'react';
+import { useMemo, useState, type ChangeEvent, type FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { AdminProductStatus, IAdminPanelManagedProduct, ISelectOption } from '@/core/types';
 import { Button, Search, Select } from '@/components/ui';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
+import {
+  AdminProductModal,
+  type IAdminProductFormState,
+} from '@/components/AdminPanel/Products/AdminProductModal/AdminProductModal';
 
 import './AdminProductManagementTable.css';
 
@@ -51,7 +55,21 @@ export const AdminProductManagementTable: FC<IProps> = ({
   onSearchChange,
   onBrandChange,
 }) => {
+  const initialDraft: IAdminProductFormState = {
+    name: '',
+    sku: '',
+    brand: '',
+    price: '',
+    stock: '',
+    status: 'In stock',
+    description: '',
+  };
+
   const [selectedStatus, setSelectedStatus] = useState<AdminProductStatus | ''>('');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<IAdminPanelManagedProduct | null>(null);
+  const [imageName, setImageName] = useState('');
+  const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(initialDraft);
 
   const brandOptions = useMemo<ISelectOption[]>(
     () => [
@@ -72,6 +90,61 @@ export const AdminProductManagementTable: FC<IProps> = ({
     });
   }, [products, selectedStatus]);
 
+  const handleDraftChange = (field: keyof IAdminProductFormState, value: string) => {
+    setDraftProduct((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setImageName(file?.name ?? '');
+  };
+
+  const getNumericPrice = (value: string) => {
+    const parsed = Number(value.replace(/[^\d.,]/g, '').replace(/,/g, ''));
+    return Number.isFinite(parsed) ? String(parsed) : '';
+  };
+
+  const getNumericStock = (value: string) => {
+    const parsed = Number(value.replace(/[^\d]/g, ''));
+    return Number.isFinite(parsed) ? String(parsed) : '';
+  };
+
+  const openAddModal = () => {
+    setEditingProduct(null);
+    setDraftProduct(initialDraft);
+    setImageName('');
+    setIsAddModalOpen(true);
+  };
+
+  const openEditModal = (product: IAdminPanelManagedProduct) => {
+    setIsAddModalOpen(false);
+    setEditingProduct(product);
+    setDraftProduct({
+      name: product.title,
+      sku: product.sku,
+      brand: product.brand,
+      price: getNumericPrice(product.price),
+      stock: getNumericStock(product.stock),
+      status: STATUS_LABELS[product.status],
+      description: '',
+    });
+    setImageName('');
+  };
+
+  const closeAddModal = () => {
+    setIsAddModalOpen(false);
+    setEditingProduct(null);
+    setDraftProduct(initialDraft);
+    setImageName('');
+  };
+
+  const saveAddModal = () => {
+    setIsAddModalOpen(false);
+    setEditingProduct(null);
+    setDraftProduct(initialDraft);
+    setImageName('');
+  };
+
   return (
     <section className="admin-product-management" aria-label="Product management">
       <div className="admin-product-management__header">
@@ -90,6 +163,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
           border="none"
           borderRadius="12px"
           sx={{ fontSize: '15px', fontWeight: 500 }}
+          onClick={openAddModal}
         >
           <div className="admin-product-management__add-product-icon" aria-hidden="true">
             <Plus color="currentColor" />
@@ -170,7 +244,11 @@ export const AdminProductManagementTable: FC<IProps> = ({
                     <button type="button" aria-label={`View ${product.title}`}>
                       <Visibility />
                     </button>
-                    <button type="button" aria-label={`Edit ${product.title}`}>
+                    <button
+                      type="button"
+                      aria-label={`Edit ${product.title}`}
+                      onClick={() => openEditModal(product)}
+                    >
                       <Edit />
                     </button>
                     <button type="button" aria-label={`Delete ${product.title}`}>
@@ -203,6 +281,20 @@ export const AdminProductManagementTable: FC<IProps> = ({
           </button>
         </div>
       </div>
+
+      <AdminProductModal
+        isOpen={isAddModalOpen || Boolean(editingProduct)}
+        title={editingProduct ? 'Edit product' : 'Add a new product'}
+        submitLabel={editingProduct ? 'Save edit' : 'Save'}
+        values={draftProduct}
+        imageName={imageName}
+        showStatusField={Boolean(editingProduct)}
+        uploadLabel={editingProduct ? 'Edit an image' : 'Upload an image'}
+        onClose={closeAddModal}
+        onSave={saveAddModal}
+        onValueChange={handleDraftChange}
+        onImageChange={handleImageChange}
+      />
     </section>
   );
 };
