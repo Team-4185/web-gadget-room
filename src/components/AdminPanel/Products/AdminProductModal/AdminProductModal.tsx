@@ -9,7 +9,13 @@ export interface IAdminProductFormState {
   brand: string;
   price: string;
   stock: string;
-  status?: string;
+  releaseYear: string;
+  cpu: string;
+  coresNumber: string;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  batteryCapacity: string;
   description: string;
 }
 
@@ -19,8 +25,8 @@ interface IProps {
   submitLabel: string;
   imageName: string;
   values: IAdminProductFormState;
-  showStatusField?: boolean;
   uploadLabel?: string;
+  editDescriptionLabel?: string;
   onClose: () => void;
   onSave: () => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
@@ -33,8 +39,8 @@ export const AdminProductModal = ({
   submitLabel,
   imageName,
   values,
-  showStatusField = false,
   uploadLabel,
+  editDescriptionLabel,
   onClose,
   onSave,
   onValueChange,
@@ -135,20 +141,80 @@ export const AdminProductModal = ({
             />
           </label>
 
-          {showStatusField ? (
-            <label className="admin-product-modal__field admin-product-modal__field--full">
-              <span>Status</span>
-              <input
-                type="text"
-                value={values.status ?? ''}
-                onChange={(event) => onValueChange('status', event.target.value)}
-                placeholder="In stock"
-              />
-            </label>
-          ) : null}
+          <label className="admin-product-modal__field">
+            <span>Release year *</span>
+            <input
+              type="number"
+              min="0"
+              value={values.releaseYear}
+              onChange={(event) => onValueChange('releaseYear', event.target.value)}
+              placeholder="2026"
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>CPU *</span>
+            <input
+              type="text"
+              value={values.cpu}
+              onChange={(event) => onValueChange('cpu', event.target.value)}
+              placeholder="Snapdragon 8 Gen 3"
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>Cores number *</span>
+            <input
+              type="number"
+              min="1"
+              value={values.coresNumber}
+              onChange={(event) => onValueChange('coresNumber', event.target.value)}
+              placeholder="8"
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>Screen size *</span>
+            <input
+              type="text"
+              value={values.screenSize}
+              onChange={(event) => onValueChange('screenSize', event.target.value)}
+              placeholder='6.8"'
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>Front camera *</span>
+            <input
+              type="text"
+              value={values.frontCamera}
+              onChange={(event) => onValueChange('frontCamera', event.target.value)}
+              placeholder="12 MP"
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>Main camera *</span>
+            <input
+              type="text"
+              value={values.mainCamera}
+              onChange={(event) => onValueChange('mainCamera', event.target.value)}
+              placeholder="64-12-12 MP"
+            />
+          </label>
+
+          <label className="admin-product-modal__field">
+            <span>Battery capacity *</span>
+            <input
+              type="text"
+              value={values.batteryCapacity}
+              onChange={(event) => onValueChange('batteryCapacity', event.target.value)}
+              placeholder="5000 mAh"
+            />
+          </label>
 
           <label className="admin-product-modal__field admin-product-modal__field--full">
-            <span>{showStatusField ? 'Edit description' : 'Description'}</span>
+            <span>{editDescriptionLabel}</span>
             <textarea
               rows={5}
               value={values.description}
@@ -158,7 +224,7 @@ export const AdminProductModal = ({
           </label>
 
           <label className="admin-product-modal__upload">
-            <span>{uploadLabel ?? (showStatusField ? 'Edit an image' : 'Upload an image')}</span>
+            <span>{uploadLabel}</span>
             <input type="file" accept="image/*" onChange={onImageChange} />
             <div className="admin-product-modal__upload-inner">
               <span className="admin-product-modal__upload-plus">+</span>

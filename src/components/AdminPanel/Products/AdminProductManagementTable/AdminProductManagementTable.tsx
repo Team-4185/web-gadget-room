@@ -61,7 +61,13 @@ export const AdminProductManagementTable: FC<IProps> = ({
     brand: '',
     price: '',
     stock: '',
-    status: 'In stock',
+    releaseYear: '',
+    cpu: '',
+    coresNumber: '',
+    screenSize: '',
+    frontCamera: '',
+    mainCamera: '',
+    batteryCapacity: '',
     description: '',
   };
 
@@ -125,7 +131,13 @@ export const AdminProductManagementTable: FC<IProps> = ({
       brand: product.brand,
       price: getNumericPrice(product.price),
       stock: getNumericStock(product.stock),
-      status: STATUS_LABELS[product.status],
+      releaseYear: '',
+      cpu: '',
+      coresNumber: '',
+      screenSize: '',
+      frontCamera: '',
+      mainCamera: '',
+      batteryCapacity: '',
       description: '',
     });
     setImageName('');
@@ -288,8 +300,8 @@ export const AdminProductManagementTable: FC<IProps> = ({
         submitLabel={editingProduct ? 'Save edit' : 'Save'}
         values={draftProduct}
         imageName={imageName}
-        showStatusField={Boolean(editingProduct)}
         uploadLabel={editingProduct ? 'Edit an image' : 'Upload an image'}
+        editDescriptionLabel={editingProduct ? 'Edit description' : 'Description'}
         onClose={closeAddModal}
         onSave={saveAddModal}
         onValueChange={handleDraftChange}
