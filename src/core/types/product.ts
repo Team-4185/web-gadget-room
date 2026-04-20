@@ -30,6 +30,25 @@ export type ApiPhone = {
   images: ApiPhoneImage[];
 };
 
+export type PhoneStockStatus = 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+
+export type CreatePhonePayload = {
+  releaseYear: number;
+  batteryCapacity: string;
+  brand: string;
+  cpu: string;
+  price: number;
+  name: string;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  status: PhoneStockStatus;
+  stock: number;
+  description: string;
+  coresNumber: number;
+  sku: string;
+};
+
 export type ApiPhoneImage = {
   id: number;
   name: string;

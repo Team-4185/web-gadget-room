@@ -1,9 +1,13 @@
 import { api } from '@/core/config';
-import type { ApiPhone, ApiPhoneImage } from '@/core/types';
+import type { ApiPhone, ApiPhoneImage, CreatePhonePayload } from '@/core/types';
 
 const imageObjectUrlCache = new Map<string, string>();
 
 export const phonesService = {
+  async create(payload: CreatePhonePayload) {
+    const { data } = await api.post<ApiPhone>('/api/v1/phones', payload);
+    return data;
+  },
   async getById(id: number, signal?: AbortSignal) {
     const { data } = await api.get<ApiPhone>(`/api/v1/phones/${id}`, { signal });
     return data;

@@ -14,6 +14,7 @@ export const useAdminProductManagementData = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
 
@@ -53,7 +54,7 @@ export const useAdminProductManagementData = () => {
     load();
 
     return () => controller.abort();
-  }, [currentPage, searchQuery, selectedBrand]);
+  }, [currentPage, searchQuery, selectedBrand, reloadKey]);
 
   const goToPreviousPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.max(1, prevPage - 1));
@@ -71,6 +72,10 @@ export const useAdminProductManagementData = () => {
   const onBrandChange = useCallback((value: string) => {
     setSelectedBrand(value);
     setCurrentPage(1);
+  }, []);
+
+  const refreshProducts = useCallback(() => {
+    setReloadKey((prev) => prev + 1);
   }, []);
 
   return useMemo(
@@ -91,6 +96,7 @@ export const useAdminProductManagementData = () => {
       goToNextPage,
       onSearchChange,
       onBrandChange,
+      refreshProducts,
     }),
     [
       currentPage,
@@ -103,6 +109,7 @@ export const useAdminProductManagementData = () => {
       menu,
       onBrandChange,
       onSearchChange,
+      refreshProducts,
       products,
       searchQuery,
       selectedBrand,

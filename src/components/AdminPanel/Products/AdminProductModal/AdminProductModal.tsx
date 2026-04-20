@@ -1,6 +1,7 @@
 import { useEffect, type ChangeEvent } from 'react';
 import { Typography } from '@mui/material';
 
+import { LabeledFormField } from '@/components/shared';
 import './AdminProductModal.css';
 
 export interface IAdminProductFormState {
@@ -88,140 +89,121 @@ export const AdminProductModal = ({
         </div>
 
         <form className="admin-product-modal__form" onSubmit={(event) => event.preventDefault()}>
-          <label className="admin-product-modal__field admin-product-modal__field--full">
-            <span>Product name *</span>
-            <input
-              type="text"
-              value={values.name}
-              onChange={(event) => onValueChange('name', event.target.value)}
-              placeholder="Enter the product name"
-            />
-          </label>
+          <LabeledFormField
+            className="admin-product-modal__field--full"
+            label="Product name"
+            required
+            value={values.name}
+            placeholder="Enter the product name"
+            onChange={(value) => onValueChange('name', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>SKU *</span>
-            <input
-              type="text"
-              value={values.sku}
-              onChange={(event) => onValueChange('sku', event.target.value)}
-              placeholder="XXX-XX-XXX"
-            />
-          </label>
+          <LabeledFormField
+            label="SKU"
+            required
+            value={values.sku}
+            placeholder="XXX-XX-XXX"
+            onChange={(value) => onValueChange('sku', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Brand *</span>
-            <input
-              type="text"
-              value={values.brand}
-              onChange={(event) => onValueChange('brand', event.target.value)}
-              placeholder="Enter the brand"
-            />
-          </label>
+          <LabeledFormField
+            label="Brand"
+            required
+            value={values.brand}
+            placeholder="Enter the brand"
+            onChange={(value) => onValueChange('brand', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Price (EUR) *</span>
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              value={values.price}
-              onChange={(event) => onValueChange('price', event.target.value)}
-              placeholder="0.00"
-            />
-          </label>
+          <LabeledFormField
+            label="Price (EUR)"
+            required
+            type="number"
+            min="0"
+            step="0.01"
+            value={values.price}
+            placeholder="0.00"
+            onChange={(value) => onValueChange('price', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>In stock *</span>
-            <input
-              type="number"
-              min="0"
-              value={values.stock}
-              onChange={(event) => onValueChange('stock', event.target.value)}
-              placeholder="0"
-            />
-          </label>
+          <LabeledFormField
+            label="In stock"
+            required
+            type="number"
+            min="0"
+            value={values.stock}
+            placeholder="0"
+            onChange={(value) => onValueChange('stock', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Release year *</span>
-            <input
-              type="number"
-              min="0"
-              value={values.releaseYear}
-              onChange={(event) => onValueChange('releaseYear', event.target.value)}
-              placeholder="2026"
-            />
-          </label>
+          <LabeledFormField
+            label="Release year"
+            required
+            type="number"
+            min="0"
+            value={values.releaseYear}
+            placeholder="2026"
+            onChange={(value) => onValueChange('releaseYear', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>CPU *</span>
-            <input
-              type="text"
-              value={values.cpu}
-              onChange={(event) => onValueChange('cpu', event.target.value)}
-              placeholder="Snapdragon 8 Gen 3"
-            />
-          </label>
+          <LabeledFormField
+            label="CPU"
+            required
+            value={values.cpu}
+            placeholder="Snapdragon 8 Gen 3"
+            onChange={(value) => onValueChange('cpu', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Cores number *</span>
-            <input
-              type="number"
-              min="1"
-              value={values.coresNumber}
-              onChange={(event) => onValueChange('coresNumber', event.target.value)}
-              placeholder="8"
-            />
-          </label>
+          <LabeledFormField
+            label="Cores number"
+            required
+            type="number"
+            min="1"
+            value={values.coresNumber}
+            placeholder="8"
+            onChange={(value) => onValueChange('coresNumber', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Screen size *</span>
-            <input
-              type="text"
-              value={values.screenSize}
-              onChange={(event) => onValueChange('screenSize', event.target.value)}
-              placeholder='6.8"'
-            />
-          </label>
+          <LabeledFormField
+            label="Screen size"
+            required
+            value={values.screenSize}
+            placeholder='6.8"'
+            onChange={(value) => onValueChange('screenSize', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Front camera *</span>
-            <input
-              type="text"
-              value={values.frontCamera}
-              onChange={(event) => onValueChange('frontCamera', event.target.value)}
-              placeholder="12 MP"
-            />
-          </label>
+          <LabeledFormField
+            label="Front camera"
+            required
+            value={values.frontCamera}
+            placeholder="12 MP"
+            onChange={(value) => onValueChange('frontCamera', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Main camera *</span>
-            <input
-              type="text"
-              value={values.mainCamera}
-              onChange={(event) => onValueChange('mainCamera', event.target.value)}
-              placeholder="64-12-12 MP"
-            />
-          </label>
+          <LabeledFormField
+            label="Main camera"
+            required
+            value={values.mainCamera}
+            placeholder="64-12-12 MP"
+            onChange={(value) => onValueChange('mainCamera', value)}
+          />
 
-          <label className="admin-product-modal__field">
-            <span>Battery capacity *</span>
-            <input
-              type="text"
-              value={values.batteryCapacity}
-              onChange={(event) => onValueChange('batteryCapacity', event.target.value)}
-              placeholder="5000 mAh"
-            />
-          </label>
+          <LabeledFormField
+            label="Battery capacity"
+            required
+            value={values.batteryCapacity}
+            placeholder="5000 mAh"
+            onChange={(value) => onValueChange('batteryCapacity', value)}
+          />
 
-          <label className="admin-product-modal__field admin-product-modal__field--full">
-            <span>{editDescriptionLabel}</span>
-            <textarea
-              rows={5}
-              value={values.description}
-              onChange={(event) => onValueChange('description', event.target.value)}
-              placeholder="Enter a product description"
-            />
-          </label>
+          <LabeledFormField
+            className="admin-product-modal__field--full"
+            label={editDescriptionLabel ?? 'Description'}
+            value={values.description}
+            placeholder="Enter a product description"
+            multiline
+            rows={5}
+            onChange={(value) => onValueChange('description', value)}
+          />
 
           <label className="admin-product-modal__upload">
             <span>{uploadLabel}</span>

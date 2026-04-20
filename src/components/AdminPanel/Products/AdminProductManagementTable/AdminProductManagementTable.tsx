@@ -1,9 +1,16 @@
 import { useMemo, useState, type ChangeEvent, type FC } from 'react';
 import { Typography } from '@mui/material';
 
-import type { AdminProductStatus, IAdminPanelManagedProduct, ISelectOption } from '@/core/types';
+import type {
+  AdminProductStatus,
+  CreatePhonePayload,
+  IAdminPanelManagedProduct,
+  ISelectOption,
+  PhoneStockStatus,
+} from '@/core/types';
 import { Button, Search, Select } from '@/components/ui';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
+import { phonesService } from '@/core/services';
 import {
   AdminProductModal,
   type IAdminProductFormState,
@@ -25,6 +32,7 @@ interface IProps {
   onNextPage: () => void;
   onSearchChange: (value: string) => void;
   onBrandChange: (value: string) => void;
+  onRefreshProducts: () => void;
 }
 
 const STATUS_LABELS = {
@@ -54,6 +62,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
   onNextPage,
   onSearchChange,
   onBrandChange,
+  onRefreshProducts,
 }) => {
   const initialDraft: IAdminProductFormState = {
     name: '',
@@ -76,6 +85,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
   const [editingProduct, setEditingProduct] = useState<IAdminPanelManagedProduct | null>(null);
   const [imageName, setImageName] = useState('');
   const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(initialDraft);
+  const [isSaving, setIsSaving] = useState(false);
 
   const brandOptions = useMemo<ISelectOption[]>(
     () => [
@@ -143,18 +153,65 @@ export const AdminProductManagementTable: FC<IProps> = ({
     setImageName('');
   };
 
-  const closeAddModal = () => {
+  const closeAddModal = (force = false) => {
+    if (isSaving && !force) return;
+
     setIsAddModalOpen(false);
     setEditingProduct(null);
     setDraftProduct(initialDraft);
     setImageName('');
   };
 
-  const saveAddModal = () => {
-    setIsAddModalOpen(false);
-    setEditingProduct(null);
-    setDraftProduct(initialDraft);
-    setImageName('');
+  const getNumberValue = (value: string) => {
+    const parsed = Number(value.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+    return Number.isFinite(parsed) ? parsed : 0;
+  };
+
+  const getIntegerValue = (value: string) => {
+    const parsed = Number(value.replace(/[^\d]/g, ''));
+    return Number.isFinite(parsed) ? parsed : 0;
+  };
+
+  const mapStatusByStock = (stock: number): PhoneStockStatus => {
+    if (stock <= 0) return 'OUT_OF_STOCK';
+    if (stock < 10) return 'LOW_STOCK';
+    return 'IN_STOCK';
+  };
+
+  const saveAddModal = async () => {
+    if (editingProduct) {
+      closeAddModal();
+      return;
+    }
+
+    const stock = getIntegerValue(draftProduct.stock);
+    const payload: CreatePhonePayload = {
+      releaseYear: getIntegerValue(draftProduct.releaseYear),
+      batteryCapacity: draftProduct.batteryCapacity.trim(),
+      brand: draftProduct.brand.trim(),
+      cpu: draftProduct.cpu.trim(),
+      price: getNumberValue(draftProduct.price),
+      name: draftProduct.name.trim(),
+      screenSize: draftProduct.screenSize.trim(),
+      frontCamera: draftProduct.frontCamera.trim(),
+      mainCamera: draftProduct.mainCamera.trim(),
+      status: mapStatusByStock(stock),
+      stock,
+      description: draftProduct.description.trim(),
+      coresNumber: Math.max(1, getIntegerValue(draftProduct.coresNumber)),
+      sku: draftProduct.sku.trim(),
+    };
+
+    setIsSaving(true);
+    try {
+      await phonesService.create(payload);
+      closeAddModal(true);
+      onRefreshProducts();
+    } catch (error) {
+      console.error('Failed to create product', error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -303,7 +360,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
         uploadLabel={editingProduct ? 'Edit an image' : 'Upload an image'}
         editDescriptionLabel={editingProduct ? 'Edit description' : 'Description'}
         onClose={closeAddModal}
-        onSave={saveAddModal}
+        onSave={() => void saveAddModal()}
         onValueChange={handleDraftChange}
         onImageChange={handleImageChange}
       />

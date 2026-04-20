@@ -17,6 +17,7 @@ interface IProps {
   onNextPage: () => void;
   onSearchChange: (value: string) => void;
   onBrandChange: (value: string) => void;
+  onRefreshProducts: () => void;
 }
 
 export const AdminProductsTab = ({
@@ -33,6 +34,7 @@ export const AdminProductsTab = ({
   onNextPage,
   onSearchChange,
   onBrandChange,
+  onRefreshProducts,
 }: IProps) => {
   return (
     <div className="admin-products-tab" aria-label="Products management">
@@ -50,6 +52,7 @@ export const AdminProductsTab = ({
         onNextPage={onNextPage}
         onSearchChange={onSearchChange}
         onBrandChange={onBrandChange}
+        onRefreshProducts={onRefreshProducts}
       />
     </div>
   );

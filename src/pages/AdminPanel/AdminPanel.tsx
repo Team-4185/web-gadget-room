@@ -37,6 +37,7 @@ export const AdminPanel = () => {
     goToNextPage,
     onSearchChange,
     onBrandChange,
+    refreshProducts,
   } = useAdminProductManagementData();
   const { kpis: ordersKpis, orders, totalOrders } = useAdminOrdersData();
   const { kpis: customersKpis, customers, totalCustomers } = useAdminCustomersData();
@@ -87,6 +88,7 @@ export const AdminPanel = () => {
                 onNextPage={goToNextPage}
                 onSearchChange={onSearchChange}
                 onBrandChange={onBrandChange}
+                onRefreshProducts={refreshProducts}
               />
             )}
             {isOrdersTab && (
