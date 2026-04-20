@@ -8,7 +8,6 @@ interface IСustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig 
 
 const options = {
   baseURL: `${import.meta.env.VITE_BACKEND_ORIGIN}`,
-  timeout: 1000,
   withCredentials: true,
 };
 

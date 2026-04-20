@@ -8,11 +8,13 @@ const passwordSchema = z
     error: 'Please enter valid data',
   });
 
+const emailSchema = z
+  .email({ error: 'Please enter valid email address' })
+  .min(10, { error: 'Please enter valid data' })
+  .max(100, { error: 'Please enter valid data' });
+
 const authBaseSchema = z.object({
-  email: z
-    .email({ error: 'Please enter valid email address' })
-    .min(10, { error: 'Please enter valid data' })
-    .max(100, { error: 'Please enter valid data' }),
+  email: emailSchema,
   password: passwordSchema,
 });
 
@@ -34,5 +36,10 @@ export const registerSchema = z
     path: ['passwordConfirmation'],
   });
 
+export const forgotPasswordSchema = z.object({
+  email: emailSchema,
+});
+
 export type FormRegisterValues = z.infer<typeof registerSchema>;
 export type FormLoginValues = z.infer<typeof loginSchema>;
+export type FormForgotPassword = z.infer<typeof forgotPasswordSchema>;
