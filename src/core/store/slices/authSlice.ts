@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 import { createAppSlice } from '@/core/store/createAppSlice';
-import type { FormRegisterValuesDto, IJwtResponseDto, IRegisterErrorResponse } from '@/core/types';
+import type { FormRegisterValuesDto, IJwtResponseDto, IErrorResponse } from '@/core/types';
 import { authService } from '@/core/services';
-import type { FormLoginValues } from '@/core/schemas';
+import type { FormForgotPassword, FormLoginValues } from '@/core/schemas';
 import { setAccessToken } from '@/core/config';
 
 interface IInitialState extends Omit<IJwtResponseDto, 'accessToken'> {
   loading: boolean;
   authLoading: boolean;
-  error: null | IRegisterErrorResponse;
+  error: null | IErrorResponse;
 }
 
 const initialState: IInitialState = {
@@ -27,13 +27,13 @@ export const authSlice = createAppSlice({
     register: create.asyncThunk<
       IJwtResponseDto,
       FormRegisterValuesDto,
-      { rejectValue: IRegisterErrorResponse }
+      { rejectValue: IErrorResponse }
     >(
       async (formData, { rejectWithValue }) => {
         try {
           return await authService.register(formData);
         } catch (err) {
-          if (axios.isAxiosError<IRegisterErrorResponse>(err)) {
+          if (axios.isAxiosError<IErrorResponse>(err)) {
             return rejectWithValue(err.response!.data);
           } else {
             throw err;
@@ -59,16 +59,12 @@ export const authSlice = createAppSlice({
         },
       }
     ),
-    login: create.asyncThunk<
-      IJwtResponseDto,
-      FormLoginValues,
-      { rejectValue: IRegisterErrorResponse }
-    >(
+    login: create.asyncThunk<IJwtResponseDto, FormLoginValues, { rejectValue: IErrorResponse }>(
       async (formData, { rejectWithValue }) => {
         try {
           return await authService.login(formData);
         } catch (err) {
-          if (axios.isAxiosError<IRegisterErrorResponse>(err)) {
+          if (axios.isAxiosError<IErrorResponse>(err)) {
             return rejectWithValue(err.response!.data);
           } else {
             throw err;
@@ -94,12 +90,12 @@ export const authSlice = createAppSlice({
         },
       }
     ),
-    refreshToken: create.asyncThunk<IJwtResponseDto, void, { rejectValue: IRegisterErrorResponse }>(
+    refreshToken: create.asyncThunk<IJwtResponseDto, void, { rejectValue: IErrorResponse }>(
       async (_, { rejectWithValue }) => {
         try {
           return await authService.refreshToken();
         } catch (err) {
-          if (axios.isAxiosError<IRegisterErrorResponse>(err)) {
+          if (axios.isAxiosError<IErrorResponse>(err)) {
             return rejectWithValue(err.response!.data);
           } else {
             throw err;
@@ -123,6 +119,31 @@ export const authSlice = createAppSlice({
         settled: (state) => {
           state.loading = false;
           state.authLoading = false;
+        },
+      }
+    ),
+    forgotPassword: create.asyncThunk<void, FormForgotPassword, { rejectValue: IErrorResponse }>(
+      async (email, { rejectWithValue }) => {
+        try {
+          await authService.forgotPassword(email);
+        } catch (err) {
+          if (axios.isAxiosError<IErrorResponse>(err)) {
+            return rejectWithValue(err.response!.data);
+          } else {
+            throw err;
+          }
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? null;
+        },
+        settled: (state) => {
+          state.loading = false;
         },
       }
     ),

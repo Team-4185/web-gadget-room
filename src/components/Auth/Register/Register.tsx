@@ -13,7 +13,11 @@ import { useAppDispatch, authActions } from '@/core/store';
 
 import './Register.css';
 
-export const Register: FC = () => {
+interface IProps {
+  className?: string;
+}
+
+export const Register: FC<IProps> = ({ className = '' }) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -49,7 +53,12 @@ export const Register: FC = () => {
   };
 
   return (
-    <motion.div className="register" variants={FADEUP} initial="hidden" animate="visible">
+    <motion.div
+      className={`${className} register`}
+      variants={FADEUP}
+      initial="hidden"
+      animate="visible"
+    >
       <Typography sx={{ fontWeight: '600' }} component="h5" variant="h5">
         Register
       </Typography>
@@ -87,6 +96,7 @@ export const Register: FC = () => {
 
         <FormCheckbox
           id="terms"
+          className="register__checkbox"
           name="terms"
           control={control}
           label={
@@ -102,7 +112,7 @@ export const Register: FC = () => {
         <Button
           type="submit"
           maxWidth="549px"
-          height="36"
+          height="36px"
           textTransform="uppercase"
           sx={{ marginTop: '32px' }}
         >

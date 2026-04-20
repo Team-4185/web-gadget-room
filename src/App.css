@@ -40,8 +40,9 @@
   --box-summary-background: rgba(249, 249, 249, 0.2);
   --inputs-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   --light-violet: #9595ef;
-  --grey-violet: #8f8faf;
+  --very-light-violet: #e8e8f0;
   --muted-violet: #8f8faf;
+  --gray-violet: #8888aa;
   --alert-red: rgba(235, 0, 27, 0.37);
 }
 

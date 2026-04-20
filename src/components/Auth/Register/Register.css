@@ -1,16 +1,4 @@
-.register {
-  max-width: 549px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-right: 57px;
-}
-
-.register__form {
-  margin-top: 35px;
-}
-
+.register__form,
 .register__checkbox {
   margin-top: 35px;
 }

@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
             black: 'currentColor',
             'url(#paint0_linear_101_3602)': 'currentColor',
             'url(#filter0_dd_101_3602)': 'currentColor',
+            'rgb(255,255,255)': 'currentColor',
           },
         },
       }),
