@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 
 import { Button, FormInput, Stepper } from '@/components';
-import { EMAIL_TOOLTIP, FADEUP, PasswordResetSteps } from '@/core/constants';
+import { EMAIL_TOOLTIP, FADEUP, PASSWORD_RESET_STEPS } from '@/core/constants';
 import { type FormForgotPassword, forgotPasswordSchema } from '@/core/schemas';
 import { authActions, useAppDispatch } from '@/core/store';
 import { ChevronLeft } from '@/assets';
@@ -100,7 +100,7 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
         <Stepper
           mode="default"
           showStepConnector={true}
-          steps={PasswordResetSteps}
+          steps={PASSWORD_RESET_STEPS}
           sx={{ gap: '8px', marginTop: '30px' }}
         />
       </div>

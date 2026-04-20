@@ -13,7 +13,7 @@ export const ORDERING_STEPS = [
   },
 ];
 
-export const PasswordResetSteps = [
+export const PASSWORD_RESET_STEPS = [
   {
     label: 'Email',
   },
