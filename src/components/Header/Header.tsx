@@ -2,11 +2,12 @@ import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
 import { Link as RouterLink, NavLink, useLocation } from 'react-router';
 
-import { BreadCrumbs, OrderingSteps } from '@/components';
+import { BreadCrumbs, Stepper } from '@/components';
 import { useAppSelector } from '@/core/store';
 import {
   AUTHBUTTON,
   ICONS,
+  ORDERING_STEPS,
   PAGES,
   ROUTES_WITHOUT_BREADCRUMBS,
   ROUTES_WITH_ORDERING_STEPS,
@@ -25,6 +26,8 @@ export const Header: FC = () => {
   const user = useAppSelector((state) => state.auth.userId);
 
   const authPage = currentPath === '/' || currentPath === '/register';
+
+  const activeStep = ORDERING_STEPS.findIndex((step) => location.pathname === step.href) ?? 0;
 
   const shouldShowBreadcrumbs = !ROUTES_WITHOUT_BREADCRUMBS.includes(currentPath);
   const shouldShowOrderingSteps = ROUTES_WITH_ORDERING_STEPS.includes(currentPath);
@@ -92,7 +95,15 @@ export const Header: FC = () => {
           )}
         </div>
         {shouldShowBreadcrumbs && <BreadCrumbs />}
-        {shouldShowOrderingSteps && <OrderingSteps />}
+        {shouldShowOrderingSteps && (
+          <Stepper
+            mode="navigation"
+            showStepConnector={false}
+            steps={ORDERING_STEPS}
+            activeStep={activeStep}
+            sx={{ gap: '12px', padding: '15px 0' }}
+          />
+        )}
       </Container>
     </header>
   );

@@ -1,6 +1,6 @@
 import { apiAuth } from '@/core/config';
 import { type IJwtResponseDto, type FormRegisterValuesDto } from '@/core/types';
-import { type FormLoginValues } from '@/core/schemas';
+import { type FormLoginValues, type FormForgotPassword } from '@/core/schemas';
 
 export const authService = {
   async register(formData: FormRegisterValuesDto): Promise<IJwtResponseDto> {
@@ -14,5 +14,8 @@ export const authService = {
   async refreshToken() {
     const { data } = await apiAuth.post<IJwtResponseDto>('/api/auth/refresh-token');
     return data;
+  },
+  async forgotPassword(email: FormForgotPassword) {
+    await apiAuth.post<void>('/api/auth/forgot-password', email);
   },
 };

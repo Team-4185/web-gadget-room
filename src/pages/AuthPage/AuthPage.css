@@ -23,7 +23,35 @@
   max-width: 627px;
   width: 100%;
   height: 100%;
-  background: var(--gray-opacity-13);
   border-radius: 50px;
   border: 1px solid var(--dark-yellow);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.auth__switcher--primary {
+  background-image: url('/authBackground.jpg');
+}
+
+.auth__switcher--secondary {
+  background-image: url('/changePasswordBackground.jpg');
+}
+
+.auth__form {
+  max-width: 549px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+}
+
+.auth__form--login,
+.auth__form--forgot-password {
+  margin-left: 57px;
+}
+
+.auth__form--register {
+  margin-right: 57px;
 }

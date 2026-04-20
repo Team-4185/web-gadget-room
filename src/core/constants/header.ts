@@ -30,21 +30,6 @@ export const AUTHBUTTON = [
   { id: 1, name: PageName.Register, href: '/register' },
 ];
 
-export const STEPS = [
-  {
-    label: 'Cart',
-    href: '/cart',
-  },
-  {
-    label: 'Delivery',
-    href: '/delivery',
-  },
-  {
-    label: 'Payment',
-    href: '/payment',
-  },
-];
-
 export const ROUTES_WITHOUT_BREADCRUMBS = [
   '/',
   '/cart',

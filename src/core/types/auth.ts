@@ -17,7 +17,7 @@ export interface IJwtResponseDto {
 
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
 
-export interface IRegisterErrorResponse {
+export interface IErrorResponse {
   type: string;
   title: string;
   status: number;
