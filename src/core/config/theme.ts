@@ -50,6 +50,20 @@ export const theme = createTheme({
       fontSize: '32px',
       color: 'var(--black)',
     },
+    aboutHeading: {
+      fontSize: '48px',
+      lineHeight: '56px',
+      fontWeight: 700,
+      letterSpacing: '-2px',
+    },
+    aboutSectionHeading: {
+      fontSize: '24px',
+      lineHeight: '20px',
+      fontWeight: 600,
+      letterSpacing: '-2px',
+      textTransform: 'uppercase',
+      color: 'var(--grey-violet)',
+    },
   },
   breakpoints: {
     values: {
@@ -82,6 +96,14 @@ export const theme = createTheme({
             width: '100%',
           },
         }),
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        variantMapping: {
+          aboutHeading: 'h2',
+          aboutSectionHeading: 'p',
+        },
       },
     },
     MuiButton: {

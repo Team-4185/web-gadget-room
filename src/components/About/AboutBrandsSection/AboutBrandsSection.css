@@ -1,0 +1,44 @@
+.about-brands {
+  padding-top: 36px;
+  padding-bottom: 72px;
+}
+
+.about-brands__eyebrow-wrap {
+  text-align: center;
+}
+
+.about-brands__grid {
+  margin: 80px auto 0;
+  max-width: 1110px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px 26px;
+  justify-items: center;
+}
+
+.about-brands__pill {
+  --x: 0px;
+  --y: 0px;
+  --r: 0deg;
+  height: 56px;
+  width: 154px;
+  border-radius: 20px;
+  background: var(--product-specs-background);
+  color: var(--muted-violet);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  font-size: 18px;
+  transform: translateX(var(--x)) translateY(var(--y)) rotate(var(--r));
+}
+
+.about-brands__pill:nth-child(1) { --x: 60px; --r: 4deg; }
+.about-brands__pill:nth-child(2) { --x: 60px; --y: 22px; --r: -3deg; }
+.about-brands__pill:nth-child(3) { --x: 60px; }
+.about-brands__pill:nth-child(4) { --x: 60px; --y: 18px; --r: 4deg; }
+.about-brands__pill:nth-child(5) { --x: -60px; --r: 4deg; }
+.about-brands__pill:nth-child(6) { --x: -60px; }
+.about-brands__pill:nth-child(7) { --x: -60px; --y: 22px; --r: -3deg; }
+.about-brands__pill:nth-child(8) { --x: -60px; --y: 18px; --r: 4deg; }
+
