@@ -1,4 +1,5 @@
 import type { HTMLInputTypeAttribute } from 'react';
+import { Tooltip } from '@mui/material';
 
 import './LabeledFormField.css';
 
@@ -13,6 +14,8 @@ interface IProps {
   multiline?: boolean;
   rows?: number;
   className?: string;
+  errorMessage?: string;
+  tooltipText?: string;
   onChange: (value: string) => void;
 }
 
@@ -27,32 +30,40 @@ export const LabeledFormField = ({
   multiline = false,
   rows = 5,
   className,
+  errorMessage,
+  tooltipText,
   onChange,
 }: IProps) => {
-  return (
-    <label className={`labeled-form-field ${className ?? ''}`.trim()}>
-      <span className="labeled-form-field__label">
-        {label}
-        {required ? ' *' : ''}
-      </span>
+  const tooltip = errorMessage ?? tooltipText ?? '';
 
-      {multiline ? (
-        <textarea
-          rows={rows}
-          value={value}
-          placeholder={placeholder}
-          onChange={(event) => onChange(event.target.value)}
-        />
-      ) : (
-        <input
-          type={type}
-          value={value}
-          min={min}
-          step={step}
-          placeholder={placeholder}
-          onChange={(event) => onChange(event.target.value)}
-        />
-      )}
-    </label>
+  return (
+    <Tooltip title={tooltip} arrow>
+      <label
+        className={`labeled-form-field ${errorMessage ? 'is-error' : ''} ${className ?? ''}`.trim()}
+      >
+        <span className="labeled-form-field__label">
+          {label}
+          {required ? ' *' : ''}
+        </span>
+
+        {multiline ? (
+          <textarea
+            rows={rows}
+            value={value}
+            placeholder={placeholder}
+            onChange={(event) => onChange(event.target.value)}
+          />
+        ) : (
+          <input
+            type={type}
+            value={value}
+            min={min}
+            step={step}
+            placeholder={placeholder}
+            onChange={(event) => onChange(event.target.value)}
+          />
+        )}
+      </label>
+    </Tooltip>
   );
 };

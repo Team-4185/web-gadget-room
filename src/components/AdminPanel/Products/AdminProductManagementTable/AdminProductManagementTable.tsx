@@ -1,5 +1,6 @@
 import { useMemo, useState, type ChangeEvent, type FC } from 'react';
 import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import type {
   AdminProductStatus,
@@ -84,8 +85,13 @@ export const AdminProductManagementTable: FC<IProps> = ({
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<IAdminPanelManagedProduct | null>(null);
   const [imageName, setImageName] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(initialDraft);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof IAdminProductFormState, string>>>(
+    {}
+  );
   const [isSaving, setIsSaving] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const brandOptions = useMemo<ISelectOption[]>(
     () => [
@@ -107,11 +113,16 @@ export const AdminProductManagementTable: FC<IProps> = ({
   }, [products, selectedStatus]);
 
   const handleDraftChange = (field: keyof IAdminProductFormState, value: string) => {
+    if (fieldErrors[field]) {
+      setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+
     setDraftProduct((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    setImageFile(file ?? null);
     setImageName(file?.name ?? '');
   };
 
@@ -129,6 +140,8 @@ export const AdminProductManagementTable: FC<IProps> = ({
     setEditingProduct(null);
     setDraftProduct(initialDraft);
     setImageName('');
+    setImageFile(null);
+    setFieldErrors({});
     setIsAddModalOpen(true);
   };
 
@@ -150,7 +163,9 @@ export const AdminProductManagementTable: FC<IProps> = ({
       batteryCapacity: '',
       description: '',
     });
+    setImageFile(null);
     setImageName('');
+    setFieldErrors({});
   };
 
   const closeAddModal = (force = false) => {
@@ -160,6 +175,8 @@ export const AdminProductManagementTable: FC<IProps> = ({
     setEditingProduct(null);
     setDraftProduct(initialDraft);
     setImageName('');
+    setImageFile(null);
+    setFieldErrors({});
   };
 
   const getNumberValue = (value: string) => {
@@ -176,6 +193,87 @@ export const AdminProductManagementTable: FC<IProps> = ({
     if (stock <= 0) return 'OUT_OF_STOCK';
     if (stock < 10) return 'LOW_STOCK';
     return 'IN_STOCK';
+  };
+
+  const validateDraft = (
+    draft: IAdminProductFormState,
+    payload: CreatePhonePayload
+  ) => {
+    const errors: Partial<Record<keyof IAdminProductFormState, string>> = {};
+
+    if (!payload.name.trim()) {
+      errors.name = 'Name is required.';
+    } else if (payload.name.trim().length < 3 || payload.name.trim().length > 255) {
+      errors.name = 'Name length must be 3 to 255 characters.';
+    }
+
+    if (!payload.brand.trim()) {
+      errors.brand = 'Brand is required.';
+    } else if (payload.brand.trim().length < 3 || payload.brand.trim().length > 255) {
+      errors.brand = 'Brand length must be 3 to 255 characters.';
+    }
+    if (!payload.cpu.trim()) errors.cpu = 'CPU is required.';
+    if (!payload.sku.trim()) {
+      errors.sku = 'SKU is required.';
+    } else if (payload.sku.trim().length < 3 || payload.sku.trim().length > 64) {
+      errors.sku = 'SKU length must be 3 to 64 characters.';
+    }
+
+    const hasValidPriceNumber = /^\d+(?:[.,]\d+)?$/.test(draft.price.trim());
+    if (!draft.price.trim()) {
+      errors.price = 'Price is required.';
+    } else if (!hasValidPriceNumber) {
+      errors.price = 'Price must be a valid number.';
+    } else if (payload.price < 0) {
+      errors.price = 'Price must be 0 or greater.';
+    }
+
+    const hasValidStockNumber = /^\d+$/.test(draft.stock.trim());
+    if (!draft.stock.trim()) {
+      errors.stock = 'Stock is required.';
+    } else if (!hasValidStockNumber) {
+      errors.stock = 'Stock must be a whole number.';
+    } else if (payload.stock < 0) {
+      errors.stock = 'Stock must be 0 or greater.';
+    }
+
+    const hasValidReleaseYear = /^\d{4}$/.test(draft.releaseYear.trim());
+    if (!draft.releaseYear.trim()) {
+      errors.releaseYear = 'Release year is required.';
+    } else if (!hasValidReleaseYear) {
+      errors.releaseYear = 'Release year must be 4 digits (e.g. 2026).';
+    } else if (payload.releaseYear < 1970) {
+      errors.releaseYear = 'Release year must be 1970 or newer.';
+    }
+
+    const hasValidCoresNumber = /^\d+$/.test(draft.coresNumber.trim());
+    if (!draft.coresNumber.trim()) {
+      errors.coresNumber = 'Cores number is required.';
+    } else if (!hasValidCoresNumber) {
+      errors.coresNumber = 'Cores number must be a whole number.';
+    } else if (payload.coresNumber < 1) {
+      errors.coresNumber = 'Cores number must be at least 1.';
+    }
+
+    if (!payload.description.trim()) errors.description = 'Description is required.';
+
+    if (!/^\d+(?:\.\d+)?\smAh$/.test(payload.batteryCapacity)) {
+      errors.batteryCapacity = 'Use format: 4323 mAh';
+    }
+
+    if (!/^\d+(?:\.\d+)?"$/.test(payload.screenSize)) {
+      errors.screenSize = 'Use format: 6.7"';
+    }
+
+    if (!/^\d+\sMP$/.test(payload.frontCamera)) {
+      errors.frontCamera = 'Use format: 12 MP';
+    }
+
+    if (!/^\d+-\d+-\d+\sMP$/.test(payload.mainCamera)) {
+      errors.mainCamera = 'Use exact format: 48-12-12 MP';
+    }
+
+    return errors;
   };
 
   const saveAddModal = async () => {
@@ -202,16 +300,36 @@ export const AdminProductManagementTable: FC<IProps> = ({
       sku: draftProduct.sku.trim(),
     };
 
+    const validationErrors = validateDraft(draftProduct, payload);
+    if (Object.keys(validationErrors).length) {
+      setFieldErrors(validationErrors);
+      enqueueSnackbar('Please fix the highlighted fields.', { variant: 'error' });
+      return;
+    }
+
     setIsSaving(true);
     try {
-      await phonesService.create(payload);
+      await phonesService.create(payload, imageFile);
       closeAddModal(true);
       onRefreshProducts();
     } catch (error) {
       console.error('Failed to create product', error);
+      if (error && typeof error === 'object' && 'response' in error) {
+        console.error('Create product response:', (error as any).response?.data);
+      }
+      enqueueSnackbar('Failed to create product.', { variant: 'error' });
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const fieldTooltips: Partial<Record<keyof IAdminProductFormState, string>> = {
+    releaseYear: 'Format: 2026 (4 digits)',
+    coresNumber: 'Whole number, min 1',
+    screenSize: 'Format: 6.7"',
+    frontCamera: 'Format: 12 MP',
+    mainCamera: 'Format: 48-12-12 MP',
+    batteryCapacity: 'Format: 4323 mAh',
   };
 
   return (
@@ -359,6 +477,8 @@ export const AdminProductManagementTable: FC<IProps> = ({
         imageName={imageName}
         uploadLabel={editingProduct ? 'Edit an image' : 'Upload an image'}
         editDescriptionLabel={editingProduct ? 'Edit description' : 'Description'}
+        fieldErrors={fieldErrors}
+        fieldTooltips={fieldTooltips}
         onClose={closeAddModal}
         onSave={() => void saveAddModal()}
         onValueChange={handleDraftChange}

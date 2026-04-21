@@ -28,6 +28,8 @@ interface IProps {
   values: IAdminProductFormState;
   uploadLabel?: string;
   editDescriptionLabel?: string;
+  fieldErrors?: Partial<Record<keyof IAdminProductFormState, string>>;
+  fieldTooltips?: Partial<Record<keyof IAdminProductFormState, string>>;
   onClose: () => void;
   onSave: () => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
@@ -42,6 +44,8 @@ export const AdminProductModal = ({
   values,
   uploadLabel,
   editDescriptionLabel,
+  fieldErrors,
+  fieldTooltips,
   onClose,
   onSave,
   onValueChange,
@@ -62,13 +66,12 @@ export const AdminProductModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="admin-product-modal__backdrop" role="presentation" onClick={onClose}>
+    <div className="admin-product-modal__backdrop" role="presentation">
       <div
         className="admin-product-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="admin-product-modal-title"
-        onClick={(event) => event.stopPropagation()}
       >
         <div className="admin-product-modal__header">
           <Typography
@@ -95,6 +98,8 @@ export const AdminProductModal = ({
             required
             value={values.name}
             placeholder="Enter the product name"
+            errorMessage={fieldErrors?.name}
+            tooltipText={fieldTooltips?.name}
             onChange={(value) => onValueChange('name', value)}
           />
 
@@ -103,6 +108,8 @@ export const AdminProductModal = ({
             required
             value={values.sku}
             placeholder="XXX-XX-XXX"
+            errorMessage={fieldErrors?.sku}
+            tooltipText={fieldTooltips?.sku}
             onChange={(value) => onValueChange('sku', value)}
           />
 
@@ -111,6 +118,8 @@ export const AdminProductModal = ({
             required
             value={values.brand}
             placeholder="Enter the brand"
+            errorMessage={fieldErrors?.brand}
+            tooltipText={fieldTooltips?.brand}
             onChange={(value) => onValueChange('brand', value)}
           />
 
@@ -119,9 +128,11 @@ export const AdminProductModal = ({
             required
             type="number"
             min="0"
-            step="0.01"
+            step="1"
             value={values.price}
             placeholder="0.00"
+            errorMessage={fieldErrors?.price}
+            tooltipText={fieldTooltips?.price}
             onChange={(value) => onValueChange('price', value)}
           />
 
@@ -130,8 +141,11 @@ export const AdminProductModal = ({
             required
             type="number"
             min="0"
+            step="1"
             value={values.stock}
             placeholder="0"
+            errorMessage={fieldErrors?.stock}
+            tooltipText={fieldTooltips?.stock}
             onChange={(value) => onValueChange('stock', value)}
           />
 
@@ -142,6 +156,8 @@ export const AdminProductModal = ({
             min="0"
             value={values.releaseYear}
             placeholder="2026"
+            errorMessage={fieldErrors?.releaseYear}
+            tooltipText={fieldTooltips?.releaseYear}
             onChange={(value) => onValueChange('releaseYear', value)}
           />
 
@@ -150,6 +166,8 @@ export const AdminProductModal = ({
             required
             value={values.cpu}
             placeholder="Snapdragon 8 Gen 3"
+            errorMessage={fieldErrors?.cpu}
+            tooltipText={fieldTooltips?.cpu}
             onChange={(value) => onValueChange('cpu', value)}
           />
 
@@ -160,6 +178,8 @@ export const AdminProductModal = ({
             min="1"
             value={values.coresNumber}
             placeholder="8"
+            errorMessage={fieldErrors?.coresNumber}
+            tooltipText={fieldTooltips?.coresNumber}
             onChange={(value) => onValueChange('coresNumber', value)}
           />
 
@@ -168,6 +188,8 @@ export const AdminProductModal = ({
             required
             value={values.screenSize}
             placeholder='6.8"'
+            errorMessage={fieldErrors?.screenSize}
+            tooltipText={fieldTooltips?.screenSize}
             onChange={(value) => onValueChange('screenSize', value)}
           />
 
@@ -176,6 +198,8 @@ export const AdminProductModal = ({
             required
             value={values.frontCamera}
             placeholder="12 MP"
+            errorMessage={fieldErrors?.frontCamera}
+            tooltipText={fieldTooltips?.frontCamera}
             onChange={(value) => onValueChange('frontCamera', value)}
           />
 
@@ -184,6 +208,8 @@ export const AdminProductModal = ({
             required
             value={values.mainCamera}
             placeholder="64-12-12 MP"
+            errorMessage={fieldErrors?.mainCamera}
+            tooltipText={fieldTooltips?.mainCamera}
             onChange={(value) => onValueChange('mainCamera', value)}
           />
 
@@ -192,6 +218,8 @@ export const AdminProductModal = ({
             required
             value={values.batteryCapacity}
             placeholder="5000 mAh"
+            errorMessage={fieldErrors?.batteryCapacity}
+            tooltipText={fieldTooltips?.batteryCapacity}
             onChange={(value) => onValueChange('batteryCapacity', value)}
           />
 
@@ -200,6 +228,8 @@ export const AdminProductModal = ({
             label={editDescriptionLabel ?? 'Description'}
             value={values.description}
             placeholder="Enter a product description"
+            errorMessage={fieldErrors?.description}
+            tooltipText={fieldTooltips?.description}
             multiline
             rows={5}
             onChange={(value) => onValueChange('description', value)}

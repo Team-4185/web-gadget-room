@@ -4,8 +4,15 @@ import type { ApiPhone, ApiPhoneImage, CreatePhonePayload } from '@/core/types';
 const imageObjectUrlCache = new Map<string, string>();
 
 export const phonesService = {
-  async create(payload: CreatePhonePayload) {
-    const { data } = await api.post<ApiPhone>('/api/v1/phones', payload);
+  async create(payload: CreatePhonePayload, imageFile?: File | null) {
+    const formData = new FormData();
+    formData.append('phone', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    const { data } = await api.post<ApiPhone>('/api/v1/phones', formData);
     return data;
   },
   async getById(id: number, signal?: AbortSignal) {

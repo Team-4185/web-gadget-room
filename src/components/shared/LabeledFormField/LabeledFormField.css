@@ -40,3 +40,12 @@
 .labeled-form-field textarea::placeholder {
   color: var(--black-opacity-65);
 }
+
+.labeled-form-field.is-error {
+  border-color: var(--coralRed);
+  box-shadow: 0 0 6.9px 0 rgb(232 64 90 / 25%);
+}
+
+.labeled-form-field.is-error .labeled-form-field__label {
+  color: var(--coralRed);
+}
