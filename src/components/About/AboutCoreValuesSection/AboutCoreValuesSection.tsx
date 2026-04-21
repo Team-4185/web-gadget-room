@@ -40,9 +40,10 @@ export const AboutCoreValuesSection = () => {
               <Typography
                 component="p"
                 sx={{
-                  color: 'var(--muted-violet)',
-                  fontSize: '15px',
+                  color: 'var(--dark-gray-violet)',
+                  fontSize: '16px',
                   lineHeight: '20px',
+                  fontWeight: 600,
                   textTransform: 'uppercase',
                 }}
               >
@@ -86,4 +87,3 @@ export const AboutCoreValuesSection = () => {
     </section>
   );
 };
-

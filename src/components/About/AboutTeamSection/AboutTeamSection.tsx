@@ -10,7 +10,7 @@ export const AboutTeamSection = () => {
       <Container disableGutters>
         <div className="about-team__eyebrow-wrap">
           <Typography variant="aboutSectionHeading">
-            THE PEOPLE BEHIND <span style={{ color: 'var(--light-violet)' }}>GADGETROOM</span>
+            THE PEOPLE BEHIND <span style={{ color: 'var(--blue-violet)' }}>GADGETROOM</span>
           </Typography>
         </div>
         <div className="about-team__title-wrap">
@@ -43,7 +43,7 @@ export const AboutTeamSection = () => {
                 <Typography
                   component="p"
                   sx={{
-                    color: 'var(--muted-violet)',
+                    color: 'var(--dark-gray-violet)',
                     fontSize: '20px',
                     lineHeight: '20px',
                     letterSpacing: '-1px',
@@ -73,4 +73,3 @@ export const AboutTeamSection = () => {
     </section>
   );
 };
-
