@@ -62,7 +62,7 @@ export const theme = createTheme({
       fontWeight: 600,
       letterSpacing: '-2px',
       textTransform: 'uppercase',
-      color: 'var(--grey-violet)',
+      color: 'var(--dark-gray-violet)',
     },
   },
   breakpoints: {
