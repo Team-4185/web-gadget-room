@@ -27,6 +27,9 @@ export type ApiPhone = {
   frontCamera: string;
   mainCamera: string;
   batteryCapacity: string;
+  sku?: string;
+  stock?: number;
+  status?: PhoneStockStatus;
   images: ApiPhoneImage[];
 };
 

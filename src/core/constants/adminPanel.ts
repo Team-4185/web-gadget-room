@@ -1,18 +1,21 @@
 import type {
   AdminOrderStatus,
   AdminAnalyticsRange,
+  AdminProductStatus,
   IAdminManagedOrderItem,
   IAdminOrderKpiItem,
   IAdminPanelBrandItem,
   IAdminSalesAnalyticsPoint,
   IAdminCustomerItem,
   IAdminCustomerKpiItem,
+  IAdminProductFormState,
   IAdminPanelLowStockItem,
   IAdminPanelMenuItem,
   IAdminPanelManagedProduct,
   IAdminPanelOrderItem,
   IAdminPanelProductItem,
   IAdminPanelStatItem,
+  ISelectOption,
 } from '@/core/types';
 import {
   ArrowRightUp,
@@ -157,7 +160,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'Apple',
     price: '$1,299',
     stock: '45 pcs',
-    status: 'in_stock',
+    status: 'IN_STOCK',
     image: '/icons/GraySquare.svg',
   },
   {
@@ -167,7 +170,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'Samsung',
     price: '$1,199',
     stock: '62 pcs',
-    status: 'in_stock',
+    status: 'IN_STOCK',
     image: '/icons/GraySquare.svg',
   },
   {
@@ -177,7 +180,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'Google',
     price: '$999',
     stock: '38 pcs',
-    status: 'in_stock',
+    status: 'IN_STOCK',
     image: '/icons/GraySquare.svg',
   },
   {
@@ -187,7 +190,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'Xiaomi',
     price: '$849',
     stock: '89 pcs',
-    status: 'in_stock',
+    status: 'IN_STOCK',
     image: '/icons/GraySquare.svg',
   },
   {
@@ -197,7 +200,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'OnePlus',
     price: '$799',
     stock: '54 pcs',
-    status: 'in_stock',
+    status: 'IN_STOCK',
     image: '/icons/GraySquare.svg',
   },
   {
@@ -207,10 +210,50 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     brand: 'Apple',
     price: '$699',
     stock: '8 pcs',
-    status: 'low_stock',
+    status: 'LOW_STOCK',
     image: '/icons/GraySquare.svg',
   },
 ];
+
+export const EMPTY_ADMIN_PRODUCT_FORM: IAdminProductFormState = {
+  name: '',
+  sku: '',
+  brand: '',
+  price: '',
+  stock: '',
+  releaseYear: '',
+  cpu: '',
+  coresNumber: '',
+  screenSize: '',
+  frontCamera: '',
+  mainCamera: '',
+  batteryCapacity: '',
+  description: '',
+};
+
+export const ADMIN_PRODUCT_STATUS_LABELS: Record<AdminProductStatus, string> = {
+  IN_STOCK: 'In Stock',
+  LOW_STOCK: 'Low Stock',
+  OUT_OF_STOCK: 'Out of stock',
+};
+
+export const ADMIN_PRODUCT_STATUS_OPTIONS: ISelectOption[] = [
+  { value: '', name: 'All statuses' },
+  { value: 'IN_STOCK', name: 'In Stock' },
+  { value: 'LOW_STOCK', name: 'Low Stock' },
+  { value: 'OUT_OF_STOCK', name: 'Out of stock' },
+];
+
+export const ADMIN_PRODUCT_FIELD_TOOLTIPS: Partial<
+  Record<keyof IAdminProductFormState, string>
+> = {
+  releaseYear: 'Format: 2026 (4 digits)',
+  coresNumber: 'Whole number, min 1',
+  screenSize: 'Format: 6.7"',
+  frontCamera: 'Format: 12 MP',
+  mainCamera: 'Format: 48-12-12 MP',
+  batteryCapacity: 'Format: 4323 mAh',
+};
 
 export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
   {

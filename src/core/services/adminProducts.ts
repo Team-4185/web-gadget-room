@@ -1,4 +1,5 @@
 import { api } from '@/core/config';
+import { phonesService } from './phones';
 import type {
   AdminProductStatus,
   AdminProductsRequestParams,
@@ -31,9 +32,9 @@ const formatPrice = (value: number) =>
 const getFallbackStock = (id: number) => 10 + (id % 40);
 
 const getStatus = (stock: number): AdminProductStatus => {
-  if (stock <= 0) return 'no_stock';
-  if (stock < 10) return 'low_stock';
-  return 'in_stock';
+  if (stock <= 0) return 'OUT_OF_STOCK';
+  if (stock < 10) return 'LOW_STOCK';
+  return 'IN_STOCK';
 };
 
 const mapProduct = (item: ApiAdminProduct): IAdminPanelManagedProduct => {
@@ -48,7 +49,7 @@ const mapProduct = (item: ApiAdminProduct): IAdminPanelManagedProduct => {
     price: formatPrice(item.price),
     stock: `${stockNumber} pcs`,
     status,
-    image: item.previewImage ?? FALLBACK_IMAGE,
+    image: item.previewImage?.url ?? FALLBACK_IMAGE,
   };
 };
 
@@ -62,27 +63,98 @@ const mapResponse = (payload: ApiAdminProductsPage): IAdminProductsPageData => (
   last: payload.last,
 });
 
+const resolveProductImages = async (products: IAdminPanelManagedProduct[]) => {
+  const imageResults = await Promise.allSettled(
+    products.map((product) =>
+      product.image === FALLBACK_IMAGE
+        ? Promise.resolve(FALLBACK_IMAGE)
+        : phonesService.getImageObjectUrl(product.image)
+    )
+  );
+
+  return products.map((product, index) => ({
+    ...product,
+    image:
+      imageResults[index]?.status === 'fulfilled'
+        ? imageResults[index].value
+        : FALLBACK_IMAGE,
+  }));
+};
+
+const fetchProductsPage = async ({
+  page,
+  size,
+  search = '',
+  brand = '',
+  status = '',
+  signal,
+}: {
+  page: number;
+  size: number;
+  search?: string;
+  brand?: string;
+  status?: AdminProductStatus | '';
+  signal?: AbortSignal;
+}) => {
+  const trimmedSearch = search.trim();
+  const trimmedBrand = brand.trim();
+
+  const { data } = await api.get<ApiAdminProductsPage>('/api/v1/admin/products', {
+    params: {
+      page,
+      size,
+      minPrice: 0,
+      maxPrice: MAX_PRICE_FILTER,
+      sort: 'releaseYear_desc',
+      ...(trimmedSearch ? { search: trimmedSearch } : {}),
+      ...(trimmedBrand ? { brand: trimmedBrand } : {}),
+      ...(status ? { status } : {}),
+    },
+    signal,
+  });
+
+  return data;
+};
+
 export const adminProductsService = {
   async getProducts({
     page,
     size,
     search,
     brand,
+    status,
     signal,
   }: AdminProductsRequestParams & { signal?: AbortSignal }): Promise<IAdminProductsPageData> {
-    const { data } = await api.get<ApiAdminProductsPage>('/api/v1/admin/products', {
-      params: {
-        page,
-        size,
-        search,
-        brand,
-        minPrice: 0,
-        maxPrice: MAX_PRICE_FILTER,
-        sort: 'releaseYear_desc',
-      },
-      signal,
-    });
+    const data = await fetchProductsPage({ page, size, search, brand, status, signal });
+    const response = mapResponse(data);
+    const products = await resolveProductImages(response.products);
 
-    return mapResponse(data);
+    return {
+      ...response,
+      products,
+    };
+  },
+  async getAvailableBrands(signal?: AbortSignal) {
+    const PAGE_SIZE = 100;
+    const firstPage = await fetchProductsPage({ page: 1, size: PAGE_SIZE, signal });
+    const uniqueBrands = new Set(
+      firstPage.content.map((item) => item.brand.trim()).filter(Boolean)
+    );
+
+    if (firstPage.totalPages > 1) {
+      const nextPagePromises = Array.from({ length: firstPage.totalPages - 1 }, (_, index) =>
+        fetchProductsPage({ page: index + 2, size: PAGE_SIZE, signal })
+      );
+      const restPages = await Promise.all(nextPagePromises);
+
+      restPages.forEach((pageData) => {
+        pageData.content.forEach((item) => {
+          const brand = item.brand.trim();
+          if (brand) uniqueBrands.add(brand);
+        });
+      });
+    }
+
+    return Array.from(uniqueBrands).sort((a, b) => a.localeCompare(b));
   },
 };

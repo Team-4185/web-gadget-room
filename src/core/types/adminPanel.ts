@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
+import type { ApiPhoneImage, PhoneStockStatus } from './product';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
 
@@ -36,7 +37,7 @@ export interface IAdminPanelProductItem {
   image: string;
 }
 
-export type AdminProductStatus = 'in_stock' | 'low_stock' | 'no_stock';
+export type AdminProductStatus = PhoneStockStatus;
 
 export interface IAdminPanelManagedProduct {
   id: string;
@@ -48,6 +49,24 @@ export interface IAdminPanelManagedProduct {
   status: AdminProductStatus;
   image: string;
 }
+
+export interface IAdminProductFormState {
+  name: string;
+  sku: string;
+  brand: string;
+  price: string;
+  stock: string;
+  releaseYear: string;
+  cpu: string;
+  coresNumber: string;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  batteryCapacity: string;
+  description: string;
+}
+
+export type AdminProductFormErrors = Partial<Record<keyof IAdminProductFormState, string>>;
 
 export interface IAdminPanelOrderItem {
   id: string;
@@ -126,7 +145,7 @@ export type ApiAdminProduct = {
   brand: string;
   price: number;
   releaseYear: number;
-  previewImage: string | null;
+  previewImage: ApiPhoneImage | null;
   sku?: string | null;
   stock?: number | null;
   status?: AdminProductStatus | null;
@@ -147,4 +166,5 @@ export type AdminProductsRequestParams = {
   size: number;
   search: string;
   brand: string;
+  status: AdminProductStatus | '';
 };

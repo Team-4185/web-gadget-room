@@ -3,24 +3,37 @@ import { Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import type {
+  AdminProductFormErrors,
   AdminProductStatus,
-  CreatePhonePayload,
+  IAdminProductFormState,
   IAdminPanelManagedProduct,
-  ISelectOption,
-  PhoneStockStatus,
 } from '@/core/types';
+import {
+  ADMIN_PRODUCT_FIELD_TOOLTIPS,
+  ADMIN_PRODUCT_STATUS_LABELS,
+  ADMIN_PRODUCT_STATUS_OPTIONS,
+  EMPTY_ADMIN_PRODUCT_FORM,
+} from '@/core/constants';
+import {
+  buildAdminPhonePayload,
+  buildAdminProductBrandOptions,
+  mapAdminProductToDraft,
+  mapPhoneToAdminProductDraft,
+  validateAdminProductDraft,
+} from '@/core/utils';
 import { Button, Search, Select } from '@/components/ui';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
 import { phonesService } from '@/core/services';
 import {
   AdminProductModal,
-  type IAdminProductFormState,
+  type IAdminProductModalImage,
 } from '@/components/AdminPanel/Products/AdminProductModal/AdminProductModal';
 
 import './AdminProductManagementTable.css';
 
 interface IProps {
   products: IAdminPanelManagedProduct[];
+  availableBrands: string[];
   totalProducts: number;
   currentPage: number;
   totalPages: number;
@@ -29,28 +42,18 @@ interface IProps {
   isLoading: boolean;
   searchQuery: string;
   selectedBrand: string;
+  selectedStatus: AdminProductStatus | '';
   onPreviousPage: () => void;
   onNextPage: () => void;
   onSearchChange: (value: string) => void;
   onBrandChange: (value: string) => void;
+  onStatusChange: (value: AdminProductStatus | '') => void;
   onRefreshProducts: () => void;
 }
 
-const STATUS_LABELS = {
-  in_stock: 'In Stock',
-  low_stock: 'Low Stock',
-  no_stock: 'No Stock',
-} as const;
-
-const STATUS_OPTIONS: ISelectOption[] = [
-  { value: '', name: 'All statuses' },
-  { value: 'in_stock', name: 'In Stock' },
-  { value: 'low_stock', name: 'Low Stock' },
-  { value: 'no_stock', name: 'No Stock' },
-];
-
 export const AdminProductManagementTable: FC<IProps> = ({
   products,
+  availableBrands,
   totalProducts,
   currentPage,
   totalPages,
@@ -59,58 +62,30 @@ export const AdminProductManagementTable: FC<IProps> = ({
   isLoading,
   searchQuery,
   selectedBrand,
+  selectedStatus,
   onPreviousPage,
   onNextPage,
   onSearchChange,
   onBrandChange,
+  onStatusChange,
   onRefreshProducts,
 }) => {
-  const initialDraft: IAdminProductFormState = {
-    name: '',
-    sku: '',
-    brand: '',
-    price: '',
-    stock: '',
-    releaseYear: '',
-    cpu: '',
-    coresNumber: '',
-    screenSize: '',
-    frontCamera: '',
-    mainCamera: '',
-    batteryCapacity: '',
-    description: '',
-  };
-
-  const [selectedStatus, setSelectedStatus] = useState<AdminProductStatus | ''>('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<IAdminPanelManagedProduct | null>(null);
   const [imageName, setImageName] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(initialDraft);
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof IAdminProductFormState, string>>>(
-    {}
+  const [productImages, setProductImages] = useState<IAdminProductModalImage[]>([]);
+  const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(
+    EMPTY_ADMIN_PRODUCT_FORM
   );
+  const [fieldErrors, setFieldErrors] = useState<AdminProductFormErrors>({});
   const [isSaving, setIsSaving] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const brandOptions = useMemo<ISelectOption[]>(
-    () => [
-      { value: '', name: 'All brands' },
-      ...Array.from(new Set(products.map((product) => product.brand))).map((brand) => ({
-        value: brand.toLowerCase(),
-        name: brand,
-      })),
-    ],
-    [products]
+  const brandOptions = useMemo(
+    () => buildAdminProductBrandOptions(availableBrands),
+    [availableBrands]
   );
-
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesStatus = !selectedStatus || product.status === selectedStatus;
-
-      return matchesStatus;
-    });
-  }, [products, selectedStatus]);
 
   const handleDraftChange = (field: keyof IAdminProductFormState, value: string) => {
     if (fieldErrors[field]) {
@@ -126,46 +101,56 @@ export const AdminProductManagementTable: FC<IProps> = ({
     setImageName(file?.name ?? '');
   };
 
-  const getNumericPrice = (value: string) => {
-    const parsed = Number(value.replace(/[^\d.,]/g, '').replace(/,/g, ''));
-    return Number.isFinite(parsed) ? String(parsed) : '';
-  };
-
-  const getNumericStock = (value: string) => {
-    const parsed = Number(value.replace(/[^\d]/g, ''));
-    return Number.isFinite(parsed) ? String(parsed) : '';
-  };
-
   const openAddModal = () => {
     setEditingProduct(null);
-    setDraftProduct(initialDraft);
+    setDraftProduct(EMPTY_ADMIN_PRODUCT_FORM);
     setImageName('');
     setImageFile(null);
+    setProductImages([]);
     setFieldErrors({});
     setIsAddModalOpen(true);
   };
 
-  const openEditModal = (product: IAdminPanelManagedProduct) => {
+  const loadProductImages = async (productId: number) => {
+    const images = await phonesService.getImages(productId);
+    const imageUrlResults = await Promise.allSettled(
+      images.map((image) => phonesService.getImageObjectUrl(image.url))
+    );
+
+    setProductImages(
+      images.map((image, index) => ({
+        id: image.id,
+        name: image.name,
+        src:
+          imageUrlResults[index]?.status === 'fulfilled'
+            ? imageUrlResults[index].value
+            : image.url,
+      }))
+    );
+  };
+
+  const openEditModal = async (product: IAdminPanelManagedProduct) => {
     setIsAddModalOpen(false);
     setEditingProduct(product);
-    setDraftProduct({
-      name: product.title,
-      sku: product.sku,
-      brand: product.brand,
-      price: getNumericPrice(product.price),
-      stock: getNumericStock(product.stock),
-      releaseYear: '',
-      cpu: '',
-      coresNumber: '',
-      screenSize: '',
-      frontCamera: '',
-      mainCamera: '',
-      batteryCapacity: '',
-      description: '',
-    });
+    setFieldErrors({});
     setImageFile(null);
     setImageName('');
-    setFieldErrors({});
+    setProductImages([]);
+
+    try {
+      const phone = await phonesService.getById(Number(product.id));
+      setDraftProduct(mapPhoneToAdminProductDraft(phone, product));
+
+      try {
+        await loadProductImages(Number(product.id));
+      } catch (error) {
+        console.error('Failed to load product images', error);
+        enqueueSnackbar('Failed to load product images.', { variant: 'warning' });
+      }
+    } catch (error) {
+      setDraftProduct(mapAdminProductToDraft(product));
+      enqueueSnackbar('Failed to load full product details for editing.', { variant: 'warning' });
+    }
   };
 
   const closeAddModal = (force = false) => {
@@ -173,134 +158,31 @@ export const AdminProductManagementTable: FC<IProps> = ({
 
     setIsAddModalOpen(false);
     setEditingProduct(null);
-    setDraftProduct(initialDraft);
+    setDraftProduct(EMPTY_ADMIN_PRODUCT_FORM);
     setImageName('');
     setImageFile(null);
+    setProductImages([]);
     setFieldErrors({});
   };
 
-  const getNumberValue = (value: string) => {
-    const parsed = Number(value.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
-    return Number.isFinite(parsed) ? parsed : 0;
-  };
+  const deleteProductImage = async (imageId: number) => {
+    if (!editingProduct) return;
 
-  const getIntegerValue = (value: string) => {
-    const parsed = Number(value.replace(/[^\d]/g, ''));
-    return Number.isFinite(parsed) ? parsed : 0;
-  };
-
-  const mapStatusByStock = (stock: number): PhoneStockStatus => {
-    if (stock <= 0) return 'OUT_OF_STOCK';
-    if (stock < 10) return 'LOW_STOCK';
-    return 'IN_STOCK';
-  };
-
-  const validateDraft = (
-    draft: IAdminProductFormState,
-    payload: CreatePhonePayload
-  ) => {
-    const errors: Partial<Record<keyof IAdminProductFormState, string>> = {};
-
-    if (!payload.name.trim()) {
-      errors.name = 'Name is required.';
-    } else if (payload.name.trim().length < 3 || payload.name.trim().length > 255) {
-      errors.name = 'Name length must be 3 to 255 characters.';
+    try {
+      await phonesService.deleteImage(Number(editingProduct.id), imageId);
+      setProductImages((prev) => prev.filter((image) => image.id !== imageId));
+      onRefreshProducts();
+    } catch (error) {
+      console.error('Failed to delete product image', error);
+      enqueueSnackbar('Failed to delete product image.', { variant: 'error' });
     }
-
-    if (!payload.brand.trim()) {
-      errors.brand = 'Brand is required.';
-    } else if (payload.brand.trim().length < 3 || payload.brand.trim().length > 255) {
-      errors.brand = 'Brand length must be 3 to 255 characters.';
-    }
-    if (!payload.cpu.trim()) errors.cpu = 'CPU is required.';
-    if (!payload.sku.trim()) {
-      errors.sku = 'SKU is required.';
-    } else if (payload.sku.trim().length < 3 || payload.sku.trim().length > 64) {
-      errors.sku = 'SKU length must be 3 to 64 characters.';
-    }
-
-    const hasValidPriceNumber = /^\d+(?:[.,]\d+)?$/.test(draft.price.trim());
-    if (!draft.price.trim()) {
-      errors.price = 'Price is required.';
-    } else if (!hasValidPriceNumber) {
-      errors.price = 'Price must be a valid number.';
-    } else if (payload.price < 0) {
-      errors.price = 'Price must be 0 or greater.';
-    }
-
-    const hasValidStockNumber = /^\d+$/.test(draft.stock.trim());
-    if (!draft.stock.trim()) {
-      errors.stock = 'Stock is required.';
-    } else if (!hasValidStockNumber) {
-      errors.stock = 'Stock must be a whole number.';
-    } else if (payload.stock < 0) {
-      errors.stock = 'Stock must be 0 or greater.';
-    }
-
-    const hasValidReleaseYear = /^\d{4}$/.test(draft.releaseYear.trim());
-    if (!draft.releaseYear.trim()) {
-      errors.releaseYear = 'Release year is required.';
-    } else if (!hasValidReleaseYear) {
-      errors.releaseYear = 'Release year must be 4 digits (e.g. 2026).';
-    } else if (payload.releaseYear < 1970) {
-      errors.releaseYear = 'Release year must be 1970 or newer.';
-    }
-
-    const hasValidCoresNumber = /^\d+$/.test(draft.coresNumber.trim());
-    if (!draft.coresNumber.trim()) {
-      errors.coresNumber = 'Cores number is required.';
-    } else if (!hasValidCoresNumber) {
-      errors.coresNumber = 'Cores number must be a whole number.';
-    } else if (payload.coresNumber < 1) {
-      errors.coresNumber = 'Cores number must be at least 1.';
-    }
-
-    if (!payload.description.trim()) errors.description = 'Description is required.';
-
-    if (!/^\d+(?:\.\d+)?\smAh$/.test(payload.batteryCapacity)) {
-      errors.batteryCapacity = 'Use format: 4323 mAh';
-    }
-
-    if (!/^\d+(?:\.\d+)?"$/.test(payload.screenSize)) {
-      errors.screenSize = 'Use format: 6.7"';
-    }
-
-    if (!/^\d+\sMP$/.test(payload.frontCamera)) {
-      errors.frontCamera = 'Use format: 12 MP';
-    }
-
-    if (!/^\d+-\d+-\d+\sMP$/.test(payload.mainCamera)) {
-      errors.mainCamera = 'Use exact format: 48-12-12 MP';
-    }
-
-    return errors;
   };
 
   const saveAddModal = async () => {
-    if (editingProduct) {
-      closeAddModal();
-      return;
-    }
+    const resolvedStatus = editingProduct?.status ?? 'IN_STOCK';
+    const payload = buildAdminPhonePayload(draftProduct, resolvedStatus);
 
-    const stock = getIntegerValue(draftProduct.stock);
-    const payload: CreatePhonePayload = {
-      releaseYear: getIntegerValue(draftProduct.releaseYear),
-      batteryCapacity: draftProduct.batteryCapacity.trim(),
-      brand: draftProduct.brand.trim(),
-      cpu: draftProduct.cpu.trim(),
-      price: getNumberValue(draftProduct.price),
-      name: draftProduct.name.trim(),
-      screenSize: draftProduct.screenSize.trim(),
-      frontCamera: draftProduct.frontCamera.trim(),
-      mainCamera: draftProduct.mainCamera.trim(),
-      status: mapStatusByStock(stock),
-      stock,
-      description: draftProduct.description.trim(),
-      coresNumber: Math.max(1, getIntegerValue(draftProduct.coresNumber)),
-      sku: draftProduct.sku.trim(),
-    };
-
-    const validationErrors = validateDraft(draftProduct, payload);
+    const validationErrors = validateAdminProductDraft(draftProduct, payload);
     if (Object.keys(validationErrors).length) {
       setFieldErrors(validationErrors);
       enqueueSnackbar('Please fix the highlighted fields.', { variant: 'error' });
@@ -309,27 +191,27 @@ export const AdminProductManagementTable: FC<IProps> = ({
 
     setIsSaving(true);
     try {
-      await phonesService.create(payload, imageFile);
+      if (editingProduct) {
+        await phonesService.update(Number(editingProduct.id), payload);
+        if (imageFile) {
+          await phonesService.addImage(Number(editingProduct.id), imageFile);
+        }
+      } else {
+        await phonesService.create(payload, imageFile);
+      }
       closeAddModal(true);
       onRefreshProducts();
     } catch (error) {
-      console.error('Failed to create product', error);
+      console.error(`Failed to ${editingProduct ? 'update' : 'create'} product`, error);
       if (error && typeof error === 'object' && 'response' in error) {
-        console.error('Create product response:', (error as any).response?.data);
+        console.error('Product request response:', (error as any).response?.data);
       }
-      enqueueSnackbar('Failed to create product.', { variant: 'error' });
+      enqueueSnackbar(`Failed to ${editingProduct ? 'update' : 'create'} product.`, {
+        variant: 'error',
+      });
     } finally {
       setIsSaving(false);
     }
-  };
-
-  const fieldTooltips: Partial<Record<keyof IAdminProductFormState, string>> = {
-    releaseYear: 'Format: 2026 (4 digits)',
-    coresNumber: 'Whole number, min 1',
-    screenSize: 'Format: 6.7"',
-    frontCamera: 'Format: 12 MP',
-    mainCamera: 'Format: 48-12-12 MP',
-    batteryCapacity: 'Format: 4323 mAh',
   };
 
   return (
@@ -382,7 +264,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
         />
 
         <Select
-          data={STATUS_OPTIONS}
+          data={ADMIN_PRODUCT_STATUS_OPTIONS}
           maxWidth="100%"
           height="46px"
           color="var(--black)"
@@ -390,7 +272,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
           selectPadding="12px"
           value={selectedStatus}
           styleVariant="subtleBorder"
-          onChange={(value) => setSelectedStatus(value as AdminProductStatus | '')}
+          onChange={(value) => onStatusChange(value as AdminProductStatus | '')}
           placeholder="All statuses"
         />
       </div>
@@ -409,7 +291,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product) => (
+            {products.map((product) => (
               <tr key={product.id}>
                 <td className="admin-product-management__product-cell">
                   <img src={product.image} alt={product.title} />
@@ -423,7 +305,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
                 <td className="is-strong">{product.stock}</td>
                 <td>
                   <span className={`admin-product-management__status is-${product.status}`}>
-                    {STATUS_LABELS[product.status]}
+                    {ADMIN_PRODUCT_STATUS_LABELS[product.status]}
                   </span>
                 </td>
                 <td>
@@ -434,7 +316,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
                     <button
                       type="button"
                       aria-label={`Edit ${product.title}`}
-                      onClick={() => openEditModal(product)}
+                      onClick={() => void openEditModal(product)}
                     >
                       <Edit />
                     </button>
@@ -451,7 +333,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
 
       <div className="admin-product-management__footer">
         <Typography variant="body2" component="p">
-          Showing <span>{filteredProducts.length}</span> of <span>{totalProducts}</span> products
+          Total products: <span>{totalProducts}</span>
           {` - Page ${currentPage} of ${totalPages}`}
         </Typography>
         <div className="admin-product-management__pager">
@@ -477,12 +359,14 @@ export const AdminProductManagementTable: FC<IProps> = ({
         imageName={imageName}
         uploadLabel={editingProduct ? 'Edit an image' : 'Upload an image'}
         editDescriptionLabel={editingProduct ? 'Edit description' : 'Description'}
+        images={editingProduct ? productImages : undefined}
         fieldErrors={fieldErrors}
-        fieldTooltips={fieldTooltips}
+        fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
         onClose={closeAddModal}
         onSave={() => void saveAddModal()}
         onValueChange={handleDraftChange}
         onImageChange={handleImageChange}
+        onImageDelete={(imageId) => void deleteProductImage(imageId)}
       />
     </section>
   );

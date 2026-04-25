@@ -5,3 +5,4 @@ export * from './tokenStorage';
 export * from './formatDisplayName';
 export * from './products';
 export * from './cartStorage';
+export * from './adminProductManagement';

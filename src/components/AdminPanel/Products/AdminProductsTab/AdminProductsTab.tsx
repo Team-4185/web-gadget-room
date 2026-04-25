@@ -1,10 +1,11 @@
 import { AdminProductManagementTable } from '@/components';
-import type { IAdminPanelManagedProduct } from '@/core/types';
+import type { AdminProductStatus, IAdminPanelManagedProduct } from '@/core/types';
 
 import './AdminProductsTab.css';
 
 interface IProps {
   products: IAdminPanelManagedProduct[];
+  availableBrands: string[];
   totalProducts: number;
   currentPage: number;
   totalPages: number;
@@ -13,15 +14,18 @@ interface IProps {
   isLoading: boolean;
   searchQuery: string;
   selectedBrand: string;
+  selectedStatus: AdminProductStatus | '';
   onPreviousPage: () => void;
   onNextPage: () => void;
   onSearchChange: (value: string) => void;
   onBrandChange: (value: string) => void;
+  onStatusChange: (value: AdminProductStatus | '') => void;
   onRefreshProducts: () => void;
 }
 
 export const AdminProductsTab = ({
   products,
+  availableBrands,
   totalProducts,
   currentPage,
   totalPages,
@@ -30,16 +34,19 @@ export const AdminProductsTab = ({
   isLoading,
   searchQuery,
   selectedBrand,
+  selectedStatus,
   onPreviousPage,
   onNextPage,
   onSearchChange,
   onBrandChange,
+  onStatusChange,
   onRefreshProducts,
 }: IProps) => {
   return (
     <div className="admin-products-tab" aria-label="Products management">
       <AdminProductManagementTable
         products={products}
+        availableBrands={availableBrands}
         totalProducts={totalProducts}
         currentPage={currentPage}
         totalPages={totalPages}
@@ -48,10 +55,12 @@ export const AdminProductsTab = ({
         isLoading={isLoading}
         searchQuery={searchQuery}
         selectedBrand={selectedBrand}
+        selectedStatus={selectedStatus}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}
         onSearchChange={onSearchChange}
         onBrandChange={onBrandChange}
+        onStatusChange={onStatusChange}
         onRefreshProducts={onRefreshProducts}
       />
     </div>

@@ -2,22 +2,13 @@ import { useEffect, type ChangeEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { LabeledFormField } from '@/components/shared';
+import type { IAdminProductFormState } from '@/core/types';
 import './AdminProductModal.css';
 
-export interface IAdminProductFormState {
+export interface IAdminProductModalImage {
+  id: number;
   name: string;
-  sku: string;
-  brand: string;
-  price: string;
-  stock: string;
-  releaseYear: string;
-  cpu: string;
-  coresNumber: string;
-  screenSize: string;
-  frontCamera: string;
-  mainCamera: string;
-  batteryCapacity: string;
-  description: string;
+  src: string;
 }
 
 interface IProps {
@@ -28,12 +19,14 @@ interface IProps {
   values: IAdminProductFormState;
   uploadLabel?: string;
   editDescriptionLabel?: string;
+  images?: IAdminProductModalImage[];
   fieldErrors?: Partial<Record<keyof IAdminProductFormState, string>>;
   fieldTooltips?: Partial<Record<keyof IAdminProductFormState, string>>;
   onClose: () => void;
   onSave: () => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
   onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onImageDelete?: (imageId: number) => void;
 }
 
 export const AdminProductModal = ({
@@ -44,12 +37,14 @@ export const AdminProductModal = ({
   values,
   uploadLabel,
   editDescriptionLabel,
+  images,
   fieldErrors,
   fieldTooltips,
   onClose,
   onSave,
   onValueChange,
   onImageChange,
+  onImageDelete,
 }: IProps) => {
   useEffect(() => {
     if (!isOpen) return;
@@ -235,14 +230,40 @@ export const AdminProductModal = ({
             onChange={(value) => onValueChange('description', value)}
           />
 
-          <label className="admin-product-modal__upload">
-            <span>{uploadLabel}</span>
-            <input type="file" accept="image/*" onChange={onImageChange} />
-            <div className="admin-product-modal__upload-inner">
-              <span className="admin-product-modal__upload-plus">+</span>
-              <p>{imageName || 'Click or drop an image here'}</p>
-            </div>
-          </label>
+          <div className="admin-product-modal__image-manager">
+            {images && (
+              <div className="admin-product-modal__images">
+                <span>Current images</span>
+                <div className="admin-product-modal__image-list">
+                  {images.length ? (
+                    images.map((image) => (
+                      <div key={image.id} className="admin-product-modal__image-item">
+                        <img src={image.src} alt={image.name} />
+                        <button
+                          type="button"
+                          aria-label={`Delete ${image.name}`}
+                          onClick={() => onImageDelete?.(image.id)}
+                        >
+                          x
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No images yet</p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <label className="admin-product-modal__upload">
+              <span>{uploadLabel}</span>
+              <input type="file" accept="image/*" onChange={onImageChange} />
+              <div className="admin-product-modal__upload-inner">
+                <span className="admin-product-modal__upload-plus">+</span>
+                <p>{imageName || 'Click or drop an image here'}</p>
+              </div>
+            </label>
+          </div>
         </form>
 
         <div className="admin-product-modal__actions">

@@ -115,16 +115,16 @@
   display: inline-block;
 }
 
-.admin-product-management__status.is-in_stock {
+.admin-product-management__status.is-IN_STOCK {
   background: var(--chateau-green);
 }
 
-.admin-product-management__status.is-low_stock {
+.admin-product-management__status.is-LOW_STOCK {
   background: var(--dark-yellow);
   font-size: 11px;
 }
 
-.admin-product-management__status.is-no_stock {
+.admin-product-management__status.is-OUT_OF_STOCK {
   background: var(--coralRed);
 }
 

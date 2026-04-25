@@ -23,7 +23,6 @@ export const LabeledFormField = ({
   label,
   value,
   placeholder,
-  required = false,
   type = 'text',
   min,
   step,
@@ -41,10 +40,7 @@ export const LabeledFormField = ({
       <label
         className={`labeled-form-field ${errorMessage ? 'is-error' : ''} ${className ?? ''}`.trim()}
       >
-        <span className="labeled-form-field__label">
-          {label}
-          {required ? ' *' : ''}
-        </span>
+        <span className="labeled-form-field__label">{label}</span>
 
         {multiline ? (
           <textarea
