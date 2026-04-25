@@ -22,6 +22,7 @@ import {
   validateAdminProductDraft,
 } from '@/core/utils';
 import { Button, Search, Select } from '@/components/ui';
+import { ConfirmationModal } from '@/components/shared';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
 import { phonesService } from '@/core/services';
 import {
@@ -75,11 +76,13 @@ export const AdminProductManagementTable: FC<IProps> = ({
   const [imageName, setImageName] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [productImages, setProductImages] = useState<IAdminProductModalImage[]>([]);
+  const [productToDelete, setProductToDelete] = useState<IAdminPanelManagedProduct | null>(null);
   const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(
     EMPTY_ADMIN_PRODUCT_FORM
   );
   const [fieldErrors, setFieldErrors] = useState<AdminProductFormErrors>({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const brandOptions = useMemo(
@@ -175,6 +178,28 @@ export const AdminProductManagementTable: FC<IProps> = ({
     } catch (error) {
       console.error('Failed to delete product image', error);
       enqueueSnackbar('Failed to delete product image.', { variant: 'error' });
+    }
+  };
+
+  const closeDeleteConfirmation = () => {
+    if (isDeleting) return;
+    setProductToDelete(null);
+  };
+
+  const deleteProduct = async () => {
+    if (!productToDelete) return;
+
+    setIsDeleting(true);
+    try {
+      await phonesService.delete(Number(productToDelete.id));
+      enqueueSnackbar('Product deleted.', { variant: 'success' });
+      setProductToDelete(null);
+      onRefreshProducts();
+    } catch (error) {
+      console.error('Failed to delete product', error);
+      enqueueSnackbar('Failed to delete product.', { variant: 'error' });
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -320,7 +345,11 @@ export const AdminProductManagementTable: FC<IProps> = ({
                     >
                       <Edit />
                     </button>
-                    <button type="button" aria-label={`Delete ${product.title}`}>
+                    <button
+                      type="button"
+                      aria-label={`Delete ${product.title}`}
+                      onClick={() => setProductToDelete(product)}
+                    >
                       <Trash />
                     </button>
                   </div>
@@ -367,6 +396,22 @@ export const AdminProductManagementTable: FC<IProps> = ({
         onValueChange={handleDraftChange}
         onImageChange={handleImageChange}
         onImageDelete={(imageId) => void deleteProductImage(imageId)}
+      />
+
+      <ConfirmationModal
+        isOpen={Boolean(productToDelete)}
+        title="Delete a product"
+        description={
+          <p>
+            Are you sure you want to erase <strong>{productToDelete?.title}</strong>? This action
+            cannot be undone.
+          </p>
+        }
+        confirmLabel="Confirm"
+        cancelLabel="Cancel"
+        isLoading={isDeleting}
+        onCancel={closeDeleteConfirmation}
+        onConfirm={() => void deleteProduct()}
       />
     </section>
   );

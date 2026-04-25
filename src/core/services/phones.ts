@@ -23,6 +23,9 @@ export const phonesService = {
     const { data } = await api.put<ApiPhone>(`/api/v1/phones/${id}`, payload);
     return data;
   },
+  async delete(id: number) {
+    await api.delete(`/api/v1/phones/${id}`);
+  },
   async addImage(id: number, imageFile: File) {
     const formData = new FormData();
     formData.append('image', imageFile);
