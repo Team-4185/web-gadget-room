@@ -1,7 +1,7 @@
 .labeled-form-field {
   border: 1px solid var(--blue-violet);
-  border-radius: 10px;
-  box-shadow: 0 0 6.9px 0 rgb(112 111 180 / 20%);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
   min-height: 56px;
   width: 100%;
   padding: 9px 10px 8px;
@@ -12,7 +12,7 @@
 }
 
 .labeled-form-field__label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.2;
   color: var(--black);
@@ -43,7 +43,7 @@
 
 .labeled-form-field.is-error {
   border-color: var(--coralRed);
-  box-shadow: 0 0 6.9px 0 rgb(232 64 90 / 25%);
+  box-shadow: 0 0 6.9px 0 var(--coralRed);
 }
 
 .labeled-form-field.is-error .labeled-form-field__label {

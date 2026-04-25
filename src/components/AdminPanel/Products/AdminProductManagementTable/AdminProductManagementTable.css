@@ -44,21 +44,14 @@
   border-radius: 8px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
   background: var(--white);
-  min-height: 40px;
   display: inline-flex;
   align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .admin-product-management__search {
   padding: 0 10px;
-}
-
-.admin-product-management__select {
-  justify-content: space-between;
-  padding: 0 12px;
-  color: var(--black-opacity-65);
-  font-size: 14px;
-  cursor: pointer;
 }
 
 .admin-product-management__table-wrap {

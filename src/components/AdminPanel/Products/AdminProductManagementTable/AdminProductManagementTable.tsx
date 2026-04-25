@@ -77,9 +77,8 @@ export const AdminProductManagementTable: FC<IProps> = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [productImages, setProductImages] = useState<IAdminProductModalImage[]>([]);
   const [productToDelete, setProductToDelete] = useState<IAdminPanelManagedProduct | null>(null);
-  const [draftProduct, setDraftProduct] = useState<IAdminProductFormState>(
-    EMPTY_ADMIN_PRODUCT_FORM
-  );
+  const [draftProduct, setDraftProduct] =
+    useState<IAdminProductFormState>(EMPTY_ADMIN_PRODUCT_FORM);
   const [fieldErrors, setFieldErrors] = useState<AdminProductFormErrors>({});
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -125,9 +124,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
         id: image.id,
         name: image.name,
         src:
-          imageUrlResults[index]?.status === 'fulfilled'
-            ? imageUrlResults[index].value
-            : image.url,
+          imageUrlResults[index]?.status === 'fulfilled' ? imageUrlResults[index].value : image.url,
       }))
     );
   };
@@ -277,26 +274,26 @@ export const AdminProductManagementTable: FC<IProps> = ({
 
         <Select
           data={brandOptions}
+          styleVariant="subtleBorder"
           maxWidth="100%"
-          height="46px"
+          height="40px"
           color="var(--black)"
           fontSize="16px"
           selectPadding="12px"
           value={selectedBrand}
-          styleVariant="subtleBorder"
           onChange={onBrandChange}
           placeholder="All brands"
         />
 
         <Select
           data={ADMIN_PRODUCT_STATUS_OPTIONS}
+          styleVariant="subtleBorder"
           maxWidth="100%"
-          height="46px"
+          height="40px"
           color="var(--black)"
           fontSize="16px"
           selectPadding="12px"
           value={selectedStatus}
-          styleVariant="subtleBorder"
           onChange={(value) => onStatusChange(value as AdminProductStatus | '')}
           placeholder="All statuses"
         />

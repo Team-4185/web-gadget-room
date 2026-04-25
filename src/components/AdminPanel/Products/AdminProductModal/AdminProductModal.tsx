@@ -233,8 +233,8 @@ export const AdminProductModal = ({
           <div className="admin-product-modal__image-manager">
             {images && (
               <div className="admin-product-modal__images">
-                <span>Current images</span>
                 <div className="admin-product-modal__image-list">
+                  <span>Current images</span>
                   {images.length ? (
                     images.map((image) => (
                       <div key={image.id} className="admin-product-modal__image-item">
@@ -256,9 +256,9 @@ export const AdminProductModal = ({
             )}
 
             <label className="admin-product-modal__upload">
-              <span>{uploadLabel}</span>
               <input type="file" accept="image/*" onChange={onImageChange} />
               <div className="admin-product-modal__upload-inner">
+                <span>{uploadLabel}</span>
                 <span className="admin-product-modal__upload-plus">+</span>
                 <p>{imageName || 'Click or drop an image here'}</p>
               </div>

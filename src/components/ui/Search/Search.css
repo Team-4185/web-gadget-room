@@ -8,11 +8,12 @@
   border: 0;
   outline: 0;
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   background: transparent;
   color: var(--black);
+  font-weight: 300;
 }
 
 .ui-search input::placeholder {
-  color: var(--black-opacity-65);
+  color: var(--black);
 }
