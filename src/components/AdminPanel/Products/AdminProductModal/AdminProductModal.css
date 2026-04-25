@@ -168,21 +168,3 @@
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
-
-.admin-product-modal__button {
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-  background: var(--white);
-  min-height: 34px;
-  color: var(--black);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.admin-product-modal__button--primary {
-  background: var(--blue-violet);
-  color: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-}

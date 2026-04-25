@@ -82,3 +82,6 @@ export { default as Alert } from './alert.svg?react';
 export { default as ArrowRightUp } from './arrowRightUp.svg?react';
 export { default as MailOutlined } from './mailOutlined.svg?react';
 export { default as PhoneOutlined } from './phoneOutlined.svg?react';
+export { default as WarningConfirmation } from './ConfirmationModal/warning.svg?react';
+export { default as SuccessConfirmation } from './ConfirmationModal/success.svg?react';
+export { default as AlertConfirmation } from './ConfirmationModal/alert.svg?react';

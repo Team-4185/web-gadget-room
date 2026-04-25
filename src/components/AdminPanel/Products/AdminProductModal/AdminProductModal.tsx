@@ -2,6 +2,7 @@ import { useEffect, type ChangeEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { LabeledFormField } from '@/components/shared';
+import { Button } from '@/components/ui';
 import type { IAdminProductFormState } from '@/core/types';
 import './AdminProductModal.css';
 
@@ -267,16 +268,28 @@ export const AdminProductModal = ({
         </form>
 
         <div className="admin-product-modal__actions">
-          <button type="button" className="admin-product-modal__button" onClick={onClose}>
-            Cancel
-          </button>
-          <button
+          <Button
             type="button"
-            className="admin-product-modal__button admin-product-modal__button--primary"
+            maxWidth="100%"
+            height="34px"
+            fontSize="14px"
+            fontWeight={600}
+            borderRadius="8px"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            maxWidth="100%"
+            height="34px"
+            fontSize="14px"
+            fontWeight={600}
+            borderRadius="8px"
             onClick={onSave}
           >
             {submitLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

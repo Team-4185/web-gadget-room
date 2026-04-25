@@ -1,6 +1,8 @@
 import { useEffect, type ReactNode } from 'react';
 import { Typography } from '@mui/material';
 
+import { Button } from '@/components/ui';
+import { AlertConfirmation } from '@/assets';
 import './ConfirmationModal.css';
 
 interface IProps {
@@ -47,13 +49,13 @@ export const ConfirmationModal = ({
         aria-labelledby="confirmation-modal-title"
       >
         <div className="confirmation-modal__icon" aria-hidden="true">
-          !
+          <AlertConfirmation />
         </div>
 
         <Typography
           id="confirmation-modal-title"
           component="h3"
-          sx={{ fontSize: '28px', fontWeight: 700, lineHeight: 1.15 }}
+          sx={{ fontSize: '32px', fontWeight: 700, lineHeight: 1.15 }}
         >
           {title}
         </Typography>
@@ -61,22 +63,37 @@ export const ConfirmationModal = ({
         <div className="confirmation-modal__description">{description}</div>
 
         <div className="confirmation-modal__actions">
-          <button
+          <Button
             type="button"
-            className="confirmation-modal__button"
+            maxWidth="100%"
+            height="40px"
+            fontSize="20px"
+            fontWeight={400}
+            borderRadius="10px"
             onClick={onCancel}
             disabled={isLoading}
           >
             {cancelLabel}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="confirmation-modal__button confirmation-modal__button--danger"
+            maxWidth="100%"
+            height="40px"
+            fontSize="20px"
+            fontWeight={400}
+            borderRadius="10px"
+            border="1px solid var(--coralRed)"
+            sx={{
+              '&:hover': {
+                background: 'var(--coralRed)',
+                color: 'var(--white)',
+              },
+            }}
             onClick={onConfirm}
             disabled={isLoading}
           >
             {isLoading ? 'Deleting...' : confirmLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
