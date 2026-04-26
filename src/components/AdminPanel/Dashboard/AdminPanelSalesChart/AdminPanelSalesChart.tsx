@@ -220,30 +220,8 @@ export const AdminPanelSalesChart = () => {
               />
             ) : null}
 
-            {chartModel.ordersLine ? (
-              <polyline
-                fill="none"
-                stroke="#9f97f4"
-                strokeWidth="2"
-                points={chartModel.ordersLine}
-              />
-            ) : null}
-
             <g fill="#f5a7a0" stroke="#f5a7a0">
               {chartModel.revenueDots.map((dot) => (
-                <circle
-                  key={dot.key}
-                  cx={dot.cx}
-                  cy={dot.cy}
-                  r="4"
-                  className="admin-panel-sales-chart__point"
-                  onMouseEnter={() => handleDotEnter(dot)}
-                />
-              ))}
-            </g>
-
-            <g fill="#9f97f4" stroke="#9f97f4">
-              {chartModel.ordersDots.map((dot) => (
                 <circle
                   key={dot.key}
                   cx={dot.cx}
@@ -275,9 +253,6 @@ export const AdminPanelSalesChart = () => {
       <div className="admin-panel-sales-chart__meta">
         <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--revenue">
           Revenue
-        </span>
-        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--orders">
-          Orders
         </span>
         {isLoading ? (
           <span className="admin-panel-sales-chart__loading">Updating chart...</span>

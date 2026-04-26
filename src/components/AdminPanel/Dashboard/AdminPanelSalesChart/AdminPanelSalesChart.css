@@ -112,10 +112,6 @@
   background: #f5a7a0;
 }
 
-.admin-panel-sales-chart__legend--orders::before {
-  background: #9f97f4;
-}
-
 .admin-panel-sales-chart__loading {
   margin-left: auto;
   font-size: 13px;
