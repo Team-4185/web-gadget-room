@@ -110,38 +110,3 @@
   color: var(--red);
 }
 
-.admin-customers-table__footer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-customers-table__footer p span {
-  color: var(--blue-violet);
-  font-weight: 500;
-}
-
-.admin-customers-table__pager {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.admin-customers-table__pager button {
-  border: 0;
-  border-radius: 12px;
-  padding: 8px;
-  min-height: 34px;
-  min-width: 52px;
-  background: var(--white);
-  box-shadow: 0 0 2px 0 var(--blue-violet);
-  cursor: pointer;
-}
-
-.admin-customers-table__pager button.is-primary {
-  background: var(--blue-violet);
-  color: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-}

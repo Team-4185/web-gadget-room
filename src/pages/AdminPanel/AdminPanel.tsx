@@ -42,8 +42,8 @@ export const AdminPanel = () => {
     onStatusChange,
     refreshProducts,
   } = useAdminProductManagementData();
-  const { kpis: ordersKpis, orders, totalOrders } = useAdminOrdersData();
-  const { kpis: customersKpis, customers, totalCustomers } = useAdminCustomersData();
+  const { kpis: ordersKpis, orders } = useAdminOrdersData();
+  const { kpis: customersKpis, customers } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
   const isProductTab = activeTab === 'product';
@@ -97,15 +97,9 @@ export const AdminPanel = () => {
                 onRefreshProducts={refreshProducts}
               />
             )}
-            {isOrdersTab && (
-              <AdminOrdersTab kpis={ordersKpis} orders={orders} totalOrders={totalOrders} />
-            )}
+            {isOrdersTab && <AdminOrdersTab kpis={ordersKpis} orders={orders} />}
             {isCustomersTab && (
-              <AdminCustomersTab
-                kpis={customersKpis}
-                customers={customers}
-                totalCustomers={totalCustomers}
-              />
+              <AdminCustomersTab kpis={customersKpis} customers={customers} />
             )}
           </div>
         </div>

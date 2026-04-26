@@ -3,13 +3,15 @@ import { Typography } from '@mui/material';
 
 import type { IAdminCustomerItem } from '@/core/types';
 import { Search } from '@/components/ui';
+import { AdminPagination } from '@/components/shared';
 import { Trash, MailOutlined, PhoneOutlined } from '@/assets';
 
 import './AdminCustomersTable.css';
 
+const ADMIN_CUSTOMERS_PAGE_SIZE = 10;
+
 interface IProps {
   customers: IAdminCustomerItem[];
-  totalCustomers: number;
 }
 
 const STATUS_LABELS = {
@@ -18,8 +20,9 @@ const STATUS_LABELS = {
   new: 'New',
 } as const;
 
-export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) => {
+export const AdminCustomersTable: FC<IProps> = ({ customers }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredCustomers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -32,6 +35,17 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
         customer.phone.toLowerCase().includes(query)
     );
   }, [customers, searchQuery]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredCustomers.length / ADMIN_CUSTOMERS_PAGE_SIZE));
+  const paginatedCustomers = useMemo(() => {
+    const startIndex = (currentPage - 1) * ADMIN_CUSTOMERS_PAGE_SIZE;
+    return filteredCustomers.slice(startIndex, startIndex + ADMIN_CUSTOMERS_PAGE_SIZE);
+  }, [currentPage, filteredCustomers]);
+
+  const changeSearchQuery = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
 
   return (
     <section className="admin-customers-table" aria-label="Customers base">
@@ -48,7 +62,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
         className="admin-customers-table__search"
         ariaLabel="Search customers"
         value={searchQuery}
-        onChange={setSearchQuery}
+        onChange={changeSearchQuery}
         placeholder="Search by name, email, number..."
       />
 
@@ -66,7 +80,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
             </tr>
           </thead>
           <tbody>
-            {filteredCustomers.map((customer) => (
+            {paginatedCustomers.map((customer) => (
               <tr key={customer.id}>
                 <td className="is-strong">{customer.name}</td>
                 <td>
@@ -105,17 +119,16 @@ export const AdminCustomersTable: FC<IProps> = ({ customers, totalCustomers }) =
         </table>
       </div>
 
-      <div className="admin-customers-table__footer">
-        <Typography variant="body2" component="p">
-          Showing <span>{filteredCustomers.length}</span> of <span>{totalCustomers}</span> customer
-        </Typography>
-        <div className="admin-customers-table__pager">
-          <button type="button">Back</button>
-          <button type="button" className="is-primary">
-            Next
-          </button>
-        </div>
-      </div>
+      <AdminPagination
+        totalItems={filteredCustomers.length}
+        itemLabel="customers"
+        currentPage={currentPage}
+        totalPages={totalPages}
+        isFirstPage={currentPage === 1}
+        isLastPage={currentPage === totalPages}
+        onPreviousPage={() => setCurrentPage((page) => Math.max(1, page - 1))}
+        onNextPage={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+      />
     </section>
   );
 };

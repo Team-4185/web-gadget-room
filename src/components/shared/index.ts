@@ -5,3 +5,4 @@ export { FormInput } from './FormInput/FormInput';
 export { FormCheckbox } from './FormCheckbox/FormCheckbox';
 export { LabeledFormField } from './LabeledFormField/LabeledFormField';
 export { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
+export { AdminPagination } from './AdminPagination/AdminPagination';

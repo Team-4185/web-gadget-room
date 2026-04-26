@@ -114,7 +114,6 @@
 
 .admin-product-management__status.is-LOW_STOCK {
   background: var(--dark-yellow);
-  font-size: 11px;
 }
 
 .admin-product-management__status.is-OUT_OF_STOCK {
@@ -138,42 +137,6 @@
 
 .admin-product-management__actions button:last-child {
   color: var(--red);
-}
-
-.admin-product-management__footer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-product-management__footer p span {
-  color: var(--blue-violet);
-  font-weight: 500;
-}
-
-.admin-product-management__pager {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.admin-product-management__pager button {
-  border: 0;
-  border-radius: 12px;
-  padding: 8px;
-  min-height: 34px;
-  min-width: 52px;
-  background: var(--white);
-  box-shadow: 0 0 2px 0 var(--blue-violet);
-  cursor: pointer;
-}
-
-.admin-product-management__pager button.is-primary {
-  background: var(--blue-violet);
-  color: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
 }
 
 .admin-product-management__add-product-icon {

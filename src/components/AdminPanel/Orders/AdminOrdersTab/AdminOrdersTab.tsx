@@ -6,10 +6,9 @@ import './AdminOrdersTab.css';
 interface IProps {
   kpis: IAdminOrderKpiItem[];
   orders: IAdminManagedOrderItem[];
-  totalOrders: number;
 }
 
-export const AdminOrdersTab = ({ kpis, orders, totalOrders }: IProps) => {
+export const AdminOrdersTab = ({ kpis, orders }: IProps) => {
   return (
     <div className="admin-orders-tab" aria-label="Orders management">
       <div className="admin-orders-tab__kpis">
@@ -18,7 +17,7 @@ export const AdminOrdersTab = ({ kpis, orders, totalOrders }: IProps) => {
         ))}
       </div>
 
-      <AdminOrdersTable orders={orders} totalOrders={totalOrders} />
+      <AdminOrdersTable orders={orders} />
     </div>
   );
 };

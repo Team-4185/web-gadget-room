@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 
 import { Button } from '@/components/ui';
 import { AlertConfirmation } from '@/assets';
+
 import './ConfirmationModal.css';
 
 interface IProps {

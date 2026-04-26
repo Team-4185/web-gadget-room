@@ -6,10 +6,9 @@ import './AdminCustomersTab.css';
 interface IProps {
   customers: IAdminCustomerItem[];
   kpis: IAdminCustomerKpiItem[];
-  totalCustomers: number;
 }
 
-export const AdminCustomersTab = ({ customers, kpis, totalCustomers }: IProps) => {
+export const AdminCustomersTab = ({ customers, kpis }: IProps) => {
   return (
     <div className="admin-customers-tab" aria-label="Customers management">
       <div className="admin-customers-tab__kpis">
@@ -18,7 +17,7 @@ export const AdminCustomersTab = ({ customers, kpis, totalCustomers }: IProps) =
         ))}
       </div>
 
-      <AdminCustomersTable customers={customers} totalCustomers={totalCustomers} />
+      <AdminCustomersTable customers={customers} />
     </div>
   );
 };

@@ -115,21 +115,3 @@
   color: var(--red);
 }
 
-.admin-orders-table__footer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-orders-table__footer p span {
-  color: var(--blue-violet);
-  font-weight: 500;
-}
-
-.admin-orders-table__pager {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}

@@ -22,7 +22,7 @@ import {
   validateAdminProductDraft,
 } from '@/core/utils';
 import { Button, Search, Select } from '@/components/ui';
-import { ConfirmationModal } from '@/components/shared';
+import { AdminPagination, ConfirmationModal } from '@/components/shared';
 import { Edit, Plus, Trash, Visibility } from '@/assets';
 import { phonesService } from '@/core/services';
 import {
@@ -357,25 +357,17 @@ export const AdminProductManagementTable: FC<IProps> = ({
         </table>
       </div>
 
-      <div className="admin-product-management__footer">
-        <Typography variant="body2" component="p">
-          Total products: <span>{totalProducts}</span>
-          {` - Page ${currentPage} of ${totalPages}`}
-        </Typography>
-        <div className="admin-product-management__pager">
-          <button type="button" onClick={onPreviousPage} disabled={isFirstPage || isLoading}>
-            Back
-          </button>
-          <button
-            type="button"
-            className="is-primary"
-            onClick={onNextPage}
-            disabled={isLastPage || isLoading}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <AdminPagination
+        totalItems={totalProducts}
+        itemLabel="products"
+        currentPage={currentPage}
+        totalPages={totalPages}
+        isFirstPage={isFirstPage}
+        isLastPage={isLastPage}
+        isLoading={isLoading}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
+      />
 
       <AdminProductModal
         isOpen={isAddModalOpen || Boolean(editingProduct)}
