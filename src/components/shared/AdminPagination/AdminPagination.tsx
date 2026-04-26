@@ -43,15 +43,6 @@ export const AdminPagination: FC<IProps> = ({
         fontWeight={500}
         border="none"
         borderRadius="12px"
-        sx={{
-          minWidth: '52px',
-          padding: '8px',
-          boxShadow: '0 0 2px 0 var(--blue-violet)',
-          '&:hover': {
-            background: 'var(--white)',
-            color: 'var(--black)',
-          },
-        }}
         onClick={onPreviousPage}
         disabled={isFirstPage || isLoading}
       >
@@ -65,17 +56,6 @@ export const AdminPagination: FC<IProps> = ({
         fontWeight={500}
         border="none"
         borderRadius="12px"
-        sx={{
-          minWidth: '52px',
-          padding: '8px',
-          background: 'var(--blue-violet)',
-          color: 'var(--white)',
-          boxShadow: '0 0 6.9px 0 var(--blue-violet)',
-          '&:hover': {
-            background: 'var(--blue-violet)',
-            color: 'var(--white)',
-          },
-        }}
         onClick={onNextPage}
         disabled={isLastPage || isLoading}
       >
