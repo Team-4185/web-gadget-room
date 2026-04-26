@@ -12,25 +12,6 @@
   gap: 16px;
 }
 
-.admin-product-management__add-button {
-  border: 0;
-  border-radius: 12px;
-  background: var(--blue-violet);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-  color: var(--white);
-  min-height: 36px;
-  padding: 8px 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.admin-product-management__add-button span {
-  font-size: 20px;
-  line-height: 1;
-}
-
 .admin-product-management__filters {
   margin-top: 30px;
   display: grid;
@@ -38,19 +19,14 @@
   gap: 10px;
 }
 
-.admin-product-management__search,
-.admin-product-management__select {
+.admin-product-management__search {
   border: 1px solid var(--blue-violet);
   border-radius: 8px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
   background: var(--white);
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
   cursor: pointer;
-}
-
-.admin-product-management__search {
   padding: 0 10px;
 }
 
@@ -79,64 +55,9 @@
   color: var(--black-opacity-65);
 }
 
-.admin-product-management__product-cell {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.admin-product-management__product-cell img {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  object-fit: cover;
-  background: var(--gray-opacity-13);
-}
-
 .admin-product-management__table td.is-strong {
   color: var(--black);
   font-weight: 600;
-}
-
-.admin-product-management__status {
-  border-radius: 14px;
-  color: var(--white);
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1;
-  padding: 4px 8px;
-  display: inline-block;
-}
-
-.admin-product-management__status.is-IN_STOCK {
-  background: var(--chateau-green);
-}
-
-.admin-product-management__status.is-LOW_STOCK {
-  background: var(--dark-yellow);
-}
-
-.admin-product-management__status.is-OUT_OF_STOCK {
-  background: var(--coralRed);
-}
-
-.admin-product-management__actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-product-management__actions button {
-  border: 0;
-  background: transparent;
-  color: var(--blue-violet);
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-.admin-product-management__actions button:last-child {
-  color: var(--red);
 }
 
 .admin-product-management__add-product-icon {

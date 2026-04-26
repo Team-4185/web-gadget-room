@@ -50,6 +50,12 @@ export interface IAdminPanelManagedProduct {
   image: string;
 }
 
+export interface IAdminProductModalImage {
+  id: number;
+  name: string;
+  src: string;
+}
+
 export interface IAdminProductFormState {
   name: string;
   sku: string;

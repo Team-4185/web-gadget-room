@@ -6,5 +6,6 @@ export { useUserPanelData } from './useUserPanelData';
 export { useAdminPanelData } from './useAdminPanelData';
 export { useAdminSalesAnalytics } from './useAdminSalesAnalytics';
 export { useAdminProductManagementData } from './useAdminProductManagementData';
+export { useAdminProductModal } from './useAdminProductModal';
 export { useAdminCustomersData } from './useAdminCustomersData';
 export { useAdminOrdersData } from './useAdminOrdersData';

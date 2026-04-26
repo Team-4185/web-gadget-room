@@ -1,0 +1,165 @@
+import { LabeledFormField } from '@/components';
+import type { IAdminProductFormState } from '@/core/types';
+
+import './AdminProductModalFields.css';
+
+interface IProps {
+  values: IAdminProductFormState;
+  editDescriptionLabel?: string;
+  fieldErrors?: Partial<Record<keyof IAdminProductFormState, string>>;
+  fieldTooltips?: Partial<Record<keyof IAdminProductFormState, string>>;
+  onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
+}
+
+export const AdminProductModalFields = ({
+  values,
+  editDescriptionLabel,
+  fieldErrors,
+  fieldTooltips,
+  onValueChange,
+}: IProps) => (
+  <>
+    <LabeledFormField
+      className="admin-product-modal-fields__full"
+      label="Product name"
+      required
+      value={values.name}
+      placeholder="Enter the product name"
+      errorMessage={fieldErrors?.name}
+      tooltipText={fieldTooltips?.name}
+      onChange={(value) => onValueChange('name', value)}
+    />
+
+    <LabeledFormField
+      label="SKU"
+      required
+      value={values.sku}
+      placeholder="XXX-XX-XXX"
+      errorMessage={fieldErrors?.sku}
+      tooltipText={fieldTooltips?.sku}
+      onChange={(value) => onValueChange('sku', value)}
+    />
+
+    <LabeledFormField
+      label="Brand"
+      required
+      value={values.brand}
+      placeholder="Enter the brand"
+      errorMessage={fieldErrors?.brand}
+      tooltipText={fieldTooltips?.brand}
+      onChange={(value) => onValueChange('brand', value)}
+    />
+
+    <LabeledFormField
+      label="Price (EUR)"
+      required
+      type="number"
+      min="0"
+      step="1"
+      value={values.price}
+      placeholder="0.00"
+      errorMessage={fieldErrors?.price}
+      tooltipText={fieldTooltips?.price}
+      onChange={(value) => onValueChange('price', value)}
+    />
+
+    <LabeledFormField
+      label="In stock"
+      required
+      type="number"
+      min="0"
+      step="1"
+      value={values.stock}
+      placeholder="0"
+      errorMessage={fieldErrors?.stock}
+      tooltipText={fieldTooltips?.stock}
+      onChange={(value) => onValueChange('stock', value)}
+    />
+
+    <LabeledFormField
+      label="Release year"
+      required
+      type="number"
+      min="0"
+      value={values.releaseYear}
+      placeholder="2026"
+      errorMessage={fieldErrors?.releaseYear}
+      tooltipText={fieldTooltips?.releaseYear}
+      onChange={(value) => onValueChange('releaseYear', value)}
+    />
+
+    <LabeledFormField
+      label="CPU"
+      required
+      value={values.cpu}
+      placeholder="Snapdragon 8 Gen 3"
+      errorMessage={fieldErrors?.cpu}
+      tooltipText={fieldTooltips?.cpu}
+      onChange={(value) => onValueChange('cpu', value)}
+    />
+
+    <LabeledFormField
+      label="Cores number"
+      required
+      type="number"
+      min="1"
+      value={values.coresNumber}
+      placeholder="8"
+      errorMessage={fieldErrors?.coresNumber}
+      tooltipText={fieldTooltips?.coresNumber}
+      onChange={(value) => onValueChange('coresNumber', value)}
+    />
+
+    <LabeledFormField
+      label="Screen size"
+      required
+      value={values.screenSize}
+      placeholder='6.8"'
+      errorMessage={fieldErrors?.screenSize}
+      tooltipText={fieldTooltips?.screenSize}
+      onChange={(value) => onValueChange('screenSize', value)}
+    />
+
+    <LabeledFormField
+      label="Front camera"
+      required
+      value={values.frontCamera}
+      placeholder="12 MP"
+      errorMessage={fieldErrors?.frontCamera}
+      tooltipText={fieldTooltips?.frontCamera}
+      onChange={(value) => onValueChange('frontCamera', value)}
+    />
+
+    <LabeledFormField
+      label="Main camera"
+      required
+      value={values.mainCamera}
+      placeholder="64-12-12 MP"
+      errorMessage={fieldErrors?.mainCamera}
+      tooltipText={fieldTooltips?.mainCamera}
+      onChange={(value) => onValueChange('mainCamera', value)}
+    />
+
+    <LabeledFormField
+      label="Battery capacity"
+      required
+      value={values.batteryCapacity}
+      placeholder="5000 mAh"
+      errorMessage={fieldErrors?.batteryCapacity}
+      tooltipText={fieldTooltips?.batteryCapacity}
+      onChange={(value) => onValueChange('batteryCapacity', value)}
+    />
+
+    <LabeledFormField
+      className="admin-product-modal-fields__full"
+      label={editDescriptionLabel ?? 'Description'}
+      value={values.description}
+      placeholder="Enter a product description"
+      errorMessage={fieldErrors?.description}
+      tooltipText={fieldTooltips?.description}
+      multiline
+      rows={5}
+      onChange={(value) => onValueChange('description', value)}
+    />
+  </>
+);

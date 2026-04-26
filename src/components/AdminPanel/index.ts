@@ -8,9 +8,14 @@ export { AdminPanelProductRow } from './Dashboard/AdminPanelProductRow/AdminPane
 export { AdminPanelRecentOrders } from './Dashboard/AdminPanelRecentOrders/AdminPanelRecentOrders';
 export { AdminPanelLowStock } from './Dashboard/AdminPanelLowStock/AdminPanelLowStock';
 
-export { AdminProductsTab } from './Products/AdminProductsTab/AdminProductsTab';
-export { AdminProductManagementTable } from './Products/AdminProductManagementTable/AdminProductManagementTable';
-export { AdminProductModal } from './Products/AdminProductModal/AdminProductModal';
+export {
+  AdminProductImageManager,
+  AdminProductManagementTable,
+  AdminProductModal,
+  AdminProductModalFields,
+  AdminProductsTab,
+  AdminProductTableRow,
+} from './Products';
 
 export { AdminOrdersTab } from './Orders/AdminOrdersTab/AdminOrdersTab';
 export { AdminOrderKpiCard } from './Orders/AdminOrderKpiCard/AdminOrderKpiCard';
