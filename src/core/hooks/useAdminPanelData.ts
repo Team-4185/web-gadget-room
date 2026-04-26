@@ -9,16 +9,13 @@ import {
   ADMIN_PANEL_STATS,
 } from '@/core/constants';
 import { useAppSelector } from '@/core/store';
-import { formatDisplayName } from '@/core/utils';
 
 export const useAdminPanelData = () => {
   const email = useAppSelector((state) => state.auth.email);
 
   return useMemo(() => {
-    const displayName = formatDisplayName(email);
-
     return {
-      greeting: `Welcome, ${displayName}!`,
+      greeting: `Welcome, Team!`,
       subtitle: "Here's what's happening in your store today",
       menu: ADMIN_PANEL_MENU,
       stats: ADMIN_PANEL_STATS,
