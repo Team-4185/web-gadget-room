@@ -1,10 +1,10 @@
 import { isAxiosError } from 'axios';
 
 import { PRODUCTS } from '@/core/constants';
-import { cartService } from '@/core/services';
+import { cartService, phonesService } from '@/core/services';
 import { createAppSlice } from '@/core/store/createAppSlice';
 import type { ICartDto, IProduct } from '@/core/types';
-import { cartStorage } from '@/core/utils';
+import { cartStorage, mapApiPhoneToProduct } from '@/core/utils';
 
 type CartState = {
   cart: IProduct[];
@@ -20,6 +20,11 @@ type RemoveProductPayload = {
   amount: number;
 };
 
+type CartProductsPayload = {
+  cart: ICartDto;
+  products: IProduct[];
+};
+
 const initialState: CartState = {
   cart: [],
   cartId: null,
@@ -31,8 +36,13 @@ const initialState: CartState = {
 
 const FALLBACK_IMAGE = '/icons/GraySquare.svg';
 
-const mapCartDtoToProducts = (cart: ICartDto): IProduct[] =>
+const mapCartDtoToProducts = (cart: ICartDto, backendProducts: IProduct[] = []): IProduct[] =>
   cart.cartItems.map(({ phoneId, amount }) => {
+    const backendProduct = backendProducts.find((product) => product.id === phoneId);
+    if (backendProduct) {
+      return { ...backendProduct, amount };
+    }
+
     const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
 
     if (sourceProduct) {
@@ -48,11 +58,11 @@ const mapCartDtoToProducts = (cart: ICartDto): IProduct[] =>
     };
   });
 
-const applyCartState = (state: CartState, cart: ICartDto) => {
+const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProduct[] = []) => {
   state.cartId = cart.id;
   state.totalPrice = cart.totalPrice;
   state.totalAmount = cart.totalAmount;
-  state.cart = mapCartDtoToProducts(cart);
+  state.cart = mapCartDtoToProducts(cart, backendProducts);
   state.error = null;
 };
 
@@ -71,6 +81,24 @@ const fetchAndStoreServerCart = async () => {
   return cart;
 };
 
+const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => {
+  const results = await Promise.allSettled(
+    cart.cartItems.map(async ({ phoneId }) => {
+      const phone = await phonesService.getById(phoneId);
+      return mapApiPhoneToProduct(phone);
+    })
+  );
+
+  return results.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []));
+};
+
+const fetchAndStoreServerCartWithProducts = async (): Promise<CartProductsPayload> => {
+  const cart = await fetchAndStoreServerCart();
+  const products = await fetchCartProducts(cart);
+
+  return { cart, products };
+};
+
 const cartSlice = createAppSlice({
   name: 'cart',
   initialState,
@@ -80,7 +108,9 @@ const cartSlice = createAppSlice({
         try {
           return cartStorage.get();
         } catch (error) {
-          return rejectWithValue(toErrorMessage(error, 'Failed to hydrate cart from local storage'));
+          return rejectWithValue(
+            toErrorMessage(error, 'Failed to hydrate cart from local storage')
+          );
         }
       },
       {
@@ -90,10 +120,10 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    fetchCart: create.asyncThunk<ICartDto, void, { rejectValue: string }>(
+    fetchCart: create.asyncThunk<CartProductsPayload, void, { rejectValue: string }>(
       async (_, { rejectWithValue }) => {
         try {
-          return await fetchAndStoreServerCart();
+          return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           return rejectWithValue(toErrorMessage(error, 'Failed to fetch cart'));
         }
@@ -104,7 +134,7 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
         rejected: (state, action) => {
           state.error = action.payload ?? 'Failed to fetch cart';
@@ -114,11 +144,11 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    addProduct: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+    addProduct: create.asyncThunk<CartProductsPayload, number, { rejectValue: string }>(
       async (phoneId, { rejectWithValue }) => {
         try {
           await cartService.putItem({ phoneId, amount: 1 });
-          return await fetchAndStoreServerCart();
+          return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           return rejectWithValue(toErrorMessage(error, 'Failed to add product'));
         }
@@ -129,7 +159,7 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
         rejected: (state, action) => {
           state.error = action.payload ?? 'Failed to add product';
@@ -139,11 +169,11 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    increaseAmount: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+    increaseAmount: create.asyncThunk<CartProductsPayload, number, { rejectValue: string }>(
       async (phoneId, { rejectWithValue }) => {
         try {
           await cartService.putItem({ phoneId, amount: 1 });
-          return await fetchAndStoreServerCart();
+          return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           return rejectWithValue(toErrorMessage(error, 'Failed to increase amount'));
         }
@@ -154,7 +184,7 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
         rejected: (state, action) => {
           state.error = action.payload ?? 'Failed to increase amount';
@@ -164,11 +194,11 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    decreaseAmount: create.asyncThunk<ICartDto, number, { rejectValue: string }>(
+    decreaseAmount: create.asyncThunk<CartProductsPayload, number, { rejectValue: string }>(
       async (phoneId, { rejectWithValue }) => {
         try {
           await cartService.removeItem({ phoneId, amount: 1 });
-          return await fetchAndStoreServerCart();
+          return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           return rejectWithValue(toErrorMessage(error, 'Failed to decrease amount'));
         }
@@ -179,7 +209,7 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
         rejected: (state, action) => {
           state.error = action.payload ?? 'Failed to decrease amount';
@@ -189,11 +219,15 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    removeProduct: create.asyncThunk<ICartDto, RemoveProductPayload, { rejectValue: string }>(
+    removeProduct: create.asyncThunk<
+      CartProductsPayload,
+      RemoveProductPayload,
+      { rejectValue: string }
+    >(
       async ({ phoneId, amount }, { rejectWithValue }) => {
         try {
           await cartService.removeItem({ phoneId, amount });
-          return await fetchAndStoreServerCart();
+          return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           return rejectWithValue(toErrorMessage(error, 'Failed to remove product'));
         }
@@ -204,7 +238,7 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
         rejected: (state, action) => {
           state.error = action.payload ?? 'Failed to remove product';
@@ -226,4 +260,3 @@ const cartSlice = createAppSlice({
 
 export const cartActions = cartSlice.actions;
 export default cartSlice.reducer;
-

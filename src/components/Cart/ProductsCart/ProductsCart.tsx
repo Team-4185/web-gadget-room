@@ -72,7 +72,7 @@ export const ProductsCart = () => {
               className="cart-item__subtotal"
               sx={{ fontSize: '15px', fontWeight: 500, lineHeight: 1 }}
             >
-              {'\u20AC'} {product.price * product.amount}
+              {'\u20AC'} {(product.price * product.amount).toFixed(2)}
             </Typography>
           </div>
 
