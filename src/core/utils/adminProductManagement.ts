@@ -1,5 +1,5 @@
 import { api } from '@/core/config';
-import { phonesService } from '@/core/services/phones';
+import { phonesService } from '@/core/services';
 import type {
   AdminProductFormErrors,
   AdminProductStatus,
