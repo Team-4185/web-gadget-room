@@ -28,7 +28,7 @@ export const ProductTitlePrice: FC<IProps> = ({ name, price }) => {
             fontWeight: 500,
           }}
         >
-          € {price}
+          $ {price}
         </Typography>
       </div>
     </div>

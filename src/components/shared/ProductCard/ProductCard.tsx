@@ -35,7 +35,7 @@ export const ProductCard: FC<IProps> = ({ product, onClick }) => {
         {product.name}
       </Typography>
       <Typography sx={{ marginTop: '14px', fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>
-        € {product.price}
+        $ {product.price}
       </Typography>
       <div className="product-card__actions">
         <Button
