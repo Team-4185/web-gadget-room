@@ -2,12 +2,12 @@ import { Typography } from '@mui/material';
 
 import { Plus } from '@/assets';
 import {
-  AdminPanelBrandChart,
-  AdminPanelLowStock,
-  AdminPanelProductRow,
-  AdminPanelRecentOrders,
-  AdminPanelSalesChart,
-  AdminPanelStatCard,
+  // AdminPanelBrandChart,
+  // AdminPanelLowStock,
+  // AdminPanelProductRow,
+  // AdminPanelRecentOrders,
+  // AdminPanelSalesChart,
+  // AdminPanelStatCard,
   Button,
 } from '@/components';
 import type {
@@ -30,17 +30,19 @@ interface IProps {
   topProducts: IAdminPanelProductItem[];
 }
 
-export const AdminDashboardTab = ({
-  brands,
-  lowStock,
-  onTabChange,
-  recentOrders,
-  stats,
-  topProducts,
-}: IProps) => {
+export const AdminDashboardTab = (
+  {
+    // brands,
+    // lowStock,
+    // onTabChange,
+    // recentOrders,
+    // stats,
+    // topProducts,
+  }: IProps
+) => {
   return (
     <>
-      <div className="admin-dashboard-tab__stats" aria-label="Store stats">
+      {/* <div className="admin-dashboard-tab__stats" aria-label="Store stats">
         {stats.map((item) => (
           <AdminPanelStatCard key={item.id} item={item} />
         ))}
@@ -82,7 +84,7 @@ export const AdminDashboardTab = ({
           <AdminPanelRecentOrders orders={recentOrders} onTabChange={onTabChange} />
           <AdminPanelLowStock items={lowStock} />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

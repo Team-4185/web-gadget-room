@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 
 import {
-  AdminCustomersTab,
+  // AdminCustomersTab,
   AdminDashboardTab,
-  AdminOrdersTab,
+  // AdminOrdersTab,
   AdminPanelSidebar,
   AdminProductsTab,
 } from '@/components';
 import {
-  useAdminCustomersData,
-  useAdminOrdersData,
+  // useAdminCustomersData,
+  // useAdminOrdersData,
   useAdminPanelData,
   useAdminProductManagementData,
 } from '@/core/hooks';
@@ -42,13 +42,13 @@ export const AdminPanel = () => {
     onStatusChange,
     refreshProducts,
   } = useAdminProductManagementData();
-  const { kpis: ordersKpis, orders } = useAdminOrdersData();
-  const { kpis: customersKpis, customers } = useAdminCustomersData();
+  // const { kpis: ordersKpis, orders } = useAdminOrdersData();
+  // const { kpis: customersKpis, customers } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
   const isProductTab = activeTab === 'product';
-  const isOrdersTab = activeTab === 'orders';
-  const isCustomersTab = activeTab === 'customers';
+  // const isOrdersTab = activeTab === 'orders';
+  // const isCustomersTab = activeTab === 'customers';
 
   return (
     <section className="admin-panel" aria-label="Admin panel page">
@@ -97,10 +97,10 @@ export const AdminPanel = () => {
                 onRefreshProducts={refreshProducts}
               />
             )}
-            {isOrdersTab && <AdminOrdersTab kpis={ordersKpis} orders={orders} />}
+            {/* {isOrdersTab && <AdminOrdersTab kpis={ordersKpis} orders={orders} />}
             {isCustomersTab && (
               <AdminCustomersTab kpis={customersKpis} customers={customers} />
-            )}
+            )} */}
           </div>
         </div>
       </Container>
