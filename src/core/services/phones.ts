@@ -1,17 +1,8 @@
 import { api } from '@/core/config';
 import type { ApiPhone, ApiPhoneImage, CreatePhonePayload } from '@/core/types';
+import { buildPhoneFormData } from '@/core/utils';
 
 const imageObjectUrlCache = new Map<string, string>();
-const buildPhoneFormData = (payload: CreatePhonePayload, imageFile?: File | null) => {
-  const formData = new FormData();
-  formData.append('phone', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
-
-  if (imageFile) {
-    formData.append('image', imageFile);
-  }
-
-  return formData;
-};
 
 export const phonesService = {
   async create(payload: CreatePhonePayload, imageFile?: File | null) {
