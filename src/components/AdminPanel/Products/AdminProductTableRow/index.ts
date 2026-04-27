@@ -1,0 +1,1 @@
+export { AdminProductTableRow } from './AdminProductTableRow';

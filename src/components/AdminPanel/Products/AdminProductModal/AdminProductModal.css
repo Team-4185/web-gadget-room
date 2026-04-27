@@ -1,0 +1,51 @@
+.admin-product-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--black-opacity-25);
+  backdrop-filter: blur(3px);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-product-modal {
+  width: min(100%, 980px);
+  background: var(--white);
+  border: 0;
+  border-radius: 35px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 34px 32px 22px;
+}
+
+.admin-product-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-product-modal__close {
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  font-size: 36px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admin-product-modal__form {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.admin-product-modal__actions {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}

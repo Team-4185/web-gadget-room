@@ -10,6 +10,7 @@ import {
   Home,
   ProductPage,
   UserProfile,
+  AdminPanel,
   PageNotFound,
 } from '@/pages';
 import { ProtectedRoutes } from '@/routes/ProtectedRoute';
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
           {
             path: 'userProfile',
             Component: UserProfile,
+          },
+          {
+            path: 'adminPanel',
+            Component: AdminPanel,
           },
           {
             path: 'catalog',

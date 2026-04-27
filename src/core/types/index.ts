@@ -7,3 +7,4 @@ export * from './delivery';
 export * from './userPanel';
 export * from './router';
 export * from './cart';
+export * from './adminPanel';

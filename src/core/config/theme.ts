@@ -154,9 +154,11 @@ export const theme = createTheme({
         {
           props: { 'data-style-variant': 'subtleBorder' } as never,
           style: {
-            boxShadow: 'var(--inputs-box-shadow)',
+            borderRadius: '8px',
+            boxShadow: '0 0 6.9px 0 var(--blue-violet)',
             '& .MuiOutlinedInput-notchedOutline': {
               border: '1px solid var(--blue-violet)',
+              borderRadius: '8px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
               border: '1px solid var(--blue-violet)',

@@ -11,3 +11,4 @@ export * from './userPanel';
 export * from './productMedia';
 export * from './about';
 export * from './stepper';
+export * from './adminPanel';

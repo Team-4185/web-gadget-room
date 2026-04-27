@@ -53,7 +53,7 @@ export const UserPanelSidebar: FC<IProps> = ({
               onClick={() => onTabChange(item.id)}
             >
               <span className="user-panel-sidebar__item-label">
-                <Icon width={30} height={30} fill="var(--blue-violet)" />
+                <Icon width={30} height={30} style={{ color: 'var(--blue-violet)' }} />
                 <Typography component="span" sx={{ fontSize: '20px', fontWeight: 600 }}>
                   {item.label}
                 </Typography>

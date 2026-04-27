@@ -44,6 +44,7 @@
   --muted-violet: #8f8faf;
   --gray-violet: #8888aa;
   --dark-gray-violet: #525f7c;
+  --alert-red: rgba(235, 0, 27, 0.37);
 }
 
 ol[role='list'],
