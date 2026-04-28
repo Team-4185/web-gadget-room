@@ -17,6 +17,7 @@ import type {
   IAdminPanelStatItem,
   ISelectOption,
 } from '@/core/types';
+import { FALLBACK_IMAGE } from './productMedia';
 import {
   ArrowRightUp,
   Customers,
@@ -92,7 +93,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+12%',
     stock: '45 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '2',
@@ -100,7 +101,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '298 sales - USD 357,020',
     trend: '+8%',
     stock: '62 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '3',
@@ -108,7 +109,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '187 sales - USD 186,813',
     trend: '+15%',
     stock: '38 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '4',
@@ -116,7 +117,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '156 sales - USD 132,444',
     trend: '+22%',
     stock: '89 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '5',
@@ -124,7 +125,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '134 sales - USD 107,066',
     trend: '+5%',
     stock: '54 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '6',
@@ -132,7 +133,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+18%',
     stock: '16 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '7',
@@ -140,7 +141,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+8%',
     stock: '30 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '8',
@@ -148,7 +149,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+40%',
     stock: '60 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
 ];
 
@@ -161,7 +162,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$1,299',
     stock: '45 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '2',
@@ -171,7 +172,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$1,199',
     stock: '62 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '3',
@@ -181,7 +182,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$999',
     stock: '38 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '4',
@@ -191,7 +192,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$849',
     stock: '89 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '5',
@@ -201,7 +202,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$799',
     stock: '54 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '6',
@@ -211,7 +212,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$699',
     stock: '8 pcs',
     status: 'LOW_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
 ];
 

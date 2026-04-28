@@ -1,7 +1,7 @@
 import type { ApiPhone, IProduct } from '@/core/types';
-import { FALLBACK_PRODUCT_IMAGE } from '@/core/constants';
+import { FALLBACK_IMAGE } from '@/core/constants';
 
-export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_PRODUCT_IMAGE): IProduct => ({
+export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMAGE): IProduct => ({
   id: phone.id,
   name: phone.name,
   price: phone.price,

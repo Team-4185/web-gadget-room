@@ -1,10 +1,13 @@
-import { isAxiosError } from 'axios';
-
-import { PRODUCTS } from '@/core/constants';
-import { cartService, phonesService } from '@/core/services';
+import { cartService } from '@/core/services';
 import { createAppSlice } from '@/core/store/createAppSlice';
 import type { ICartDto, IProduct } from '@/core/types';
-import { cartStorage, mapApiPhoneToProduct } from '@/core/utils';
+import {
+  cartStorage,
+  fetchAndStoreServerCartWithProducts,
+  mapCartDtoToProducts,
+  toErrorMessage,
+  type CartProductsPayload,
+} from '@/core/utils';
 
 type CartState = {
   cart: IProduct[];
@@ -20,11 +23,6 @@ type RemoveProductPayload = {
   amount: number;
 };
 
-type CartProductsPayload = {
-  cart: ICartDto;
-  products: IProduct[];
-};
-
 const initialState: CartState = {
   cart: [],
   cartId: null,
@@ -34,69 +32,12 @@ const initialState: CartState = {
   error: null,
 };
 
-const FALLBACK_IMAGE = '/icons/GraySquare.svg';
-
-const mapCartDtoToProducts = (cart: ICartDto, backendProducts: IProduct[] = []): IProduct[] =>
-  cart.cartItems.map(({ phoneId, amount }) => {
-    const backendProduct = backendProducts.find((product) => product.id === phoneId);
-    if (backendProduct) {
-      return { ...backendProduct, amount };
-    }
-
-    const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
-
-    if (sourceProduct) {
-      return { ...sourceProduct, amount };
-    }
-
-    return {
-      id: phoneId,
-      name: `Phone #${phoneId}`,
-      price: 0,
-      img: FALLBACK_IMAGE,
-      amount,
-    };
-  });
-
 const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProduct[] = []) => {
   state.cartId = cart.id;
   state.totalPrice = cart.totalPrice;
   state.totalAmount = cart.totalAmount;
   state.cart = mapCartDtoToProducts(cart, backendProducts);
   state.error = null;
-};
-
-const toErrorMessage = (error: unknown, fallback: string) => {
-  if (isAxiosError<{ detail?: string }>(error)) {
-    return error.response?.data?.detail ?? error.message ?? fallback;
-  }
-
-  if (error instanceof Error) return error.message;
-  return fallback;
-};
-
-const fetchAndStoreServerCart = async () => {
-  const cart = await cartService.getCart();
-  cartStorage.set(cart);
-  return cart;
-};
-
-const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => {
-  const results = await Promise.allSettled(
-    cart.cartItems.map(async ({ phoneId }) => {
-      const phone = await phonesService.getById(phoneId);
-      return mapApiPhoneToProduct(phone);
-    })
-  );
-
-  return results.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []));
-};
-
-const fetchAndStoreServerCartWithProducts = async (): Promise<CartProductsPayload> => {
-  const cart = await fetchAndStoreServerCart();
-  const products = await fetchCartProducts(cart);
-
-  return { cart, products };
 };
 
 const cartSlice = createAppSlice({
