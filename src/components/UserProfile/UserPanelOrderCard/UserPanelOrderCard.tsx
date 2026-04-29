@@ -36,7 +36,7 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
         </div>
         <div className="user-panel-order-card__total">
           <Typography sx={{ marginBottom: '7px', fontWeight: 500 }}>Total</Typography>
-          <Typography sx={{ fontWeight: 500 }}>{`€ ${order.total.toFixed(2)}`}</Typography>
+          <Typography sx={{ fontWeight: 500 }}>{`$ ${order.total.toFixed(2)}`}</Typography>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
                 </Typography>
               </div>
             </div>
-            <Typography sx={{ fontWeight: 500 }}>{`€ ${item.price.toFixed(2)}`}</Typography>
+            <Typography sx={{ fontWeight: 500 }}>{`$ ${item.price.toFixed(2)}`}</Typography>
           </div>
         ))}
       </div>

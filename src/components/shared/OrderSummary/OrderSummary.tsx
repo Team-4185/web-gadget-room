@@ -63,7 +63,7 @@ export const OrderSummary = ({
             Subtotal
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? subTotal.toFixed(2) : 0}
+            $ {amountOfProducts ? subTotal.toFixed(2) : 0}
           </Typography>
         </div>
 
@@ -72,7 +72,7 @@ export const OrderSummary = ({
             Tax
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? taxAmount.toFixed(2) : 0}
+            $ {amountOfProducts ? taxAmount.toFixed(2) : 0}
           </Typography>
         </div>
 
@@ -81,7 +81,7 @@ export const OrderSummary = ({
             Delivery
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? shippingAmount.toFixed(2) : 0}
+            $ {amountOfProducts ? shippingAmount.toFixed(2) : 0}
           </Typography>
         </div>
       </div>
@@ -93,7 +93,7 @@ export const OrderSummary = ({
           Total
         </Typography>
         <Typography variant="h6" component="span" sx={totalValueSx}>
-          {'\u20AC'} {amountOfProducts ? total.toFixed(2) : 0}
+          $ {amountOfProducts ? total.toFixed(2) : 0}
         </Typography>
       </div>
 

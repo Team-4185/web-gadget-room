@@ -52,7 +52,7 @@ export const DeliveryMethodSection = ({
                 </Typography>
               </div>
               <Typography variant="body1" sx={{ fontSize: '15px', fontWeight: 500 }}>
-                {'\u20AC'} {option.price.toFixed(2)}
+                $ {option.price.toFixed(2)}
               </Typography>
             </button>
 

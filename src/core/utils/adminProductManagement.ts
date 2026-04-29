@@ -1,4 +1,5 @@
 import { api } from '@/core/config';
+import { FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type {
   AdminProductFormErrors,
@@ -22,7 +23,6 @@ export interface IAdminProductsPageData {
   last: boolean;
 }
 
-export const ADMIN_PRODUCTS_FALLBACK_IMAGE = '/icons/GraySquare.svg';
 export const ADMIN_PRODUCTS_MAX_PRICE_FILTER = 1_000_000;
 
 const formatAdminProductPrice = (value: number) =>
@@ -53,7 +53,7 @@ export const mapAdminProduct = (item: ApiAdminProduct): IAdminPanelManagedProduc
     price: formatAdminProductPrice(item.price),
     stock: `${stockNumber} pcs`,
     status,
-    image: item.previewImage?.url ?? ADMIN_PRODUCTS_FALLBACK_IMAGE,
+    image: item.previewImage?.url ?? FALLBACK_IMAGE,
   };
 };
 
@@ -72,18 +72,15 @@ export const mapAdminProductsResponse = (
 export const resolveAdminProductImages = async (products: IAdminPanelManagedProduct[]) => {
   const imageResults = await Promise.allSettled(
     products.map((product) =>
-      product.image === ADMIN_PRODUCTS_FALLBACK_IMAGE
-        ? Promise.resolve(ADMIN_PRODUCTS_FALLBACK_IMAGE)
+      product.image === FALLBACK_IMAGE
+        ? Promise.resolve(FALLBACK_IMAGE)
         : phonesService.getImageObjectUrl(product.image)
     )
   );
 
   return products.map((product, index) => ({
     ...product,
-    image:
-      imageResults[index]?.status === 'fulfilled'
-        ? imageResults[index].value
-        : ADMIN_PRODUCTS_FALLBACK_IMAGE,
+    image: imageResults[index]?.status === 'fulfilled' ? imageResults[index].value : FALLBACK_IMAGE,
   }));
 };
 

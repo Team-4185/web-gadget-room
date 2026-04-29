@@ -51,7 +51,7 @@ export const AdminProductModalFields = ({
     />
 
     <LabeledFormField
-      label="Price (EUR)"
+      label="Price (USD)"
       required
       type="number"
       min="0"
