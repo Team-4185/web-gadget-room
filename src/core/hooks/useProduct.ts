@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 
-import { FALLBACK_PRODUCT_IMAGE, PRODUCTS, PRODUCT_GALLERY_SIZE, SPECS } from '@/core/constants';
+import { FALLBACK_IMAGE, PRODUCTS, PRODUCT_GALLERY_SIZE, SPECS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { IProduct, UseProductResult } from '@/core/types';
 import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils';
@@ -9,7 +9,7 @@ import { buildSpecs, mapApiPhoneToProduct } from '@/core/utils';
 const normalizeGalleryImages = (images: string[]): string[] => {
   const limited = images.slice(0, PRODUCT_GALLERY_SIZE);
   while (limited.length < PRODUCT_GALLERY_SIZE) {
-    limited.push(FALLBACK_PRODUCT_IMAGE);
+    limited.push(FALLBACK_IMAGE);
   }
   return limited;
 };
@@ -30,7 +30,7 @@ export const useProduct = (): UseProductResult => {
   );
   const [description, setDescription] = useState('No description');
   const [galleryImages, setGalleryImages] = useState<string[]>(
-    normalizeGalleryImages([fallbackProduct.img || FALLBACK_PRODUCT_IMAGE])
+    normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE])
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,12 +63,12 @@ export const useProduct = (): UseProductResult => {
         if (controller.signal.aborted) return;
         // TESTING ONLY: fallback to local constants if backend call fails, to allow testing without a backend.
         setError(null);
-        setProduct({ ...fallbackProduct, img: fallbackProduct.img || FALLBACK_PRODUCT_IMAGE });
+        setProduct({ ...fallbackProduct, img: fallbackProduct.img || FALLBACK_IMAGE });
         setSpecs(SPECS.map(({ label, value }) => ({ label, value })));
         setDescription(
           'Enhanced capabilities thanks to an enlarged display and all-day battery life.'
         );
-        setGalleryImages(normalizeGalleryImages([fallbackProduct.img || FALLBACK_PRODUCT_IMAGE]));
+        setGalleryImages(normalizeGalleryImages([fallbackProduct.img || FALLBACK_IMAGE]));
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }

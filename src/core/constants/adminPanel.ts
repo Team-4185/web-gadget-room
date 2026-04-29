@@ -17,6 +17,7 @@ import type {
   IAdminPanelStatItem,
   ISelectOption,
 } from '@/core/types';
+import { FALLBACK_IMAGE } from './productMedia';
 import {
   ArrowRightUp,
   Customers,
@@ -89,66 +90,66 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
   {
     id: '1',
     title: 'iPhone 15 Pro Max',
-    sales: '342 sales - EUR 444,558',
+    sales: '342 sales - USD 444,558',
     trend: '+12%',
     stock: '45 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '2',
     title: 'Samsung Galaxy S24 Ultra',
-    sales: '298 sales - EUR 357,020',
+    sales: '298 sales - USD 357,020',
     trend: '+8%',
     stock: '62 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '3',
     title: 'Google Pixel 8 Pro',
-    sales: '187 sales - EUR 186,813',
+    sales: '187 sales - USD 186,813',
     trend: '+15%',
     stock: '38 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '4',
     title: 'Xiaomi 14 Pro',
-    sales: '156 sales - EUR 132,444',
+    sales: '156 sales - USD 132,444',
     trend: '+22%',
     stock: '89 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '5',
     title: 'OnePlus 11',
-    sales: '134 sales - EUR 107,066',
+    sales: '134 sales - USD 107,066',
     trend: '+5%',
     stock: '54 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '6',
     title: 'Samsung Galaxy S22',
-    sales: '342 sales - EUR 444,558',
+    sales: '342 sales - USD 444,558',
     trend: '+18%',
     stock: '16 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '7',
     title: 'Honor 90',
-    sales: '342 sales - EUR 444,558',
+    sales: '342 sales - USD 444,558',
     trend: '+8%',
     stock: '30 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '8',
     title: 'iPhone 11 128 GB',
-    sales: '342 sales - EUR 444,558',
+    sales: '342 sales - USD 444,558',
     trend: '+40%',
     stock: '60 pcs',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
 ];
 
@@ -161,7 +162,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$1,299',
     stock: '45 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '2',
@@ -171,7 +172,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$1,199',
     stock: '62 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '3',
@@ -181,7 +182,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$999',
     stock: '38 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '4',
@@ -191,7 +192,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$849',
     stock: '89 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '5',
@@ -201,7 +202,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$799',
     stock: '54 pcs',
     status: 'IN_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
   {
     id: '6',
@@ -211,7 +212,7 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
     price: '$699',
     stock: '8 pcs',
     status: 'LOW_STOCK',
-    image: '/icons/GraySquare.svg',
+    image: FALLBACK_IMAGE,
   },
 ];
 
@@ -244,9 +245,7 @@ export const ADMIN_PRODUCT_STATUS_OPTIONS: ISelectOption[] = [
   { value: 'OUT_OF_STOCK', name: 'Out of stock' },
 ];
 
-export const ADMIN_PRODUCT_FIELD_TOOLTIPS: Partial<
-  Record<keyof IAdminProductFormState, string>
-> = {
+export const ADMIN_PRODUCT_FIELD_TOOLTIPS: Partial<Record<keyof IAdminProductFormState, string>> = {
   releaseYear: 'Format: 2026 (4 digits)',
   coresNumber: 'Whole number, min 1',
   screenSize: 'Format: 6.7"',
