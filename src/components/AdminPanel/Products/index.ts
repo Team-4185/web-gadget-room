@@ -6,3 +6,4 @@ export {
   AdminProductModal,
   AdminProductModalFields,
 } from './AdminProductModal';
+export { AdminProductOverviewModal } from './AdminProductOverviewModal';

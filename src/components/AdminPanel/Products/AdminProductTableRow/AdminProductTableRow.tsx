@@ -8,11 +8,12 @@ import './AdminProductTableRow.css';
 
 interface IProps {
   product: IAdminPanelManagedProduct;
+  onView: (product: IAdminPanelManagedProduct) => void;
   onEdit: (product: IAdminPanelManagedProduct) => void;
   onDelete: (product: IAdminPanelManagedProduct) => void;
 }
 
-export const AdminProductTableRow = ({ product, onEdit, onDelete }: IProps) => (
+export const AdminProductTableRow = ({ product, onView, onEdit, onDelete }: IProps) => (
   <tr>
     <td className="admin-product-table-row__product-cell">
       <img src={product.image} alt={product.title} />
@@ -31,7 +32,7 @@ export const AdminProductTableRow = ({ product, onEdit, onDelete }: IProps) => (
     </td>
     <td>
       <div className="admin-product-table-row__actions">
-        <button type="button" aria-label={`View ${product.title}`}>
+        <button type="button" aria-label={`View ${product.title}`} onClick={() => onView(product)}>
           <Visibility />
         </button>
         <button type="button" aria-label={`Edit ${product.title}`} onClick={() => onEdit(product)}>

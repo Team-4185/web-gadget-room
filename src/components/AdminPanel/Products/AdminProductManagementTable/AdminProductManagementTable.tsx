@@ -2,15 +2,13 @@ import { useMemo, type FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { AdminProductStatus, IAdminPanelManagedProduct } from '@/core/types';
-import {
-  ADMIN_PRODUCT_FIELD_TOOLTIPS,
-  ADMIN_PRODUCT_STATUS_OPTIONS,
-} from '@/core/constants';
+import { ADMIN_PRODUCT_FIELD_TOOLTIPS, ADMIN_PRODUCT_STATUS_OPTIONS } from '@/core/constants';
 import { buildAdminProductBrandOptions } from '@/core/utils';
-import { useAdminProductModal } from '@/core/hooks';
+import { useAdminProductModal, useAdminProductOverviewModal } from '@/core/hooks';
 import { AdminPagination, Button, ConfirmationModal, Search, Select } from '@/components';
 import { Plus } from '@/assets';
 import { AdminProductModal } from '../AdminProductModal';
+import { AdminProductOverviewModal } from '../AdminProductOverviewModal';
 import { AdminProductTableRow } from '../AdminProductTableRow';
 
 import './AdminProductManagementTable.css';
@@ -55,6 +53,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
   onRefreshProducts,
 }) => {
   const productModal = useAdminProductModal({ onRefreshProducts });
+  const overviewModal = useAdminProductOverviewModal();
 
   const brandOptions = useMemo(
     () => buildAdminProductBrandOptions(availableBrands),
@@ -65,7 +64,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
     <section className="admin-product-management" aria-label="Product management">
       <div className="admin-product-management__header">
         <div>
-          <Typography component="h2" sx={{ fontSize: '24px', fontWeight: 600, lineHeight: 1 }}>
+          <Typography component="h2" fontSize="24px" fontWeight={600} lineHeight={1.1}>
             Product Management
           </Typography>
           <Typography variant="body2" component="p" sx={{ marginTop: '6px' }}>
@@ -142,6 +141,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
               <AdminProductTableRow
                 key={product.id}
                 product={product}
+                onView={(selectedProduct) => void overviewModal.openOverviewModal(selectedProduct)}
                 onEdit={(selectedProduct) => void productModal.openEditModal(selectedProduct)}
                 onDelete={productModal.openDeleteConfirmation}
               />
@@ -178,6 +178,13 @@ export const AdminProductManagementTable: FC<IProps> = ({
         onValueChange={productModal.handleDraftChange}
         onImageChange={productModal.handleImageChange}
         onImageDelete={(imageId) => void productModal.deleteProductImage(imageId)}
+      />
+
+      <AdminProductOverviewModal
+        product={overviewModal.product}
+        description={overviewModal.description}
+        isLoading={overviewModal.isLoading}
+        onClose={overviewModal.closeOverviewModal}
       />
 
       <ConfirmationModal
