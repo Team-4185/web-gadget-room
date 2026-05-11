@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
         Component: AuthPage,
       },
       {
+        path: 'reset-password',
+        Component: AuthPage,
+      },
+      {
         Component: ProtectedRoutes,
         children: [
           {

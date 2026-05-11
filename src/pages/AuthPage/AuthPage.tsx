@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Container } from '@mui/material';
 import { useLocation } from 'react-router';
 
-import { ForgotPassword, Login, Register, WelcomeSection } from '@/components';
+import { ForgotPassword, Login, Register, ResetPassword, WelcomeSection } from '@/components';
 import { ArrowRight, ArrowLeft } from '@/assets';
 
 import './AuthPage.css';
@@ -59,6 +59,18 @@ export const AuthPage: FC = () => {
                 subtitle="Enter your email to receive a secure password reset link."
                 icon={ArrowLeft}
                 className="auth__content--forgot-password"
+              />
+            </>
+          )}
+
+          {currentUrl === '/reset-password' && (
+            <>
+              <ResetPassword className="auth__form auth__form--reset-password" />
+              <WelcomeSection
+                title="Create new password "
+                subtitle="Choose a strong password to keep your account secure."
+                icon={ArrowLeft}
+                className="auth__content--reset-password"
               />
             </>
           )}
