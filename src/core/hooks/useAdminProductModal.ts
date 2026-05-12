@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import { useSnackbar } from 'notistack';
 
 import { EMPTY_ADMIN_PRODUCT_FORM } from '@/core/constants';
-import { phonesService } from '@/core/services';
+import { adminProductsService, phonesService } from '@/core/services';
 import type {
   AdminProductFormErrors,
   IAdminPanelManagedProduct,
@@ -63,7 +63,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
   };
 
   const loadProductImages = async (productId: number) => {
-    const images = await phonesService.getImages(productId);
+    const images = await adminProductsService.getImages(productId);
     const imageUrlResults = await Promise.allSettled(
       images.map((image) => phonesService.getImageObjectUrl(image.url))
     );
@@ -87,7 +87,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     setProductImages([]);
 
     try {
-      const phone = await phonesService.getById(Number(product.id));
+      const phone = await adminProductsService.getById(Number(product.id));
       setDraftProduct(mapPhoneToAdminProductDraft(phone, product));
 
       try {
@@ -113,7 +113,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     if (!editingProduct) return;
 
     try {
-      await phonesService.deleteImage(Number(editingProduct.id), imageId);
+      await adminProductsService.deleteImage(Number(editingProduct.id), imageId);
       setProductImages((prev) => prev.filter((image) => image.id !== imageId));
       onRefreshProducts();
     } catch (error) {
@@ -136,7 +136,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
 
     setIsDeleting(true);
     try {
-      await phonesService.delete(Number(productToDelete.id));
+      await adminProductsService.delete(Number(productToDelete.id));
       enqueueSnackbar('Product deleted.', { variant: 'success' });
       setProductToDelete(null);
       onRefreshProducts();
@@ -162,12 +162,12 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     setIsSaving(true);
     try {
       if (editingProduct) {
-        await phonesService.update(Number(editingProduct.id), payload);
+        await adminProductsService.update(Number(editingProduct.id), payload);
         if (imageFile) {
-          await phonesService.addImage(Number(editingProduct.id), imageFile);
+          await adminProductsService.addImage(Number(editingProduct.id), imageFile);
         }
       } else {
-        await phonesService.create(payload, imageFile);
+        await adminProductsService.create(payload, imageFile);
       }
       closeProductModal(true);
       onRefreshProducts();

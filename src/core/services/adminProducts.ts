@@ -1,4 +1,10 @@
-import type { AdminProductsRequestParams } from '@/core/types';
+import { api } from '@/core/config';
+import type {
+  AdminProductsRequestParams,
+  ApiPhone,
+  ApiPhoneImage,
+  CreatePhonePayload,
+} from '@/core/types';
 import {
   fetchAdminProductsPage,
   mapAdminProductsResponse,
@@ -6,7 +12,47 @@ import {
   type IAdminProductsPageData,
 } from '@/core/utils';
 
+const addAdminProductImage = async (id: number, imageFile: File) => {
+  const formData = new FormData();
+  formData.append('images', imageFile);
+
+  const { data } = await api.post<ApiPhoneImage>(`/api/v1/admin/products/${id}/images`, formData);
+  return data;
+};
+
 export const adminProductsService = {
+  async getById(id: number, signal?: AbortSignal) {
+    const { data } = await api.get<ApiPhone>(`/api/v1/admin/products/${id}`, { signal });
+    return data;
+  },
+  async create(payload: CreatePhonePayload, imageFile?: File | null) {
+    const { data } = await api.post<ApiPhone>('/api/v1/admin/products', payload);
+
+    if (imageFile) {
+      await addAdminProductImage(data.id, imageFile);
+    }
+
+    return data;
+  },
+  async update(id: number, payload: CreatePhonePayload) {
+    const { data } = await api.put<ApiPhone>(`/api/v1/admin/products/${id}`, payload);
+    return data;
+  },
+  async delete(id: number) {
+    await api.delete(`/api/v1/admin/products/${id}`);
+  },
+  async getImages(id: number, signal?: AbortSignal) {
+    const { data } = await api.get<ApiPhoneImage[]>(`/api/v1/admin/products/${id}/images`, {
+      signal,
+    });
+    return data;
+  },
+  async addImage(id: number, imageFile: File) {
+    return addAdminProductImage(id, imageFile);
+  },
+  async deleteImage(productId: number, imageId: number) {
+    await api.delete(`/api/v1/admin/products/${productId}/images/${imageId}`);
+  },
   async getProducts({
     page,
     size,
