@@ -15,62 +15,64 @@ type Props = {
 export const HeroSection = ({ title, subtitle, onBuyNow, imageSrc, imageAlt = '' }: Props) => {
   return (
     <section className="home-hero" aria-label="Home Hero Section">
-      <div className="home-hero__content">
-        <Typography
-          variant="h1"
-          component="h1"
-          id="home-hero-title"
-          sx={{
-            fontStyle: 'italic',
-            fontWeight: 300,
-            lineHeight: '75%',
-            letterSpacing: '-0.05em',
-          }}
-        >
-          {title.regular}{' '}
+      <div className="home-hero__background">
+        <div className="home-hero__content">
           <Typography
             variant="h1"
-            component="span"
+            component="h1"
+            id="home-hero-title"
             sx={{
+              fontStyle: 'italic',
+              fontWeight: 300,
               lineHeight: '75%',
               letterSpacing: '-0.05em',
-              display: 'inline-block',
-              fontWeight: 600,
             }}
           >
-            {title.bold}
+            {title.regular}{' '}
+            <Typography
+              variant="h1"
+              component="span"
+              sx={{
+                lineHeight: '75%',
+                letterSpacing: '-0.05em',
+                display: 'inline-block',
+                fontWeight: 600,
+              }}
+            >
+              {title.bold}
+            </Typography>
           </Typography>
-        </Typography>
 
-        <Typography
-          variant="body1"
-          component="p"
-          sx={{
-            fontWeight: 600,
-            fontSize: '20px',
-            lineHeight: '120%',
-            color: 'var(--white)',
-          }}
-        >
-          {subtitle}
-        </Typography>
+          <Typography
+            variant="body1"
+            component="p"
+            sx={{
+              fontWeight: 600,
+              fontSize: '20px',
+              lineHeight: '120%',
+              color: 'var(--white)',
+            }}
+          >
+            {subtitle}
+          </Typography>
 
-        <Button
-          maxWidth="200px"
-          height="60px"
-          fontSize="20px"
-          onClick={onBuyNow}
-          sx={{ background: 'var(--dark-hero-background)', color: 'var(--white)' }}
-        >
-          Buy Now
-        </Button>
-      </div>
-
-      {imageSrc ? (
-        <div className="home-hero__media">
-          <img className="home-hero__media-image" src={imageSrc} alt={imageAlt} />
+          <Button
+            maxWidth="200px"
+            height="60px"
+            fontSize="20px"
+            onClick={onBuyNow}
+            sx={{ background: 'var(--dark-hero-background)', color: 'var(--white)' }}
+          >
+            Buy Now
+          </Button>
         </div>
-      ) : null}
+
+        {imageSrc ? (
+          <div className="home-hero__media">
+            <img className="home-hero__media-image" src={imageSrc} alt={imageAlt} />
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 };
