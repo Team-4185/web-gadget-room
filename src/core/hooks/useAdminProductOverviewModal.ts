@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 
-import { phonesService } from '@/core/services';
+import { adminProductsService } from '@/core/services';
 import type { IAdminPanelManagedProduct } from '@/core/types';
 
 export const useAdminProductOverviewModal = () => {
@@ -16,7 +16,7 @@ export const useAdminProductOverviewModal = () => {
     setIsLoading(true);
 
     try {
-      const phone = await phonesService.getById(Number(selectedProduct.id));
+      const phone = await adminProductsService.getById(Number(selectedProduct.id));
       setDescription(phone.description?.trim() || 'No description provided.');
     } catch (error) {
       console.error('Failed to load product overview details', error);
