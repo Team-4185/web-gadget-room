@@ -34,7 +34,7 @@ import {
 
 export const ADMIN_PANEL_MENU: IAdminPanelMenuItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: Dashboard },
-  { id: 'product', label: 'Product', icon: Product, badge: 100 },
+  { id: 'product', label: 'Products', icon: Product, badge: 100 },
   { id: 'orders', label: 'Orders', icon: Order, badge: 10 },
   { id: 'customers', label: 'Customers', icon: Customers },
 ];
@@ -355,16 +355,16 @@ export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
 ];
 
 export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
-  processing: 'Processing',
   confirmed: 'Confirmed',
+  processing: 'Processing',
   delivered: 'Delivered',
   cancelled: 'Cancelled',
 };
 
 export const ADMIN_ORDER_FILTER_TABS = [
   { id: 'all', label: 'All orders' },
-  { id: 'processing', label: 'Processing' },
   { id: 'confirmed', label: 'Confirmed' },
+  { id: 'processing', label: 'Processing' },
   { id: 'delivered', label: 'Delivered' },
   { id: 'cancelled', label: 'Cancelled' },
 ] as const;
