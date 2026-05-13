@@ -70,11 +70,35 @@ export type BrandInfo = {
 
 export type SortOption =
   | 'popularity'
+  | 'new'
+  | 'increase'
+  | 'reduction'
   | 'name A to Z'
   | 'name Z to A'
   | 'price decreasing'
   | 'price increasing'
   | 'number of reviews';
+
+export type CatalogApiSort = 'price_asc' | 'price_desc';
+
+export type CatalogProductsRequestParams = {
+  page: number;
+  size: number;
+  brand?: string;
+  minPrice: number;
+  maxPrice: number;
+  sort: CatalogApiSort;
+};
+
+export type ApiCatalogProductsPage = {
+  content: ApiPhone[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+};
 
 export type UseProductResult = {
   product: IProduct;

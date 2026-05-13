@@ -17,7 +17,8 @@ interface IProps {
 
 const formatProductPrice = (price: number) =>
   new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 0,
+    minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
+    maximumFractionDigits: 2,
   }).format(price);
 
 export const ProductCard: FC<IProps> = ({ product, variant = 'catalog', onClick }) => {

@@ -11,6 +11,8 @@ interface ICatalogFiltersProps {
   sliderValue: number;
   onSliderChange: (_event: Event, newValue: number | number[]) => void;
   onToggle: (item: string) => void;
+  onApply: () => void;
+  onReset: () => void;
 }
 
 export const CatalogFilters: FC<ICatalogFiltersProps> = ({
@@ -18,6 +20,8 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
   sliderValue,
   onSliderChange,
   onToggle,
+  onApply,
+  onReset,
 }) => {
   return (
     <aside className="catalog__filters">
@@ -30,7 +34,7 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
           className="catalog__slider"
           value={sliderValue}
           min={200}
-          max={2000}
+          max={250000}
           onChange={onSliderChange}
         />
 
@@ -48,6 +52,7 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
             fontSize="20px"
             fontWeight={400}
             textTransform="uppercase"
+            onClick={onReset}
           >
             Reset
           </Button>
@@ -57,6 +62,7 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
             fontSize="20px"
             fontWeight={400}
             textTransform="uppercase"
+            onClick={onApply}
           >
             Apply
           </Button>

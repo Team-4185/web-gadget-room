@@ -3,48 +3,54 @@ import { Pagination, PaginationItem } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 import { ChevronRight, ChevronLeft } from '@/assets';
-import type { IProduct } from '@/core/types';
+import type { IProduct, SortOption } from '@/core/types';
 import { CatalogHeader, ProductCard } from '@/components';
 
 import './CatalogContent.css';
 
 interface IProps {
-  // sortBy: SortOption;
-  // onSortChange: (event: SelectChangeEvent<string>) => void;
   items: IProduct[];
-  // totalPages: number;
-  // currentPage: number;
-  // onPrev: () => void;
-  // onNext: () => void;
-  // onPageChange: (page: number) => void;
+  sortBy: SortOption;
+  totalPages: number;
+  currentPage: number;
+  isLoading?: boolean;
+  onSortChange: (value: string) => void;
+  onPageChange: (page: number) => void;
 }
 
 export const CatalogContent: FC<IProps> = ({
-  // sortBy,
-  // onSortChange,
   items,
-  // totalPages,
-  // currentPage,
-  // onPrev,
-  // onNext,
-  // onPageChange,
+  sortBy,
+  totalPages,
+  currentPage,
+  isLoading = false,
+  onSortChange,
+  onPageChange,
 }) => {
   const navigate = useNavigate();
 
   return (
     <div className="catalog__content">
-      <CatalogHeader />
+      <CatalogHeader sortBy={sortBy} onSortChange={onSortChange} />
       <div className="catalog__products">
-        {items.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onClick={() => navigate(`/product/${product.id}`, { state: product })}
-          />
-        ))}
+        {isLoading ? (
+          <p className="catalog__products-status">Loading products...</p>
+        ) : items.length ? (
+          items.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClick={() => navigate(`/product/${product.id}`, { state: product })}
+            />
+          ))
+        ) : (
+          <p className="catalog__products-status">No products found.</p>
+        )}
       </div>
       <Pagination
-        count={10}
+        page={currentPage}
+        count={totalPages}
+        onChange={(_event, page) => onPageChange(page)}
         renderItem={(item) => {
           if (item.type === 'next') {
             return (
