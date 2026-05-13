@@ -58,7 +58,7 @@ export const AboutTeamSection = () => {
                     color: 'var(--dark-gray-violet)',
                     fontSize: '20px',
                     lineHeight: '20px',
-                    letterSpacing: '-1px',
+                    letterSpacing: '-2px',
                     fontWeight: 600,
                   }}
                 >
@@ -72,7 +72,7 @@ export const AboutTeamSection = () => {
                     color: 'var(--muted-violet)',
                     fontSize: '16px',
                     lineHeight: '20px',
-                    letterSpacing: '-2px',
+                    letterSpacing: '-1px',
                   }}
                 >
                   {person.text}
