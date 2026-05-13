@@ -187,7 +187,7 @@ export const aboutMetrics = [
   },
   {
     id: 4,
-    value: '2.4k+',
+    value: '24/7',
     label: 'SUPPORT',
     caption: 'Round-the-clock customer care',
   },
