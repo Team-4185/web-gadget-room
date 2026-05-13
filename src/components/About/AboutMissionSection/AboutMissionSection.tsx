@@ -69,7 +69,7 @@ export const AboutMissionSection = () => {
               height="56px"
               fontSize="16px"
               borderRadius="8px"
-              sx={{ marginTop: '26px' }}
+              sx={{ marginTop: '40px' }}
               onClick={() => navigate('/catalog')}
             >
               GO TO CATALOG

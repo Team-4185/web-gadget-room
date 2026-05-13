@@ -19,7 +19,14 @@ export const AboutTeamSection = () => {
           </Typography>
         </div>
         <div className="about-team__description-wrap">
-          <Typography sx={{ color: 'var(--muted-violet)', fontSize: '24px', lineHeight: '28px' }}>
+          <Typography
+            sx={{
+              color: 'var(--muted-violet)',
+              fontSize: '24px',
+              lineHeight: '30px',
+              letterSpacing: '-1px',
+            }}
+          >
             A passionate group of tech enthusiasts and retail professionals dedicated to bringing
             you the best gadget-buying experience.
           </Typography>
@@ -34,7 +41,12 @@ export const AboutTeamSection = () => {
               <div className="about-team__name-wrap">
                 <Typography
                   component="h3"
-                  sx={{ fontSize: '24px', lineHeight: '34px', fontWeight: 600 }}
+                  sx={{
+                    fontSize: '24px',
+                    lineHeight: '34px',
+                    fontWeight: 600,
+                    letterSpacing: '-1px',
+                  }}
                 >
                   {person.name}
                 </Typography>
@@ -60,7 +72,7 @@ export const AboutTeamSection = () => {
                     color: 'var(--muted-violet)',
                     fontSize: '16px',
                     lineHeight: '20px',
-                    letterSpacing: '-1px',
+                    letterSpacing: '-2px',
                   }}
                 >
                   {person.text}

@@ -21,7 +21,14 @@ export const AboutProcessSection = () => {
           </Typography>
         </div>
         <div className="about-process__description-wrap">
-          <Typography sx={{ color: 'var(--muted-violet)', fontSize: '24px', lineHeight: '28px' }}>
+          <Typography
+            sx={{
+              color: 'var(--muted-violet)',
+              fontSize: '24px',
+              lineHeight: '28px',
+              letterSpacing: '-1px',
+            }}
+          >
             From selecting products to delivering them at your door - here's how{' '}
             <span style={{ fontWeight: 600 }}>GadgetRoom</span> operates.
           </Typography>
@@ -35,7 +42,13 @@ export const AboutProcessSection = () => {
               </div>
               <Typography
                 component="h3"
-                sx={{ fontSize: '24px', lineHeight: '28px', fontWeight: 600 }}
+                sx={{
+                  fontSize: '24px',
+                  lineHeight: '32px',
+                  fontWeight: 600,
+                  letterSpacing: '-1px',
+                  marginTop: '10px',
+                }}
               >
                 {step.title}
               </Typography>
@@ -59,4 +72,3 @@ export const AboutProcessSection = () => {
     </section>
   );
 };
-

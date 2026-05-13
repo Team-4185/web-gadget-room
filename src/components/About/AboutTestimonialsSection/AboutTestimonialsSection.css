@@ -27,11 +27,11 @@
 }
 
 .about-testimonials__description-wrap {
-  margin: 19px auto 0;
+  margin: 25px auto 0;
 }
 
 .about-testimonials__grid {
-  margin-top: 80px;
+  margin-top: 115px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-height: 316px;
@@ -93,4 +93,3 @@
 .about-testimonials__author-badge--blue {
   background: var(--blue);
 }
-

@@ -26,6 +26,7 @@ export const AboutMetricsSection = () => {
                       fontWeight: 700,
                       textTransform: 'uppercase',
                       lineHeight: '16px',
+                      marginTop: '20px',
                     }}
                   >
                     {item.label}
@@ -34,7 +35,12 @@ export const AboutMetricsSection = () => {
                 <div className="about-metrics__caption-wrap">
                   <Typography
                     component="p"
-                    sx={{ color: 'var(--white)', fontWeight: 400, lineHeight: 1 }}
+                    sx={{
+                      color: 'var(--white)',
+                      fontWeight: 400,
+                      lineHeight: 1,
+                      marginTop: '12px',
+                    }}
                   >
                     {item.caption}
                   </Typography>
@@ -47,4 +53,3 @@ export const AboutMetricsSection = () => {
     </section>
   );
 };
-

@@ -1,6 +1,6 @@
 .about-metrics {
   background: var(--dark-hero-background-no-gradient);
-  padding: 56px 0;
+  padding: 59px 0 56px 0;
   position: relative;
 }
 
@@ -20,7 +20,7 @@
 .about-metrics__panel {
   border-radius: 30px;
   background: var(--about-metrics-background);
-  padding: 56px 34px;
+  padding: 60px 14.5px;
 }
 
 .about-metrics__grid {
@@ -40,4 +40,3 @@
 .about-metrics__caption-wrap {
   margin-top: 6px;
 }
-
