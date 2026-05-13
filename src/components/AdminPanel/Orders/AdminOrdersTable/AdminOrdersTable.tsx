@@ -9,7 +9,6 @@ import {
 } from '@/core/constants';
 import { Button } from '@/components/ui';
 import { AdminPagination } from '@/components/shared';
-import { Trash, Visibility, Edit } from '@/assets';
 
 import './AdminOrdersTable.css';
 
@@ -81,7 +80,6 @@ export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
               <th>Amount</th>
               <th>Date</th>
               <th>Status</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -115,19 +113,6 @@ export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
                   <span className={`admin-orders-table__status is-${order.status}`}>
                     {ADMIN_ORDER_STATUS_LABELS[order.status]}
                   </span>
-                </td>
-                <td>
-                  <div className="admin-orders-table__actions">
-                    <button type="button" aria-label={`View ${order.orderNumber}`}>
-                      <Visibility />
-                    </button>
-                    <button type="button" aria-label={`Edit ${order.orderNumber}`}>
-                      <Edit />
-                    </button>
-                    <button type="button" aria-label={`Delete ${order.orderNumber}`}>
-                      <Trash />
-                    </button>
-                  </div>
                 </td>
               </tr>
             ))}

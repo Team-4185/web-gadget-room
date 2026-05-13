@@ -80,7 +80,7 @@ export interface IAdminPanelOrderItem {
   customer: string;
   product: string;
   age: string;
-  status: 'processing' | 'paid' | 'shipping';
+  status: 'confirmed' | 'processing' | 'delivered' | 'cancelled';
 }
 
 export interface IAdminPanelLowStockItem {
@@ -97,7 +97,7 @@ export interface IAdminCustomerKpiItem {
   icon: ComponentType<SvgIconProps>;
 }
 
-export type AdminCustomerStatus = 'vip' | 'active' | 'new';
+export type AdminCustomerStatus = 'inactive' | 'active' | 'new';
 
 export interface IAdminCustomerItem {
   id: string;
@@ -117,12 +117,7 @@ export interface IAdminOrderKpiItem {
   icon: ComponentType<SvgIconProps>;
 }
 
-export type AdminOrderStatus =
-  | 'in_processing'
-  | 'paid'
-  | 'in_delivery'
-  | 'delivered'
-  | 'cancelled';
+export type AdminOrderStatus = 'processing' | 'confirmed' | 'delivered' | 'cancelled';
 
 export interface IAdminManagedOrderItem {
   id: string;

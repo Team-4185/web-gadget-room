@@ -34,7 +34,7 @@ import {
 
 export const ADMIN_PANEL_MENU: IAdminPanelMenuItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: Dashboard },
-  { id: 'product', label: 'Product', icon: Product, badge: 100 },
+  { id: 'product', label: 'Products', icon: Product, badge: 100 },
   { id: 'orders', label: 'Orders', icon: Order, badge: 10 },
   { id: 'customers', label: 'Customers', icon: Customers },
 ];
@@ -269,7 +269,7 @@ export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
     customer: 'Maria Johnson',
     product: 'Samsung S24',
     age: '12 min',
-    status: 'paid',
+    status: 'confirmed',
   },
   {
     id: '3',
@@ -277,7 +277,7 @@ export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
     customer: 'Alex Brown',
     product: 'Pixel 8',
     age: '28 min',
-    status: 'shipping',
+    status: 'delivered',
   },
 ];
 
@@ -289,8 +289,8 @@ export const ADMIN_PANEL_LOW_STOCK: IAdminPanelLowStockItem[] = [
 
 export const ADMIN_CUSTOMER_KPIS: IAdminCustomerKpiItem[] = [
   { id: 'total', title: 'Total clients', value: '100', icon: Customers },
-  { id: 'vip', title: 'VIP clients', value: '89', icon: Star },
-  { id: 'new_month', title: 'New (month)', value: '60', icon: ArrowRightUp },
+  { id: 'new_month', title: 'New (month)', value: '89', icon: Star },
+  { id: 'inactive', title: 'Inactive', value: '60', icon: ArrowRightUp },
   { id: 'receipt', title: 'Wed receipt', value: '$2,200', icon: Dollar },
 ];
 
@@ -303,7 +303,7 @@ export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
     orders: 12,
     spent: '$8,450',
     registeredAt: 'January 15, 2025',
-    status: 'vip',
+    status: 'inactive',
   },
   {
     id: '2',
@@ -323,7 +323,7 @@ export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
     orders: 12,
     spent: '$12,890',
     registeredAt: 'December 22, 2023',
-    status: 'vip',
+    status: 'inactive',
   },
   {
     id: '4',
@@ -348,25 +348,23 @@ export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
 ];
 
 export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
-  { id: 'processing', title: 'In processing', value: '23', icon: SmallClock },
-  { id: 'delivered', title: 'Delivered', value: '856', icon: StatusDelivered },
-  { id: 'delivery', title: 'In delivery', value: '60', icon: SmallTruck },
+  { id: 'confirmed', title: 'Confirmed', value: '23', icon: StatusDelivered },
+  { id: 'processing', title: 'Processing', value: '856', icon: SmallClock },
+  { id: 'delivered', title: 'Delivered', value: '60', icon: SmallTruck },
   { id: 'cancelled', title: 'Cancelled', value: '23', icon: StatusCancelled },
 ];
 
 export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
-  in_processing: 'In processing',
-  paid: 'Paid',
-  in_delivery: 'In transit',
+  confirmed: 'Confirmed',
+  processing: 'Processing',
   delivered: 'Delivered',
   cancelled: 'Cancelled',
 };
 
 export const ADMIN_ORDER_FILTER_TABS = [
   { id: 'all', label: 'All orders' },
-  { id: 'in_processing', label: 'Processing' },
-  { id: 'paid', label: 'Paid' },
-  { id: 'in_delivery', label: 'In transit' },
+  { id: 'confirmed', label: 'Confirmed' },
+  { id: 'processing', label: 'Processing' },
   { id: 'delivered', label: 'Delivered' },
   { id: 'cancelled', label: 'Cancelled' },
 ] as const;
@@ -384,7 +382,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$1,299',
     date: '12 Oct 2025',
     time: '14:30',
-    status: 'in_processing',
+    status: 'processing',
   },
   {
     id: '2',
@@ -396,7 +394,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$999',
     date: '12 Oct 2025',
     time: '13:45',
-    status: 'paid',
+    status: 'confirmed',
   },
   {
     id: '3',
@@ -408,7 +406,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$1,998',
     date: '12 Oct 2025',
     time: '11:20',
-    status: 'in_delivery',
+    status: 'delivered',
   },
   {
     id: '4',
@@ -444,7 +442,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$699',
     date: '11 Oct 2025',
     time: '15:30',
-    status: 'paid',
+    status: 'confirmed',
   },
   {
     id: '7',
@@ -456,7 +454,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$699',
     date: '11 Oct 2025',
     time: '15:30',
-    status: 'paid',
+    status: 'delivered',
   },
   {
     id: '8',
@@ -468,7 +466,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$699',
     date: '11 Oct 2025',
     time: '15:30',
-    status: 'paid',
+    status: 'confirmed',
   },
   {
     id: '9',
@@ -480,7 +478,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$699',
     date: '11 Oct 2025',
     time: '15:30',
-    status: 'paid',
+    status: 'confirmed',
   },
 ];
 
