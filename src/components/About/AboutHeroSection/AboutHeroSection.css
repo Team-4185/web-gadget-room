@@ -25,7 +25,7 @@
 }
 
 .about-hero__media--left {
-  left: 104px;
+  left: 130px;
   bottom: 0;
   width: 290px;
   height: 295px;
@@ -54,7 +54,7 @@
 .about-hero__title {
   display: inline-flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 25px;
 }
 
 .about-hero__trust-wrap {
@@ -89,4 +89,3 @@
   width: 474px;
   z-index: 3;
 }
-

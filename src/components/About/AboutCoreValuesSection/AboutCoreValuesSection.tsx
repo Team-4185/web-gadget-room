@@ -58,7 +58,7 @@ export const AboutCoreValuesSection = () => {
                 <Typography
                   component="h3"
                   sx={{
-                    fontSize: '32px',
+                    fontSize: '24px',
                     lineHeight: '32px',
                     fontWeight: 700,
                     letterSpacing: '-1px',

@@ -1,6 +1,6 @@
 .about-values {
-  padding-top: 82px;
-  padding-bottom: 82px;
+  padding-top: 91px;
+  padding-bottom: 83px;
 }
 
 .about-values__eyebrow-wrap,
@@ -10,7 +10,7 @@
 }
 
 .about-values__title-wrap {
-  margin-top: 15px;
+  margin-top: 30px;
 }
 
 .about-values__description-wrap {
@@ -19,7 +19,7 @@
 }
 
 .about-values__grid {
-  margin-top: 50px;
+  margin-top: 78px;
   display: grid;
   grid-template-columns: repeat(3, 409px);
   gap: 36px 26px;
@@ -46,7 +46,8 @@
 }
 
 .about-values__card-text-wrap {
-  margin-top: 39px;
+  margin-top: 20px;
+  max-width: 352px;
 }
 
 .about-values__icon {
@@ -87,4 +88,3 @@
 .about-values__icon--purple {
   background: var(--light-violet);
 }
-

@@ -1,5 +1,5 @@
 .about-team {
-  padding-top: 53px;
+  padding-top: 58px;
   padding-bottom: 78px;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .about-team__grid {
-  margin-top: 80px;
+  margin-top: 83px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
@@ -63,5 +63,5 @@
 
 .about-team__text-wrap {
   margin-top: 19px;
+  max-width: 240px;
 }
-
