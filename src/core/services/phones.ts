@@ -31,6 +31,10 @@ export const phonesService = {
   async deleteImage(phoneId: number, imageId: number) {
     await api.delete(`/api/v1/phones/${phoneId}/images/${imageId}`);
   },
+  async getAll(signal?: AbortSignal) {
+    const { data } = await api.get<ApiPhone[]>('/api/v1/phones', { signal });
+    return data;
+  },
   async getById(id: number, signal?: AbortSignal) {
     const { data } = await api.get<ApiPhone>(`/api/v1/phones/${id}`, { signal });
     return data;

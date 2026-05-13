@@ -30,6 +30,7 @@ export type ApiPhone = {
   sku?: string;
   stock?: number;
   status?: PhoneStockStatus;
+  badge?: BadgeType;
   images: ApiPhoneImage[];
 };
 

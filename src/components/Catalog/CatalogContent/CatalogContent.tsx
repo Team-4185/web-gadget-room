@@ -1,10 +1,10 @@
 import type { FC } from 'react';
-import { Pagination, PaginationItem, type SelectChangeEvent } from '@mui/material';
+import { Pagination, PaginationItem } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 import { ChevronRight, ChevronLeft } from '@/assets';
-import type { IProduct, SortOption } from '@/core/types';
-import { Badge, CatalogHeader, ProductCard } from '@/components';
+import type { IProduct } from '@/core/types';
+import { CatalogHeader, ProductCard } from '@/components';
 
 import './CatalogContent.css';
 
@@ -35,19 +35,13 @@ export const CatalogContent: FC<IProps> = ({
     <div className="catalog__content">
       <CatalogHeader />
       <div className="catalog__products">
-        {items.map((product) =>
-          product.badge ? (
-            <Badge key={product.id} text={product.badge}>
-              <ProductCard product={product} onClick={() => navigate(`/product/${product.id}`)} />
-            </Badge>
-          ) : (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClick={() => navigate(`/product/${product.id}`)}
-            />
-          )
-        )}
+        {items.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            onClick={() => navigate(`/product/${product.id}`, { state: product })}
+          />
+        ))}
       </div>
       <Pagination
         count={10}
