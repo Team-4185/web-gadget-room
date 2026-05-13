@@ -72,16 +72,12 @@
   line-height: 1;
 }
 
-.admin-orders-table__status.is-in_processing {
+.admin-orders-table__status.is-processing {
   background: var(--amber);
 }
 
-.admin-orders-table__status.is-paid {
+.admin-orders-table__status.is-confirmed {
   background: var(--chateau-green);
-}
-
-.admin-orders-table__status.is-in_delivery {
-  background: var(--blue);
 }
 
 .admin-orders-table__status.is-delivered {
@@ -114,4 +110,3 @@
 .admin-orders-table__actions button:last-child {
   color: var(--red);
 }
-

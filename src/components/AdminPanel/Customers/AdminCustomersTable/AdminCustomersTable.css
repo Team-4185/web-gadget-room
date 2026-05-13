@@ -79,8 +79,8 @@
   line-height: 1;
 }
 
-.admin-customers-table__status.is-vip {
-  background: var(--amber);
+.admin-customers-table__status.is-inactive {
+  background: var(--red);
 }
 
 .admin-customers-table__status.is-active {
@@ -109,4 +109,3 @@
 .admin-customers-table__actions button:last-child {
   color: var(--red);
 }
-

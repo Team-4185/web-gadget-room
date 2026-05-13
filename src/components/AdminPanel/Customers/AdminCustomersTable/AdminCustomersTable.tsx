@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const STATUS_LABELS = {
-  vip: 'VIP',
+  inactive: 'Inactive',
   active: 'Active',
   new: 'New',
 } as const;
