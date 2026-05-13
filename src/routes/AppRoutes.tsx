@@ -75,12 +75,6 @@ export const router = createBrowserRouter([
           {
             path: 'about',
             Component: About,
-            handle: {
-              breadcrumb: () => [
-                { id: 1, path: '/home', label: 'Home' },
-                { id: 2, path: '/about', label: 'About' },
-              ],
-            },
           },
           {
             path: 'product/:id',
