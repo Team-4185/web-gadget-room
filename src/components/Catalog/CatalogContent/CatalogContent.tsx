@@ -1,156 +1,59 @@
-import type { FC } from 'react';
-import { Pagination, PaginationItem, type SelectChangeEvent } from '@mui/material';
+import { useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { ChevronRight, ChevronLeft } from '@/assets';
 import type { IProduct, SortOption } from '@/core/types';
-import { Badge, CatalogHeader, ProductCard } from '@/components';
+import { CatalogHeader } from '@/components';
+import { CatalogPagination } from './CatalogPagination/CatalogPagination';
+import { CatalogProductGrid } from './CatalogProductGrid/CatalogProductGrid';
 
 import './CatalogContent.css';
 
 interface IProps {
-  // sortBy: SortOption;
-  // onSortChange: (event: SelectChangeEvent<string>) => void;
   items: IProduct[];
-  // totalPages: number;
-  // currentPage: number;
-  // onPrev: () => void;
-  // onNext: () => void;
-  // onPageChange: (page: number) => void;
+  sortBy: SortOption;
+  totalPages: number;
+  currentPage: number;
+  scrollTrigger: number;
+  isLoading?: boolean;
+  onSortChange: (value: string) => void;
+  onPageChange: (page: number) => void;
 }
 
 export const CatalogContent: FC<IProps> = ({
-  // sortBy,
-  // onSortChange,
   items,
-  // totalPages,
-  // currentPage,
-  // onPrev,
-  // onNext,
-  // onPageChange,
+  sortBy,
+  totalPages,
+  currentPage,
+  scrollTrigger,
+  isLoading = false,
+  onSortChange,
+  onPageChange,
 }) => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [currentPage, scrollTrigger]);
+
+  const handleProductClick = (product: IProduct) => {
+    navigate(`/product/${product.id}`, { state: product });
+  };
+
   return (
     <div className="catalog__content">
-      <CatalogHeader />
-      <div className="catalog__products">
-        {items.map((product) =>
-          product.badge ? (
-            <Badge key={product.id} text={product.badge}>
-              <ProductCard product={product} onClick={() => navigate(`/product/${product.id}`)} />
-            </Badge>
-          ) : (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClick={() => navigate(`/product/${product.id}`)}
-            />
-          )
-        )}
-      </div>
-      <Pagination
-        count={10}
-        renderItem={(item) => {
-          if (item.type === 'next') {
-            return (
-              <PaginationItem
-                {...item}
-                slots={{
-                  next: () => (
-                    <div data-pagination="next">
-                      <p>Next</p>
-                      <ChevronRight />
-                    </div>
-                  ),
-                }}
-                shape="rounded"
-              />
-            );
-          }
-
-          if (item.type === 'previous') {
-            return (
-              <PaginationItem
-                {...item}
-                slots={{
-                  previous: () => (
-                    <div data-pagination="prev">
-                      <ChevronLeft />
-                    </div>
-                  ),
-                }}
-                shape="rounded"
-              />
-            );
-          }
-
-          return <PaginationItem {...item} />;
-        }}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '60px',
-          height: '36px',
-
-          '& .MuiPagination-ul': {
-            borderRadius: '10px',
-            boxShadow: '0 0 7px 0 var(--blue-violet)',
-            background: 'var(--white)',
-          },
-
-          '& .MuiPaginationItem-root:not(.MuiPaginationItem-previousNext)': {
-            width: '26px',
-            height: '26px',
-            minWidth: '26px',
-            fontWeight: 600,
-            fontSize: '16px',
-            padding: 0,
-            margin: 0,
-          },
-          '& .MuiPaginationItem-root.Mui-selected': {
-            background: 'var(--blue-violet)',
-            color: 'var(--white)',
-          },
-          '& .MuiPaginationItem-root:not(.Mui-selected):not(.MuiPaginationItem-previousNext)': {
-            border: '1px solid var(--blue-violet)',
-            color: 'var(--black)',
-          },
-          '& .MuiPaginationItem-previousNext': {
-            height: '36px',
-            padding: 0,
-            margin: 0,
-            boxShadow: '0 0 7px 0 var(--blue-violet)',
-            background: 'var(--white)',
-            borderRadius: '10px',
-          },
-          '& .MuiPagination-ul > :first-child .MuiPaginationItem-previousNext': {
-            width: '26px',
-            minWidth: '26px',
-          },
-          '& .MuiPagination-ul > :last-child .MuiPaginationItem-previousNext': {
-            width: '73px',
-            minWidth: '73px',
-          },
-          '& .MuiPagination-ul > :first-child': {
-            marginRight: '13px',
-          },
-          '& .MuiPagination-ul > :last-child': {
-            marginLeft: '13px',
-          },
-          '& .MuiPagination-ul > :not(:first-child):not(:nth-last-child(2)):not(:last-child)': {
-            marginRight: '17px',
-          },
-          '& [data-pagination="next"] , & [data-pagination="prev"]': {
-            display: 'flex',
-            alignItems: 'center',
-          },
-          '& [data-pagination="next"] p': {
-            fontWeight: 600,
-            fontSize: '16px',
-            color: 'var(--black)',
-          },
-        }}
+      <CatalogHeader sortBy={sortBy} onSortChange={onSortChange} />
+      <CatalogProductGrid
+        items={items}
+        isLoading={isLoading}
+        onProductClick={handleProductClick}
+      />
+      <CatalogPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
       />
     </div>
   );

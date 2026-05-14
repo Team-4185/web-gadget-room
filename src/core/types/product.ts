@@ -30,6 +30,7 @@ export type ApiPhone = {
   sku?: string;
   stock?: number;
   status?: PhoneStockStatus;
+  badge?: BadgeType;
   images: ApiPhoneImage[];
 };
 
@@ -67,13 +68,27 @@ export type BrandInfo = {
   descr: string;
 };
 
-export type SortOption =
-  | 'popularity'
-  | 'name A to Z'
-  | 'name Z to A'
-  | 'price decreasing'
-  | 'price increasing'
-  | 'number of reviews';
+export type CatalogApiSort = 'price_asc' | 'price_desc';
+export type SortOption = CatalogApiSort;
+
+export type CatalogProductsRequestParams = {
+  page: number;
+  size: number;
+  brands?: string[];
+  minPrice: number;
+  maxPrice: number;
+  sort: CatalogApiSort;
+};
+
+export type ApiCatalogProductsPage = {
+  content: ApiPhone[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+};
 
 export type UseProductResult = {
   product: IProduct;

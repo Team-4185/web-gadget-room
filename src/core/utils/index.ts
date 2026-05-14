@@ -6,6 +6,7 @@ export * from './formatDisplayName';
 export * from './products';
 export * from './cartStorage';
 export * from './cart';
+export * from './catalogFilters';
 export * from './adminProductManagement';
 export * from './phone';
 export * from './adminAnalytics';

@@ -1,5 +1,11 @@
 import { api } from '@/core/config';
-import type { ApiPhone, ApiPhoneImage, CreatePhonePayload } from '@/core/types';
+import type {
+  ApiCatalogProductsPage,
+  ApiPhone,
+  ApiPhoneImage,
+  CatalogProductsRequestParams,
+  CreatePhonePayload,
+} from '@/core/types';
 import { buildPhoneFormData } from '@/core/utils';
 
 const imageObjectUrlCache = new Map<string, string>();
@@ -30,6 +36,25 @@ export const phonesService = {
   },
   async deleteImage(phoneId: number, imageId: number) {
     await api.delete(`/api/v1/phones/${phoneId}/images/${imageId}`);
+  },
+  async getAll(signal?: AbortSignal) {
+    const { data } = await api.get<ApiPhone[]>('/api/v1/phones', { signal });
+    return data;
+  },
+  async getCatalog(params: CatalogProductsRequestParams, signal?: AbortSignal) {
+    const { data } = await api.get<ApiCatalogProductsPage>('/api/v1/filter/by', {
+      params: {
+        page: params.page,
+        size: params.size,
+        brands: params.brands?.join(', ') ?? '',
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        sort: params.sort,
+      },
+      signal,
+    });
+
+    return data;
   },
   async getById(id: number, signal?: AbortSignal) {
     const { data } = await api.get<ApiPhone>(`/api/v1/phones/${id}`, { signal });

@@ -27,9 +27,11 @@ export const SliderPrice: FC<IProps> = ({ value, min, max, step = 10, onChange, 
         Price
       </Typography>
       <div className="slider-price__prices">
-        <Typography sx={{ fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>$ 200</Typography>
         <Typography sx={{ fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>
-          $ 2000
+          $ {min}
+        </Typography>
+        <Typography sx={{ fontSize: 15, fontWeight: 500, color: 'var(--black)' }}>
+          $ {value}
         </Typography>
       </div>
       <Slider

@@ -1,4 +1,5 @@
 export { useCatalogState } from './useCatalogState';
+export { useCatalogProducts } from './useCatalogProducts';
 export { usePagination } from './usePagination';
 export { usePaymentForm } from './usePaymentForm';
 export { useProduct } from './useProduct';
