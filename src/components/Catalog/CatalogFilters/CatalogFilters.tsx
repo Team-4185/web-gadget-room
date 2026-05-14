@@ -34,7 +34,7 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
           className="catalog__slider"
           value={sliderValue}
           min={200}
-          max={250000}
+          max={50000}
           onChange={onSliderChange}
         />
 
@@ -46,24 +46,10 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
         />
 
         <div className="catalog__filters-buttons">
-          <Button
-            maxWidth="145px"
-            height="40px"
-            fontSize="20px"
-            fontWeight={400}
-            textTransform="uppercase"
-            onClick={onReset}
-          >
+          <Button maxWidth="145px" height="40px" fontSize="20px" fontWeight={400} onClick={onReset}>
             Reset
           </Button>
-          <Button
-            maxWidth="145px"
-            height="40px"
-            fontSize="20px"
-            fontWeight={400}
-            textTransform="uppercase"
-            onClick={onApply}
-          >
+          <Button maxWidth="145px" height="40px" fontSize="20px" fontWeight={400} onClick={onApply}>
             Apply
           </Button>
         </div>
