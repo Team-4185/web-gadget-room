@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Container } from '@mui/material';
 
 import { CatalogContent, CatalogFilters } from '@/components';
@@ -9,6 +9,7 @@ import { getCatalogApiSort, getSelectedCatalogBrands } from '@/core/utils';
 import './Catalog.css';
 
 export const Catalog = () => {
+  const [contentScrollTrigger, setContentScrollTrigger] = useState(0);
   const {
     sortBy,
     activeItems,
@@ -36,6 +37,16 @@ export const Catalog = () => {
     maxPrice: appliedSliderValue,
   });
 
+  const handleApplyFilters = () => {
+    applyFilters();
+    setContentScrollTrigger((prev) => prev + 1);
+  };
+
+  const handleResetFilters = () => {
+    resetFilters();
+    setContentScrollTrigger((prev) => prev + 1);
+  };
+
   return (
     <section className="catalog">
       <Container disableGutters>
@@ -46,8 +57,8 @@ export const Catalog = () => {
             onToggle={toggleItems}
             sliderValue={sliderValue}
             onSliderChange={handleSliderChange}
-            onApply={applyFilters}
-            onReset={resetFilters}
+            onApply={handleApplyFilters}
+            onReset={handleResetFilters}
           />
 
           <CatalogContent
@@ -55,6 +66,7 @@ export const Catalog = () => {
             sortBy={sortBy}
             totalPages={totalPages}
             currentPage={currentPage}
+            scrollTrigger={contentScrollTrigger}
             isLoading={isLoading}
             onSortChange={handleSortChange}
             onPageChange={setCurrentPage}
