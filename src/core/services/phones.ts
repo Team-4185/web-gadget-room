@@ -42,17 +42,18 @@ export const phonesService = {
     return data;
   },
   async getCatalog(params: CatalogProductsRequestParams, signal?: AbortSignal) {
-    const { data } = await api.get<ApiCatalogProductsPage>('/api/v1/phones', {
+    const { data } = await api.get<ApiCatalogProductsPage>('/api/v1/filter/by', {
       params: {
         page: params.page,
         size: params.size,
-        ...(params.brand ? { brand: params.brand } : {}),
+        brands: params.brands?.join(', ') ?? '',
         minPrice: params.minPrice,
         maxPrice: params.maxPrice,
         sort: params.sort,
       },
       signal,
     });
+
     return data;
   },
   async getById(id: number, signal?: AbortSignal) {

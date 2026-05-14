@@ -84,7 +84,7 @@ export type CatalogApiSort = 'price_asc' | 'price_desc';
 export type CatalogProductsRequestParams = {
   page: number;
   size: number;
-  brand?: string;
+  brands?: string[];
   minPrice: number;
   maxPrice: number;
   sort: CatalogApiSort;

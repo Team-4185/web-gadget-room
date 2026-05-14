@@ -18,10 +18,8 @@ const sortMap: Partial<Record<SortOption, CatalogApiSort>> = {
   'price decreasing': 'price_desc',
 };
 
-const getSelectedBrand = (activeItems: Record<string, boolean>) => {
-  const selectedBrand = BRANDS.find((brand) => activeItems[brand.value]);
-  return selectedBrand?.label;
-};
+const getSelectedBrands = (activeItems: Record<string, boolean>) =>
+  BRANDS.filter((brand) => activeItems[brand.value]).map((brand) => brand.label);
 
 const sortFallbackProducts = (products: IProduct[], sortBy: SortOption) => {
   const sortedProducts = [...products];
@@ -48,10 +46,10 @@ const getFallbackProductsPage = ({
   activeItems: Record<string, boolean>;
   maxPrice: number;
 }) => {
-  const selectedBrand = getSelectedBrand(activeItems);
+  const selectedBrands = getSelectedBrands(activeItems);
   const filteredProducts = sortFallbackProducts(PRODUCTS, sortBy).filter((product) => {
-    const matchesBrand = selectedBrand
-      ? product.name.toLowerCase().includes(selectedBrand.toLowerCase())
+    const matchesBrand = selectedBrands.length
+      ? selectedBrands.some((brand) => product.name.toLowerCase().includes(brand.toLowerCase()))
       : true;
     const matchesPrice = product.price <= maxPrice;
 
@@ -86,12 +84,13 @@ export const useCatalogProducts = ({
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const selectedBrand = getSelectedBrand(activeItems);
+  const selectedBrands = useMemo(() => getSelectedBrands(activeItems), [activeItems]);
+  const selectedBrandsKey = selectedBrands.join(', ');
   const apiSort = sortMap[sortBy] ?? 'price_asc';
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [sortBy, selectedBrand, maxPrice]);
+  }, [sortBy, selectedBrandsKey, maxPrice]);
 
   useEffect(() => {
     if (import.meta.env.VITE_USE_TESTING_FALLBACK === 'true') {
@@ -120,7 +119,7 @@ export const useCatalogProducts = ({
           {
             page: currentPage,
             size: CATALOG_PAGE_SIZE,
-            brand: selectedBrand,
+            brands: selectedBrands,
             minPrice: CATALOG_MIN_PRICE,
             maxPrice,
             sort: apiSort,
@@ -170,7 +169,7 @@ export const useCatalogProducts = ({
     void loadProducts();
 
     return () => controller.abort();
-  }, [activeItems, apiSort, currentPage, maxPrice, selectedBrand, sortBy]);
+  }, [activeItems, apiSort, currentPage, maxPrice, selectedBrands, sortBy]);
 
   return useMemo(
     () => ({
