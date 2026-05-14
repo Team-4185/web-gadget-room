@@ -1,27 +1,22 @@
 import { useState } from 'react';
 
+import {
+  CATALOG_DEFAULT_ACTIVE_ITEMS,
+  CATALOG_DEFAULT_SORT,
+  CATALOG_MAX_PRICE,
+} from '@/core/constants';
 import type { SortOption } from '@/core/types';
 
-const DEFAULT_ACTIVE_ITEMS: Record<string, boolean> = {
-  apple: false,
-  samsung: false,
-  xiaomi: false,
-  oneplus: false,
-  honor: false,
-  poco: false,
-  'in-stock': false,
-  'pre-order': false,
-};
-
-const DEFAULT_MAX_PRICE = 250000;
-
 export const useCatalogState = () => {
-  const [sortBy, setSortBy] = useState<SortOption>('popularity');
-  const [activeItems, setActiveItems] = useState<Record<string, boolean>>(DEFAULT_ACTIVE_ITEMS);
+  const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeItems, setActiveItems] = useState<Record<string, boolean>>(
+    CATALOG_DEFAULT_ACTIVE_ITEMS
+  );
   const [appliedActiveItems, setAppliedActiveItems] =
-    useState<Record<string, boolean>>(DEFAULT_ACTIVE_ITEMS);
-  const [sliderValue, setSliderValue] = useState<number>(DEFAULT_MAX_PRICE);
-  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(DEFAULT_MAX_PRICE);
+    useState<Record<string, boolean>>(CATALOG_DEFAULT_ACTIVE_ITEMS);
+  const [sliderValue, setSliderValue] = useState<number>(CATALOG_MAX_PRICE);
+  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(CATALOG_MAX_PRICE);
 
   const toggleItems = (item: string) => {
     setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));
@@ -33,22 +28,26 @@ export const useCatalogState = () => {
 
   const handleSortChange = (value: string) => {
     setSortBy(value as SortOption);
+    setCurrentPage(1);
   };
 
   const applyFilters = () => {
     setAppliedActiveItems(activeItems);
     setAppliedSliderValue(sliderValue);
+    setCurrentPage(1);
   };
 
   const resetFilters = () => {
-    setActiveItems(DEFAULT_ACTIVE_ITEMS);
-    setAppliedActiveItems(DEFAULT_ACTIVE_ITEMS);
-    setSliderValue(DEFAULT_MAX_PRICE);
-    setAppliedSliderValue(DEFAULT_MAX_PRICE);
+    setActiveItems(CATALOG_DEFAULT_ACTIVE_ITEMS);
+    setAppliedActiveItems(CATALOG_DEFAULT_ACTIVE_ITEMS);
+    setSliderValue(CATALOG_MAX_PRICE);
+    setAppliedSliderValue(CATALOG_MAX_PRICE);
+    setCurrentPage(1);
   };
 
   return {
     sortBy,
+    currentPage,
     activeItems,
     appliedActiveItems,
     sliderValue,
@@ -59,5 +58,6 @@ export const useCatalogState = () => {
     handleSortChange,
     applyFilters,
     resetFilters,
+    setCurrentPage,
   };
 };

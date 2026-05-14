@@ -2,11 +2,13 @@ import type { FC } from 'react';
 import { Box } from '@mui/material';
 
 import { Accordion, SliderPrice, Button } from '@/components';
-import { BRANDS, AVAILABILITY } from '@/core/constants';
+import { AVAILABILITY, CATALOG_MAX_PRICE, CATALOG_MIN_PRICE } from '@/core/constants';
+import type { ICheckboxOption } from '@/core/types';
 
 import './CatalogFilters.css';
 
 interface ICatalogFiltersProps {
+  brandOptions: ICheckboxOption[];
   activeItems: Record<string, boolean>;
   sliderValue: number;
   onSliderChange: (_event: Event, newValue: number | number[]) => void;
@@ -16,6 +18,7 @@ interface ICatalogFiltersProps {
 }
 
 export const CatalogFilters: FC<ICatalogFiltersProps> = ({
+  brandOptions,
   activeItems,
   sliderValue,
   onSliderChange,
@@ -28,13 +31,13 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
       <span className="catalog__filters-title">Filter:</span>
 
       <Box className="catalog__filters-layout">
-        <Accordion title="Brand" items={BRANDS} active={activeItems} onToggle={onToggle} />
+        <Accordion title="Brand" items={brandOptions} active={activeItems} onToggle={onToggle} />
 
         <SliderPrice
           className="catalog__slider"
           value={sliderValue}
-          min={200}
-          max={50000}
+          min={CATALOG_MIN_PRICE}
+          max={CATALOG_MAX_PRICE}
           onChange={onSliderChange}
         />
 

@@ -1,7 +1,10 @@
+import { useMemo } from 'react';
 import { Container } from '@mui/material';
 
 import { CatalogContent, CatalogFilters } from '@/components';
+import { BRANDS } from '@/core/constants';
 import { useCatalogProducts, useCatalogState } from '@/core/hooks';
+import { getCatalogApiSort, getSelectedCatalogBrands } from '@/core/utils';
 
 import './Catalog.css';
 
@@ -17,10 +20,19 @@ export const Catalog = () => {
     handleSortChange,
     applyFilters,
     resetFilters,
+    currentPage,
+    setCurrentPage,
   } = useCatalogState();
-  const { products, currentPage, totalPages, isLoading, setCurrentPage } = useCatalogProducts({
+  const selectedBrands = useMemo(
+    () => getSelectedCatalogBrands(appliedActiveItems, BRANDS),
+    [appliedActiveItems]
+  );
+  const apiSort = useMemo(() => getCatalogApiSort(sortBy), [sortBy]);
+  const { products, totalPages, isLoading } = useCatalogProducts({
+    currentPage,
     sortBy,
-    activeItems: appliedActiveItems,
+    brands: selectedBrands,
+    sort: apiSort,
     maxPrice: appliedSliderValue,
   });
 
@@ -29,6 +41,7 @@ export const Catalog = () => {
       <Container disableGutters>
         <div className="catalog__layout">
           <CatalogFilters
+            brandOptions={BRANDS}
             activeItems={activeItems}
             onToggle={toggleItems}
             sliderValue={sliderValue}

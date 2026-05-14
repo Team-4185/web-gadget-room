@@ -1,103 +1,38 @@
 import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
-import { BRANDS, PRODUCTS } from '@/core/constants';
+import { CATALOG_MIN_PRICE, CATALOG_PAGE_SIZE, PRODUCTS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { CatalogApiSort, IProduct, SortOption } from '@/core/types';
-import { mapApiPhoneToProduct } from '@/core/utils';
-
-const CATALOG_PAGE_SIZE = 12;
-const CATALOG_MIN_PRICE = 0;
-
-const sortMap: Partial<Record<SortOption, CatalogApiSort>> = {
-  popularity: 'price_asc',
-  new: 'price_asc',
-  increase: 'price_asc',
-  reduction: 'price_desc',
-  'price increasing': 'price_asc',
-  'price decreasing': 'price_desc',
-};
-
-const getSelectedBrands = (activeItems: Record<string, boolean>) =>
-  BRANDS.filter((brand) => activeItems[brand.value]).map((brand) => brand.label);
-
-const sortFallbackProducts = (products: IProduct[], sortBy: SortOption) => {
-  const sortedProducts = [...products];
-
-  if (sortBy === 'increase' || sortBy === 'price increasing') {
-    return sortedProducts.sort((a, b) => a.price - b.price);
-  }
-
-  if (sortBy === 'reduction' || sortBy === 'price decreasing') {
-    return sortedProducts.sort((a, b) => b.price - a.price);
-  }
-
-  return sortedProducts;
-};
-
-const getFallbackProductsPage = ({
-  page,
-  sortBy,
-  activeItems,
-  maxPrice,
-}: {
-  page: number;
-  sortBy: SortOption;
-  activeItems: Record<string, boolean>;
-  maxPrice: number;
-}) => {
-  const selectedBrands = getSelectedBrands(activeItems);
-  const filteredProducts = sortFallbackProducts(PRODUCTS, sortBy).filter((product) => {
-    const matchesBrand = selectedBrands.length
-      ? selectedBrands.some((brand) => product.name.toLowerCase().includes(brand.toLowerCase()))
-      : true;
-    const matchesPrice = product.price <= maxPrice;
-
-    return matchesBrand && matchesPrice;
-  });
-  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / CATALOG_PAGE_SIZE));
-  const startIndex = (page - 1) * CATALOG_PAGE_SIZE;
-
-  return {
-    products: filteredProducts.slice(startIndex, startIndex + CATALOG_PAGE_SIZE),
-    totalElements: filteredProducts.length,
-    totalPages,
-    first: page <= 1,
-    last: page >= totalPages,
-  };
-};
+import { getFallbackCatalogProductsPage, mapApiPhoneToProduct } from '@/core/utils';
 
 export const useCatalogProducts = ({
+  currentPage,
   sortBy,
-  activeItems,
+  brands,
+  sort,
   maxPrice,
 }: {
+  currentPage: number;
   sortBy: SortOption;
-  activeItems: Record<string, boolean>;
+  brands: string[];
+  sort: CatalogApiSort;
   maxPrice: number;
 }) => {
   const [products, setProducts] = useState<IProduct[]>(PRODUCTS.slice(0, CATALOG_PAGE_SIZE));
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(PRODUCTS.length);
   const [totalPages, setTotalPages] = useState(Math.ceil(PRODUCTS.length / CATALOG_PAGE_SIZE));
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const selectedBrands = useMemo(() => getSelectedBrands(activeItems), [activeItems]);
-  const selectedBrandsKey = selectedBrands.join(', ');
-  const apiSort = sortMap[sortBy] ?? 'price_asc';
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [sortBy, selectedBrandsKey, maxPrice]);
-
   useEffect(() => {
     if (import.meta.env.VITE_USE_TESTING_FALLBACK === 'true') {
-      const fallback = getFallbackProductsPage({
+      const fallback = getFallbackCatalogProductsPage({
+        products: PRODUCTS,
         page: currentPage,
         sortBy,
-        activeItems,
+        selectedBrands: brands,
         maxPrice,
       });
 
@@ -119,10 +54,10 @@ export const useCatalogProducts = ({
           {
             page: currentPage,
             size: CATALOG_PAGE_SIZE,
-            brands: selectedBrands,
+            brands,
             minPrice: CATALOG_MIN_PRICE,
             maxPrice,
-            sort: apiSort,
+            sort,
           },
           controller.signal
         );
@@ -147,10 +82,11 @@ export const useCatalogProducts = ({
       } catch (error) {
         if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
 
-        const fallback = getFallbackProductsPage({
+        const fallback = getFallbackCatalogProductsPage({
+          products: PRODUCTS,
           page: currentPage,
           sortBy,
-          activeItems,
+          selectedBrands: brands,
           maxPrice,
         });
 
@@ -169,7 +105,7 @@ export const useCatalogProducts = ({
     void loadProducts();
 
     return () => controller.abort();
-  }, [activeItems, apiSort, currentPage, maxPrice, selectedBrands, sortBy]);
+  }, [brands, currentPage, maxPrice, sort, sortBy]);
 
   return useMemo(
     () => ({
@@ -180,7 +116,6 @@ export const useCatalogProducts = ({
       isFirstPage,
       isLastPage,
       isLoading,
-      setCurrentPage,
     }),
     [currentPage, isFirstPage, isLastPage, isLoading, products, totalPages, totalProducts]
   );
