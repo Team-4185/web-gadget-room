@@ -25,7 +25,7 @@ export const CatalogHeader: FC<IProps> = ({ sortBy, onSortChange }) => {
         </Typography>
         <Select
           data={SORT_BY}
-          maxWidth="135px"
+          maxWidth="fit-content"
           height="36px"
           color="var(--black)"
           fontSize="16px"

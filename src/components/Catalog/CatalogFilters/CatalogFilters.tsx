@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Box } from '@mui/material';
 
 import { Accordion, SliderPrice, Button } from '@/components';
-import { AVAILABILITY, CATALOG_MAX_PRICE, CATALOG_MIN_PRICE } from '@/core/constants';
+import { CATALOG_MAX_PRICE, CATALOG_MIN_PRICE } from '@/core/constants';
 import type { ICheckboxOption } from '@/core/types';
 
 import './CatalogFilters.css';
@@ -39,13 +39,6 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
           min={CATALOG_MIN_PRICE}
           max={CATALOG_MAX_PRICE}
           onChange={onSliderChange}
-        />
-
-        <Accordion
-          title="Availability"
-          items={AVAILABILITY}
-          active={activeItems}
-          onToggle={onToggle}
         />
 
         <div className="catalog__filters-buttons">

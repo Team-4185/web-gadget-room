@@ -68,18 +68,8 @@ export type BrandInfo = {
   descr: string;
 };
 
-export type SortOption =
-  | 'popularity'
-  | 'new'
-  | 'increase'
-  | 'reduction'
-  | 'name A to Z'
-  | 'name Z to A'
-  | 'price decreasing'
-  | 'price increasing'
-  | 'number of reviews';
-
 export type CatalogApiSort = 'price_asc' | 'price_desc';
+export type SortOption = CatalogApiSort;
 
 export type CatalogProductsRequestParams = {
   page: number;

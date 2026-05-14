@@ -2,17 +2,8 @@ import type { CatalogApiSort, ICheckboxOption, IProduct, SortOption } from '@/co
 
 import { CATALOG_PAGE_SIZE } from '@/core/constants';
 
-const catalogSortMap: Partial<Record<SortOption, CatalogApiSort>> = {
-  popularity: 'price_asc',
-  new: 'price_asc',
-  increase: 'price_asc',
-  reduction: 'price_desc',
-  'price increasing': 'price_asc',
-  'price decreasing': 'price_desc',
-};
-
 export const getCatalogApiSort = (sortBy: SortOption): CatalogApiSort =>
-  catalogSortMap[sortBy] ?? 'price_asc';
+  sortBy;
 
 export const getSelectedCatalogBrands = (
   activeItems: Record<string, boolean>,
@@ -22,11 +13,11 @@ export const getSelectedCatalogBrands = (
 export const sortFallbackCatalogProducts = (products: IProduct[], sortBy: SortOption) => {
   const sortedProducts = [...products];
 
-  if (sortBy === 'increase' || sortBy === 'price increasing') {
+  if (sortBy === 'price_asc') {
     return sortedProducts.sort((a, b) => a.price - b.price);
   }
 
-  if (sortBy === 'reduction' || sortBy === 'price decreasing') {
+  if (sortBy === 'price_desc') {
     return sortedProducts.sort((a, b) => b.price - a.price);
   }
 
