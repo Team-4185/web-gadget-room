@@ -1,13 +1,23 @@
 import type { FC } from 'react';
 
 import { ProductCard } from '@/components';
+import { CATALOG_PAGE_SIZE } from '@/core/constants';
 import type { IProduct } from '@/core/types';
+
+import { CatalogProductCardSkeleton } from './CatalogProductCardSkeleton/CatalogProductCardSkeleton';
+
+import './CatalogProductGrid.css';
 
 interface IProps {
   items: IProduct[];
   isLoading: boolean;
   onProductClick: (product: IProduct) => void;
 }
+
+const catalogProductSkeletons = Array.from(
+  { length: CATALOG_PAGE_SIZE },
+  (_, index) => index
+);
 
 export const CatalogProductGrid: FC<IProps> = ({
   items,
@@ -16,7 +26,9 @@ export const CatalogProductGrid: FC<IProps> = ({
 }) => (
   <div className="catalog__products">
     {isLoading ? (
-      <p className="catalog__products-status">Loading products...</p>
+      catalogProductSkeletons.map((item) => (
+        <CatalogProductCardSkeleton key={item} />
+      ))
     ) : items.length ? (
       items.map((product) => (
         <ProductCard
