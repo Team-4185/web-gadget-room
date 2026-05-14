@@ -63,6 +63,12 @@
   text-overflow: ellipsis;
 }
 
+.product-card__price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .product-card__actions {
   display: flex;
   justify-content: space-between;

@@ -11,7 +11,9 @@ import './ProductCard.css';
 
 interface IProps {
   product: IProduct;
-  variant?: 'catalog' | 'home';
+  className?: string;
+  likeClassName?: string;
+  showBadge?: boolean;
   onClick?: () => void;
 }
 
@@ -21,10 +23,18 @@ const formatProductPrice = (price: number) =>
     maximumFractionDigits: 2,
   }).format(price);
 
-export const ProductCard: FC<IProps> = ({ product, variant = 'catalog', onClick }) => {
+export const ProductCard: FC<IProps> = ({
+  product,
+  className = '',
+  likeClassName = '',
+  showBadge = true,
+  onClick,
+}) => {
   const dispatch = useAppDispatch();
   const productImage = product.img || FALLBACK_IMAGE;
   const badge = product.badge;
+  const productCardClassName = `product-card ${className}`.trim();
+  const likeIconClassName = `product-card__like ${likeClassName}`.trim();
 
   const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -40,9 +50,9 @@ export const ProductCard: FC<IProps> = ({ product, variant = 'catalog', onClick 
   };
 
   return (
-    <article className={`product-card product-card--${variant}`} onClick={onClick}>
+    <article className={productCardClassName} onClick={onClick}>
       <div className="product-card__media">
-        {badge && (
+        {badge && showBadge && (
           <span className={`product-card__badge product-card__badge--${badge.toLowerCase()}`}>
             {badge}
           </span>
@@ -69,7 +79,12 @@ export const ProductCard: FC<IProps> = ({ product, variant = 'catalog', onClick 
         <Typography
           className="product-card__price"
           component="p"
-          sx={{ marginTop: '16px', fontSize: 15, fontWeight: 500, color: 'var(--black)' }}
+          sx={{
+            marginTop: '16px',
+            fontSize: '15px',
+            fontWeight: 500,
+            color: 'var(--black)',
+          }}
         >
           ${formatProductPrice(product.price)}
         </Typography>
@@ -86,7 +101,7 @@ export const ProductCard: FC<IProps> = ({ product, variant = 'catalog', onClick 
         >
           Add to Cart
         </Button>
-        <Like className="product-card__like" onClick={handleLikeClick} />
+        <Like className={likeIconClassName} onClick={handleLikeClick} />
       </div>
     </article>
   );

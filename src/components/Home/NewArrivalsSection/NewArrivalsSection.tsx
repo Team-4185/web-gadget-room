@@ -26,7 +26,9 @@ export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
               <ProductCard
                 key={product.id}
                 product={product}
-                variant="home"
+                className="new-arrivals__product-card"
+                likeClassName="new-arrivals__product-card-like"
+                showBadge={false}
                 onClick={() => onOpenProduct(product)}
               />
             ))}
