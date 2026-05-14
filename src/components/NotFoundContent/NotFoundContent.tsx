@@ -44,7 +44,6 @@ export const NotFoundContent: FC<Props> = ({ onBackHome }) => {
           maxWidth="190px"
           height="56px"
           fontWeight={500}
-          borderRadius="30px"
           textTransform="uppercase"
           sx={{
             marginTop: '10px',
