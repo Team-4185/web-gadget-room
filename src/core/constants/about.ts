@@ -209,13 +209,13 @@ export const aboutMissionCards = [
   {
     id: 'payment',
     title: 'Secure Payment',
-    text: 'Safe and popular payment methods. Visa, Mastercard, Apple Pay, Google Pay and more.',
+    text: 'Safe and popular payment methods: Visa, Mastercard, Apple Pay, Google Pay and more.',
     Icon: AboutSecurePaymentIcon,
   },
   {
     id: 'delivery',
     title: 'Fast Delivery',
-    text: 'Clear warranty policy and fast support response. We stand behind every product we sell.',
+    text: 'Get your orders your way: pick it up from our office at a convenient time or choose delivery with available postal operators (Nova Post, Meest, etc.)',
     Icon: AboutFastDeliveryIcon,
   },
 ] as const;
