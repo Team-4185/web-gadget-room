@@ -1,9 +1,9 @@
+import type { SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
 import { Trash, Plus, Minus } from '@/assets';
-
-import greyBox from '/icons/greyBox.png';
+import { FALLBACK_IMAGE } from '@/core/constants';
 
 import './ProductsCart.css';
 
@@ -11,6 +11,10 @@ export const ProductsCart = () => {
   const products = useAppSelector((state) => state.cart.cart);
   const cartLoading = useAppSelector((state) => state.cart.loading);
   const dispatch = useAppDispatch();
+
+  const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.src = FALLBACK_IMAGE;
+  };
 
   return (
     <>
@@ -20,7 +24,13 @@ export const ProductsCart = () => {
 
           <div className="cart-item__main">
             <div className="cart-item__media">
-              <img className="cart-item__image" src={greyBox} alt={product.name} />
+              <img
+                className="cart-item__image"
+                src={product.img || FALLBACK_IMAGE}
+                alt={product.name}
+                loading="lazy"
+                onError={handleImageError}
+              />
             </div>
 
             <div className="cart-item__info">

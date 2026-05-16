@@ -102,7 +102,6 @@ export const OrderSummary = ({
           className="order-summary__button "
           maxWidth="425px"
           height="56px"
-          borderRadius="24px"
           onClick={handleContinue}
           disabled={continueDisabled}
           textTransform="upperCase"

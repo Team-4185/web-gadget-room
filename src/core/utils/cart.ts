@@ -44,7 +44,9 @@ export const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => 
   const results = await Promise.allSettled(
     cart.cartItems.map(async ({ phoneId }) => {
       const phone = await phonesService.getById(phoneId);
-      return mapApiPhoneToProduct(phone);
+      const imageUrls = await phonesService.getImageObjectUrls(phone.images ?? []);
+
+      return mapApiPhoneToProduct(phone, imageUrls[0]);
     })
   );
 
