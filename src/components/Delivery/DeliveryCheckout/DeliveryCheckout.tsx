@@ -25,6 +25,8 @@ import './DeliveryCheckout.css';
 
 export const DeliveryCheckout = () => {
   const [form, setForm] = useState<DeliveryCheckoutForm>(INITIAL_DELIVERY_CHECKOUT_FORM);
+  const selectedDeliveryPrice =
+    DELIVERY_OPTIONS.find((option) => option.id === form.delivery.method)?.price ?? 0;
 
   const handleRecipientChange = (field: keyof RecipientForm, value: string) => {
     setForm((prev) => ({
@@ -106,7 +108,11 @@ export const DeliveryCheckout = () => {
       </div>
 
       <div className="delivery-checkout__right">
-        <OrderSummary className="delivery-checkout__summary" continueTo="/payment" />
+        <OrderSummary
+          className="delivery-checkout__summary"
+          continueTo="/payment"
+          shippingAmount={selectedDeliveryPrice}
+        />
         <SmallRobots width={572} height={412} />
       </div>
     </div>

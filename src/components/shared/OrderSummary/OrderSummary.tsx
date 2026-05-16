@@ -32,7 +32,7 @@ export const OrderSummary = ({
   continueDisabled = false,
   showContinueButton = true,
   taxAmount = 13,
-  shippingAmount = 13,
+  shippingAmount = 0,
   className,
 }: OrderSummaryProps) => {
   const amountOfProducts = useAppSelector((state) => state.cart.totalAmount);
@@ -64,15 +64,6 @@ export const OrderSummary = ({
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
             $ {amountOfProducts ? subTotal.toFixed(2) : 0}
-          </Typography>
-        </div>
-
-        <div className="order-summary__row">
-          <Typography variant="body1" component="span" sx={rowLabelSx}>
-            Tax
-          </Typography>
-          <Typography variant="body1" component="span" sx={rowValueSx}>
-            $ {amountOfProducts ? taxAmount.toFixed(2) : 0}
           </Typography>
         </div>
 
