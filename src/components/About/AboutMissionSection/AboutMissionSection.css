@@ -53,7 +53,7 @@
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about-mission__card-header {
