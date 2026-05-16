@@ -7,4 +7,5 @@
   grid-template-columns: minmax(0, 1fr) 503px;
   align-items: start;
   gap: 20px;
+  padding-top: 95px;
 }
