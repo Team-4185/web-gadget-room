@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 
 import { Button, FormCheckbox, FormInput } from '@/components';
-import { EMAIL_TOOLTIP, FADEUP, PASSWORD_TOOLTIP } from '@/core/constants';
+import { FADEUP, PASSWORD_TOOLTIP } from '@/core/constants';
 import { type FormLoginValues, loginSchema } from '@/core/schemas';
 import { authActions, useAppDispatch } from '@/core/store';
 
@@ -66,7 +66,6 @@ export const Login: FC<IProps> = ({ className = '' }) => {
           type="email"
           name="email"
           label="Email Address"
-          tooltipText={EMAIL_TOOLTIP}
           control={control}
           autoComplete="email"
           required

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 
 import { Button, FormInput, Stepper } from '@/components';
-import { EMAIL_TOOLTIP, FADEUP, PASSWORD_RESET_STEPS } from '@/core/constants';
+import { FADEUP, PASSWORD_RESET_STEPS } from '@/core/constants';
 import { type FormForgotPassword, forgotPasswordSchema } from '@/core/schemas';
 import { authActions, useAppDispatch } from '@/core/store';
 import { ChevronLeft } from '@/assets';
@@ -109,7 +109,6 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
           type="email"
           name="email"
           label="Email Address"
-          tooltipText={EMAIL_TOOLTIP}
           control={control}
           autoComplete="email"
           required
