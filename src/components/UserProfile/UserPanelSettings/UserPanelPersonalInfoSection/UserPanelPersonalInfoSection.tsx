@@ -1,27 +1,21 @@
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
+import type { Control } from 'react-hook-form';
 
 import { User } from '@/assets';
-import { Input, UserPanelSettingsActionButton, UserPanelSettingsSection } from '@/components';
+import { FormInput, UserPanelSettingsActionButton, UserPanelSettingsSection } from '@/components';
+import { PROFILE_NAME_TOOLTIP, PROFILE_PHONE_TOOLTIP } from '@/core/constants';
+import type { UserProfileFormValues } from '@/core/schemas';
 
 import './UserPanelPersonalInfoSection.css';
 
-export interface PersonalInfoState {
-  firstName: string;
-  lastName: string;
-  city: string;
-  phoneNumber: string;
-}
-
 interface UserPanelPersonalInfoSectionProps {
-  value: PersonalInfoState;
-  onChange: (key: keyof PersonalInfoState) => (event: ChangeEvent<HTMLInputElement>) => void;
+  control: Control<UserProfileFormValues>;
   isSaving?: boolean;
   onSave: () => void;
 }
 
 export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps> = ({
-  value,
-  onChange,
+  control,
   isSaving = false,
   onSave,
 }) => {
@@ -40,25 +34,34 @@ export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps>
       }
     >
       <div className="user-profile__settings-input-grid">
-        <Input
+        <FormInput
+          name="firstName"
+          control={control}
           label="First Name"
-          placeholder="First Name"
-          value={value.firstName}
-          onChange={onChange('firstName')}
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
         />
-        <Input
+        <FormInput
+          name="lastName"
+          control={control}
           label="Last Name"
-          placeholder="Last Name"
-          value={value.lastName}
-          onChange={onChange('lastName')}
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
         />
-        <Input
+        <FormInput
+          name="phoneNumber"
+          control={control}
           label="Phone Number"
-          placeholder="Phone Number"
-          value={value.phoneNumber}
-          onChange={onChange('phoneNumber')}
+          tooltipText={PROFILE_PHONE_TOOLTIP}
+          required
         />
-        <Input label="City" placeholder="City" value={value.city} onChange={onChange('city')} />
+        <FormInput
+          name="city"
+          control={control}
+          label="City"
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
+        />
       </div>
     </UserPanelSettingsSection>
   );
