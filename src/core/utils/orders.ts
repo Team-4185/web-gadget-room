@@ -7,7 +7,12 @@ import type {
   OrderDeliveryMethod,
   OrderLogisticsCompany,
 } from '@/core/types';
-import { MOCK_CARD_PAYMENT_DETAILS, UKRAINE_REGIONS } from '@/core/constants';
+import {
+  BRANCH_ADDRESS_BY_ID,
+  DEFAULT_BRANCH_ADDRESS,
+  MOCK_CARD_PAYMENT_DETAILS,
+  UKRAINE_REGIONS,
+} from '@/core/constants';
 
 const LOGISTICS_COMPANY_BY_METHOD: Record<DeliveryMethod, OrderLogisticsCompany> = {
   courier: 'NOVA_POSHTA',
@@ -33,6 +38,7 @@ export const createOrderPayloadFromCheckout = (
   const deliveryMethod = DELIVERY_METHOD_BY_FORM_METHOD[form.delivery.method];
   const paymentMethod = form.payment.method === 'receipt' ? 'CASH_ON_DELIVERY' : 'CARD';
   const selectedBranch = form.delivery.branchByMethod[form.delivery.method];
+  const selectedBranchAddress = BRANCH_ADDRESS_BY_ID[selectedBranch] ?? DEFAULT_BRANCH_ADDRESS;
   const region = getOptionName(UKRAINE_REGIONS, form.recipient.region);
 
   return {
@@ -58,6 +64,9 @@ export const createOrderPayloadFromCheckout = (
         : {
             logisticsCompany: LOGISTICS_COMPANY_BY_METHOD[form.delivery.method],
             logisticPostOffice: selectedBranch,
+            region,
+            country: selectedBranchAddress.country,
+            zipCode: selectedBranchAddress.zipCode,
           },
     items: cartItems.map(({ phoneId, amount }) => ({
       phoneId,
@@ -90,8 +99,10 @@ export const validateDeliveryCheckout = (
     if (requiredAddressFields.some((value) => !value.trim())) {
       return 'Please fill in the courier address.';
     }
-  } else if (!form.delivery.branchByMethod[form.delivery.method]) {
-    return 'Please select a delivery branch.';
+  } else {
+    if (!form.delivery.branchByMethod[form.delivery.method]) {
+      return 'Please select a delivery branch.';
+    }
   }
 
   return null;

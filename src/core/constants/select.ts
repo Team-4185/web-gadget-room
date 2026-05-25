@@ -45,3 +45,20 @@ export const DHL_BRANCHES: ISelectOption[] = [
   { name: 'DHL Service Point #5, Kyiv', value: 'dhl-5' },
   { name: 'DHL Service Point #11, Kyiv', value: 'dhl-11' },
 ];
+
+export const DEFAULT_BRANCH_ADDRESS = {
+  country: 'Ukraine',
+  zipCode: '01001',
+};
+
+export const BRANCH_ADDRESS_BY_ID: Record<string, typeof DEFAULT_BRANCH_ADDRESS> = {
+  'nova-104': { country: 'Ukraine', zipCode: '02094' },
+  'nova-17': { country: 'Ukraine', zipCode: '01054' },
+  'nova-9': { country: 'Ukraine', zipCode: '03150' },
+  'ukr-22': { country: 'Ukraine', zipCode: '02002' },
+  'ukr-49': { country: 'Ukraine', zipCode: '03049' },
+  'ukr-103': { country: 'Ukraine', zipCode: '02103' },
+  'dhl-2': { country: 'Ukraine', zipCode: '01001' },
+  'dhl-5': { country: 'Ukraine', zipCode: '04070' },
+  'dhl-11': { country: 'Ukraine', zipCode: '03113' },
+};
