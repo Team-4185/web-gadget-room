@@ -7,6 +7,7 @@ import type {
 } from '@/core/types';
 
 export type ApiAdminOrder = OrderResponse & {
+  customerCity?: string | null;
   paymentStatus?: ApiAdminPaymentStatus;
   availableActions?: AdminOrderAction[];
 };

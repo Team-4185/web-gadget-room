@@ -62,25 +62,38 @@ const formatOrderDateTime = (value: string) => {
   };
 };
 
-const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
+const mapAdminOrderRows = (order: ApiAdminOrder): IAdminManagedOrderItem[] => {
   const dateTime = formatOrderDateTime(order.createdAt);
   const customer = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ');
-  const firstItem = order.items[0];
-  const extraItems = order.items.length > 1 ? ` +${order.items.length - 1}` : '';
-
-  return {
-    id: String(order.id),
+  const baseOrderRow = {
     orderNumber: `#ORD-${order.id}`,
     customer: customer || 'Guest',
     email: order.customerEmail,
-    product: `${firstItem?.productName ?? firstItem?.phone?.name ?? 'Order item'}${extraItems}`,
-    quantity: order.items.reduce((total, item) => total + item.quantity, 0),
-    amount: formatCurrency(order.total),
     date: dateTime.date,
     time: dateTime.time,
     status: mapApiStatusToFrontendStatus(order.status),
     availableActions: order.availableActions ?? [],
   };
+
+  if (!order.items.length) {
+    return [
+      {
+        ...baseOrderRow,
+        id: String(order.id),
+        product: 'Order item',
+        quantity: 0,
+        amount: formatCurrency(order.total),
+      },
+    ];
+  }
+
+  return order.items.map((item) => ({
+    ...baseOrderRow,
+    id: `${order.id}-${item.id}`,
+    product: item.productName ?? item.phone?.name ?? 'Order item',
+    quantity: item.quantity,
+    amount: formatCurrency(item.totalPrice),
+  }));
 };
 
 export const useAdminOrdersData = () => {
@@ -123,7 +136,7 @@ export const useAdminOrdersData = () => {
           })
         );
 
-        setOrders(detailedOrders.map(mapAdminOrder));
+        setOrders(detailedOrders.flatMap(mapAdminOrderRows));
         setTotalOrders(response.totalElements);
         setTotalPages(response.totalPages);
         setIsFirstPage(response.first);
