@@ -1,5 +1,8 @@
-import { useState, type ChangeEvent, type FC } from 'react';
+import { useEffect, useState, type ChangeEvent, type FC } from 'react';
 import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   UserPanelEmailSection,
@@ -7,22 +10,32 @@ import {
   UserPanelPasswordSection,
   UserPanelPersonalInfoSection,
 } from '@/components';
+import { usersService } from '@/core/services';
+import { toErrorMessage, toValidationMessages } from '@/core/utils';
+import type { UpdateUserProfilePayload } from '@/core/types';
+import { type UserProfileFormValues, userProfileSchema } from '@/core/schemas';
 
 import './UserPanelSettings.css';
 
 interface UserPanelSettingsProps {
+  userId: number | null;
   email: string;
+  profile: UpdateUserProfilePayload;
+  onProfileSaved: (profile: UpdateUserProfilePayload) => void;
 }
 
-export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
-  const [personalInfo, setPersonalInfo] = useState({
-    firstName: '',
-    lastName: '',
-    streetAddress: '',
-    country: '',
-    city: '',
-    phoneNumber: '',
+export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
+  userId,
+  email,
+  profile,
+  onProfileSaved,
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const { control, handleSubmit, reset } = useForm<UserProfileFormValues>({
+    resolver: zodResolver(userProfileSchema),
+    defaultValues: profile,
   });
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [emailState, setEmailState] = useState({
     current: email,
     next: '',
@@ -38,10 +51,10 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
     newArrivals: true,
   });
 
-  const handlePersonalInfoChange =
-    (key: keyof typeof personalInfo) => (event: ChangeEvent<HTMLInputElement>) => {
-      setPersonalInfo((prev) => ({ ...prev, [key]: event.target.value }));
-    };
+  useEffect(() => {
+    reset(profile);
+  }, [profile, reset]);
+
   const handlePasswordChange =
     (key: keyof typeof passwordState) => (event: ChangeEvent<HTMLInputElement>) => {
       setPasswordState((prev) => ({ ...prev, [key]: event.target.value }));
@@ -51,6 +64,47 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
   };
   const handleNotificationToggle = (key: keyof typeof notificationState) => {
     setNotificationState((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+  const handleProfileSave: SubmitHandler<UserProfileFormValues> = async (data) => {
+    if (!userId) {
+      enqueueSnackbar('Unable to update profile without a user account.', { variant: 'error' });
+      return;
+    }
+
+    const payload: UpdateUserProfilePayload = {
+      firstName: data.firstName.trim(),
+      lastName: data.lastName.trim(),
+      city: data.city.trim(),
+      phoneNumber: data.phoneNumber.trim(),
+    };
+
+    setIsSavingProfile(true);
+
+    try {
+      const updatedProfile = await usersService.updateProfile(userId, payload);
+      const nextProfile = {
+        firstName: updatedProfile.firstName ?? payload.firstName,
+        lastName: updatedProfile.lastName ?? payload.lastName,
+        city: updatedProfile.city ?? payload.city,
+        phoneNumber: updatedProfile.phoneNumber ?? payload.phoneNumber,
+      };
+
+      reset(nextProfile);
+      onProfileSaved(nextProfile);
+      enqueueSnackbar('Profile updated.', { variant: 'success' });
+    } catch (error) {
+      const validationMessages = toValidationMessages(error);
+
+      if (validationMessages.length) {
+        validationMessages.forEach((message) => {
+          enqueueSnackbar(message, { variant: 'warning' });
+        });
+      } else {
+        enqueueSnackbar(toErrorMessage(error, 'Failed to update profile.'), { variant: 'error' });
+      }
+    } finally {
+      setIsSavingProfile(false);
+    }
   };
 
   return (
@@ -64,7 +118,11 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
         </Typography>
       </div>
 
-      <UserPanelPersonalInfoSection value={personalInfo} onChange={handlePersonalInfoChange} />
+      <UserPanelPersonalInfoSection
+        control={control}
+        isSaving={isSavingProfile}
+        onSave={handleSubmit(handleProfileSave)}
+      />
       <UserPanelEmailSection value={emailState} onChange={handleEmailChange} />
       <UserPanelPasswordSection value={passwordState} onChange={handlePasswordChange} />
       <UserPanelNotificationsSection value={notificationState} onToggle={handleNotificationToggle} />

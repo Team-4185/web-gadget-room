@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { IUserPanelOrder } from '@/core/types';
-import { STATUS_META } from '@/core/constants';
+import { FALLBACK_IMAGE, STATUS_META } from '@/core/constants';
 
 import './UserPanelOrderCard.css';
 
@@ -49,6 +49,9 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
                   src={item.image}
                   alt={item.title}
                   className="user-panel-order-card__item-image"
+                  onError={(event) => {
+                    event.currentTarget.src = FALLBACK_IMAGE;
+                  }}
                 />
               </div>
               <div>

@@ -6,11 +6,15 @@ import { Button } from '@/components';
 interface UserPanelSettingsActionButtonProps {
   text: string;
   maxWidth: string;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 export const UserPanelSettingsActionButton: FC<UserPanelSettingsActionButtonProps> = ({
   text,
   maxWidth,
+  disabled,
+  onClick,
 }) => {
   return (
     <Button
@@ -18,6 +22,8 @@ export const UserPanelSettingsActionButton: FC<UserPanelSettingsActionButtonProp
       height="41px"
       fontSize="20px"
       fontWeight={400}
+      disabled={disabled}
+      onClick={onClick}
       sx={{
         gap: '8px',
         display: 'flex',
