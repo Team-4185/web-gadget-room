@@ -5,11 +5,9 @@ import { Input, UserPanelSettingsActionButton, UserPanelSettingsSection } from '
 
 import './UserPanelPersonalInfoSection.css';
 
-interface PersonalInfoState {
+export interface PersonalInfoState {
   firstName: string;
   lastName: string;
-  streetAddress: string;
-  country: string;
   city: string;
   phoneNumber: string;
 }
@@ -17,18 +15,29 @@ interface PersonalInfoState {
 interface UserPanelPersonalInfoSectionProps {
   value: PersonalInfoState;
   onChange: (key: keyof PersonalInfoState) => (event: ChangeEvent<HTMLInputElement>) => void;
+  isSaving?: boolean;
+  onSave: () => void;
 }
 
 export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps> = ({
   value,
   onChange,
+  isSaving = false,
+  onSave,
 }) => {
   return (
     <UserPanelSettingsSection
       icon={<User width={30} height={30} />}
       title="Personal Information"
       subtitle="Update your personal data"
-      action={<UserPanelSettingsActionButton text="Save changes" maxWidth="192px" />}
+      action={
+        <UserPanelSettingsActionButton
+          text={isSaving ? 'Saving' : 'Save changes'}
+          maxWidth="192px"
+          disabled={isSaving}
+          onClick={onSave}
+        />
+      }
     >
       <div className="user-profile__settings-input-grid">
         <Input
@@ -44,24 +53,12 @@ export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps>
           onChange={onChange('lastName')}
         />
         <Input
-          label="Street Address"
-          placeholder="Street Address"
-          value={value.streetAddress}
-          onChange={onChange('streetAddress')}
-        />
-        <Input
-          label="Country"
-          placeholder="Country"
-          value={value.country}
-          onChange={onChange('country')}
-        />
-        <Input label="City" placeholder="City" value={value.city} onChange={onChange('city')} />
-        <Input
           label="Phone Number"
           placeholder="Phone Number"
           value={value.phoneNumber}
           onChange={onChange('phoneNumber')}
         />
+        <Input label="City" placeholder="City" value={value.city} onChange={onChange('city')} />
       </div>
     </UserPanelSettingsSection>
   );

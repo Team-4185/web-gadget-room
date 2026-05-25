@@ -1,5 +1,6 @@
-import { useState, type ChangeEvent, type FC } from 'react';
+import { useEffect, useState, type ChangeEvent, type FC } from 'react';
 import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import {
   UserPanelEmailSection,
@@ -7,22 +8,28 @@ import {
   UserPanelPasswordSection,
   UserPanelPersonalInfoSection,
 } from '@/components';
+import { usersService } from '@/core/services';
+import { toErrorMessage } from '@/core/utils';
+import type { UpdateUserProfilePayload } from '@/core/types';
 
 import './UserPanelSettings.css';
 
 interface UserPanelSettingsProps {
+  userId: number | null;
   email: string;
+  profile: UpdateUserProfilePayload;
+  onProfileSaved: (profile: UpdateUserProfilePayload) => void;
 }
 
-export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
-  const [personalInfo, setPersonalInfo] = useState({
-    firstName: '',
-    lastName: '',
-    streetAddress: '',
-    country: '',
-    city: '',
-    phoneNumber: '',
-  });
+export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
+  userId,
+  email,
+  profile,
+  onProfileSaved,
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [personalInfo, setPersonalInfo] = useState<UpdateUserProfilePayload>(profile);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [emailState, setEmailState] = useState({
     current: email,
     next: '',
@@ -38,6 +45,10 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
     newArrivals: true,
   });
 
+  useEffect(() => {
+    setPersonalInfo(profile);
+  }, [profile]);
+
   const handlePersonalInfoChange =
     (key: keyof typeof personalInfo) => (event: ChangeEvent<HTMLInputElement>) => {
       setPersonalInfo((prev) => ({ ...prev, [key]: event.target.value }));
@@ -52,6 +63,39 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
   const handleNotificationToggle = (key: keyof typeof notificationState) => {
     setNotificationState((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+  const handleProfileSave = async () => {
+    if (!userId) {
+      enqueueSnackbar('Unable to update profile without a user account.', { variant: 'error' });
+      return;
+    }
+
+    const payload: UpdateUserProfilePayload = {
+      firstName: personalInfo.firstName.trim(),
+      lastName: personalInfo.lastName.trim(),
+      city: personalInfo.city.trim(),
+      phoneNumber: personalInfo.phoneNumber.trim(),
+    };
+
+    setIsSavingProfile(true);
+
+    try {
+      const updatedProfile = await usersService.updateProfile(userId, payload);
+      const nextProfile = {
+        firstName: updatedProfile.firstName ?? payload.firstName,
+        lastName: updatedProfile.lastName ?? payload.lastName,
+        city: updatedProfile.city ?? payload.city,
+        phoneNumber: updatedProfile.phoneNumber ?? payload.phoneNumber,
+      };
+
+      setPersonalInfo(nextProfile);
+      onProfileSaved(nextProfile);
+      enqueueSnackbar('Profile updated.', { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar(toErrorMessage(error, 'Failed to update profile.'), { variant: 'error' });
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
 
   return (
     <div className="user-profile__settings" aria-label="Account settings">
@@ -64,7 +108,12 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({ email }) => {
         </Typography>
       </div>
 
-      <UserPanelPersonalInfoSection value={personalInfo} onChange={handlePersonalInfoChange} />
+      <UserPanelPersonalInfoSection
+        value={personalInfo}
+        onChange={handlePersonalInfoChange}
+        isSaving={isSavingProfile}
+        onSave={handleProfileSave}
+      />
       <UserPanelEmailSection value={emailState} onChange={handleEmailChange} />
       <UserPanelPasswordSection value={passwordState} onChange={handlePasswordChange} />
       <UserPanelNotificationsSection value={notificationState} onToggle={handleNotificationToggle} />

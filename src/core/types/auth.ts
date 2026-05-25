@@ -15,6 +15,18 @@ export interface IJwtResponseDto {
   accessToken: string;
 }
 
+export type UpdateUserProfilePayload = {
+  firstName: string;
+  lastName: string;
+  city: string;
+  phoneNumber: string;
+};
+
+export type UserProfileDto = UpdateUserProfilePayload & {
+  id?: number;
+  email?: string;
+};
+
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
 
 export interface IErrorResponse {

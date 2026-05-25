@@ -12,13 +12,21 @@ import {
 } from '@/components';
 import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
 import { useUserPanelData } from '@/core/hooks';
-import type { UserPanelTab } from '@/core/types';
+import { useAppSelector } from '@/core/store';
+import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData();
+  const userId = useAppSelector((state) => state.auth.userId);
+  const [profileInfo, setProfileInfo] = useState<UpdateUserProfilePayload>({
+    firstName: '',
+    lastName: '',
+    city: '',
+    phoneNumber: '',
+  });
+  const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData(profileInfo);
   const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
 
   const handleLogout = () => {
@@ -147,7 +155,14 @@ export const UserProfile = () => {
               </div>
             )}
 
-            {isSettingsTab && <UserPanelSettings email={profile.email} />}
+            {isSettingsTab && (
+              <UserPanelSettings
+                userId={userId}
+                email={profile.email}
+                profile={profileInfo}
+                onProfileSaved={setProfileInfo}
+              />
+            )}
           </div>
         </div>
       </Container>
