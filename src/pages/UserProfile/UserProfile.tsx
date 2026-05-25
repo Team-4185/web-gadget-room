@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router';
 import { ChevronRight } from '@/assets';
 import {
   ProductCard,
+  CircularProgress,
   UserPanelOrderCard,
   UserPanelSettings,
   UserPanelSidebar,
   UserPanelStatCard,
 } from '@/components';
 import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
-import { useUserPanelData } from '@/core/hooks';
+import { useUserOrders, useUserPanelData } from '@/core/hooks';
 import { useAppSelector } from '@/core/store';
 import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
@@ -26,7 +27,11 @@ export const UserProfile = () => {
     city: '',
     phoneNumber: '',
   });
-  const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData(profileInfo);
+  const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
+  const { greeting, subtitle, menu, stats, profile } = useUserPanelData(
+    profileInfo,
+    totalElements
+  );
   const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
 
   const handleLogout = () => {
@@ -109,9 +114,18 @@ export const UserProfile = () => {
                   </div>
 
                   <div className="user-profile__orders-list">
-                    {recentOrders.map((order) => (
-                      <UserPanelOrderCard key={order.id} order={order} />
-                    ))}
+                    {ordersLoading ? <CircularProgress /> : null}
+                    {!ordersLoading && ordersError ? (
+                      <Typography component="p">{ordersError}</Typography>
+                    ) : null}
+                    {!ordersLoading && !ordersError && !recentOrders.length ? (
+                      <Typography component="p">No recent orders yet.</Typography>
+                    ) : null}
+                    {!ordersLoading &&
+                      !ordersError &&
+                      recentOrders.map((order) => (
+                        <UserPanelOrderCard key={order.id} order={order} />
+                      ))}
                   </div>
                 </div>
               </>
@@ -129,9 +143,16 @@ export const UserProfile = () => {
                 </div>
 
                 <div className="user-profile__orders-list">
-                  {orders.map((order) => (
-                    <UserPanelOrderCard key={order.id} order={order} />
-                  ))}
+                  {ordersLoading ? <CircularProgress /> : null}
+                  {!ordersLoading && ordersError ? (
+                    <Typography component="p">{ordersError}</Typography>
+                  ) : null}
+                  {!ordersLoading && !ordersError && !orders.length ? (
+                    <Typography component="p">No orders yet.</Typography>
+                  ) : null}
+                  {!ordersLoading &&
+                    !ordersError &&
+                    orders.map((order) => <UserPanelOrderCard key={order.id} order={order} />)}
                 </div>
               </div>
             )}
