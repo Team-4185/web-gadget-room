@@ -19,7 +19,7 @@ export const ordersService = {
   },
   async getMyOrders(page = 0, size = 10) {
     const { data } = await api.get<OrdersPageResponse>('/api/v1/orders/my', {
-      params: { page, size },
+      params: { page, size, sort: 'createdAt,desc' },
     });
 
     return data;
