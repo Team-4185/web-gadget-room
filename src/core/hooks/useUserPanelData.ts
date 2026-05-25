@@ -21,7 +21,7 @@ export const useUserPanelData = (profileInfo: UpdateUserProfilePayload = EMPTY_P
 
     return {
       ...USER_PANEL_DATA,
-      greeting: `Welcome back ${displayName}!`,
+      greeting: `Welcome back, ${displayName}!`,
       profile: {
         firstName,
         lastName,

@@ -4,7 +4,7 @@ import { PRODUCTS } from '@/core/constants/products';
 import { SmallClock, SmallTruck, StatusDelivered } from '@/assets';
 
 export const USER_PANEL_DATA: IUserPanelData = {
-  greeting: 'Welcome back Taras!',
+  greeting: 'Welcome back, Taras!',
   subtitle: "Here's what's happening with your account",
   menu: [
     { id: 'overview', label: 'Overview', icon: User },
