@@ -88,25 +88,3 @@
   background: var(--red);
 }
 
-.admin-orders-table__actions {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.admin-orders-table__actions button {
-  border: 0;
-  background: transparent;
-  padding: 0;
-  line-height: 1;
-  color: var(--blue-violet);
-  cursor: pointer;
-}
-
-.admin-orders-table__actions button:nth-child(2) {
-  color: var(--chateau-green);
-}
-
-.admin-orders-table__actions button:last-child {
-  color: var(--red);
-}
