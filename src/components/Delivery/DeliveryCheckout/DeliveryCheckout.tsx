@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import {
   OrderSummary,
@@ -13,8 +15,17 @@ import {
   DELIVERY_OPTIONS,
   INITIAL_DELIVERY_CHECKOUT_FORM,
 } from '@/core/constants';
+import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { cartService, ordersService } from '@/core/services';
+import {
+  cartStorage,
+  createOrderPayloadFromCheckout,
+  toErrorMessage,
+  validateDeliveryCheckout,
+} from '@/core/utils';
 import type {
   CheckoutPaymentMethod,
+  CourierAddressForm,
   DeliveryCheckoutForm,
   DeliveryMethod,
   OnlinePaymentType,
@@ -25,8 +36,17 @@ import './DeliveryCheckout.css';
 
 export const DeliveryCheckout = () => {
   const [form, setForm] = useState<DeliveryCheckoutForm>(INITIAL_DELIVERY_CHECKOUT_FORM);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const cartProducts = useAppSelector((state) => state.cart.cart);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const selectedDeliveryPrice =
     DELIVERY_OPTIONS.find((option) => option.id === form.delivery.method)?.price ?? 0;
+  const cartItems = cartProducts.map((product) => ({
+    phoneId: product.id,
+    amount: product.amount,
+  }));
 
   const handleRecipientChange = (field: keyof RecipientForm, value: string) => {
     setForm((prev) => ({
@@ -61,6 +81,19 @@ export const DeliveryCheckout = () => {
     }));
   };
 
+  const handleCourierAddressChange = (field: keyof CourierAddressForm, value: string) => {
+    setForm((prev) => ({
+      ...prev,
+      delivery: {
+        ...prev.delivery,
+        courierAddress: {
+          ...prev.delivery.courierAddress,
+          [field]: value,
+        },
+      },
+    }));
+  };
+
   const handlePaymentMethodChange = (method: CheckoutPaymentMethod) => {
     setForm((prev) => ({
       ...prev,
@@ -81,6 +114,31 @@ export const DeliveryCheckout = () => {
     }));
   };
 
+  const handlePlaceOrder = async () => {
+    const validationError = validateDeliveryCheckout(form, cartItems);
+
+    if (validationError) {
+      enqueueSnackbar(validationError, { variant: 'error' });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const order = await ordersService.createOrder(createOrderPayloadFromCheckout(form, cartItems));
+
+      await cartService.clearCart();
+      cartStorage.clear();
+      dispatch(cartActions.clearCartLocal());
+      enqueueSnackbar(`Order #${order.id} has been placed.`, { variant: 'success' });
+      navigate('/home');
+    } catch (error) {
+      enqueueSnackbar(toErrorMessage(error, 'Failed to place order.'), { variant: 'error' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="delivery-checkout__layout">
       <div className="delivery-checkout__left">
@@ -97,6 +155,8 @@ export const DeliveryCheckout = () => {
           branchByMethod={form.delivery.branchByMethod}
           onBranchChange={handleBranchChange}
           branchesByMethod={DELIVERY_BRANCHES_BY_METHOD}
+          courierAddress={form.delivery.courierAddress}
+          onCourierAddressChange={handleCourierAddressChange}
         />
 
         <PaymentSection
@@ -110,7 +170,9 @@ export const DeliveryCheckout = () => {
       <div className="delivery-checkout__right">
         <OrderSummary
           className="delivery-checkout__summary"
-          continueTo="/payment"
+          onContinue={handlePlaceOrder}
+          continueLabel={isSubmitting ? 'placing order' : 'place order'}
+          continueDisabled={isSubmitting}
           shippingAmount={selectedDeliveryPrice}
         />
         <SmallRobots width={572} height={412} />

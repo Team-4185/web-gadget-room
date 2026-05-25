@@ -3,6 +3,7 @@ import type {
   DeliveryCheckoutForm,
   DeliveryOptionConfig,
   ISelectOption,
+  OrderPaymentDetailsPayload,
 } from '@/core/types';
 
 import { COURIER_BRANCHES, DHL_BRANCHES, NOVA_BRANCHES, UKR_BRANCHES } from './select';
@@ -19,6 +20,14 @@ export const DELIVERY_BRANCHES_BY_METHOD: DeliveryBranchesMap = {
   nova: NOVA_BRANCHES,
   ukr: UKR_BRANCHES,
   dhl: DHL_BRANCHES,
+};
+
+export const MOCK_CARD_PAYMENT_DETAILS: OrderPaymentDetailsPayload = {
+  cardHoldName: 'Mock Customer',
+  cardNumber: '4111111111111111',
+  cardMonthExpiration: 12,
+  cardYearExpiration: 2030,
+  cardCvv: '123',
 };
 
 export const UKRAINE_REGIONS: ISelectOption[] = [
@@ -64,6 +73,14 @@ export const INITIAL_DELIVERY_CHECKOUT_FORM: DeliveryCheckoutForm = {
       nova: '',
       ukr: '',
       dhl: '',
+    },
+    courierAddress: {
+      street: '',
+      houseNumber: '',
+      apartmentNumber: '',
+      city: '',
+      country: 'Ukraine',
+      zipCode: '',
     },
   },
   payment: {

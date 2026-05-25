@@ -12,6 +12,9 @@ interface IProps {
 
 const STATUS_LABELS = {
   processing: 'Processing',
+  confirmed: 'Confirmed',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled',
   paid: 'Paid',
   shipping: 'Shipping',
 } as const;
