@@ -51,7 +51,7 @@ export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep
           />
         ) : null
       }
-      sx={sx}
+      sx={sx as never}
     >
       {steps.map((step, idx) => {
         return (

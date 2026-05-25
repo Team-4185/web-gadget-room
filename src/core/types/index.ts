@@ -4,6 +4,7 @@ export * from './product';
 export * from './select';
 export * from './checkbox';
 export * from './delivery';
+export * from './order';
 export * from './userPanel';
 export * from './router';
 export * from './cart';
