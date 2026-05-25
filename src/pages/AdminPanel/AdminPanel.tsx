@@ -42,7 +42,20 @@ export const AdminPanel = () => {
     onStatusChange,
     refreshProducts,
   } = useAdminProductManagementData();
-  const { kpis: ordersKpis, orders } = useAdminOrdersData();
+  const {
+    kpis: ordersKpis,
+    orders,
+    totalOrders,
+    currentPage: ordersCurrentPage,
+    totalPages: ordersTotalPages,
+    isFirstPage: isOrdersFirstPage,
+    isLastPage: isOrdersLastPage,
+    isLoading: isOrdersLoading,
+    activeFilter: ordersActiveFilter,
+    onFilterChange: onOrdersFilterChange,
+    goToPreviousPage: goToPreviousOrdersPage,
+    goToNextPage: goToNextOrdersPage,
+  } = useAdminOrdersData();
   const { kpis: customersKpis, customers } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
@@ -97,7 +110,22 @@ export const AdminPanel = () => {
                 onRefreshProducts={refreshProducts}
               />
             )}
-            {isOrdersTab && <AdminOrdersTab kpis={ordersKpis} orders={orders} />}
+            {isOrdersTab && (
+              <AdminOrdersTab
+                kpis={ordersKpis}
+                orders={orders}
+                totalOrders={totalOrders}
+                currentPage={ordersCurrentPage}
+                totalPages={ordersTotalPages}
+                isFirstPage={isOrdersFirstPage}
+                isLastPage={isOrdersLastPage}
+                isLoading={isOrdersLoading}
+                activeFilter={ordersActiveFilter}
+                onFilterChange={onOrdersFilterChange}
+                onPreviousPage={goToPreviousOrdersPage}
+                onNextPage={goToNextOrdersPage}
+              />
+            )}
             {isCustomersTab && <AdminCustomersTab kpis={customersKpis} customers={customers} />}
           </div>
         </div>

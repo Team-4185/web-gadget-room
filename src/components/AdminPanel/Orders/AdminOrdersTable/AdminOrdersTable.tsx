@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC } from 'react';
+import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { IAdminManagedOrderItem } from '@/core/types';
@@ -12,32 +12,33 @@ import { AdminPagination } from '@/components/shared';
 
 import './AdminOrdersTable.css';
 
-const ADMIN_ORDERS_PAGE_SIZE = 10;
-
 interface IProps {
   orders: IAdminManagedOrderItem[];
+  totalOrders: number;
+  currentPage: number;
+  totalPages: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  isLoading: boolean;
+  activeFilter: AdminOrderFilterId;
+  onFilterChange: (filter: AdminOrderFilterId) => void;
+  onPreviousPage: () => void;
+  onNextPage: () => void;
 }
 
-export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
-  const [activeTab, setActiveTab] = useState<AdminOrderFilterId>('all');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const filteredOrders = useMemo(() => {
-    if (activeTab === 'all') return orders;
-    return orders.filter((order) => order.status === activeTab);
-  }, [orders, activeTab]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredOrders.length / ADMIN_ORDERS_PAGE_SIZE));
-  const paginatedOrders = useMemo(() => {
-    const startIndex = (currentPage - 1) * ADMIN_ORDERS_PAGE_SIZE;
-    return filteredOrders.slice(startIndex, startIndex + ADMIN_ORDERS_PAGE_SIZE);
-  }, [currentPage, filteredOrders]);
-
-  const changeActiveTab = (tab: AdminOrderFilterId) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-  };
-
+export const AdminOrdersTable: FC<IProps> = ({
+  orders,
+  totalOrders,
+  currentPage,
+  totalPages,
+  isFirstPage,
+  isLastPage,
+  isLoading,
+  activeFilter,
+  onFilterChange,
+  onPreviousPage,
+  onNextPage,
+}) => {
   return (
     <section className="admin-orders-table" aria-label="Order management">
       <div className="admin-orders-table__head">
@@ -58,10 +59,10 @@ export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
             border="none"
             fontSize="14px"
             borderRadius="8px"
-            onClick={() => changeActiveTab(tab.id)}
+            onClick={() => onFilterChange(tab.id)}
             sx={{
-              color: activeTab === tab.id ? 'var(--white)' : 'var(--black)',
-              background: activeTab === tab.id ? 'var(--blue-violet)' : 'var(--white)',
+              color: activeFilter === tab.id ? 'var(--white)' : 'var(--black)',
+              background: activeFilter === tab.id ? 'var(--blue-violet)' : 'var(--white)',
             }}
           >
             {tab.label}
@@ -83,7 +84,7 @@ export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
             </tr>
           </thead>
           <tbody>
-            {paginatedOrders.map((order) => (
+            {orders.map((order) => (
               <tr key={order.id}>
                 <td className="admin-orders-table__number">{order.orderNumber}</td>
                 <td>
@@ -121,14 +122,15 @@ export const AdminOrdersTable: FC<IProps> = ({ orders }) => {
       </div>
 
       <AdminPagination
-        totalItems={filteredOrders.length}
+        totalItems={totalOrders}
         itemLabel="orders"
         currentPage={currentPage}
         totalPages={totalPages}
-        isFirstPage={currentPage === 1}
-        isLastPage={currentPage === totalPages}
-        onPreviousPage={() => setCurrentPage((page) => Math.max(1, page - 1))}
-        onNextPage={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+        isFirstPage={isFirstPage}
+        isLastPage={isLastPage}
+        isLoading={isLoading}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
       />
     </section>
   );

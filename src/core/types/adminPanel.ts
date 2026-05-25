@@ -118,6 +118,28 @@ export interface IAdminOrderKpiItem {
 }
 
 export type AdminOrderStatus = 'processing' | 'confirmed' | 'delivered' | 'cancelled';
+export type ApiAdminOrderStatus =
+  | 'NEW'
+  | 'CONFIRMED'
+  | 'PROCESSING'
+  | 'SHIPPED'
+  | 'DELIVERED'
+  | 'CANCELLED';
+export type ApiAdminPaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
+export type ApiAdminOrderSort =
+  | 'createdAt_asc'
+  | 'createdAt_desc'
+  | 'total_asc'
+  | 'total_desc'
+  | 'status_asc'
+  | 'status_desc'
+  | 'paymentStatus_asc'
+  | 'paymentStatus_desc'
+  | 'customerEmail_asc'
+  | 'customerEmail_desc'
+  | 'id_asc'
+  | 'id_desc';
+export type AdminOrderAction = 'confirm' | 'cancel' | 'process' | 'ship' | 'deliver';
 
 export interface IAdminManagedOrderItem {
   id: string;
@@ -130,6 +152,7 @@ export interface IAdminManagedOrderItem {
   date: string;
   time: string;
   status: AdminOrderStatus;
+  availableActions?: AdminOrderAction[];
 }
 
 export type AdminAnalyticsRange = 'week' | 'month' | 'year';
@@ -168,4 +191,12 @@ export type AdminProductsRequestParams = {
   search: string;
   brand: string;
   status: AdminProductStatus | '';
+};
+
+export type AdminOrdersRequestParams = {
+  page: number;
+  size: number;
+  status?: ApiAdminOrderStatus;
+  paymentStatus?: ApiAdminPaymentStatus;
+  sort?: ApiAdminOrderSort;
 };
