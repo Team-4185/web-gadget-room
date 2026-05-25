@@ -33,5 +33,8 @@ export const cartService = {
   async removeItem(payload: MutateCartBody) {
     return mutateCart('/api/v1/me/cart/remove', payload);
   },
+  async clearCart() {
+    await api.post<void>('/api/v1/me/cart/clear');
+  },
 };
 

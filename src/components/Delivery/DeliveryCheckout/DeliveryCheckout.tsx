@@ -16,7 +16,7 @@ import {
   INITIAL_DELIVERY_CHECKOUT_FORM,
 } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
-import { ordersService } from '@/core/services';
+import { cartService, ordersService } from '@/core/services';
 import {
   cartStorage,
   createOrderPayloadFromCheckout,
@@ -127,6 +127,7 @@ export const DeliveryCheckout = () => {
     try {
       const order = await ordersService.createOrder(createOrderPayloadFromCheckout(form, cartItems));
 
+      await cartService.clearCart();
       cartStorage.clear();
       dispatch(cartActions.clearCartLocal());
       enqueueSnackbar(`Order #${order.id} has been placed.`, { variant: 'success' });
