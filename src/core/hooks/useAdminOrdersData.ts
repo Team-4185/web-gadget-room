@@ -17,25 +17,29 @@ import type { AdminOrderFilterId } from '@/core/constants';
 const PAGE_SIZE = 10;
 
 const STATUS_BY_FILTER: Partial<Record<AdminOrderFilterId, ApiAdminOrderStatus>> = {
+  new: 'NEW',
   confirmed: 'CONFIRMED',
   processing: 'PROCESSING',
+  shipped: 'SHIPPED',
   delivered: 'DELIVERED',
   cancelled: 'CANCELLED',
 };
 
 const mapApiStatusToFrontendStatus = (status: string): AdminOrderStatus => {
   switch (status) {
+    case 'NEW':
+      return 'new';
+    case 'CONFIRMED':
+      return 'confirmed';
     case 'PROCESSING':
       return 'processing';
     case 'SHIPPED':
-    case 'DELIVERED':
-      return 'delivered';
+      return 'shipped';
     case 'CANCELLED':
       return 'cancelled';
-    case 'NEW':
-    case 'CONFIRMED':
+    case 'DELIVERED':
     default:
-      return 'confirmed';
+      return 'delivered';
   }
 };
 

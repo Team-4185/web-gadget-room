@@ -355,16 +355,20 @@ export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
 ];
 
 export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
+  new: 'New',
   confirmed: 'Confirmed',
   processing: 'Processing',
+  shipped: 'Shipped',
   delivered: 'Delivered',
   cancelled: 'Cancelled',
 };
 
 export const ADMIN_ORDER_FILTER_TABS = [
   { id: 'all', label: 'All orders' },
+  { id: 'new', label: 'New' },
   { id: 'confirmed', label: 'Confirmed' },
   { id: 'processing', label: 'Processing' },
+  { id: 'shipped', label: 'Shipped' },
   { id: 'delivered', label: 'Delivered' },
   { id: 'cancelled', label: 'Cancelled' },
 ] as const;
@@ -382,7 +386,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$1,299',
     date: '12 Oct 2025',
     time: '14:30',
-    status: 'processing',
+    status: 'new',
   },
   {
     id: '2',
@@ -406,7 +410,7 @@ export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
     amount: '$1,998',
     date: '12 Oct 2025',
     time: '11:20',
-    status: 'delivered',
+    status: 'shipped',
   },
   {
     id: '4',

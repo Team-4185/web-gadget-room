@@ -25,9 +25,9 @@ export const AdminPanelProductRow: FC<IProps> = ({ item }) => {
       </div>
 
       <div className="admin-panel-product-row__meta">
-        <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
+        {/* <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
           {item.trend}
-        </Typography>
+        </Typography> */}
         <div>
           <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
             In Stock

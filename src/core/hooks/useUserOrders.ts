@@ -7,12 +7,18 @@ import { toErrorMessage } from '@/core/utils';
 
 const mapOrderStatus = (status: string): OrderStatus => {
   switch (status.toUpperCase()) {
-    case 'DELIVERED':
-    case 'COMPLETED':
-      return 'delivered';
+    case 'NEW':
+      return 'new';
+    case 'CONFIRMED':
+      return 'confirmed';
+    case 'PROCESSING':
+      return 'processing';
     case 'SHIPPED':
-    case 'SHIPPING':
       return 'shipped';
+    case 'DELIVERED':
+      return 'delivered';
+    case 'CANCELLED':
+      return 'cancelled';
     default:
       return 'processing';
   }

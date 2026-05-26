@@ -10,15 +10,6 @@ interface IProps {
   onTabChange?: (tab: AdminPanelTab) => void;
 }
 
-const STATUS_LABELS = {
-  processing: 'Processing',
-  confirmed: 'Confirmed',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
-  paid: 'Paid',
-  shipping: 'Shipping',
-} as const;
-
 export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
   return (
     <section className="admin-panel-recent-orders" aria-label="Recent orders">
@@ -51,12 +42,12 @@ export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
             </Typography>
 
             <div className="admin-panel-recent-orders__item-bottom">
-              <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
+              {/* <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
                 {order.product}
-              </Typography>
-              <span className={`admin-panel-recent-orders__status is-${order.status}`}>
+              </Typography> */}
+              {/* <span className={`admin-panel-recent-orders__status is-${order.status}`}>
                 {STATUS_LABELS[order.status]}
-              </span>
+              </span> */}
             </div>
           </article>
         ))}

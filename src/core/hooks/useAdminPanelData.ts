@@ -41,17 +41,19 @@ const formatCurrency = (value: number) =>
 
 const mapApiStatusToFrontendStatus = (status: string): AdminOrderStatus => {
   switch (status) {
+    case 'NEW':
+      return 'new';
+    case 'CONFIRMED':
+      return 'confirmed';
     case 'PROCESSING':
       return 'processing';
     case 'SHIPPED':
-    case 'DELIVERED':
-      return 'delivered';
+      return 'shipped';
     case 'CANCELLED':
       return 'cancelled';
-    case 'NEW':
-    case 'CONFIRMED':
+    case 'DELIVERED':
     default:
-      return 'confirmed';
+      return 'delivered';
   }
 };
 
@@ -150,36 +152,31 @@ const mapTopProducts = async (
 };
 
 const mapRecentOrders = (items: AdminDashboardRecentOrder[]): IAdminPanelOrderItem[] =>
-  items
-    .slice(0, DASHBOARD_SIDE_LIST_LIMIT)
-    .map((item) => ({
-      id: String(item.id),
-      orderNumber: `#ORD-${item.id}`,
-      customer: item.customerEmail,
-      product: `${formatCurrency(item.total)} - ${item.paymentStatus}`,
-      age: formatOrderAge(item.createdAt),
-      status: mapApiStatusToFrontendStatus(item.status),
-    }));
+  items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
+    id: String(item.id),
+    orderNumber: `#ORD-${item.id}`,
+    customer: item.customerEmail,
+    product: `${formatCurrency(item.total)} - ${item.paymentStatus}`,
+    age: formatOrderAge(item.createdAt),
+    status: mapApiStatusToFrontendStatus(item.status),
+  }));
 
 const mapLowStock = (items: AdminDashboardLowStockProduct[]): IAdminPanelLowStockItem[] =>
-  items
-    .slice(0, DASHBOARD_SIDE_LIST_LIMIT)
-    .map((item) => ({
-      id: String(item.id),
-      title: `${item.name} (${item.sku})`,
-      left: item.stock,
-      threshold: 10,
-    }));
+  items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
+    id: String(item.id),
+    title: `${item.name} (${item.sku})`,
+    left: item.stock,
+    threshold: 5,
+  }));
 
 export const useAdminPanelData = () => {
   const email = useAppSelector((state) => state.auth.email);
   const [stats, setStats] = useState<IAdminPanelStatItem[]>(ADMIN_PANEL_STATS);
   const [brands, setBrands] = useState<IAdminPanelBrandItem[]>(ADMIN_PANEL_BRANDS);
   const [topProducts, setTopProducts] = useState<IAdminPanelProductItem[]>(ADMIN_PANEL_PRODUCTS);
-  const [recentOrders, setRecentOrders] =
-    useState<IAdminPanelOrderItem[]>(
-      ADMIN_PANEL_RECENT_ORDERS.slice(0, DASHBOARD_SIDE_LIST_LIMIT)
-    );
+  const [recentOrders, setRecentOrders] = useState<IAdminPanelOrderItem[]>(
+    ADMIN_PANEL_RECENT_ORDERS.slice(0, DASHBOARD_SIDE_LIST_LIMIT)
+  );
   const [lowStock, setLowStock] = useState<IAdminPanelLowStockItem[]>(
     ADMIN_PANEL_LOW_STOCK.slice(0, DASHBOARD_SIDE_LIST_LIMIT)
   );
