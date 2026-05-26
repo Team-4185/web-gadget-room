@@ -43,8 +43,6 @@ const mapApiStatusToFrontendStatus = (status: string): AdminOrderStatus => {
   }
 };
 
-const formatCurrency = (value: number) => `$${value.toLocaleString('en-US')}`;
-
 const formatOrderDateTime = (value: string) => {
   const date = new Date(value);
 
@@ -66,38 +64,24 @@ const formatOrderDateTime = (value: string) => {
   };
 };
 
-const mapAdminOrderRows = (order: ApiAdminOrder): IAdminManagedOrderItem[] => {
+const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
   const dateTime = formatOrderDateTime(order.createdAt);
   const customer = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ');
-  const baseOrderRow = {
+
+  return {
+    id: String(order.id),
     orderNumber: `#ORD-${order.id}`,
     customer: customer || 'Guest',
     email: order.customerEmail,
+    paymentMethod: order.paymentMethod,
+    paymentStatus: order.paymentStatus,
+    deliveryMethod: order.deliveryMethod,
+    itemsCount: order.itemsCount ?? order.items?.length ?? 0,
     date: dateTime.date,
     time: dateTime.time,
     status: mapApiStatusToFrontendStatus(order.status),
     availableActions: order.availableActions ?? [],
   };
-
-  if (!order.items.length) {
-    return [
-      {
-        ...baseOrderRow,
-        id: String(order.id),
-        product: 'Order item',
-        quantity: 0,
-        amount: formatCurrency(order.total),
-      },
-    ];
-  }
-
-  return order.items.map((item) => ({
-    ...baseOrderRow,
-    id: `${order.id}-${item.id}`,
-    product: item.productName ?? item.phone?.name ?? 'Order item',
-    quantity: item.quantity,
-    amount: formatCurrency(item.totalPrice),
-  }));
 };
 
 export const useAdminOrdersData = () => {
@@ -130,17 +114,7 @@ export const useAdminOrdersData = () => {
           controller.signal
         );
 
-        const detailedOrders = await Promise.all(
-          response.content.map(async (order) => {
-            try {
-              return await adminOrdersService.getOrder(order.id, controller.signal);
-            } catch {
-              return order;
-            }
-          })
-        );
-
-        setOrders(detailedOrders.flatMap(mapAdminOrderRows));
+        setOrders(response.content.map(mapAdminOrder));
         setTotalOrders(response.totalElements);
         setTotalPages(response.totalPages);
         setIsFirstPage(response.first);

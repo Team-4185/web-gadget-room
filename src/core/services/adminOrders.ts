@@ -2,13 +2,34 @@ import { api } from '@/core/config';
 import type {
   AdminOrderAction,
   AdminOrdersRequestParams,
+  ApiAdminOrderStatus,
   ApiAdminPaymentStatus,
-  OrderResponse,
+  OrderDeliveryMethod,
+  OrderPaymentMethod,
 } from '@/core/types';
 
-export type ApiAdminOrder = OrderResponse & {
+export type ApiAdminOrder = {
+  id: number;
+  customerId?: number;
+  customerEmail: string;
+  customerFirstName?: string;
+  customerLastName?: string;
+  customerPhoneNumber?: string;
   customerCity?: string | null;
-  paymentStatus?: ApiAdminPaymentStatus;
+  status: ApiAdminOrderStatus;
+  paymentMethod: OrderPaymentMethod;
+  paymentStatus: ApiAdminPaymentStatus;
+  deliveryMethod: OrderDeliveryMethod;
+  total: number;
+  itemsCount?: number;
+  createdAt: string;
+  updatedAt: string | null;
+  items?: {
+    id: number;
+    productName?: string;
+    quantity: number;
+    totalPrice: number;
+  }[];
   availableActions?: AdminOrderAction[];
 };
 

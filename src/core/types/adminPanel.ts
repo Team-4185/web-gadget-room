@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
 import type { ApiPhoneImage, PhoneStockStatus } from './product';
+import type { OrderDeliveryMethod, OrderPaymentMethod } from './order';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
 
@@ -152,9 +153,10 @@ export interface IAdminManagedOrderItem {
   orderNumber: string;
   customer: string;
   email: string;
-  product: string;
-  quantity: number;
-  amount: string;
+  paymentMethod: OrderPaymentMethod;
+  paymentStatus: ApiAdminPaymentStatus;
+  deliveryMethod: OrderDeliveryMethod;
+  itemsCount: number;
   date: string;
   time: string;
   status: AdminOrderStatus;

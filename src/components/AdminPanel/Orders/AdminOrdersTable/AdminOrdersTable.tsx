@@ -2,8 +2,11 @@ import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { IAdminManagedOrderItem } from '@/core/types';
+import { Visibility } from '@/assets';
 import {
   ADMIN_ORDER_FILTER_TABS,
+  ADMIN_ORDER_PAYMENT_METHOD_LABELS,
+  ADMIN_ORDER_PAYMENT_STATUS_LABELS,
   ADMIN_ORDER_STATUS_LABELS,
   type AdminOrderFilterId,
 } from '@/core/constants';
@@ -76,11 +79,11 @@ export const AdminOrdersTable: FC<IProps> = ({
             <tr>
               <th>Order number</th>
               <th>Customer</th>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Amount</th>
+              <th>Payment method</th>
+              <th>Payment status</th>
               <th>Date</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -101,9 +104,8 @@ export const AdminOrdersTable: FC<IProps> = ({
                     </Typography>
                   </div>
                 </td>
-                <td>{order.product}</td>
-                <td>{order.quantity}</td>
-                <td>{order.amount}</td>
+                <td>{ADMIN_ORDER_PAYMENT_METHOD_LABELS[order.paymentMethod]}</td>
+                <td>{ADMIN_ORDER_PAYMENT_STATUS_LABELS[order.paymentStatus]}</td>
                 <td>
                   <div className="admin-orders-table__date">
                     <span>{order.date}</span>
@@ -114,6 +116,13 @@ export const AdminOrdersTable: FC<IProps> = ({
                   <span className={`admin-orders-table__status is-${order.status}`}>
                     {ADMIN_ORDER_STATUS_LABELS[order.status]}
                   </span>
+                </td>
+                <td>
+                  <div className="admin-orders-table__actions">
+                    <button type="button" aria-label={`View ${order.orderNumber}`}>
+                      <Visibility />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

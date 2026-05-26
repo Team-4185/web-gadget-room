@@ -93,3 +93,16 @@
   background: var(--red);
 }
 
+.admin-orders-table__actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.admin-orders-table__actions button {
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
