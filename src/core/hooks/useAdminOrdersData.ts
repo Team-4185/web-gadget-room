@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 
 import { ADMIN_MANAGED_ORDERS, ADMIN_ORDER_KPIS } from '@/core/constants';
-import { adminOrdersService, type ApiAdminOrder } from '@/core/services';
+import { adminOrdersService, type ApiAdminOrder, type ApiAdminOrdersKpi } from '@/core/services';
 import type {
   AdminOrderAction,
   AdminOrderStatus,
   ApiAdminOrderStatus,
   IAdminManagedOrderItem,
+  IAdminOrderKpiItem,
 } from '@/core/types';
 import { toErrorMessage } from '@/core/utils';
 import { useAdminPanelData } from './useAdminPanelData';
@@ -84,9 +85,18 @@ const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
   };
 };
 
+const formatKpiValue = (value: number) => new Intl.NumberFormat('en-US').format(value);
+
+const mapAdminOrderKpis = (kpis: ApiAdminOrdersKpi): IAdminOrderKpiItem[] =>
+  ADMIN_ORDER_KPIS.map((item) => ({
+    ...item,
+    value: formatKpiValue(kpis[item.id as keyof ApiAdminOrdersKpi]),
+  }));
+
 export const useAdminOrdersData = () => {
   const { greeting, subtitle, menu } = useAdminPanelData();
   const { enqueueSnackbar } = useSnackbar();
+  const [kpis, setKpis] = useState<IAdminOrderKpiItem[]>(ADMIN_ORDER_KPIS);
   const [orders, setOrders] = useState<IAdminManagedOrderItem[]>([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,6 +106,25 @@ export const useAdminOrdersData = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<AdminOrderFilterId>('all');
   const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadKpis = async () => {
+      try {
+        const response = await adminOrdersService.getKpis(controller.signal);
+        setKpis(mapAdminOrderKpis(response));
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
+
+        setKpis(ADMIN_ORDER_KPIS);
+      }
+    };
+
+    loadKpis();
+
+    return () => controller.abort();
+  }, [reloadKey]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -171,7 +200,7 @@ export const useAdminOrdersData = () => {
       greeting,
       subtitle,
       menu,
-      kpis: ADMIN_ORDER_KPIS,
+      kpis,
       orders,
       totalOrders,
       currentPage,
@@ -195,6 +224,7 @@ export const useAdminOrdersData = () => {
       isFirstPage,
       isLastPage,
       isLoading,
+      kpis,
       menu,
       onFilterChange,
       orders,

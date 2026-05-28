@@ -60,6 +60,13 @@ export type AdminOrdersPage = {
   empty: boolean;
 };
 
+export type ApiAdminOrdersKpi = {
+  confirmed: number;
+  processing: number;
+  delivered: number;
+  cancelled: number;
+};
+
 const normalizeAdminOrdersPage = (
   data: RawAdminOrdersPage,
   fallbackPage: number,
@@ -83,6 +90,10 @@ const normalizeAdminOrdersPage = (
 };
 
 export const adminOrdersService = {
+  async getKpis(signal?: AbortSignal) {
+    const { data } = await api.get<ApiAdminOrdersKpi>('/api/v1/admin/orders/kpi', { signal });
+    return data;
+  },
   async getOrders(params: AdminOrdersRequestParams, signal?: AbortSignal) {
     const { data } = await api.get<RawAdminOrdersPage>('/api/v1/admin/orders', {
       params,
