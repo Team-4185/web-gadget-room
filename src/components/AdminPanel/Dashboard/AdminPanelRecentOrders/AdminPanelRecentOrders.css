@@ -13,7 +13,7 @@
 }
 
 .admin-panel-recent-orders__item {
-  padding-bottom: 20px;
+  padding-bottom: 30px;
   border-bottom: 1px solid var(--amber-opacity-89);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .admin-panel-recent-orders__view-all {
-  margin: 28px auto 0;
+  margin: 40px auto 22px;
   border: 0;
   background: transparent;
   color: var(--blue-violet);

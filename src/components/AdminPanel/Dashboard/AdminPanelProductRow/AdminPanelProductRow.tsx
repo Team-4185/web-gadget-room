@@ -18,21 +18,24 @@ export const AdminPanelProductRow: FC<IProps> = ({ item }) => {
           <Typography variant="subtitle1" component="h4" sx={{ fontWeight: 600 }}>
             {item.title}
           </Typography>
-          <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
+          <Typography variant="body2" component="p">
             {item.sales}
           </Typography>
         </div>
       </div>
 
       <div className="admin-panel-product-row__meta">
-        {/* <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
+        <Typography variant="body2" component="p">
           {item.trend}
-        </Typography> */}
+        </Typography>
         <div>
-          <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
-            In Stock
+          <Typography variant="body2" component="p">
+            {item.statusLabel}
           </Typography>
-          <Typography component="p" sx={{ fontSize: '14px', fontWeight: 600, lineHeight: 1.1 }}>
+          <Typography
+            component="p"
+            sx={{ fontSize: '14px', fontWeight: 600, lineHeight: 1.1, minWidth: '85px' }}
+          >
             {item.stock}
           </Typography>
         </div>

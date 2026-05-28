@@ -8,10 +8,10 @@ import {
   ADMIN_PANEL_PRODUCTS,
   ADMIN_PANEL_RECENT_ORDERS,
   ADMIN_PANEL_STATS,
+  ADMIN_PRODUCT_STATUS_LABELS,
 } from '@/core/constants';
 import { Customers, Dollar, Order, Product } from '@/assets';
 import {
-  adminProductsService,
   adminDashboardService,
   type AdminDashboardBrandSale,
   type AdminDashboardLowStockProduct,
@@ -123,51 +123,42 @@ const mapSummaryToStats = (summary: AdminDashboardSummary): IAdminPanelStatItem[
 ];
 
 const mapBrandSales = (items: AdminDashboardBrandSale[]): IAdminPanelBrandItem[] => {
-  const totalRevenue = items.reduce((sum, item) => sum + item.revenue, 0);
+  const totalUnitsSold = items.reduce((sum, item) => sum + item.unitsSold, 0);
 
-  if (!totalRevenue) return ADMIN_PANEL_BRANDS;
+  if (!totalUnitsSold) return ADMIN_PANEL_BRANDS;
 
-  return items.map((item, index) => ({
+  const sortedItems = [...items].sort((a, b) => b.unitsSold - a.unitsSold);
+  const topBrands = sortedItems.slice(0, 4);
+  const otherUnitsSold = sortedItems.slice(4).reduce((sum, item) => sum + item.unitsSold, 0);
+  const chartItems = otherUnitsSold
+    ? [...topBrands, { brand: 'Others', revenue: 0, unitsSold: otherUnitsSold }]
+    : topBrands;
+
+  return chartItems.map((item, index) => ({
     id: item.brand.toLowerCase(),
     label: item.brand,
-    share: Math.round((item.revenue / totalRevenue) * 100),
+    share: Math.round((item.unitsSold / totalUnitsSold) * 100),
     color: BRAND_COLORS[index % BRAND_COLORS.length],
   }));
 };
 
-const mapTopProducts = async (
-  items: AdminDashboardTopProduct[],
-  signal: AbortSignal
-): Promise<IAdminPanelProductItem[]> => {
-  const productDetails = await Promise.allSettled(
-    items.map((item) => adminProductsService.getById(item.phoneId, signal))
-  );
-
-  return items.map((item, index) => {
-    const product = productDetails[index];
-    const fallbackProduct = ADMIN_PANEL_PRODUCTS[index];
-    const stock =
-      product?.status === 'fulfilled' && typeof product.value.stock === 'number'
-        ? `${product.value.stock} pcs`
-        : (fallbackProduct?.stock ?? '');
-
-    return {
-      id: String(item.phoneId),
-      title: item.name,
-      sales: `${item.unitsSold} sales - USD ${item.revenue.toLocaleString('en-US')}`,
-      trend: item.sku,
-      stock,
-      image: FALLBACK_IMAGE,
-    };
-  });
-};
+const mapTopProducts = (items: AdminDashboardTopProduct[]): IAdminPanelProductItem[] =>
+  items.map((item) => ({
+    id: String(item.phoneId),
+    title: item.name,
+    sales: `${formatNumber(item.unitsSold)} sales - $${formatNumber(item.revenue)}`,
+    trend: formatTrend(item.growthPercent),
+    stock: `${formatNumber(item.stock)} pcs`,
+    statusLabel: ADMIN_PRODUCT_STATUS_LABELS[item.status],
+    image: FALLBACK_IMAGE,
+  }));
 
 const mapRecentOrders = (items: AdminDashboardRecentOrder[]): IAdminPanelOrderItem[] =>
   items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
     id: String(item.id),
     orderNumber: `#ORD-${item.id}`,
-    customer: item.customerEmail,
-    product: `${formatCurrency(item.total)} - ${item.paymentStatus}`,
+    customer: item.customerName || 'Guest',
+    email: item.customerEmail,
     age: formatOrderAge(item.createdAt),
     status: mapApiStatusToFrontendStatus(item.status),
   }));
@@ -216,7 +207,7 @@ export const useAdminPanelData = () => {
       }
 
       if (topSellingProducts.status === 'fulfilled') {
-        setTopProducts(await mapTopProducts(topSellingProducts.value, controller.signal));
+        setTopProducts(mapTopProducts(topSellingProducts.value));
       }
 
       if (latestOrders.status === 'fulfilled') {

@@ -3,6 +3,7 @@
   border-radius: 18px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
   padding: 20px;
+  max-width: 588px;
 }
 
 .admin-panel-sales-chart__head {
@@ -46,6 +47,11 @@
   font-size: 11px;
 }
 
+.admin-panel-sales-chart__x-labels-svg {
+  fill: var(--black-opacity-65);
+  font-size: 12px;
+}
+
 .admin-panel-sales-chart__point {
   cursor: pointer;
 }
@@ -71,17 +77,6 @@
   font-weight: 600;
 }
 
-.admin-panel-sales-chart__x-labels {
-  margin-top: 6px;
-}
-
-.admin-panel-sales-chart__x-labels-grid {
-  display: grid;
-  gap: 8px;
-  color: var(--black-opacity-65);
-  font-size: 14px;
-}
-
 .admin-panel-sales-chart__caption {
   margin: 0 0 8px;
   color: var(--black-opacity-65);
@@ -91,29 +86,9 @@
   margin-top: 10px;
   display: flex;
   align-items: center;
-  gap: 14px;
-}
-
-.admin-panel-sales-chart__legend {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-}
-
-.admin-panel-sales-chart__legend::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.admin-panel-sales-chart__legend--revenue::before {
-  background: #f5a7a0;
 }
 
 .admin-panel-sales-chart__loading {
-  margin-left: auto;
   font-size: 13px;
   color: var(--black-opacity-65);
 }

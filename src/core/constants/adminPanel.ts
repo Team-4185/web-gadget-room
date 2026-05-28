@@ -93,6 +93,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+12%',
     stock: '45 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -101,6 +102,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '298 sales - USD 357,020',
     trend: '+8%',
     stock: '62 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -109,6 +111,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '187 sales - USD 186,813',
     trend: '+15%',
     stock: '38 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -117,6 +120,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '156 sales - USD 132,444',
     trend: '+22%',
     stock: '89 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -125,6 +129,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '134 sales - USD 107,066',
     trend: '+5%',
     stock: '54 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -133,6 +138,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+18%',
     stock: '16 pcs',
+    statusLabel: 'Low Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -141,6 +147,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+8%',
     stock: '30 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
   {
@@ -149,6 +156,7 @@ export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
     sales: '342 sales - USD 444,558',
     trend: '+40%',
     stock: '60 pcs',
+    statusLabel: 'In Stock',
     image: FALLBACK_IMAGE,
   },
 ];
@@ -259,7 +267,7 @@ export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
     id: '1',
     orderNumber: '#ORD-8472',
     customer: 'John Smith',
-    product: 'iPhone 15 Pro',
+    email: 'john.smith@example.com',
     age: '5 min',
     status: 'processing',
   },
@@ -267,7 +275,7 @@ export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
     id: '2',
     orderNumber: '#ORD-8471',
     customer: 'Maria Johnson',
-    product: 'Samsung S24',
+    email: 'maria.johnson@example.com',
     age: '12 min',
     status: 'confirmed',
   },
@@ -275,7 +283,7 @@ export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
     id: '3',
     orderNumber: '#ORD-8470',
     customer: 'Alex Brown',
-    product: 'Pixel 8',
+    email: 'alex.brown@example.com',
     age: '28 min',
     status: 'delivered',
   },

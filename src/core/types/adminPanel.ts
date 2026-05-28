@@ -35,6 +35,7 @@ export interface IAdminPanelProductItem {
   sales: string;
   trend: string;
   stock: string;
+  statusLabel: string;
   image: string;
 }
 
@@ -79,7 +80,7 @@ export interface IAdminPanelOrderItem {
   id: string;
   orderNumber: string;
   customer: string;
-  product: string;
+  email: string;
   age: string;
   status: AdminOrderStatus;
 }

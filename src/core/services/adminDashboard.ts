@@ -26,6 +26,8 @@ export type AdminDashboardSummary = {
 export type AdminDashboardSalesPoint = {
   date: string;
   revenue: number;
+  profit?: number;
+  salesCount?: number;
   ordersCount: number;
 };
 
@@ -41,11 +43,16 @@ export type AdminDashboardTopProduct = {
   sku: string;
   unitsSold: number;
   revenue: number;
+  stock: number;
+  status: AdminProductStatus;
+  growthPercent: number | null;
 };
 
 export type AdminDashboardRecentOrder = {
   id: number;
   customerEmail: string;
+  customerName: string;
+  productName: string;
   status: DashboardOrderStatus;
   paymentStatus: DashboardPaymentStatus;
   total: number;
