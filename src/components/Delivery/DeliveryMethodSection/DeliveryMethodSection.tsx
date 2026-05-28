@@ -1,10 +1,12 @@
 import { Typography } from '@mui/material';
+import type { FieldError } from 'react-hook-form';
 
 import { Button, Input, RadioButton, Select } from '@/components';
 import { Map } from '@/assets';
 import type {
   BranchSelectionMap,
   CourierAddressForm,
+  DeliveryCheckoutErrors,
   DeliveryBranchesMap,
   DeliveryMethod,
   DeliveryOptionConfig,
@@ -17,17 +19,22 @@ type DeliveryMethodSectionProps = {
   onDeliveryMethodChange: (method: DeliveryMethod) => void;
   options: DeliveryOptionConfig[];
   branchByMethod: BranchSelectionMap;
+  errors?: DeliveryCheckoutErrors['delivery'];
   onBranchChange: (method: DeliveryMethod, branch: string) => void;
   branchesByMethod: DeliveryBranchesMap;
   courierAddress: CourierAddressForm;
   onCourierAddressChange: (field: keyof CourierAddressForm, value: string) => void;
 };
 
+const toFieldError = (message?: string): FieldError | undefined =>
+  message ? { type: 'manual', message } : undefined;
+
 export const DeliveryMethodSection = ({
   deliveryMethod,
   onDeliveryMethodChange,
   options,
   branchByMethod,
+  errors,
   onBranchChange,
   branchesByMethod,
   courierAddress,
@@ -71,6 +78,7 @@ export const DeliveryMethodSection = ({
                         onChange={(e) => onCourierAddressChange('city', e.target.value)}
                         label="City"
                         sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.city)}
                         required
                       />
                       <Input
@@ -78,6 +86,7 @@ export const DeliveryMethodSection = ({
                         onChange={(e) => onCourierAddressChange('street', e.target.value)}
                         label="Street"
                         sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.street)}
                         required
                       />
                     </div>
@@ -87,6 +96,7 @@ export const DeliveryMethodSection = ({
                         onChange={(e) => onCourierAddressChange('houseNumber', e.target.value)}
                         label="House"
                         sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.houseNumber)}
                         required
                       />
                       <Input
@@ -94,12 +104,14 @@ export const DeliveryMethodSection = ({
                         onChange={(e) => onCourierAddressChange('apartmentNumber', e.target.value)}
                         label="Apartment"
                         sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.apartmentNumber)}
                       />
                       <Input
                         value={courierAddress.zipCode}
                         onChange={(e) => onCourierAddressChange('zipCode', e.target.value)}
                         label="ZIP code"
                         sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.zipCode)}
                         required
                       />
                     </div>
@@ -108,6 +120,7 @@ export const DeliveryMethodSection = ({
                       onChange={(e) => onCourierAddressChange('country', e.target.value)}
                       label="Country"
                       sx={{ maxWidth: '100%' }}
+                      error={toFieldError(errors?.courierAddress?.country)}
                       required
                     />
                   </div>
@@ -123,6 +136,7 @@ export const DeliveryMethodSection = ({
                       onChange={(value) => onBranchChange(option.id, value)}
                       placeholder="Select the appropriate branch"
                       styleVariant="subtleBorder"
+                      error={Boolean(errors?.branchByMethod?.[option.id])}
                     />
                     <Button
                       maxWidth="233px"

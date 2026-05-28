@@ -166,9 +166,9 @@ const mapRecentOrders = (items: AdminDashboardRecentOrder[]): IAdminPanelOrderIt
 const mapLowStock = (items: AdminDashboardLowStockProduct[]): IAdminPanelLowStockItem[] =>
   items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
     id: String(item.id),
-    title: `${item.name} (${item.sku})`,
+    title: `${item.name}`,
     left: item.stock,
-    threshold: 5,
+    threshold: 10,
   }));
 
 export const useAdminPanelData = () => {

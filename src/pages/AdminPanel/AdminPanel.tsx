@@ -4,14 +4,17 @@ import { Container, Typography } from '@mui/material';
 import {
   AdminCustomersTab,
   AdminDashboardTab,
+  AdminProductModal,
   AdminOrdersTab,
   AdminPanelSidebar,
   AdminProductsTab,
 } from '@/components';
+import { ADMIN_PRODUCT_FIELD_TOOLTIPS } from '@/core/constants';
 import {
   useAdminCustomersData,
   useAdminOrdersData,
   useAdminPanelData,
+  useAdminProductModal,
   useAdminProductManagementData,
 } from '@/core/hooks';
 import type { AdminPanelTab } from '@/core/types';
@@ -42,6 +45,7 @@ export const AdminPanel = () => {
     onStatusChange,
     refreshProducts,
   } = useAdminProductManagementData();
+  const dashboardProductModal = useAdminProductModal({ onRefreshProducts: refreshProducts });
   const {
     kpis: ordersKpis,
     orders,
@@ -87,6 +91,7 @@ export const AdminPanel = () => {
                 recentOrders={recentOrders}
                 lowStock={lowStock}
                 onTabChange={setActiveTab}
+                onAddProduct={dashboardProductModal.openAddModal}
               />
             )}
             {isProductTab && (
@@ -130,6 +135,22 @@ export const AdminPanel = () => {
           </div>
         </div>
       </Container>
+
+      <AdminProductModal
+        isOpen={dashboardProductModal.isProductModalOpen}
+        title="Add a new product"
+        submitLabel="Save"
+        values={dashboardProductModal.draftProduct}
+        imageName={dashboardProductModal.imageName}
+        uploadLabel="Upload an image"
+        editDescriptionLabel="Description"
+        fieldErrors={dashboardProductModal.fieldErrors}
+        fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
+        onClose={dashboardProductModal.closeProductModal}
+        onSave={() => void dashboardProductModal.saveProductModal()}
+        onValueChange={dashboardProductModal.handleDraftChange}
+        onImageChange={dashboardProductModal.handleImageChange}
+      />
     </section>
   );
 };

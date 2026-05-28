@@ -29,6 +29,14 @@ export type CourierAddressForm = {
 
 export type BranchSelectionMap = Record<DeliveryMethod, string>;
 export type DeliveryBranchesMap = Record<DeliveryMethod, ISelectOption[]>;
+export type DeliveryCheckoutErrors = {
+  recipient?: Partial<Record<keyof RecipientForm, string>>;
+  delivery?: {
+    branchByMethod?: Partial<Record<DeliveryMethod, string>>;
+    courierAddress?: Partial<Record<keyof CourierAddressForm, string>>;
+  };
+  cart?: string;
+};
 
 export type DeliveryCheckoutForm = {
   recipient: RecipientForm;

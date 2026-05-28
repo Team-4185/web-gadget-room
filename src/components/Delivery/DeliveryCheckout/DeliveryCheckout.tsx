@@ -20,6 +20,7 @@ import { cartService, ordersService } from '@/core/services';
 import {
   cartStorage,
   createOrderPayloadFromCheckout,
+  getDeliveryCheckoutValidationMessage,
   toErrorMessage,
   validateDeliveryCheckout,
 } from '@/core/utils';
@@ -27,6 +28,7 @@ import type {
   CheckoutPaymentMethod,
   CourierAddressForm,
   DeliveryCheckoutForm,
+  DeliveryCheckoutErrors,
   DeliveryMethod,
   OnlinePaymentType,
   RecipientForm,
@@ -36,6 +38,7 @@ import './DeliveryCheckout.css';
 
 export const DeliveryCheckout = () => {
   const [form, setForm] = useState<DeliveryCheckoutForm>(INITIAL_DELIVERY_CHECKOUT_FORM);
+  const [validationErrors, setValidationErrors] = useState<DeliveryCheckoutErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cartProducts = useAppSelector((state) => state.cart.cart);
   const dispatch = useAppDispatch();
@@ -49,6 +52,7 @@ export const DeliveryCheckout = () => {
   }));
 
   const handleRecipientChange = (field: keyof RecipientForm, value: string) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       recipient: {
@@ -59,6 +63,7 @@ export const DeliveryCheckout = () => {
   };
 
   const handleDeliveryMethodChange = (method: DeliveryMethod) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       delivery: {
@@ -69,6 +74,7 @@ export const DeliveryCheckout = () => {
   };
 
   const handleBranchChange = (method: DeliveryMethod, branch: string) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       delivery: {
@@ -82,6 +88,7 @@ export const DeliveryCheckout = () => {
   };
 
   const handleCourierAddressChange = (field: keyof CourierAddressForm, value: string) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       delivery: {
@@ -95,6 +102,7 @@ export const DeliveryCheckout = () => {
   };
 
   const handlePaymentMethodChange = (method: CheckoutPaymentMethod) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       payment: {
@@ -105,6 +113,7 @@ export const DeliveryCheckout = () => {
   };
 
   const handleOnlinePaymentChange = (onlinePayment: OnlinePaymentType) => {
+    setValidationErrors({});
     setForm((prev) => ({
       ...prev,
       payment: {
@@ -115,9 +124,11 @@ export const DeliveryCheckout = () => {
   };
 
   const handlePlaceOrder = async () => {
-    const validationError = validateDeliveryCheckout(form, cartItems);
+    const nextValidationErrors = validateDeliveryCheckout(form, cartItems);
+    const validationError = getDeliveryCheckoutValidationMessage(nextValidationErrors);
 
     if (validationError) {
+      setValidationErrors(nextValidationErrors);
       enqueueSnackbar(validationError, { variant: 'error' });
       return;
     }
@@ -125,7 +136,9 @@ export const DeliveryCheckout = () => {
     setIsSubmitting(true);
 
     try {
-      const order = await ordersService.createOrder(createOrderPayloadFromCheckout(form, cartItems));
+      const order = await ordersService.createOrder(
+        createOrderPayloadFromCheckout(form, cartItems)
+      );
 
       await cartService.clearCart();
       cartStorage.clear();
@@ -146,13 +159,18 @@ export const DeliveryCheckout = () => {
           Delivery
         </Typography>
 
-        <RecipientSection recipient={form.recipient} onRecipientChange={handleRecipientChange} />
+        <RecipientSection
+          recipient={form.recipient}
+          errors={validationErrors.recipient}
+          onRecipientChange={handleRecipientChange}
+        />
 
         <DeliveryMethodSection
           deliveryMethod={form.delivery.method}
           onDeliveryMethodChange={handleDeliveryMethodChange}
           options={DELIVERY_OPTIONS}
           branchByMethod={form.delivery.branchByMethod}
+          errors={validationErrors.delivery}
           onBranchChange={handleBranchChange}
           branchesByMethod={DELIVERY_BRANCHES_BY_METHOD}
           courierAddress={form.delivery.courierAddress}
