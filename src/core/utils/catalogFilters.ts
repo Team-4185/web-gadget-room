@@ -2,8 +2,22 @@ import type { CatalogApiSort, ICheckboxOption, IProduct, SortOption } from '@/co
 
 import { CATALOG_PAGE_SIZE } from '@/core/constants';
 
-export const getCatalogApiSort = (sortBy: SortOption): CatalogApiSort =>
-  sortBy;
+export const getCatalogApiSort = (sortBy: SortOption): CatalogApiSort => sortBy;
+
+export const buildCatalogBrandOptions = (brands: string[]): ICheckboxOption[] =>
+  brands
+    .map((brand) => brand.trim())
+    .filter(Boolean)
+    .map((brand) => ({
+      value: brand,
+      label: brand,
+    }));
+
+export const buildCatalogActiveItems = (brandOptions: ICheckboxOption[]) =>
+  brandOptions.reduce<Record<string, boolean>>((acc, item) => {
+    acc[item.value] = false;
+    return acc;
+  }, {});
 
 export const getSelectedCatalogBrands = (
   activeItems: Record<string, boolean>,

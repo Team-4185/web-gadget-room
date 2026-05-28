@@ -1,14 +1,26 @@
 import { api } from '@/core/config';
 import type { AdminProductStatus } from '@/core/types';
 
-type DashboardOrderStatus = 'NEW' | 'CONFIRMED' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+type DashboardOrderStatus =
+  | 'NEW'
+  | 'CONFIRMED'
+  | 'PROCESSING'
+  | 'SHIPPED'
+  | 'DELIVERED'
+  | 'CANCELLED';
 type DashboardPaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
 
 export type AdminDashboardSummary = {
   totalRevenue: number;
+  totalRevenueChangePercent: number | null;
   totalOrders: number;
-  totalCustomers: number;
+  totalOrdersChangePercent: number | null;
+  processingOrders: number;
+  itemsInStock: number;
+  itemsInStockChangePercent: number | null;
   lowStockProducts: number;
+  newClients: number;
+  newClientsChangePercent: number | null;
 };
 
 export type AdminDashboardSalesPoint = {

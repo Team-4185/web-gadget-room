@@ -39,6 +39,17 @@ const formatCurrency = (value: number) =>
     maximumFractionDigits: 2,
   })}`;
 
+const formatNumber = (value: number) => value.toLocaleString('en-US');
+
+const formatTrend = (value: number | null) => {
+  if (value === null) return '0%';
+
+  const prefix = value > 0 ? '+' : '';
+  return `${prefix}${value}%`;
+};
+
+const isPositiveTrend = (value: number | null) => value === null || value >= 0;
+
 const mapApiStatusToFrontendStatus = (status: string): AdminOrderStatus => {
   switch (status) {
     case 'NEW':
@@ -78,35 +89,35 @@ const mapSummaryToStats = (summary: AdminDashboardSummary): IAdminPanelStatItem[
     title: 'Total revenue',
     value: formatCurrency(summary.totalRevenue),
     subtitle: 'Over the last 30 days',
-    trend: '+18.2%',
-    isPositive: true,
+    trend: formatTrend(summary.totalRevenueChangePercent),
+    isPositive: isPositiveTrend(summary.totalRevenueChangePercent),
     icon: Dollar,
   },
   {
     id: 'orders',
     title: 'Total orders',
-    value: String(summary.totalOrders),
-    subtitle: '124 in processing',
-    trend: '+12.5%',
-    isPositive: true,
+    value: formatNumber(summary.totalOrders),
+    subtitle: `${formatNumber(summary.processingOrders)} in processing`,
+    trend: formatTrend(summary.totalOrdersChangePercent),
+    isPositive: isPositiveTrend(summary.totalOrdersChangePercent),
     icon: Order,
   },
   {
     id: 'stock',
     title: 'Items in stock',
-    value: String(summary.lowStockProducts),
-    subtitle: '12 running low',
-    trend: '-3.1%',
-    isPositive: false,
+    value: formatNumber(summary.itemsInStock),
+    subtitle: `${formatNumber(summary.lowStockProducts)} running low`,
+    trend: formatTrend(summary.itemsInStockChangePercent),
+    isPositive: isPositiveTrend(summary.itemsInStockChangePercent),
     icon: Product,
   },
   {
     id: 'clients',
     title: 'New clients',
-    value: String(summary.totalCustomers),
+    value: formatNumber(summary.newClients),
     subtitle: 'This month',
-    trend: '+24.8%',
-    isPositive: true,
+    trend: formatTrend(summary.newClientsChangePercent),
+    isPositive: isPositiveTrend(summary.newClientsChangePercent),
     icon: Customers,
   },
 ];

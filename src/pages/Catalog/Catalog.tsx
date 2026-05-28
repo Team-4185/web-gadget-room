@@ -1,15 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Container } from '@mui/material';
+import axios from 'axios';
 
 import { CatalogContent, CatalogFilters } from '@/components';
 import { BRANDS } from '@/core/constants';
+import { phonesService } from '@/core/services';
 import { useCatalogProducts, useCatalogState } from '@/core/hooks';
-import { getCatalogApiSort, getSelectedCatalogBrands } from '@/core/utils';
+import {
+  buildCatalogBrandOptions,
+  getCatalogApiSort,
+  getSelectedCatalogBrands,
+} from '@/core/utils';
 
 import './Catalog.css';
 
 export const Catalog = () => {
   const [contentScrollTrigger, setContentScrollTrigger] = useState(0);
+  const [brandOptions, setBrandOptions] = useState(BRANDS);
   const {
     sortBy,
     activeItems,
@@ -23,10 +30,10 @@ export const Catalog = () => {
     resetFilters,
     currentPage,
     setCurrentPage,
-  } = useCatalogState();
+  } = useCatalogState(brandOptions);
   const selectedBrands = useMemo(
-    () => getSelectedCatalogBrands(appliedActiveItems, BRANDS),
-    [appliedActiveItems]
+    () => getSelectedCatalogBrands(appliedActiveItems, brandOptions),
+    [appliedActiveItems, brandOptions]
   );
   const apiSort = useMemo(() => getCatalogApiSort(sortBy), [sortBy]);
   const { products, totalPages, isLoading } = useCatalogProducts({
@@ -36,6 +43,27 @@ export const Catalog = () => {
     sort: apiSort,
     maxPrice: appliedSliderValue,
   });
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadBrands = async () => {
+      try {
+        const brands = await phonesService.getBrands(controller.signal);
+        const nextBrandOptions = buildCatalogBrandOptions(brands);
+
+        if (nextBrandOptions.length) {
+          setBrandOptions(nextBrandOptions);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
+      }
+    };
+
+    loadBrands();
+
+    return () => controller.abort();
+  }, []);
 
   const handleApplyFilters = () => {
     applyFilters();
@@ -52,7 +80,7 @@ export const Catalog = () => {
       <Container disableGutters>
         <div className="catalog__layout">
           <CatalogFilters
-            brandOptions={BRANDS}
+            brandOptions={brandOptions}
             activeItems={activeItems}
             onToggle={toggleItems}
             sliderValue={sliderValue}
