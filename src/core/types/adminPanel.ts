@@ -32,6 +32,7 @@ export interface IAdminPanelBrandItem {
 export interface IAdminPanelProductItem {
   id: string;
   title: string;
+  brand?: string;
   sales: string;
   trend: string;
   stock: string;

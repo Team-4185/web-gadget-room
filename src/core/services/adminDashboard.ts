@@ -1,5 +1,5 @@
 import { api } from '@/core/config';
-import type { AdminProductStatus } from '@/core/types';
+import type { AdminProductStatus, ApiPhoneImage } from '@/core/types';
 
 type DashboardOrderStatus =
   | 'NEW'
@@ -41,11 +41,13 @@ export type AdminDashboardTopProduct = {
   phoneId: number;
   name: string;
   sku: string;
+  brand: string;
   unitsSold: number;
   revenue: number;
   stock: number;
   status: AdminProductStatus;
   growthPercent: number | null;
+  previewImage: ApiPhoneImage | null;
 };
 
 export type AdminDashboardRecentOrder = {

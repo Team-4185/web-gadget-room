@@ -13,6 +13,7 @@ import {
 import { Customers, Dollar, Order, Product } from '@/assets';
 import {
   adminDashboardService,
+  phonesService,
   type AdminDashboardBrandSale,
   type AdminDashboardLowStockProduct,
   type AdminDashboardRecentOrder,
@@ -40,6 +41,17 @@ const formatCurrency = (value: number) =>
   })}`;
 
 const formatNumber = (value: number) => value.toLocaleString('en-US');
+
+const formatProductName = (brand: string, name: string) => {
+  const normalizedBrand = brand.trim();
+  const normalizedName = name.trim();
+
+  if (!normalizedBrand) return normalizedName;
+
+  return normalizedName.toLowerCase().startsWith(normalizedBrand.toLowerCase())
+    ? normalizedName
+    : `${normalizedBrand} ${normalizedName}`;
+};
 
 const formatTrend = (value: number | null) => {
   if (value === null) return '0%';
@@ -142,16 +154,28 @@ const mapBrandSales = (items: AdminDashboardBrandSale[]): IAdminPanelBrandItem[]
   }));
 };
 
-const mapTopProducts = (items: AdminDashboardTopProduct[]): IAdminPanelProductItem[] =>
-  items.map((item) => ({
+const mapTopProducts = async (
+  items: AdminDashboardTopProduct[],
+  signal?: AbortSignal
+): Promise<IAdminPanelProductItem[]> => {
+  const imageResults = await Promise.allSettled(
+    items.map((item) =>
+      item.previewImage?.url
+        ? phonesService.getImageObjectUrl(item.previewImage.url, signal)
+        : Promise.resolve(FALLBACK_IMAGE)
+    )
+  );
+
+  return items.map((item, index) => ({
     id: String(item.phoneId),
-    title: item.name,
+    title: formatProductName(item.brand, item.name),
     sales: `${formatNumber(item.unitsSold)} sales - $${formatNumber(item.revenue)}`,
     trend: formatTrend(item.growthPercent),
     stock: `${formatNumber(item.stock)} pcs`,
     statusLabel: ADMIN_PRODUCT_STATUS_LABELS[item.status],
-    image: FALLBACK_IMAGE,
+    image: imageResults[index]?.status === 'fulfilled' ? imageResults[index].value : FALLBACK_IMAGE,
   }));
+};
 
 const mapRecentOrders = (items: AdminDashboardRecentOrder[]): IAdminPanelOrderItem[] =>
   items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
@@ -207,7 +231,7 @@ export const useAdminPanelData = () => {
       }
 
       if (topSellingProducts.status === 'fulfilled') {
-        setTopProducts(mapTopProducts(topSellingProducts.value));
+        setTopProducts(await mapTopProducts(topSellingProducts.value, controller.signal));
       }
 
       if (latestOrders.status === 'fulfilled') {
