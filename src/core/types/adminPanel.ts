@@ -45,6 +45,7 @@ export type AdminProductStatus = PhoneStockStatus;
 export interface IAdminPanelManagedProduct {
   id: string;
   title: string;
+  modelName?: string;
   sku: string;
   brand: string;
   price: string;

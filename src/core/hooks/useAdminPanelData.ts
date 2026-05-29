@@ -30,6 +30,7 @@ import type {
   IAdminPanelStatItem,
 } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
+import { formatProductDisplayName } from '@/core/utils';
 
 const BRAND_COLORS = ['#4285f4', '#8a3ffc', '#d930b9', '#eaa60f', '#5f6b83'];
 const DASHBOARD_SIDE_LIST_LIMIT = 3;
@@ -41,17 +42,6 @@ const formatCurrency = (value: number) =>
   })}`;
 
 const formatNumber = (value: number) => value.toLocaleString('en-US');
-
-const formatProductName = (brand: string, name: string) => {
-  const normalizedBrand = brand.trim();
-  const normalizedName = name.trim();
-
-  if (!normalizedBrand) return normalizedName;
-
-  return normalizedName.toLowerCase().startsWith(normalizedBrand.toLowerCase())
-    ? normalizedName
-    : `${normalizedBrand} ${normalizedName}`;
-};
 
 const formatTrend = (value: number | null) => {
   if (value === null) return '0%';
@@ -168,7 +158,7 @@ const mapTopProducts = async (
 
   return items.map((item, index) => ({
     id: String(item.phoneId),
-    title: formatProductName(item.brand, item.name),
+    title: formatProductDisplayName(item.brand, item.name),
     sales: `${formatNumber(item.unitsSold)} sales - $${formatNumber(item.revenue)}`,
     trend: formatTrend(item.growthPercent),
     stock: `${formatNumber(item.stock)} pcs`,
@@ -190,7 +180,7 @@ const mapRecentOrders = (items: AdminDashboardRecentOrder[]): IAdminPanelOrderIt
 const mapLowStock = (items: AdminDashboardLowStockProduct[]): IAdminPanelLowStockItem[] =>
   items.slice(0, DASHBOARD_SIDE_LIST_LIMIT).map((item) => ({
     id: String(item.id),
-    title: `${item.name}`,
+    title: formatProductDisplayName(item.brand, item.name),
     left: item.stock,
     threshold: 10,
   }));
