@@ -60,7 +60,20 @@ export const AdminPanel = () => {
     goToPreviousPage: goToPreviousOrdersPage,
     goToNextPage: goToNextOrdersPage,
   } = useAdminOrdersData();
-  const { kpis: customersKpis, customers } = useAdminCustomersData();
+  const {
+    kpis: customersKpis,
+    customers,
+    totalCustomers,
+    currentPage: customersCurrentPage,
+    totalPages: customersTotalPages,
+    isFirstPage: isCustomersFirstPage,
+    isLastPage: isCustomersLastPage,
+    isLoadingCustomers,
+    searchQuery: customersSearchQuery,
+    onSearchChange: onCustomersSearchChange,
+    goToPreviousCustomerPage,
+    goToNextCustomerPage,
+  } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
   const isProductTab = activeTab === 'product';
@@ -131,7 +144,22 @@ export const AdminPanel = () => {
                 onNextPage={goToNextOrdersPage}
               />
             )}
-            {isCustomersTab && <AdminCustomersTab kpis={customersKpis} customers={customers} />}
+            {isCustomersTab && (
+              <AdminCustomersTab
+                kpis={customersKpis}
+                customers={customers}
+                searchQuery={customersSearchQuery}
+                currentPage={customersCurrentPage}
+                totalCustomers={totalCustomers}
+                totalPages={customersTotalPages}
+                isFirstPage={isCustomersFirstPage}
+                isLastPage={isCustomersLastPage}
+                isLoadingCustomers={isLoadingCustomers}
+                onSearchChange={onCustomersSearchChange}
+                onPreviousPage={goToPreviousCustomerPage}
+                onNextPage={goToNextCustomerPage}
+              />
+            )}
           </div>
         </div>
       </Container>
