@@ -109,6 +109,30 @@ export interface IAdminCustomerKpiItem {
 
 export type AdminCustomerStatus = 'inactive' | 'active' | 'new';
 
+export type ApiAdminCustomerStatus = 'ACTIVE' | 'INACTIVE' | 'NEW';
+
+export type ApiAdminCustomerKpi = {
+  totalClients: number;
+  newCustomersThisMonth: number;
+  inactiveCustomers: number;
+  averageReceipt: number;
+};
+
+export type ApiAdminCustomer = {
+  id: number;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  phoneNumber: string | null;
+  city: string | null;
+  status: ApiAdminCustomerStatus;
+  totalOrders: number;
+  totalSpent: number;
+  lastOrderAt: string | null;
+  createdAt: string;
+  updatedAt: string | null;
+};
+
 export interface IAdminCustomerItem {
   id: string;
   name: string;
