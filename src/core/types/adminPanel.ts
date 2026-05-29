@@ -12,6 +12,12 @@ export interface IAdminPanelMenuItem {
   badge?: number;
 }
 
+export type ApiAdminSidebarCounters = {
+  productsCount: number;
+  ordersCount: number;
+  customersCount: number;
+};
+
 export interface IAdminPanelStatItem {
   id: string;
   title: string;

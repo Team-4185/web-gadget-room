@@ -13,5 +13,6 @@ export type {
 export { adminProductsService } from './adminProducts';
 export { adminOrdersService } from './adminOrders';
 export type { ApiAdminOrder, ApiAdminOrdersKpi, AdminOrdersPage } from './adminOrders';
+export { adminNavigationService } from './adminNavigation';
 export { ordersService } from './orders';
 export { usersService } from './users';

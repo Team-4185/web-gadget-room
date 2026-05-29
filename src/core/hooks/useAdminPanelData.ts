@@ -13,6 +13,7 @@ import {
 import { Customers, Dollar, Order, Product } from '@/assets';
 import {
   adminDashboardService,
+  adminNavigationService,
   phonesService,
   type AdminDashboardBrandSale,
   type AdminDashboardLowStockProduct,
@@ -23,8 +24,10 @@ import {
 import { useAppSelector } from '@/core/store';
 import type {
   AdminOrderStatus,
+  ApiAdminSidebarCounters,
   IAdminPanelBrandItem,
   IAdminPanelLowStockItem,
+  IAdminPanelMenuItem,
   IAdminPanelOrderItem,
   IAdminPanelProductItem,
   IAdminPanelStatItem,
@@ -185,8 +188,17 @@ const mapLowStock = (items: AdminDashboardLowStockProduct[]): IAdminPanelLowStoc
     threshold: 10,
   }));
 
+const mapSidebarCountersToMenu = (counters: ApiAdminSidebarCounters): IAdminPanelMenuItem[] =>
+  ADMIN_PANEL_MENU.map((item) => {
+    if (item.id === 'product') return { ...item, badge: counters.productsCount };
+    if (item.id === 'orders') return { ...item, badge: counters.ordersCount };
+    if (item.id === 'customers') return { ...item, badge: counters.customersCount };
+    return item;
+  });
+
 export const useAdminPanelData = () => {
   const email = useAppSelector((state) => state.auth.email);
+  const [menu, setMenu] = useState<IAdminPanelMenuItem[]>(ADMIN_PANEL_MENU);
   const [stats, setStats] = useState<IAdminPanelStatItem[]>(ADMIN_PANEL_STATS);
   const [brands, setBrands] = useState<IAdminPanelBrandItem[]>(ADMIN_PANEL_BRANDS);
   const [topProducts, setTopProducts] = useState<IAdminPanelProductItem[]>(ADMIN_PANEL_PRODUCTS);
@@ -201,13 +213,14 @@ export const useAdminPanelData = () => {
     const controller = new AbortController();
 
     const loadDashboard = async () => {
-      const [summary, brandSales, topSellingProducts, latestOrders, stockAlerts] =
+      const [summary, brandSales, topSellingProducts, latestOrders, stockAlerts, sidebarCounters] =
         await Promise.allSettled([
           adminDashboardService.getSummary(controller.signal),
           adminDashboardService.getSalesByBrand(controller.signal),
           adminDashboardService.getTopSellingProducts(controller.signal),
           adminDashboardService.getRecentOrders(controller.signal),
           adminDashboardService.getLowStockAlerts(controller.signal),
+          adminNavigationService.getSidebarCounters(controller.signal),
         ]);
 
       if (controller.signal.aborted) return;
@@ -231,6 +244,10 @@ export const useAdminPanelData = () => {
       if (stockAlerts.status === 'fulfilled') {
         setLowStock(mapLowStock(stockAlerts.value));
       }
+
+      if (sidebarCounters.status === 'fulfilled') {
+        setMenu(mapSidebarCountersToMenu(sidebarCounters.value));
+      }
     };
 
     loadDashboard().catch((error) => {
@@ -244,12 +261,12 @@ export const useAdminPanelData = () => {
     return {
       greeting: `Welcome, Team!`,
       subtitle: "Here's what's happening in your store today",
-      menu: ADMIN_PANEL_MENU,
+      menu,
       stats,
       brands,
       topProducts,
       recentOrders,
       lowStock,
     };
-  }, [brands, email, lowStock, recentOrders, stats, topProducts]);
+  }, [brands, email, lowStock, menu, recentOrders, stats, topProducts]);
 };
