@@ -41,6 +41,10 @@ export const phonesService = {
     const { data } = await api.get<ApiPhone[]>('/api/v1/phones', { signal });
     return data;
   },
+  async getBrands(signal?: AbortSignal) {
+    const { data } = await api.get<string[]>('/api/v1/phones/brands', { signal });
+    return data;
+  },
   async getCatalog(params: CatalogProductsRequestParams, signal?: AbortSignal) {
     const { data } = await api.get<ApiCatalogProductsPage>('/api/v1/filter/by', {
       params: {

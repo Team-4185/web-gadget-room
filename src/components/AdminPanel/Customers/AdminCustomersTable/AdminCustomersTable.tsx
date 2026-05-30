@@ -1,4 +1,4 @@
-import { useMemo, useState, type FC } from 'react';
+import { type FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { IAdminCustomerItem } from '@/core/types';
@@ -8,10 +8,18 @@ import { Trash, MailOutlined, PhoneOutlined } from '@/assets';
 
 import './AdminCustomersTable.css';
 
-const ADMIN_CUSTOMERS_PAGE_SIZE = 10;
-
 interface IProps {
   customers: IAdminCustomerItem[];
+  searchQuery: string;
+  currentPage: number;
+  totalCustomers: number;
+  totalPages: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  isLoading?: boolean;
+  onSearchChange: (value: string) => void;
+  onPreviousPage: () => void;
+  onNextPage: () => void;
 }
 
 const STATUS_LABELS = {
@@ -20,33 +28,19 @@ const STATUS_LABELS = {
   new: 'New',
 } as const;
 
-export const AdminCustomersTable: FC<IProps> = ({ customers }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const filteredCustomers = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) return customers;
-
-    return customers.filter(
-      (customer) =>
-        customer.name.toLowerCase().includes(query) ||
-        customer.email.toLowerCase().includes(query) ||
-        customer.phone.toLowerCase().includes(query)
-    );
-  }, [customers, searchQuery]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredCustomers.length / ADMIN_CUSTOMERS_PAGE_SIZE));
-  const paginatedCustomers = useMemo(() => {
-    const startIndex = (currentPage - 1) * ADMIN_CUSTOMERS_PAGE_SIZE;
-    return filteredCustomers.slice(startIndex, startIndex + ADMIN_CUSTOMERS_PAGE_SIZE);
-  }, [currentPage, filteredCustomers]);
-
-  const changeSearchQuery = (value: string) => {
-    setSearchQuery(value);
-    setCurrentPage(1);
-  };
-
+export const AdminCustomersTable: FC<IProps> = ({
+  customers,
+  searchQuery,
+  currentPage,
+  totalCustomers,
+  totalPages,
+  isFirstPage,
+  isLastPage,
+  isLoading = false,
+  onSearchChange,
+  onPreviousPage,
+  onNextPage,
+}) => {
   return (
     <section className="admin-customers-table" aria-label="Customers base">
       <div className="admin-customers-table__header">
@@ -62,7 +56,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers }) => {
         className="admin-customers-table__search"
         ariaLabel="Search customers"
         value={searchQuery}
-        onChange={changeSearchQuery}
+        onChange={onSearchChange}
         placeholder="Search by name, email, number..."
       />
 
@@ -80,7 +74,7 @@ export const AdminCustomersTable: FC<IProps> = ({ customers }) => {
             </tr>
           </thead>
           <tbody>
-            {paginatedCustomers.map((customer) => (
+            {customers.map((customer) => (
               <tr key={customer.id}>
                 <td className="is-strong">{customer.name}</td>
                 <td>
@@ -120,14 +114,15 @@ export const AdminCustomersTable: FC<IProps> = ({ customers }) => {
       </div>
 
       <AdminPagination
-        totalItems={filteredCustomers.length}
+        totalItems={totalCustomers}
         itemLabel="customers"
         currentPage={currentPage}
         totalPages={totalPages}
-        isFirstPage={currentPage === 1}
-        isLastPage={currentPage === totalPages}
-        onPreviousPage={() => setCurrentPage((page) => Math.max(1, page - 1))}
-        onNextPage={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+        isFirstPage={isFirstPage}
+        isLastPage={isLastPage}
+        isLoading={isLoading}
+        onPreviousPage={onPreviousPage}
+        onNextPage={onNextPage}
       />
     </section>
   );

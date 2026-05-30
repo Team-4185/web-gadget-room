@@ -2,13 +2,34 @@ import { api } from '@/core/config';
 import type {
   AdminOrderAction,
   AdminOrdersRequestParams,
+  ApiAdminOrderStatus,
   ApiAdminPaymentStatus,
-  OrderResponse,
+  OrderDeliveryMethod,
+  OrderPaymentMethod,
 } from '@/core/types';
 
-export type ApiAdminOrder = OrderResponse & {
+export type ApiAdminOrder = {
+  id: number;
+  customerId?: number;
+  customerEmail: string;
+  customerFirstName?: string;
+  customerLastName?: string;
+  customerPhoneNumber?: string;
   customerCity?: string | null;
-  paymentStatus?: ApiAdminPaymentStatus;
+  status: ApiAdminOrderStatus;
+  paymentMethod: OrderPaymentMethod;
+  paymentStatus: ApiAdminPaymentStatus;
+  deliveryMethod: OrderDeliveryMethod;
+  total: number;
+  itemsCount?: number;
+  createdAt: string;
+  updatedAt: string | null;
+  items?: {
+    id: number;
+    productName?: string;
+    quantity: number;
+    totalPrice: number;
+  }[];
   availableActions?: AdminOrderAction[];
 };
 
@@ -39,6 +60,13 @@ export type AdminOrdersPage = {
   empty: boolean;
 };
 
+export type ApiAdminOrdersKpi = {
+  confirmed: number;
+  processing: number;
+  delivered: number;
+  cancelled: number;
+};
+
 const normalizeAdminOrdersPage = (
   data: RawAdminOrdersPage,
   fallbackPage: number,
@@ -62,6 +90,10 @@ const normalizeAdminOrdersPage = (
 };
 
 export const adminOrdersService = {
+  async getKpis(signal?: AbortSignal) {
+    const { data } = await api.get<ApiAdminOrdersKpi>('/api/v1/admin/orders/kpi', { signal });
+    return data;
+  },
   async getOrders(params: AdminOrdersRequestParams, signal?: AbortSignal) {
     const { data } = await api.get<RawAdminOrdersPage>('/api/v1/admin/orders', {
       params,

@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
 import type { ApiPhoneImage, PhoneStockStatus } from './product';
+import type { OrderDeliveryMethod, OrderPaymentMethod } from './order';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
 
@@ -10,6 +11,12 @@ export interface IAdminPanelMenuItem {
   icon: ComponentType<SvgIconProps>;
   badge?: number;
 }
+
+export type ApiAdminSidebarCounters = {
+  productsCount: number;
+  ordersCount: number;
+  customersCount: number;
+};
 
 export interface IAdminPanelStatItem {
   id: string;
@@ -31,9 +38,11 @@ export interface IAdminPanelBrandItem {
 export interface IAdminPanelProductItem {
   id: string;
   title: string;
+  brand?: string;
   sales: string;
   trend: string;
   stock: string;
+  statusLabel: string;
   image: string;
 }
 
@@ -42,6 +51,7 @@ export type AdminProductStatus = PhoneStockStatus;
 export interface IAdminPanelManagedProduct {
   id: string;
   title: string;
+  modelName?: string;
   sku: string;
   brand: string;
   price: string;
@@ -78,9 +88,9 @@ export interface IAdminPanelOrderItem {
   id: string;
   orderNumber: string;
   customer: string;
-  product: string;
+  email: string;
   age: string;
-  status: 'confirmed' | 'processing' | 'delivered' | 'cancelled';
+  status: AdminOrderStatus;
 }
 
 export interface IAdminPanelLowStockItem {
@@ -98,6 +108,30 @@ export interface IAdminCustomerKpiItem {
 }
 
 export type AdminCustomerStatus = 'inactive' | 'active' | 'new';
+
+export type ApiAdminCustomerStatus = 'ACTIVE' | 'INACTIVE' | 'NEW';
+
+export type ApiAdminCustomerKpi = {
+  totalClients: number;
+  newCustomersThisMonth: number;
+  inactiveCustomers: number;
+  averageReceipt: number;
+};
+
+export type ApiAdminCustomer = {
+  id: number;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  phoneNumber: string | null;
+  city: string | null;
+  status: ApiAdminCustomerStatus;
+  totalOrders: number;
+  totalSpent: number;
+  lastOrderAt: string | null;
+  createdAt: string;
+  updatedAt: string | null;
+};
 
 export interface IAdminCustomerItem {
   id: string;
@@ -117,7 +151,13 @@ export interface IAdminOrderKpiItem {
   icon: ComponentType<SvgIconProps>;
 }
 
-export type AdminOrderStatus = 'processing' | 'confirmed' | 'delivered' | 'cancelled';
+export type AdminOrderStatus =
+  | 'new'
+  | 'confirmed'
+  | 'processing'
+  | 'shipped'
+  | 'delivered'
+  | 'cancelled';
 export type ApiAdminOrderStatus =
   | 'NEW'
   | 'CONFIRMED'
@@ -146,9 +186,10 @@ export interface IAdminManagedOrderItem {
   orderNumber: string;
   customer: string;
   email: string;
-  product: string;
-  quantity: number;
-  amount: string;
+  paymentMethod: OrderPaymentMethod;
+  paymentStatus: ApiAdminPaymentStatus;
+  deliveryMethod: OrderDeliveryMethod;
+  itemsCount: number;
   date: string;
   time: string;
   status: AdminOrderStatus;

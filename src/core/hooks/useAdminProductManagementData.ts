@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
 import { ADMIN_PANEL_MANAGED_PRODUCTS } from '@/core/constants';
-import { adminProductsService } from '@/core/services';
+import { adminProductsService, phonesService } from '@/core/services';
 import type { AdminProductStatus } from '@/core/types';
 import { useAdminPanelData } from './useAdminPanelData';
 
@@ -13,11 +13,7 @@ const getFallbackBrands = () =>
 
 const mergeBrands = (current: string[], next: string[]) =>
   Array.from(
-    new Set(
-      [...current, ...next]
-        .map((brand) => brand.trim())
-        .filter((brand) => brand.length > 0)
-    )
+    new Set([...current, ...next].map((brand) => brand.trim()).filter((brand) => brand.length > 0))
   ).sort((a, b) => a.localeCompare(b));
 
 export const useAdminProductManagementData = () => {
@@ -79,7 +75,7 @@ export const useAdminProductManagementData = () => {
 
     const loadBrands = async () => {
       try {
-        const brands = await adminProductsService.getAvailableBrands(controller.signal);
+        const brands = await phonesService.getBrands(controller.signal);
         const nextBrands = brands.length ? brands : getFallbackBrands();
         setAvailableBrands((prev) => mergeBrands(prev, nextBrands));
       } catch (error) {

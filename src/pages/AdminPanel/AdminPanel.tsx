@@ -4,14 +4,17 @@ import { Container, Typography } from '@mui/material';
 import {
   AdminCustomersTab,
   AdminDashboardTab,
+  AdminProductModal,
   AdminOrdersTab,
   AdminPanelSidebar,
   AdminProductsTab,
 } from '@/components';
+import { ADMIN_PRODUCT_FIELD_TOOLTIPS } from '@/core/constants';
 import {
   useAdminCustomersData,
   useAdminOrdersData,
   useAdminPanelData,
+  useAdminProductModal,
   useAdminProductManagementData,
 } from '@/core/hooks';
 import type { AdminPanelTab } from '@/core/types';
@@ -42,6 +45,7 @@ export const AdminPanel = () => {
     onStatusChange,
     refreshProducts,
   } = useAdminProductManagementData();
+  const dashboardProductModal = useAdminProductModal({ onRefreshProducts: refreshProducts });
   const {
     kpis: ordersKpis,
     orders,
@@ -56,7 +60,20 @@ export const AdminPanel = () => {
     goToPreviousPage: goToPreviousOrdersPage,
     goToNextPage: goToNextOrdersPage,
   } = useAdminOrdersData();
-  const { kpis: customersKpis, customers } = useAdminCustomersData();
+  const {
+    kpis: customersKpis,
+    customers,
+    totalCustomers,
+    currentPage: customersCurrentPage,
+    totalPages: customersTotalPages,
+    isFirstPage: isCustomersFirstPage,
+    isLastPage: isCustomersLastPage,
+    isLoadingCustomers,
+    searchQuery: customersSearchQuery,
+    onSearchChange: onCustomersSearchChange,
+    goToPreviousCustomerPage,
+    goToNextCustomerPage,
+  } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
   const isProductTab = activeTab === 'product';
@@ -87,6 +104,7 @@ export const AdminPanel = () => {
                 recentOrders={recentOrders}
                 lowStock={lowStock}
                 onTabChange={setActiveTab}
+                onAddProduct={dashboardProductModal.openAddModal}
               />
             )}
             {isProductTab && (
@@ -126,10 +144,41 @@ export const AdminPanel = () => {
                 onNextPage={goToNextOrdersPage}
               />
             )}
-            {isCustomersTab && <AdminCustomersTab kpis={customersKpis} customers={customers} />}
+            {isCustomersTab && (
+              <AdminCustomersTab
+                kpis={customersKpis}
+                customers={customers}
+                searchQuery={customersSearchQuery}
+                currentPage={customersCurrentPage}
+                totalCustomers={totalCustomers}
+                totalPages={customersTotalPages}
+                isFirstPage={isCustomersFirstPage}
+                isLastPage={isCustomersLastPage}
+                isLoadingCustomers={isLoadingCustomers}
+                onSearchChange={onCustomersSearchChange}
+                onPreviousPage={goToPreviousCustomerPage}
+                onNextPage={goToNextCustomerPage}
+              />
+            )}
           </div>
         </div>
       </Container>
+
+      <AdminProductModal
+        isOpen={dashboardProductModal.isProductModalOpen}
+        title="Add a new product"
+        submitLabel="Save"
+        values={dashboardProductModal.draftProduct}
+        imageName={dashboardProductModal.imageName}
+        uploadLabel="Upload an image"
+        editDescriptionLabel="Description"
+        fieldErrors={dashboardProductModal.fieldErrors}
+        fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
+        onClose={dashboardProductModal.closeProductModal}
+        onSave={() => void dashboardProductModal.saveProductModal()}
+        onValueChange={dashboardProductModal.handleDraftChange}
+        onImageChange={dashboardProductModal.handleImageChange}
+      />
     </section>
   );
 };

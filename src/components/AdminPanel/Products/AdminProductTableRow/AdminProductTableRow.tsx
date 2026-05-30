@@ -13,39 +13,43 @@ interface IProps {
   onDelete: (product: IAdminPanelManagedProduct) => void;
 }
 
-export const AdminProductTableRow = ({ product, onView, onEdit, onDelete }: IProps) => (
-  <tr>
-    <td className="admin-product-table-row__product-cell">
-      <img src={product.image} alt={product.title} />
-      <Typography variant="subtitle2" component="span" sx={{ fontWeight: 600 }}>
-        {product.title}
-      </Typography>
-    </td>
-    <td>{product.sku}</td>
-    <td>{product.brand}</td>
-    <td className="is-strong">{product.price}</td>
-    <td className="is-strong">{product.stock}</td>
-    <td>
-      <span className={`admin-product-table-row__status is-${product.status}`}>
-        {ADMIN_PRODUCT_STATUS_LABELS[product.status]}
-      </span>
-    </td>
-    <td>
-      <div className="admin-product-table-row__actions">
-        <button type="button" aria-label={`View ${product.title}`} onClick={() => onView(product)}>
-          <Visibility />
-        </button>
-        <button type="button" aria-label={`Edit ${product.title}`} onClick={() => onEdit(product)}>
-          <Edit />
-        </button>
-        <button
-          type="button"
-          aria-label={`Delete ${product.title}`}
-          onClick={() => onDelete(product)}
-        >
-          <Trash />
-        </button>
-      </div>
-    </td>
-  </tr>
-);
+export const AdminProductTableRow = ({ product, onView, onEdit, onDelete }: IProps) => {
+  const productName = product.modelName ?? product.title;
+
+  return (
+    <tr>
+      <td className="admin-product-table-row__product-cell">
+        <img src={product.image} alt={productName} />
+        <Typography variant="subtitle2" component="span" sx={{ fontWeight: 600 }}>
+          {productName}
+        </Typography>
+      </td>
+      <td>{product.sku}</td>
+      <td>{product.brand}</td>
+      <td className="is-strong">{product.price}</td>
+      <td className="is-strong">{product.stock}</td>
+      <td>
+        <span className={`admin-product-table-row__status is-${product.status}`}>
+          {ADMIN_PRODUCT_STATUS_LABELS[product.status]}
+        </span>
+      </td>
+      <td>
+        <div className="admin-product-table-row__actions">
+          <button type="button" aria-label={`View ${productName}`} onClick={() => onView(product)}>
+            <Visibility />
+          </button>
+          <button type="button" aria-label={`Edit ${productName}`} onClick={() => onEdit(product)}>
+            <Edit />
+          </button>
+          <button
+            type="button"
+            aria-label={`Delete ${productName}`}
+            onClick={() => onDelete(product)}
+          >
+            <Trash />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+};

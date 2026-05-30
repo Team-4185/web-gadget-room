@@ -1,6 +1,17 @@
 import type { ApiPhone, BadgeType, IProduct } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
 
+export const formatProductDisplayName = (brand: string | null | undefined, name: string) => {
+  const normalizedBrand = brand?.trim() ?? '';
+  const normalizedName = name.trim();
+
+  if (!normalizedBrand) return normalizedName;
+
+  return normalizedName.toLowerCase().startsWith(normalizedBrand.toLowerCase())
+    ? normalizedName
+    : `${normalizedBrand} ${normalizedName}`;
+};
+
 const TEMP_PRODUCT_BADGES: Record<number, BadgeType> = {
   1: 'Sale',
   2: 'Hit',
@@ -12,7 +23,7 @@ const TEMP_PRODUCT_BADGES: Record<number, BadgeType> = {
 
 export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMAGE): IProduct => ({
   id: phone.id,
-  name: phone.name,
+  name: formatProductDisplayName(phone.brand, phone.name),
   price: phone.price,
   img,
   badge: phone.badge ?? TEMP_PRODUCT_BADGES[phone.id],

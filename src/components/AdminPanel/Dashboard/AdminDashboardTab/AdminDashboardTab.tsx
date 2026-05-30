@@ -24,6 +24,7 @@ import './AdminDashboardTab.css';
 interface IProps {
   brands: IAdminPanelBrandItem[];
   lowStock: IAdminPanelLowStockItem[];
+  onAddProduct?: () => void;
   onTabChange?: (tab: AdminPanelTab) => void;
   recentOrders: IAdminPanelOrderItem[];
   stats: IAdminPanelStatItem[];
@@ -33,6 +34,7 @@ interface IProps {
 export const AdminDashboardTab = ({
   brands,
   lowStock,
+  onAddProduct,
   onTabChange,
   recentOrders,
   stats,
@@ -63,6 +65,7 @@ export const AdminDashboardTab = ({
               border="none"
               borderRadius="12px"
               sx={{ fontSize: '15px', fontWeight: 500 }}
+              onClick={onAddProduct}
             >
               <div className="admin-dashboard-tab__add-product-icon" aria-hidden="true">
                 <Plus color="currentColor" />
