@@ -72,19 +72,37 @@
   line-height: 1;
 }
 
+.admin-orders-table__status.is-new,
+.admin-orders-table__status.is-confirmed {
+  background: var(--blue-violet);
+}
+
 .admin-orders-table__status.is-processing {
   background: var(--amber);
 }
 
-.admin-orders-table__status.is-confirmed {
-  background: var(--chateau-green);
+.admin-orders-table__status.is-shipped {
+  background: var(--blue);
 }
 
 .admin-orders-table__status.is-delivered {
-  background: var(--light-violet);
+  background: var(--chateau-green);
 }
 
 .admin-orders-table__status.is-cancelled {
   background: var(--red);
 }
 
+.admin-orders-table__actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.admin-orders-table__actions button {
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}

@@ -1,6 +1,8 @@
 import type {
   CreateOrderPayload,
+  CourierAddressForm,
   DeliveryCheckoutForm,
+  DeliveryCheckoutErrors,
   DeliveryMethod,
   ICartItemDto,
   ISelectOption,
@@ -13,6 +15,7 @@ import {
   MOCK_CARD_PAYMENT_DETAILS,
   UKRAINE_REGIONS,
 } from '@/core/constants';
+import { deliveryCheckoutSchema } from '@/core/schemas';
 
 const LOGISTICS_COMPANY_BY_METHOD: Record<DeliveryMethod, OrderLogisticsCompany> = {
   courier: 'NOVA_POSHTA',
@@ -78,31 +81,66 @@ export const createOrderPayloadFromCheckout = (
 export const validateDeliveryCheckout = (
   form: DeliveryCheckoutForm,
   cartItems: ICartItemDto[]
-): string | null => {
-  const requiredRecipientFields = [
-    form.recipient.firstName,
-    form.recipient.lastName,
-    form.recipient.email,
-    form.recipient.phone,
-    form.recipient.region,
-  ];
+): DeliveryCheckoutErrors => {
+  const result = deliveryCheckoutSchema.safeParse(form);
+  const errors: DeliveryCheckoutErrors = {};
 
-  if (!cartItems.length) return 'Your cart is empty.';
-  if (requiredRecipientFields.some((value) => !value.trim())) {
-    return 'Please fill in all recipient fields.';
+  if (!cartItems.length) {
+    errors.cart = 'Your cart is empty.';
+  }
+
+  if (!result.success) {
+    result.error.issues.forEach((issue) => {
+      const [section, group, field] = issue.path;
+
+      if (section === 'recipient' && typeof group === 'string') {
+        errors.recipient = {
+          ...errors.recipient,
+          [group]: issue.message,
+        };
+      }
+
+      if (section === 'delivery' && group === 'courierAddress' && typeof field === 'string') {
+        errors.delivery = {
+          ...errors.delivery,
+          courierAddress: {
+            ...errors.delivery?.courierAddress,
+            [field as keyof CourierAddressForm]: issue.message,
+          },
+        };
+      }
+    });
   }
 
   if (form.delivery.method === 'courier') {
-    const { street, houseNumber, city, country, zipCode } = form.delivery.courierAddress;
-    const requiredAddressFields = [street, houseNumber, city, country, zipCode];
-
-    if (requiredAddressFields.some((value) => !value.trim())) {
-      return 'Please fill in the courier address.';
-    }
+    return errors;
   } else {
     if (!form.delivery.branchByMethod[form.delivery.method]) {
-      return 'Please select a delivery branch.';
+      errors.delivery = {
+        ...errors.delivery,
+        branchByMethod: {
+          ...errors.delivery?.branchByMethod,
+          [form.delivery.method]: 'Please select a delivery branch.',
+        },
+      };
     }
+  }
+
+  delete errors.delivery?.courierAddress;
+
+  return errors;
+};
+
+export const getDeliveryCheckoutValidationMessage = (errors: DeliveryCheckoutErrors) => {
+  if (errors.cart) return errors.cart;
+  if (errors.recipient && Object.keys(errors.recipient).length) {
+    return 'Please fix the highlighted recipient fields.';
+  }
+  if (errors.delivery?.courierAddress && Object.keys(errors.delivery.courierAddress).length) {
+    return 'Please fix the highlighted courier address fields.';
+  }
+  if (errors.delivery?.branchByMethod && Object.keys(errors.delivery.branchByMethod).length) {
+    return 'Please select a delivery branch.';
   }
 
   return null;

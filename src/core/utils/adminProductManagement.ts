@@ -1,6 +1,7 @@
 import { api } from '@/core/config';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
+import { formatProductDisplayName } from './products';
 import type {
   AdminProductFormErrors,
   AdminProductStatus,
@@ -47,7 +48,8 @@ export const mapAdminProduct = (item: ApiAdminProduct): IAdminPanelManagedProduc
 
   return {
     id: String(item.id),
-    title: item.name,
+    title: formatProductDisplayName(item.brand, item.name),
+    modelName: item.name,
     sku: item.sku ?? `SKU-${item.id}`,
     brand: item.brand,
     price: formatAdminProductPrice(item.price),
@@ -155,7 +157,7 @@ const getIntegerValue = (value: string) => {
 export const mapAdminProductToDraft = (
   product: IAdminPanelManagedProduct
 ): IAdminProductFormState => ({
-  name: product.title,
+  name: product.modelName ?? product.title,
   sku: product.sku,
   brand: product.brand,
   price: getNumericPrice(product.price),

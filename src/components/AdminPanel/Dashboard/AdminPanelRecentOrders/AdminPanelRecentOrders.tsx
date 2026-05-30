@@ -2,6 +2,8 @@ import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { AdminPanelTab, IAdminPanelOrderItem } from '@/core/types';
+import { ADMIN_ORDER_STATUS_LABELS } from '@/core/constants';
+import { SmallArrowRight } from '@/assets';
 
 import './AdminPanelRecentOrders.css';
 
@@ -9,15 +11,6 @@ interface IProps {
   orders: IAdminPanelOrderItem[];
   onTabChange?: (tab: AdminPanelTab) => void;
 }
-
-const STATUS_LABELS = {
-  processing: 'Processing',
-  confirmed: 'Confirmed',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
-  paid: 'Paid',
-  shipping: 'Shipping',
-} as const;
 
 export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
   return (
@@ -37,25 +30,22 @@ export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
               >
                 {order.orderNumber}
               </Typography>
-              <Typography
-                variant="body2"
-                component="span"
-                sx={{ color: 'var(--black-opacity-65)' }}
-              >
+              <Typography variant="body2" component="span">
                 {order.age}
               </Typography>
             </div>
-
-            <Typography variant="subtitle1" component="p" sx={{ fontWeight: 600 }}>
-              {order.customer}
-            </Typography>
-
             <div className="admin-panel-recent-orders__item-bottom">
-              <Typography variant="body2" component="p" sx={{ color: 'var(--black-opacity-65)' }}>
-                {order.product}
-              </Typography>
+              <div className="admin-panel-recent-orders__customer-info">
+                <Typography variant="subtitle1" component="p" sx={{ fontWeight: 600 }}>
+                  {order.customer}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {order.email}
+                </Typography>
+              </div>
+
               <span className={`admin-panel-recent-orders__status is-${order.status}`}>
-                {STATUS_LABELS[order.status]}
+                {ADMIN_ORDER_STATUS_LABELS[order.status]}
               </span>
             </div>
           </article>
@@ -67,8 +57,8 @@ export const AdminPanelRecentOrders: FC<IProps> = ({ orders, onTabChange }) => {
         className="admin-panel-recent-orders__view-all"
         onClick={() => onTabChange?.('orders')}
       >
-        <Typography variant="body2" component="span">
-          Show all orders
+        <Typography variant="body2" component="span" sx={{ fontWeight: 500 }}>
+          Show all orders <SmallArrowRight />
         </Typography>
       </button>
     </section>

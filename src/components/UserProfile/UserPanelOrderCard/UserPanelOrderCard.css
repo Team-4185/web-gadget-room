@@ -32,16 +32,25 @@
   color: var(--white);
 }
 
+.user-panel-order-card__status.is-new,
+.user-panel-order-card__status.is-confirmed {
+  background: var(--blue-violet);
+}
+
+.user-panel-order-card__status.is-processing {
+  background: var(--amber);
+}
+
+.user-panel-order-card__status.is-shipped {
+  background: var(--blue);
+}
+
 .user-panel-order-card__status.is-delivered {
   background: var(--chateau-green);
 }
 
-.user-panel-order-card__status.is-shipped {
-  background: var(--amber);
-}
-
-.user-panel-order-card__status.is-processing {
-  background: var(--blue);
+.user-panel-order-card__status.is-cancelled {
+  background: var(--red);
 }
 
 .user-panel-order-card__total {

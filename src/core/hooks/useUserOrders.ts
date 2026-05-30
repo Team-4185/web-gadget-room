@@ -3,16 +3,22 @@ import { useEffect, useState } from 'react';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { ordersService, phonesService } from '@/core/services';
 import type { IUserPanelOrder, OrderResponse, OrderStatus } from '@/core/types';
-import { toErrorMessage } from '@/core/utils';
+import { formatProductDisplayName, toErrorMessage } from '@/core/utils';
 
 const mapOrderStatus = (status: string): OrderStatus => {
   switch (status.toUpperCase()) {
-    case 'DELIVERED':
-    case 'COMPLETED':
-      return 'delivered';
+    case 'NEW':
+      return 'new';
+    case 'CONFIRMED':
+      return 'confirmed';
+    case 'PROCESSING':
+      return 'processing';
     case 'SHIPPED':
-    case 'SHIPPING':
       return 'shipped';
+    case 'DELIVERED':
+      return 'delivered';
+    case 'CANCELLED':
+      return 'cancelled';
     default:
       return 'processing';
   }
@@ -47,7 +53,10 @@ const mapOrderToUserPanelOrder = async (
   const items = await Promise.all(
     order.items.map(async (item) => ({
       id: String(item.id),
-      title: item.productName || item.phone?.name || `Phone #${item.phone?.id ?? item.id}`,
+      title:
+        item.productName || item.phone?.name
+          ? formatProductDisplayName(item.phone?.brand, item.productName || item.phone.name)
+          : `Phone #${item.phone?.id ?? item.id}`,
       quantity: item.quantity,
       price: item.totalPrice,
       image: await getOrderItemImage(item.phone?.images?.[0]?.url, signal),

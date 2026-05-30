@@ -34,11 +34,7 @@ export const AdminPanelLowStock: FC<IProps> = ({ items }) => {
               >
                 Left: {item.left} pcs
               </Typography>
-              <Typography
-                variant="body2"
-                component="span"
-                sx={{ color: 'var(--black-opacity-65)' }}
-              >
+              <Typography variant="body2" component="span">
                 Threshold: {item.threshold}
               </Typography>
             </div>

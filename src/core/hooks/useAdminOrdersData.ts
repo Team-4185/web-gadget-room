@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 
 import { ADMIN_MANAGED_ORDERS, ADMIN_ORDER_KPIS } from '@/core/constants';
-import { adminOrdersService, type ApiAdminOrder } from '@/core/services';
+import { adminOrdersService, type ApiAdminOrder, type ApiAdminOrdersKpi } from '@/core/services';
 import type {
   AdminOrderAction,
   AdminOrderStatus,
   ApiAdminOrderStatus,
   IAdminManagedOrderItem,
+  IAdminOrderKpiItem,
 } from '@/core/types';
 import { toErrorMessage } from '@/core/utils';
 import { useAdminPanelData } from './useAdminPanelData';
@@ -17,29 +18,31 @@ import type { AdminOrderFilterId } from '@/core/constants';
 const PAGE_SIZE = 10;
 
 const STATUS_BY_FILTER: Partial<Record<AdminOrderFilterId, ApiAdminOrderStatus>> = {
+  new: 'NEW',
   confirmed: 'CONFIRMED',
   processing: 'PROCESSING',
+  shipped: 'SHIPPED',
   delivered: 'DELIVERED',
   cancelled: 'CANCELLED',
 };
 
 const mapApiStatusToFrontendStatus = (status: string): AdminOrderStatus => {
   switch (status) {
+    case 'NEW':
+      return 'new';
+    case 'CONFIRMED':
+      return 'confirmed';
     case 'PROCESSING':
       return 'processing';
     case 'SHIPPED':
-    case 'DELIVERED':
-      return 'delivered';
+      return 'shipped';
     case 'CANCELLED':
       return 'cancelled';
-    case 'NEW':
-    case 'CONFIRMED':
+    case 'DELIVERED':
     default:
-      return 'confirmed';
+      return 'delivered';
   }
 };
-
-const formatCurrency = (value: number) => `$${value.toLocaleString('en-US')}`;
 
 const formatOrderDateTime = (value: string) => {
   const date = new Date(value);
@@ -62,43 +65,38 @@ const formatOrderDateTime = (value: string) => {
   };
 };
 
-const mapAdminOrderRows = (order: ApiAdminOrder): IAdminManagedOrderItem[] => {
+const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
   const dateTime = formatOrderDateTime(order.createdAt);
   const customer = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ');
-  const baseOrderRow = {
+
+  return {
+    id: String(order.id),
     orderNumber: `#ORD-${order.id}`,
     customer: customer || 'Guest',
     email: order.customerEmail,
+    paymentMethod: order.paymentMethod,
+    paymentStatus: order.paymentStatus,
+    deliveryMethod: order.deliveryMethod,
+    itemsCount: order.itemsCount ?? order.items?.length ?? 0,
     date: dateTime.date,
     time: dateTime.time,
     status: mapApiStatusToFrontendStatus(order.status),
     availableActions: order.availableActions ?? [],
   };
-
-  if (!order.items.length) {
-    return [
-      {
-        ...baseOrderRow,
-        id: String(order.id),
-        product: 'Order item',
-        quantity: 0,
-        amount: formatCurrency(order.total),
-      },
-    ];
-  }
-
-  return order.items.map((item) => ({
-    ...baseOrderRow,
-    id: `${order.id}-${item.id}`,
-    product: item.productName ?? item.phone?.name ?? 'Order item',
-    quantity: item.quantity,
-    amount: formatCurrency(item.totalPrice),
-  }));
 };
+
+const formatKpiValue = (value: number) => new Intl.NumberFormat('en-US').format(value);
+
+const mapAdminOrderKpis = (kpis: ApiAdminOrdersKpi): IAdminOrderKpiItem[] =>
+  ADMIN_ORDER_KPIS.map((item) => ({
+    ...item,
+    value: formatKpiValue(kpis[item.id as keyof ApiAdminOrdersKpi]),
+  }));
 
 export const useAdminOrdersData = () => {
   const { greeting, subtitle, menu } = useAdminPanelData();
   const { enqueueSnackbar } = useSnackbar();
+  const [kpis, setKpis] = useState<IAdminOrderKpiItem[]>(ADMIN_ORDER_KPIS);
   const [orders, setOrders] = useState<IAdminManagedOrderItem[]>([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -108,6 +106,25 @@ export const useAdminOrdersData = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<AdminOrderFilterId>('all');
   const [reloadKey, setReloadKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadKpis = async () => {
+      try {
+        const response = await adminOrdersService.getKpis(controller.signal);
+        setKpis(mapAdminOrderKpis(response));
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
+
+        setKpis(ADMIN_ORDER_KPIS);
+      }
+    };
+
+    loadKpis();
+
+    return () => controller.abort();
+  }, [reloadKey]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -126,17 +143,7 @@ export const useAdminOrdersData = () => {
           controller.signal
         );
 
-        const detailedOrders = await Promise.all(
-          response.content.map(async (order) => {
-            try {
-              return await adminOrdersService.getOrder(order.id, controller.signal);
-            } catch {
-              return order;
-            }
-          })
-        );
-
-        setOrders(detailedOrders.flatMap(mapAdminOrderRows));
+        setOrders(response.content.map(mapAdminOrder));
         setTotalOrders(response.totalElements);
         setTotalPages(response.totalPages);
         setIsFirstPage(response.first);
@@ -193,7 +200,7 @@ export const useAdminOrdersData = () => {
       greeting,
       subtitle,
       menu,
-      kpis: ADMIN_ORDER_KPIS,
+      kpis,
       orders,
       totalOrders,
       currentPage,
@@ -217,6 +224,7 @@ export const useAdminOrdersData = () => {
       isFirstPage,
       isLastPage,
       isLoading,
+      kpis,
       menu,
       onFilterChange,
       orders,

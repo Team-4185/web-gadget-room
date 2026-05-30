@@ -49,12 +49,18 @@ interface IYAxisLabel {
   value: string;
 }
 
+interface IXAxisLabel {
+  id: string;
+  x: number;
+  value: string;
+}
+
 interface IChartModel {
   points: IAdminSalesAnalyticsPoint[];
   revenueLine: string;
   ordersLine: string;
   yAxisLabels: IYAxisLabel[];
-  xLabels: string[];
+  xAxisLabels: IXAxisLabel[];
   revenueDots: IChartDot[];
   ordersDots: IChartDot[];
 }
@@ -64,7 +70,7 @@ const EMPTY_CHART_MODEL: IChartModel = {
   revenueLine: '',
   ordersLine: '',
   yAxisLabels: [],
-  xLabels: [],
+  xAxisLabels: [],
   revenueDots: [],
   ordersDots: [],
 };
@@ -108,13 +114,18 @@ const buildChartModel = (points: IAdminSalesAnalyticsPoint[]): IChartModel => {
       value: formatValue(value),
     };
   });
+  const xAxisLabels: IXAxisLabel[] = points.map((point, index) => ({
+    id: `x-${point.label}-${index}`,
+    x: CHART.left + index * stepX,
+    value: point.label,
+  }));
 
   return {
     points,
     revenueLine: toPolyline(revenueDots),
     ordersLine: toPolyline(ordersDots),
     yAxisLabels,
-    xLabels: points.map((point) => point.label),
+    xAxisLabels,
     revenueDots,
     ordersDots,
   };
@@ -197,9 +208,11 @@ export const AdminPanelSalesChart = () => {
             onMouseLeave={() => setTooltip(null)}
           >
             <g stroke="rgba(119, 119, 191, 0.22)" strokeWidth="1">
-              <line x1={CHART.left} y1={CHART.top} x2={CHART.left} y2={CHART.bottom} />
               {chartModel.yAxisLabels.map((line) => (
                 <line key={line.id} x1={CHART.left} y1={line.y} x2={CHART.right} y2={line.y} />
+              ))}
+              {chartModel.xAxisLabels.map((line) => (
+                <line key={line.id} x1={line.x} y1={CHART.top} x2={line.x} y2={CHART.bottom} />
               ))}
             </g>
 
@@ -207,6 +220,19 @@ export const AdminPanelSalesChart = () => {
               {chartModel.yAxisLabels.map((line) => (
                 <text key={`label-${line.id}`} x={CHART.left - 8} y={line.y + 4} textAnchor="end">
                   {formatRevenueTick(line.value)}
+                </text>
+              ))}
+            </g>
+
+            <g className="admin-panel-sales-chart__x-labels-svg">
+              {chartModel.xAxisLabels.map((label) => (
+                <text
+                  key={`label-${label.id}`}
+                  x={label.x}
+                  y={CHART.bottom + 20}
+                  textAnchor="middle"
+                >
+                  {label.value}
                 </text>
               ))}
             </g>
@@ -236,28 +262,11 @@ export const AdminPanelSalesChart = () => {
         </div>
       </div>
 
-      <div className="admin-panel-sales-chart__x-labels">
-        <div
-          className="admin-panel-sales-chart__x-labels-grid"
-          style={{
-            paddingLeft: `${CHART.left}px`,
-            gridTemplateColumns: `repeat(${Math.max(chartModel.xLabels.length, 1)}, minmax(0, 1fr))`,
-          }}
-        >
-          {chartModel.xLabels.map((label, index) => (
-            <span key={`${label}-${index}`}>{label}</span>
-          ))}
-        </div>
-      </div>
-
-      <div className="admin-panel-sales-chart__meta">
-        <span className="admin-panel-sales-chart__legend admin-panel-sales-chart__legend--revenue">
-          Revenue
-        </span>
-        {isLoading ? (
+      {isLoading ? (
+        <div className="admin-panel-sales-chart__meta">
           <span className="admin-panel-sales-chart__loading">Updating chart...</span>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </section>
   );
 };

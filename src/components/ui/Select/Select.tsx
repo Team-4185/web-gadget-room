@@ -16,6 +16,7 @@ interface IProps {
   startIcon?: ReactNode;
   initialValue?: string;
   placeholder?: string;
+  error?: boolean;
   value?: string;
   onChange?: (value: string) => void;
 }
@@ -31,6 +32,7 @@ export const Select: FC<IProps> = ({
   startIcon,
   initialValue,
   placeholder,
+  error = false,
   value,
   onChange,
 }) => {
@@ -57,6 +59,17 @@ export const Select: FC<IProps> = ({
           '& .MuiSelect-select.MuiSelect-select': {
             padding: selectPadding,
           },
+          ...(error && {
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+          }),
         }}
         data-style-variant={styleVariant === 'subtleBorder' ? 'subtleBorder' : undefined}
         value={selectedValue}
