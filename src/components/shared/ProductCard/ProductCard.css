@@ -80,3 +80,7 @@
 .product-card__like:hover {
   cursor: pointer;
 }
+
+.product-card__like.is-active {
+  color: var(--blue-violet);
+}

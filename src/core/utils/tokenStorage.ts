@@ -2,6 +2,7 @@ const ACCESS_KEY = 'accessToken';
 const REFRESH_KEY = 'refreshToken';
 const EMAIL_KEY = 'userEmail';
 const UID_KEY = 'userId';
+const SESSION_KEY = 'hasAuthSession';
 
 export const tokenStorage = {
   get() {
@@ -26,5 +27,15 @@ export const tokenStorage = {
     localStorage.removeItem(REFRESH_KEY);
     localStorage.removeItem(EMAIL_KEY);
     localStorage.removeItem(UID_KEY);
+  },
+  hasSession() {
+    return localStorage.getItem(SESSION_KEY) === 'true';
+  },
+  markSession() {
+    localStorage.setItem(SESSION_KEY, 'true');
+  },
+  clearSession() {
+    this.clear();
+    localStorage.removeItem(SESSION_KEY);
   },
 };

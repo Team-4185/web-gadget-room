@@ -1,6 +1,7 @@
 import axios, { AxiosError, isAxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 import { authService } from '@/core/services';
+import { tokenStorage } from '@/core/utils/tokenStorage';
 
 interface IСustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
   _isRetry?: boolean;
@@ -34,7 +35,12 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as IСustomInternalAxiosRequestConfig;
 
-    if (isAxiosError(error) && error.response?.status === 401 && !originalRequest._isRetry) {
+    if (
+      isAxiosError(error) &&
+      error.response?.status === 401 &&
+      tokenStorage.hasSession() &&
+      !originalRequest._isRetry
+    ) {
       originalRequest._isRetry = true;
 
       try {
@@ -49,6 +55,7 @@ api.interceptors.response.use(
       } catch (e) {
         console.log('Logout');
         setAccessToken(null);
+        tokenStorage.clearSession();
 
         throw e;
       }
