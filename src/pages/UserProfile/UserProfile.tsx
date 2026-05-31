@@ -11,16 +11,19 @@ import {
   UserPanelSidebar,
   UserPanelStatCard,
 } from '@/components';
-import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
 import { useUserOrders, useUserPanelData } from '@/core/hooks';
-import { useAppSelector } from '@/core/store';
+import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
 import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.auth.userId);
+  const favorites = useAppSelector((state) => state.wishList.wishList);
+  const favoritesLoading = useAppSelector((state) => state.wishList.loading);
+  const favoritesError = useAppSelector((state) => state.wishList.error);
   const [profileInfo, setProfileInfo] = useState<UpdateUserProfilePayload>({
     firstName: '',
     lastName: '',
@@ -34,7 +37,8 @@ export const UserProfile = () => {
   );
   const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
     navigate('/login');
   };
 
@@ -169,9 +173,16 @@ export const UserProfile = () => {
                 </div>
 
                 <div className="user-profile__favorites-grid">
-                  {USER_PANEL_FAVORITE_PRODUCTS.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
+                  {favoritesLoading ? <CircularProgress /> : null}
+                  {!favoritesLoading && favoritesError ? (
+                    <Typography component="p">{favoritesError}</Typography>
+                  ) : null}
+                  {!favoritesLoading && !favoritesError && !favorites.length ? (
+                    <Typography component="p">No favorites yet.</Typography>
+                  ) : null}
+                  {!favoritesLoading &&
+                    !favoritesError &&
+                    favorites.map((product) => <ProductCard key={product.id} product={product} />)}
                 </div>
               </div>
             )}

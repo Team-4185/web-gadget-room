@@ -1,4 +1,4 @@
-import { apiAuth } from '@/core/config';
+import { api, apiAuth } from '@/core/config';
 import { type IJwtResponseDto, type FormRegisterValuesDto } from '@/core/types';
 import { type FormLoginValues, type FormForgotPassword } from '@/core/schemas';
 
@@ -17,5 +17,8 @@ export const authService = {
   },
   async forgotPassword(email: FormForgotPassword) {
     await apiAuth.post<void>('/api/auth/forgot-password', email);
+  },
+  async logout() {
+    await api.post<void>('/api/v1/logout');
   },
 };

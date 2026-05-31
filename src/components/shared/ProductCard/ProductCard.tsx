@@ -1,8 +1,8 @@
 import type { FC, MouseEvent, SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
-import { CartAdd, Like } from '@/assets';
-import { useAppDispatch, cartActions } from '@/core/store';
+import { CartAdd, Like, Liked } from '@/assets';
+import { useAppDispatch, useAppSelector, cartActions, wishListActions } from '@/core/store';
 import { Button } from '@/components';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import type { IProduct } from '@/core/types';
@@ -31,10 +31,14 @@ export const ProductCard: FC<IProps> = ({
   onClick,
 }) => {
   const dispatch = useAppDispatch();
+  const wishList = useAppSelector((state) => state.wishList.wishList);
+  const userId = useAppSelector((state) => state.auth.userId);
+  const isLiked = wishList.some((item) => item.id === product.id);
   const productImage = product.img || FALLBACK_IMAGE;
   const badge = product.badge;
   const productCardClassName = `product-card ${className}`.trim();
-  const likeIconClassName = `product-card__like ${likeClassName}`.trim();
+  const likeIconClassName = `product-card__like ${isLiked ? 'is-active' : ''} ${likeClassName}`.trim();
+  const FavoriteIcon = isLiked ? Liked : Like;
 
   const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -47,6 +51,23 @@ export const ProductCard: FC<IProps> = ({
 
   const handleLikeClick = (event: MouseEvent<SVGSVGElement>) => {
     event.stopPropagation();
+
+    if (!userId) {
+      if (isLiked) {
+        dispatch(wishListActions.removeProductFromWishList(product.id));
+        return;
+      }
+
+      dispatch(wishListActions.addProductToWishList(product));
+      return;
+    }
+
+    if (isLiked) {
+      void dispatch(wishListActions.removeFavorite(product.id));
+      return;
+    }
+
+    void dispatch(wishListActions.addFavorite(product));
   };
 
   return (
@@ -101,7 +122,7 @@ export const ProductCard: FC<IProps> = ({
         >
           Add to Cart
         </Button>
-        <Like className={likeIconClassName} onClick={handleLikeClick} />
+        <FavoriteIcon className={likeIconClassName} onClick={handleLikeClick} />
       </div>
     </article>
   );
