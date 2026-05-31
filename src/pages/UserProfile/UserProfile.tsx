@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import { ChevronRight } from '@/assets';
 import {
-  ProductCard,
   CircularProgress,
+  UserFavoriteProductCard,
   UserPanelOrderCard,
   UserPanelSettings,
   UserPanelSidebar,
@@ -19,6 +19,7 @@ import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.auth.userId);
   const favorites = useAppSelector((state) => state.wishList.wishList);
@@ -31,11 +32,30 @@ export const UserProfile = () => {
     phoneNumber: '',
   });
   const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
+  const requestedTab = searchParams.get('tab');
+  const initialTab: UserPanelTab = requestedTab === 'favorite' ? 'favorite' : 'overview';
   const { greeting, subtitle, menu, stats, profile } = useUserPanelData(
     profileInfo,
-    totalElements
+    totalElements,
+    favorites.length
   );
-  const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
+  const [activeTab, setActiveTab] = useState<UserPanelTab>(initialTab);
+
+  useEffect(() => {
+    if (requestedTab === 'favorite') {
+      setActiveTab('favorite');
+    }
+  }, [requestedTab]);
+
+  const handleTabChange = (tab: UserPanelTab) => {
+    setActiveTab(tab);
+
+    if (tab === 'favorite') {
+      setSearchParams({ tab: 'favorite' }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
 
   const handleLogout = async () => {
     await dispatch(authActions.logout());
@@ -57,7 +77,7 @@ export const UserProfile = () => {
             email={profile.email}
             menu={menu}
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={handleTabChange}
             onLogout={handleLogout}
           />
 
@@ -108,7 +128,7 @@ export const UserProfile = () => {
                     <button
                       type="button"
                       className="user-profile__view-all"
-                      onClick={() => setActiveTab('orders')}
+                      onClick={() => handleTabChange('orders')}
                     >
                       <Typography component="span" sx={{ fontSize: '20px', color: 'inherit' }}>
                         View All
@@ -182,7 +202,13 @@ export const UserProfile = () => {
                   ) : null}
                   {!favoritesLoading &&
                     !favoritesError &&
-                    favorites.map((product) => <ProductCard key={product.id} product={product} />)}
+                    favorites.map((product) => (
+                      <UserFavoriteProductCard
+                        key={product.id}
+                        product={product}
+                        onClick={() => navigate(`/product/${product.id}`)}
+                      />
+                    ))}
                 </div>
               </div>
             )}

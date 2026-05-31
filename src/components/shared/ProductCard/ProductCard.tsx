@@ -14,6 +14,7 @@ interface IProps {
   className?: string;
   likeClassName?: string;
   showBadge?: boolean;
+  forceLiked?: boolean;
   onClick?: () => void;
 }
 
@@ -28,12 +29,13 @@ export const ProductCard: FC<IProps> = ({
   className = '',
   likeClassName = '',
   showBadge = true,
+  forceLiked = false,
   onClick,
 }) => {
   const dispatch = useAppDispatch();
   const wishList = useAppSelector((state) => state.wishList.wishList);
   const userId = useAppSelector((state) => state.auth.userId);
-  const isLiked = wishList.some((item) => item.id === product.id);
+  const isLiked = forceLiked || wishList.some((item) => item.id === product.id);
   const productImage = product.img || FALLBACK_IMAGE;
   const badge = product.badge;
   const productCardClassName = `product-card ${className}`.trim();
