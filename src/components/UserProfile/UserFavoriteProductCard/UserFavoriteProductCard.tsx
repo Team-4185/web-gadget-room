@@ -76,7 +76,7 @@ export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
 
       <Button
         maxWidth="100%"
-        height="31px"
+        height="36px"
         fontSize="15px"
         fontWeight={600}
         textTransform="uppercase"

@@ -30,10 +30,8 @@
 }
 
 .product-info__description {
-  display: -webkit-box;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  line-height: 171.429%;
+  max-height: calc(1em * 1.71429 * 3);
   overflow: hidden;
 }
 
