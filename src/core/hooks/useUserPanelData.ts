@@ -13,7 +13,8 @@ const EMPTY_PROFILE: UpdateUserProfilePayload = {
 
 export const useUserPanelData = (
   profileInfo: UpdateUserProfilePayload = EMPTY_PROFILE,
-  ordersCount = 0
+  ordersCount = 0,
+  favoritesCount = 0
 ) => {
   const email = useAppSelector((state) => state.auth.email);
   const { firstName, lastName, city, phoneNumber } = profileInfo;
@@ -26,10 +27,18 @@ export const useUserPanelData = (
       ...USER_PANEL_DATA,
       greeting: `Welcome back, ${displayName}!`,
       menu: USER_PANEL_DATA.menu.map((item) =>
-        item.id === 'orders' ? { ...item, badge: ordersCount } : item
+        item.id === 'orders'
+          ? { ...item, badge: ordersCount }
+          : item.id === 'favorite'
+            ? { ...item, badge: favoritesCount }
+            : item
       ),
       stats: USER_PANEL_DATA.stats.map((item) =>
-        item.id === 'orders' ? { ...item, value: ordersCount } : item
+        item.id === 'orders'
+          ? { ...item, value: ordersCount }
+          : item.id === 'favorites'
+            ? { ...item, value: favoritesCount }
+            : item
       ),
       profile: {
         firstName,
@@ -40,5 +49,5 @@ export const useUserPanelData = (
         email: email || 'UserAll@gmail.com',
       },
     };
-  }, [city, email, firstName, lastName, ordersCount, phoneNumber]);
+  }, [city, email, favoritesCount, firstName, lastName, ordersCount, phoneNumber]);
 };

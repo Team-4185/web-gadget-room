@@ -15,7 +15,7 @@ const PageName = {
 export const HEADER_ICONS = [
   { id: 0, icon: Search, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
-  { id: 2, icon: Liked, href: '#' },
+  { id: 2, icon: Liked, href: '/userProfile?tab=favorite' },
   { id: 3, icon: Cart, href: '/cart' },
 ];
 
