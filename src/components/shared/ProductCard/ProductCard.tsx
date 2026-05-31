@@ -32,6 +32,7 @@ export const ProductCard: FC<IProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const wishList = useAppSelector((state) => state.wishList.wishList);
+  const userId = useAppSelector((state) => state.auth.userId);
   const isLiked = wishList.some((item) => item.id === product.id);
   const productImage = product.img || FALLBACK_IMAGE;
   const badge = product.badge;
@@ -50,6 +51,16 @@ export const ProductCard: FC<IProps> = ({
 
   const handleLikeClick = (event: MouseEvent<SVGSVGElement>) => {
     event.stopPropagation();
+
+    if (!userId) {
+      if (isLiked) {
+        dispatch(wishListActions.removeProductFromWishList(product.id));
+        return;
+      }
+
+      dispatch(wishListActions.addProductToWishList(product));
+      return;
+    }
 
     if (isLiked) {
       void dispatch(wishListActions.removeFavorite(product.id));

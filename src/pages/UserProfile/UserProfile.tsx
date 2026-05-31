@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
@@ -12,7 +12,7 @@ import {
   UserPanelStatCard,
 } from '@/components';
 import { useUserOrders, useUserPanelData } from '@/core/hooks';
-import { authActions, useAppDispatch, useAppSelector, wishListActions } from '@/core/store';
+import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
 import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
@@ -41,12 +41,6 @@ export const UserProfile = () => {
     await dispatch(authActions.logout());
     navigate('/login');
   };
-
-  useEffect(() => {
-    if (!userId) return;
-
-    void dispatch(wishListActions.fetchFavorites());
-  }, [dispatch, userId]);
 
   const recentOrders = orders.slice(0, 2);
   const isOverviewTab = activeTab === 'overview';

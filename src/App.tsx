@@ -2,7 +2,13 @@ import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 import { Footer, Header, ScrollToTop } from '@/components';
-import { useAppDispatch, useAppSelector, authActions, cartActions } from '@/core/store';
+import {
+  useAppDispatch,
+  useAppSelector,
+  authActions,
+  cartActions,
+  wishListActions,
+} from '@/core/store';
 import { tokenStorage } from '@/core/utils';
 
 import './App.css';
@@ -22,9 +28,15 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (authLoading || !userId) return;
+    if (authLoading) return;
+
+    if (!userId) {
+      dispatch(wishListActions.clearWishList());
+      return;
+    }
 
     dispatch(cartActions.fetchCart());
+    dispatch(wishListActions.fetchFavorites());
   }, [authLoading, dispatch, userId]);
 
   return (
