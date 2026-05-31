@@ -4,8 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router';
 
 import { ChevronRight } from '@/assets';
 import {
-  ProductCard,
   CircularProgress,
+  UserFavoriteProductCard,
   UserPanelOrderCard,
   UserPanelSettings,
   UserPanelSidebar,
@@ -203,10 +203,9 @@ export const UserProfile = () => {
                   {!favoritesLoading &&
                     !favoritesError &&
                     favorites.map((product) => (
-                      <ProductCard
+                      <UserFavoriteProductCard
                         key={product.id}
                         product={product}
-                        forceLiked
                         onClick={() => navigate(`/product/${product.id}`)}
                       />
                     ))}

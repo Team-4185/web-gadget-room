@@ -77,6 +77,12 @@
   margin-top: 16px;
 }
 
+.product-card__like {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+}
+
 .product-card__like:hover {
   cursor: pointer;
 }
