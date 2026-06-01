@@ -44,7 +44,7 @@ export const ProductCard: FC<IProps> = ({
 
   const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    dispatch(cartActions.addProduct(product.id));
+    dispatch(cartActions.addProduct(product));
   };
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {

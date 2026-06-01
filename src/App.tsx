@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 
-import { Footer, Header, ScrollToTop } from '@/components';
+import { AddToCartModal, Footer, Header, ScrollToTop } from '@/components';
 import {
   useAppDispatch,
   useAppSelector,
@@ -47,6 +47,7 @@ const App = () => {
         <Outlet />
       </main>
       <Footer />
+      <AddToCartModal />
     </>
   );
 };

@@ -41,7 +41,7 @@ export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
 
   const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    dispatch(cartActions.addProduct(product.id));
+    dispatch(cartActions.addProduct(product));
   };
 
   return (

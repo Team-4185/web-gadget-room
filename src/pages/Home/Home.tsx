@@ -27,7 +27,7 @@ export const Home = () => {
   const hero_product = PRODUCTS.find((p) => p.id === HOME_HERO.productId) ?? PRODUCTS[0];
 
   const addPhone = async () => {
-    await dispatch(cartActions.addProduct(hero_product.id));
+    await dispatch(cartActions.addProduct(hero_product));
     navigate('/cart');
   };
 
