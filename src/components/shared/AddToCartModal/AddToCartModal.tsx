@@ -124,14 +124,6 @@ export const AddToCartModal = () => {
             fontSize="16px"
             fontWeight={400}
             borderRadius="12px"
-            sx={{
-              background: 'var(--blue-violet)',
-              color: 'var(--white)',
-              '&:hover': {
-                background: 'var(--black)',
-                color: 'var(--white)',
-              },
-            }}
             onClick={goToCart}
           >
             Go to cart

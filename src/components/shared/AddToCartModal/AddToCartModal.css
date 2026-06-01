@@ -66,8 +66,8 @@
 }
 
 .add-to-cart-modal__close svg {
-  width: 32px;
-  height: 32px;
+  width: 19px;
+  height: 19px;
   transform: rotate(45deg);
 }
 
@@ -99,6 +99,9 @@
 .add-to-cart-modal__details {
   min-width: 0;
   padding-top: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
 }
 
 .add-to-cart-modal__name {
