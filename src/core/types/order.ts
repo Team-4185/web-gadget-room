@@ -24,9 +24,20 @@ export type OrderShippingAddressPayload = {
   zipCode?: string;
 };
 
+export type OrderItemColor = 'BLACK';
+export type OrderItemStorage = 'CAPACITY_128GB';
+
 export type CreateOrderItemPayload = {
   phoneId: number;
   quantity: number;
+  color: OrderItemColor;
+  storage: OrderItemStorage;
+};
+
+export type CheckoutItemSelectionPayload = {
+  phoneId: number;
+  color: OrderItemColor;
+  storage: OrderItemStorage;
 };
 
 export type CreateOrderPayload = {
@@ -39,6 +50,10 @@ export type CreateOrderPayload = {
   deliveryMethod: OrderDeliveryMethod;
   shippingAddress: OrderShippingAddressPayload | null;
   items: CreateOrderItemPayload[];
+};
+
+export type CheckoutOrderPayload = Omit<CreateOrderPayload, 'items'> & {
+  itemSelections: CheckoutItemSelectionPayload[];
 };
 
 export type OrderResponseItem = {

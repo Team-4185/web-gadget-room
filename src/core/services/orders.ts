@@ -1,5 +1,5 @@
 import { api } from '@/core/config';
-import type { CreateOrderPayload, OrderResponse } from '@/core/types';
+import type { CheckoutOrderPayload, CreateOrderPayload, OrderResponse } from '@/core/types';
 
 export type OrdersPageResponse = {
   content: OrderResponse[];
@@ -15,6 +15,10 @@ export type OrdersPageResponse = {
 export const ordersService = {
   async createOrder(payload: CreateOrderPayload) {
     const { data } = await api.post<OrderResponse>('/api/v1/orders', payload);
+    return data;
+  },
+  async checkout(payload: CheckoutOrderPayload) {
+    const { data } = await api.post<OrderResponse>('/api/v1/orders/checkout', payload);
     return data;
   },
   async getMyOrders(page = 0, size = 10) {

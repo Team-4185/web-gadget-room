@@ -1,4 +1,5 @@
 import type {
+  CheckoutOrderPayload,
   CreateOrderPayload,
   CourierAddressForm,
   DeliveryCheckoutForm,
@@ -8,6 +9,7 @@ import type {
   ISelectOption,
   OrderDeliveryMethod,
   OrderLogisticsCompany,
+  OrderPaymentDetailsPayload,
 } from '@/core/types';
 import {
   BRANCH_ADDRESS_BY_ID,
@@ -16,6 +18,9 @@ import {
   UKRAINE_REGIONS,
 } from '@/core/constants';
 import { deliveryCheckoutSchema } from '@/core/schemas';
+
+export const TEMP_ORDER_ITEM_COLOR = 'BLACK';
+export const TEMP_ORDER_ITEM_STORAGE = 'CAPACITY_128GB';
 
 const LOGISTICS_COMPANY_BY_METHOD: Record<DeliveryMethod, OrderLogisticsCompany> = {
   courier: 'NOVA_POSHTA',
@@ -36,7 +41,8 @@ const getOptionName = (options: ISelectOption[], value: string) =>
 
 export const createOrderPayloadFromCheckout = (
   form: DeliveryCheckoutForm,
-  cartItems: ICartItemDto[]
+  cartItems: ICartItemDto[],
+  paymentDetails: OrderPaymentDetailsPayload = MOCK_CARD_PAYMENT_DETAILS
 ): CreateOrderPayload => {
   const deliveryMethod = DELIVERY_METHOD_BY_FORM_METHOD[form.delivery.method];
   const paymentMethod = form.payment.method === 'receipt' ? 'CASH_ON_DELIVERY' : 'CARD';
@@ -50,7 +56,7 @@ export const createOrderPayloadFromCheckout = (
     customerLastName: form.recipient.lastName.trim(),
     customerPhoneNumber: form.recipient.phone.trim(),
     paymentMethod,
-    ...(paymentMethod === 'CARD' && { paymentDetails: MOCK_CARD_PAYMENT_DETAILS }),
+    ...(paymentMethod === 'CARD' && { paymentDetails }),
     deliveryMethod,
     shippingAddress:
       deliveryMethod === 'COURIER'
@@ -74,6 +80,25 @@ export const createOrderPayloadFromCheckout = (
     items: cartItems.map(({ phoneId, amount }) => ({
       phoneId,
       quantity: amount,
+      color: TEMP_ORDER_ITEM_COLOR,
+      storage: TEMP_ORDER_ITEM_STORAGE,
+    })),
+  };
+};
+
+export const createCheckoutPayloadFromDeliveryAndPayment = (
+  form: DeliveryCheckoutForm,
+  cartItems: ICartItemDto[],
+  paymentDetails?: OrderPaymentDetailsPayload
+): CheckoutOrderPayload => {
+  const { items, ...orderDetails } = createOrderPayloadFromCheckout(form, cartItems, paymentDetails);
+
+  return {
+    ...orderDetails,
+    itemSelections: items.map(({ phoneId, color, storage }) => ({
+      phoneId,
+      color,
+      storage,
     })),
   };
 };

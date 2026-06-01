@@ -19,7 +19,8 @@ import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
 import { cartService, ordersService } from '@/core/services';
 import {
   cartStorage,
-  createOrderPayloadFromCheckout,
+  checkoutStorage,
+  createCheckoutPayloadFromDeliveryAndPayment,
   getDeliveryCheckoutValidationMessage,
   toErrorMessage,
   validateDeliveryCheckout,
@@ -123,25 +124,39 @@ export const DeliveryCheckout = () => {
     }));
   };
 
-  const handlePlaceOrder = async () => {
+  const validateCheckoutDetails = () => {
     const nextValidationErrors = validateDeliveryCheckout(form, cartItems);
     const validationError = getDeliveryCheckoutValidationMessage(nextValidationErrors);
 
     if (validationError) {
       setValidationErrors(nextValidationErrors);
       enqueueSnackbar(validationError, { variant: 'error' });
-      return;
+      return false;
     }
+
+    return true;
+  };
+
+  const handleContinueToPayment = () => {
+    if (!validateCheckoutDetails()) return;
+
+    checkoutStorage.setDelivery(form);
+    navigate('/payment');
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!validateCheckoutDetails()) return;
 
     setIsSubmitting(true);
 
     try {
-      const order = await ordersService.createOrder(
-        createOrderPayloadFromCheckout(form, cartItems)
+      const order = await ordersService.checkout(
+        createCheckoutPayloadFromDeliveryAndPayment(form, cartItems)
       );
 
       await cartService.clearCart();
       cartStorage.clear();
+      checkoutStorage.clearDelivery();
       dispatch(cartActions.clearCartLocal());
       enqueueSnackbar(`Order #${order.id} has been placed.`, { variant: 'success' });
       navigate('/home');
@@ -151,6 +166,8 @@ export const DeliveryCheckout = () => {
       setIsSubmitting(false);
     }
   };
+
+  const isOnlinePayment = form.payment.method === 'online';
 
   return (
     <div className="delivery-checkout__layout">
@@ -188,8 +205,10 @@ export const DeliveryCheckout = () => {
       <div className="delivery-checkout__right">
         <OrderSummary
           className="delivery-checkout__summary"
-          onContinue={handlePlaceOrder}
-          continueLabel={isSubmitting ? 'placing order' : 'place order'}
+          onContinue={isOnlinePayment ? handleContinueToPayment : () => void handlePlaceOrder()}
+          continueLabel={
+            isSubmitting ? 'placing order' : isOnlinePayment ? 'continue to payment' : 'place order'
+          }
           continueDisabled={isSubmitting}
           shippingAmount={selectedDeliveryPrice}
         />
