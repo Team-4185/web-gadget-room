@@ -11,13 +11,14 @@ import './AuthPage.css';
 export const AuthPage: FC = () => {
   const location = useLocation();
   const currentUrl = location.pathname;
+  const isLoginPage = currentUrl === '/' || currentUrl === '/login';
 
   return (
     <section className="auth">
       <Container disableGutters>
         <div className="auth__wrapper">
           <motion.div
-            className={`auth__switcher ${currentUrl === '/' || currentUrl === '/register' ? 'auth__switcher--primary' : 'auth__switcher--secondary'}`}
+            className={`auth__switcher ${isLoginPage || currentUrl === '/register' ? 'auth__switcher--primary' : 'auth__switcher--secondary'}`}
             initial={currentUrl === '/register' ? { left: 0 } : { right: 0 }}
             animate={
               currentUrl === '/register' ? { right: 'unset', left: 0 } : { right: 0, left: 'unset' }
@@ -25,7 +26,7 @@ export const AuthPage: FC = () => {
             transition={{ duration: 0.7, ease: 'easeInOut' }}
           />
 
-          {currentUrl === '/' && (
+          {isLoginPage && (
             <>
               <Login className="auth__form auth__form--login" />
               <WelcomeSection

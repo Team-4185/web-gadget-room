@@ -15,6 +15,7 @@ import {
   PageNotFound,
 } from '@/pages';
 import { ProtectedRoutes } from '@/routes/ProtectedRoute';
+import { AdminRoutes } from '@/routes/AdminRoutes';
 import { PRODUCTS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import { mapApiPhoneToProduct } from '@/core/utils';
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
+        Component: AuthPage,
+      },
+      {
+        path: 'login',
         Component: AuthPage,
       },
       {
@@ -68,8 +73,13 @@ export const router = createBrowserRouter([
             Component: UserProfile,
           },
           {
-            path: 'adminPanel',
-            Component: AdminPanel,
+            Component: AdminRoutes,
+            children: [
+              {
+                path: 'adminPanel',
+                Component: AdminPanel,
+              },
+            ],
           },
           {
             path: 'catalog',
@@ -121,11 +131,11 @@ export const router = createBrowserRouter([
               ],
             },
           },
+          {
+            path: '404',
+            Component: PageNotFound,
+          },
         ],
-      },
-      {
-        path: '404',
-        Component: PageNotFound,
       },
       {
         path: '*',
