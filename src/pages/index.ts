@@ -9,3 +9,4 @@ export { ProductPage } from './ProductPage/ProductPage';
 export { UserProfile } from './UserProfile/UserProfile';
 export { AdminPanel } from './AdminPanel/AdminPanel';
 export { PageNotFound } from './PageNotFound/PageNotFound';
+export { Payment } from './Payment';

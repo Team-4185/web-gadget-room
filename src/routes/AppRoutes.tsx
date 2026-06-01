@@ -8,6 +8,7 @@ import {
   Delivery,
   EmptyCart,
   Home,
+  Payment,
   ProductPage,
   UserProfile,
   AdminPanel,
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
           {
             path: 'delivery',
             Component: Delivery,
+          },
+          {
+            path: 'payment',
+            Component: Payment,
           },
           {
             path: 'userProfile',
