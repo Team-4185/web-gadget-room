@@ -1,0 +1,137 @@
+.add-to-cart-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--black-opacity-25);
+}
+
+.add-to-cart-modal {
+  width: min(100%, 456px);
+  min-height: 271px;
+  padding: 15px 20px 30px;
+  border-radius: 31px;
+  background: var(--white);
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+}
+
+.add-to-cart-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.add-to-cart-modal__title-row {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-width: 0;
+}
+
+.add-to-cart-modal__success {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #ecfff1;
+  color: #39b864;
+}
+
+.add-to-cart-modal__success svg {
+  width: 18px;
+  height: 18px;
+}
+
+.add-to-cart-modal__success svg path {
+  fill: currentColor;
+}
+
+.add-to-cart-modal__close {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  cursor: pointer;
+}
+
+.add-to-cart-modal__close svg {
+  width: 19px;
+  height: 19px;
+  transform: rotate(45deg);
+}
+
+.add-to-cart-modal__product {
+  display: grid;
+  grid-template-columns: 97px minmax(0, 1fr);
+  gap: 17px;
+  width: min(100%, 332px);
+  margin-top: 30px;
+}
+
+.add-to-cart-modal__image-wrap {
+  width: 97px;
+  height: 90px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--white);
+}
+
+.add-to-cart-modal__image {
+  width: 68px;
+  height: 85px;
+  object-fit: contain;
+}
+
+.add-to-cart-modal__details {
+  min-width: 0;
+  padding-top: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.add-to-cart-modal__name {
+  margin: 0;
+}
+
+.add-to-cart-modal__price {
+  margin: 24px 0 0;
+}
+
+.add-to-cart-modal__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 190px));
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+}
+
+@media (max-width: 520px) {
+  .add-to-cart-modal {
+    padding: 16px;
+    border-radius: 24px;
+  }
+
+  .add-to-cart-modal__product {
+    width: 100%;
+  }
+
+  .add-to-cart-modal__actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

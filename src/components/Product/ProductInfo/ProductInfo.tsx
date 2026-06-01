@@ -56,7 +56,7 @@ export const ProductInfo: FC<ProductInfoProps> = ({
     };
   }, [descriptionText]);
 
-  const addToCart = async () => dispatch(cartActions.addProduct(product.id));
+  const addToCart = async () => dispatch(cartActions.addProduct(product));
 
   const buyNow = async () => {
     await addToCart();

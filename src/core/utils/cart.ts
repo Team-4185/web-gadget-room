@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { FALLBACK_IMAGE, PRODUCTS } from '@/core/constants';
 import { cartService, phonesService } from '@/core/services';
 import type { ICartDto, IProduct } from '@/core/types';
@@ -7,6 +9,13 @@ import { mapApiPhoneToProduct } from './products';
 export type CartProductsPayload = {
   cart: ICartDto;
   products: IProduct[];
+};
+
+const EMPTY_CART: ICartDto = {
+  id: null,
+  totalPrice: 0,
+  totalAmount: 0,
+  cartItems: [],
 };
 
 export const mapCartDtoToProducts = (
@@ -35,9 +44,18 @@ export const mapCartDtoToProducts = (
   });
 
 export const fetchAndStoreServerCart = async () => {
-  const cart = await cartService.getCart();
-  cartStorage.set(cart);
-  return cart;
+  try {
+    const cart = await cartService.getCart();
+    cartStorage.set(cart);
+    return cart;
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 404) {
+      cartStorage.clear();
+      return EMPTY_CART;
+    }
+
+    throw error;
+  }
 };
 
 export const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => {

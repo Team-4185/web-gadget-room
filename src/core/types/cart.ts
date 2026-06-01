@@ -4,7 +4,7 @@ export type ICartItemDto = {
 };
 
 export type ICartDto = {
-  id: number;
+  id: number | null;
   totalPrice: number;
   totalAmount: number;
   cartItems: ICartItemDto[];
