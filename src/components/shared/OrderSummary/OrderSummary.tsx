@@ -31,7 +31,7 @@ export const OrderSummary = ({
   continueLabel = 'continue to payment',
   continueDisabled = false,
   showContinueButton = true,
-  taxAmount = 13,
+  taxAmount = 0,
   shippingAmount = 0,
   className,
 }: OrderSummaryProps) => {
@@ -67,14 +67,16 @@ export const OrderSummary = ({
           </Typography>
         </div>
 
-        <div className="order-summary__row">
-          <Typography variant="body1" component="span" sx={rowLabelSx}>
-            Delivery
-          </Typography>
-          <Typography variant="body1" component="span" sx={rowValueSx}>
-            $ {amountOfProducts ? shippingAmount.toFixed(2) : 0}
-          </Typography>
-        </div>
+        {shippingAmount > 0 && (
+          <div className="order-summary__row">
+            <Typography variant="body1" component="span" sx={rowLabelSx}>
+              Delivery
+            </Typography>
+            <Typography variant="body1" component="span" sx={rowValueSx}>
+              $ {amountOfProducts ? shippingAmount.toFixed(2) : 0}
+            </Typography>
+          </div>
+        )}
       </div>
 
       <div className="order-summary__divider" />
