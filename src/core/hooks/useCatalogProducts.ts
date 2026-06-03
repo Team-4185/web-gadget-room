@@ -27,6 +27,7 @@ export const useCatalogProducts = ({
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const brandsKey = brands.join('|');
 
   useEffect(() => {
     if (!enabled) return;
@@ -49,22 +50,23 @@ export const useCatalogProducts = ({
     }
 
     const controller = new AbortController();
+    let isActive = true;
 
     const loadProducts = async () => {
       setIsLoading(true);
 
       try {
-        const response = await phonesService.getCatalog(
-          {
-            page: currentPage,
-            size: CATALOG_PAGE_SIZE,
-            brands,
-            minPrice: CATALOG_MIN_PRICE,
-            maxPrice,
-            sort,
-          },
-          controller.signal
-        );
+        const response = await phonesService.getCatalog({
+          page: currentPage,
+          size: CATALOG_PAGE_SIZE,
+          brands,
+          minPrice: CATALOG_MIN_PRICE,
+          maxPrice,
+          sort,
+        });
+
+        if (!isActive) return;
+
         const mappedProducts = await Promise.all(
           response.content.map(async (phone) => {
             const imageUrls = await phonesService.getImageObjectUrls(
@@ -76,7 +78,7 @@ export const useCatalogProducts = ({
           })
         );
 
-        if (!controller.signal.aborted) {
+        if (isActive && !controller.signal.aborted) {
           setProducts(mappedProducts);
           setTotalProducts(response.totalElements);
           setTotalPages(Math.max(1, response.totalPages));
@@ -84,6 +86,8 @@ export const useCatalogProducts = ({
           setIsLastPage(response.last);
         }
       } catch (error) {
+        if (!isActive) return;
+
         if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
 
         const fallback = getFallbackCatalogProductsPage({
@@ -100,7 +104,7 @@ export const useCatalogProducts = ({
         setIsFirstPage(fallback.first);
         setIsLastPage(fallback.last);
       } finally {
-        if (!controller.signal.aborted) {
+        if (isActive && !controller.signal.aborted) {
           setIsLoading(false);
         }
       }
@@ -108,8 +112,11 @@ export const useCatalogProducts = ({
 
     void loadProducts();
 
-    return () => controller.abort();
-  }, [brands, currentPage, enabled, maxPrice, sort, sortBy]);
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, [brandsKey, currentPage, enabled, maxPrice, sort, sortBy]);
 
   return useMemo(
     () => ({
