@@ -1,5 +1,7 @@
 import * as z from 'zod';
 
+import { isValidPhoneNumber } from '@/core/utils/phoneFormat';
+
 const namePattern = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u;
 
 const nameSchema = (fieldName: string) =>
@@ -25,7 +27,9 @@ export const deliveryCheckoutSchema = z.object({
     phone: z
       .string()
       .trim()
-      .regex(/^\+380\d{9}$/, { error: 'Phone number must be in the format +380XXXXXXXXX' }),
+      .refine(isValidPhoneNumber, {
+        error: 'Phone number must be in the format +380 (50) 555-55-55',
+      }),
     region: z.string().trim().min(1, { error: 'Please select a region' }),
   }),
   delivery: z.object({

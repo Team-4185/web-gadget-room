@@ -4,6 +4,7 @@ import type { FieldError } from 'react-hook-form';
 import { Input, Select } from '@/components';
 import { PROFILE_NAME_TOOLTIP, PROFILE_PHONE_TOOLTIP, UKRAINE_REGIONS } from '@/core/constants';
 import type { DeliveryCheckoutErrors, RecipientForm } from '@/core/types';
+import { formatPhoneNumber, normalizePhoneNumber } from '@/core/utils';
 
 import './RecipientSection.css';
 
@@ -60,9 +61,12 @@ export const RecipientSection = ({
             required
           />
           <Input
-            value={recipient.phone}
-            onChange={(e) => onRecipientChange('phone', e.target.value)}
+            value={formatPhoneNumber(recipient.phone)}
+            onChange={(e) => onRecipientChange('phone', normalizePhoneNumber(e.target.value))}
             label="Phone"
+            type="tel"
+            inputMode="tel"
+            placeholder="+380 (50) 555-55-55"
             tooltipText={PROFILE_PHONE_TOOLTIP}
             sx={{ maxWidth: '100%' }}
             error={toFieldError(errors?.phone)}

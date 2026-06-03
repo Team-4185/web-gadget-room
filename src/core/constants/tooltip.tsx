@@ -57,10 +57,10 @@ export const PROFILE_NAME_TOOLTIP = (
 export const PROFILE_PHONE_TOOLTIP = (
   <div>
     <Typography variant="caption" component="div">
-      - Format: +380XXXXXXXXX
+      - Format: +380 (50) 555-55-55
     </Typography>
     <Typography variant="caption" component="div">
-      - Example: +380786932742
+      - Country code +380 is added automatically
     </Typography>
   </div>
 );

@@ -14,9 +14,11 @@ const EMPTY_PROFILE: UpdateUserProfilePayload = {
 export const useUserPanelData = (
   profileInfo: UpdateUserProfilePayload = EMPTY_PROFILE,
   ordersCount = 0,
-  favoritesCount = 0
+  favoritesCount = 0,
+  profileEmail?: string
 ) => {
-  const email = useAppSelector((state) => state.auth.email);
+  const authEmail = useAppSelector((state) => state.auth.email);
+  const email = profileEmail || authEmail;
   const { firstName, lastName, city, phoneNumber } = profileInfo;
 
   return useMemo(() => {

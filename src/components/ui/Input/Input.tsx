@@ -26,6 +26,7 @@ interface IProps {
   size?: 'small' | 'medium';
   isPassword?: boolean;
   autoComplete?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: () => void;
@@ -47,6 +48,7 @@ export const Input: FC<IProps> = ({
   size = 'small',
   isPassword = false,
   autoComplete,
+  inputMode,
   value,
   onChange,
   onBlur,
@@ -120,6 +122,9 @@ export const Input: FC<IProps> = ({
         slotProps={{
           input: {
             endAdornment,
+          },
+          htmlInput: {
+            inputMode,
           },
         }}
         sx={{

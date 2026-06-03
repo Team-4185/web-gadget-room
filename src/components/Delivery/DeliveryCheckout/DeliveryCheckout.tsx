@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -16,7 +16,7 @@ import {
   INITIAL_DELIVERY_CHECKOUT_FORM,
 } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
-import { cartService, ordersService } from '@/core/services';
+import { cartService, ordersService, usersService } from '@/core/services';
 import {
   cartStorage,
   checkoutStorage,
@@ -42,6 +42,7 @@ export const DeliveryCheckout = () => {
   const [validationErrors, setValidationErrors] = useState<DeliveryCheckoutErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cartProducts = useAppSelector((state) => state.cart.cart);
+  const userId = useAppSelector((state) => state.auth.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -51,6 +52,36 @@ export const DeliveryCheckout = () => {
     phoneId: product.id,
     amount: product.amount,
   }));
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const controller = new AbortController();
+
+    usersService
+      .getCurrentUser(controller.signal)
+      .then((user) => {
+        if (controller.signal.aborted) return;
+
+        setForm((prev) => ({
+          ...prev,
+          recipient: {
+            ...prev.recipient,
+            firstName: prev.recipient.firstName || user.firstName || '',
+            lastName: prev.recipient.lastName || user.lastName || '',
+            email: prev.recipient.email || user.email || '',
+            phone: prev.recipient.phone || user.phoneNumber || '',
+          },
+        }));
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [userId]);
 
   const handleRecipientChange = (field: keyof RecipientForm, value: string) => {
     setValidationErrors({});

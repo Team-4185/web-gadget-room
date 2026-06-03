@@ -11,7 +11,7 @@ import {
   UserPanelPersonalInfoSection,
 } from '@/components';
 import { usersService } from '@/core/services';
-import { toErrorMessage, toValidationMessages } from '@/core/utils';
+import { normalizePhoneNumber, toErrorMessage, toValidationMessages } from '@/core/utils';
 import type { UpdateUserProfilePayload } from '@/core/types';
 import { type UserProfileFormValues, userProfileSchema } from '@/core/schemas';
 
@@ -55,6 +55,13 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
     reset(profile);
   }, [profile, reset]);
 
+  useEffect(() => {
+    setEmailState((prev) => ({
+      ...prev,
+      current: email,
+    }));
+  }, [email]);
+
   const handlePasswordChange =
     (key: keyof typeof passwordState) => (event: ChangeEvent<HTMLInputElement>) => {
       setPasswordState((prev) => ({ ...prev, [key]: event.target.value }));
@@ -75,7 +82,7 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       city: data.city.trim(),
-      phoneNumber: data.phoneNumber.trim(),
+      phoneNumber: normalizePhoneNumber(data.phoneNumber),
     };
 
     setIsSavingProfile(true);
