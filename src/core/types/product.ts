@@ -68,7 +68,13 @@ export type BrandInfo = {
   descr: string;
 };
 
-export type CatalogApiSort = 'price_asc' | 'price_desc';
+export type CatalogApiSort =
+  | 'name_asc'
+  | 'name_desc'
+  | 'price_asc'
+  | 'price_desc'
+  | 'popularity'
+  | 'popularity_desc';
 export type SortOption = CatalogApiSort;
 
 export type CatalogProductsRequestParams = {

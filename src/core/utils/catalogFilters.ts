@@ -27,12 +27,24 @@ export const getSelectedCatalogBrands = (
 export const sortFallbackCatalogProducts = (products: IProduct[], sortBy: SortOption) => {
   const sortedProducts = [...products];
 
+  if (sortBy === 'name_asc') {
+    return sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (sortBy === 'name_desc') {
+    return sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+  }
+
   if (sortBy === 'price_asc') {
     return sortedProducts.sort((a, b) => a.price - b.price);
   }
 
   if (sortBy === 'price_desc') {
     return sortedProducts.sort((a, b) => b.price - a.price);
+  }
+
+  if (sortBy === 'popularity' || sortBy === 'popularity_desc') {
+    return sortedProducts.sort((a, b) => (b.reviews ?? 0) - (a.reviews ?? 0));
   }
 
   return sortedProducts;

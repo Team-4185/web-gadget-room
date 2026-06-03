@@ -2,12 +2,24 @@ import type { ISelectOption } from '@/core/types';
 
 export const SORT_BY: ISelectOption[] = [
   {
+    name: 'Name: A to Z',
+    value: 'name_asc',
+  },
+  {
+    name: 'Name: Z to A',
+    value: 'name_desc',
+  },
+  {
     name: 'Price: Low to High',
     value: 'price_asc',
   },
   {
     name: 'Price: High to Low',
     value: 'price_desc',
+  },
+  {
+    name: 'Popularity: High to Low',
+    value: 'popularity_desc',
   },
 ];
 

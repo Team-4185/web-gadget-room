@@ -26,6 +26,7 @@ export const CatalogHeader: FC<IProps> = ({ sortBy, onSortChange }) => {
         <Select
           data={SORT_BY}
           maxWidth="fit-content"
+          minWidth="226px"
           height="36px"
           color="var(--black)"
           fontSize="16px"

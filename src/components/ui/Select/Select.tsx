@@ -8,6 +8,7 @@ import type { ISelectOption } from '@/core/types';
 interface IProps {
   data: ISelectOption[];
   maxWidth: string;
+  minWidth?: string;
   height: string;
   color: string;
   fontSize: string;
@@ -24,6 +25,7 @@ interface IProps {
 export const Select: FC<IProps> = ({
   data,
   maxWidth,
+  minWidth,
   height,
   color,
   fontSize,
@@ -56,6 +58,7 @@ export const Select: FC<IProps> = ({
           height,
           color,
           fontSize,
+          minWidth,
           '& .MuiSelect-select.MuiSelect-select': {
             padding: selectPadding,
           },
@@ -75,11 +78,17 @@ export const Select: FC<IProps> = ({
         value={selectedValue}
         onChange={handleChange}
         displayEmpty
+        autoWidth
         MenuProps={{
           PaperProps: {
             sx: {
               maxHeight: 48 * 6,
               overflowY: 'auto',
+              width: 'max-content',
+              minWidth: 'max-content',
+              '& .MuiMenuItem-root': {
+                whiteSpace: 'nowrap',
+              },
             },
           },
         }}
