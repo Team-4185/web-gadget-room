@@ -2,10 +2,10 @@ import { useEffect, useRef, useState, type FC } from 'react';
 import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 
-import { PRODUCT_META, PRODUCT_SPECS_META } from '@/core/constants';
+import { PRODUCT_SPECS_META } from '@/core/constants';
 import { useAppDispatch, cartActions } from '@/core/store';
 import type { IProduct } from '@/core/types';
-import { ProductTitlePrice, ProductSpecItem, ProductMetaItem, Button } from '@/components';
+import { ProductTitlePrice, ProductSpecItem, Button } from '@/components';
 
 import './ProductInfo.css';
 
@@ -130,17 +130,6 @@ export const ProductInfo: FC<ProductInfoProps> = ({
         <Button maxWidth="257px" height="56px" onClick={buyNow}>
           Buy Now
         </Button>
-      </div>
-      <div className="product-info__meta">
-        {PRODUCT_META.map((info) => (
-          <ProductMetaItem
-            key={info.id}
-            label={info.label}
-            value={info.value}
-            icon={info.icon}
-            alt={info.alt}
-          />
-        ))}
       </div>
     </div>
   );

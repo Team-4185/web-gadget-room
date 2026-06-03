@@ -14,7 +14,7 @@ export const ProductPage: FC = () => {
       <Container disableGutters>
         <div className="product__layout">
           {/* Images */}
-          <ProductGallery images={galleryImages} />
+          <ProductGallery images={galleryImages} colors={product.colors} />
 
           {/* Info */}
           <ProductInfo

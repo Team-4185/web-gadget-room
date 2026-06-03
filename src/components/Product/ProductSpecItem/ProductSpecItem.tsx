@@ -32,6 +32,7 @@ export const ProductSpecItem: FC<IProps> = ({ label, value, icon, alt }) => {
         </Typography>
         <Typography
           component="span"
+          className="product-spec-item__value"
           style={{
             fontWeight: 500,
             fontSize: '14px',

@@ -201,6 +201,18 @@ export const PRODUCT_SPECS_META = [
     icon: ProductInfoBatteryIcon,
     alt: 'Battery icon',
   },
+  {
+    id: 7,
+    label: 'Release year',
+    icon: ProductInfoPhoneIcon,
+    alt: 'Release year icon',
+  },
+  {
+    id: 8,
+    label: 'Storage',
+    icon: ProductInfoCoreIcon,
+    alt: 'Storage icon',
+  },
 ] as const;
 
 export const SPECS = [
@@ -245,6 +257,20 @@ export const SPECS = [
     value: '4323 mAh',
     icon: ProductInfoBatteryIcon,
     alt: 'Battery icon',
+  },
+  {
+    id: 7,
+    label: 'Release year',
+    value: '2024',
+    icon: ProductInfoPhoneIcon,
+    alt: 'Release year icon',
+  },
+  {
+    id: 8,
+    label: 'Storage',
+    value: '128GB',
+    icon: ProductInfoCoreIcon,
+    alt: 'Storage icon',
   },
 ];
 
