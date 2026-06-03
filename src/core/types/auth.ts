@@ -27,6 +27,24 @@ export type UserProfileDto = UpdateUserProfilePayload & {
   email?: string;
 };
 
+export type UserPersonalInfoResponseDto = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  city: string | null;
+  phoneNumber: string | null;
+  role: {
+    id?: number;
+    name?: string;
+  };
+  cart: unknown;
+  orders: unknown[];
+  favorites: unknown[];
+};
+
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
 
 export interface IErrorResponse {

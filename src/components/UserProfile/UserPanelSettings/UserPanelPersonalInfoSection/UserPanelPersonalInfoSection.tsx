@@ -4,6 +4,7 @@ import type { Control } from 'react-hook-form';
 import { User } from '@/assets';
 import { FormInput, UserPanelSettingsActionButton, UserPanelSettingsSection } from '@/components';
 import { PROFILE_NAME_TOOLTIP, PROFILE_PHONE_TOOLTIP } from '@/core/constants';
+import { formatPhoneNumber, normalizePhoneNumber } from '@/core/utils';
 import type { UserProfileFormValues } from '@/core/schemas';
 
 import './UserPanelPersonalInfoSection.css';
@@ -53,6 +54,11 @@ export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps>
           control={control}
           label="Phone Number"
           tooltipText={PROFILE_PHONE_TOOLTIP}
+          type="tel"
+          inputMode="tel"
+          placeholder="+380 (50) 555-55-55"
+          formatValue={formatPhoneNumber}
+          parseValue={normalizePhoneNumber}
           required
         />
         <FormInput

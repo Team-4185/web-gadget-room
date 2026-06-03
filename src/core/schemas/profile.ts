@@ -1,5 +1,7 @@
 import * as z from 'zod';
 
+import { isValidPhoneNumber } from '@/core/utils/phoneFormat';
+
 const namePattern = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u;
 
 const profileNameSchema = (fieldName: string) =>
@@ -19,7 +21,9 @@ export const userProfileSchema = z.object({
   phoneNumber: z
     .string()
     .trim()
-    .regex(/^\+380\d{9}$/, { error: 'Phone number must be in the format +380XXXXXXXXX' }),
+    .refine(isValidPhoneNumber, {
+      error: 'Phone number must be in the format +380 (50) 555-55-55',
+    }),
 });
 
 export type UserProfileFormValues = z.infer<typeof userProfileSchema>;

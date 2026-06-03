@@ -16,6 +16,10 @@ interface IProps<T extends FieldValues> {
   disabled?: boolean;
   isPassword?: boolean;
   autoComplete?: string;
+  inputMode?: InputHTMLAttributes<HTMLInputElement>['inputMode'];
+  placeholder?: string;
+  formatValue?: (value: string) => string;
+  parseValue?: (value: string) => string;
   sx?: SxProps<Theme>;
 }
 
@@ -31,6 +35,10 @@ export const FormInput = <T extends FieldValues>({
   disabled = false,
   isPassword = false,
   autoComplete,
+  inputMode,
+  placeholder,
+  formatValue,
+  parseValue,
   sx,
 }: IProps<T>) => {
   return (
@@ -44,11 +52,17 @@ export const FormInput = <T extends FieldValues>({
           maxWidth={maxWidth}
           type={type}
           label={label}
+          placeholder={placeholder}
           size={size}
           required={required}
           disabled={disabled}
           isPassword={isPassword}
           autoComplete={autoComplete}
+          inputMode={inputMode}
+          value={formatValue ? formatValue(String(field.value ?? '')) : field.value}
+          onChange={(event) => {
+            field.onChange(parseValue ? parseValue(event.target.value) : event);
+          }}
           error={fieldState.error}
           success={!fieldState.error && formState.isSubmitted}
           sx={{ ...sx }}

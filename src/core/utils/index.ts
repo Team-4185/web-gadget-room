@@ -13,3 +13,4 @@ export * from './adminProductManagement';
 export * from './phone';
 export * from './adminAnalytics';
 export * from './error';
+export * from './phoneFormat';

@@ -18,6 +18,7 @@ import {
   UKRAINE_REGIONS,
 } from '@/core/constants';
 import { deliveryCheckoutSchema } from '@/core/schemas';
+import { normalizePhoneNumber } from '@/core/utils/phoneFormat';
 
 export const TEMP_ORDER_ITEM_COLOR = 'BLACK';
 export const TEMP_ORDER_ITEM_STORAGE = 'CAPACITY_128GB';
@@ -54,7 +55,7 @@ export const createOrderPayloadFromCheckout = (
     customerEmail: form.recipient.email.trim(),
     customerFirstName: form.recipient.firstName.trim(),
     customerLastName: form.recipient.lastName.trim(),
-    customerPhoneNumber: form.recipient.phone.trim(),
+    customerPhoneNumber: normalizePhoneNumber(form.recipient.phone),
     paymentMethod,
     ...(paymentMethod === 'CARD' && { paymentDetails }),
     deliveryMethod,

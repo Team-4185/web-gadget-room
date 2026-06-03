@@ -13,6 +13,7 @@ import {
 } from '@/components';
 import { useUserOrders, useUserPanelData } from '@/core/hooks';
 import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { usersService } from '@/core/services';
 import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
@@ -31,15 +32,44 @@ export const UserProfile = () => {
     city: '',
     phoneNumber: '',
   });
+  const [profileEmail, setProfileEmail] = useState('');
   const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
   const requestedTab = searchParams.get('tab');
   const initialTab: UserPanelTab = requestedTab === 'favorite' ? 'favorite' : 'overview';
   const { greeting, subtitle, menu, stats, profile } = useUserPanelData(
     profileInfo,
     totalElements,
-    favorites.length
+    favorites.length,
+    profileEmail
   );
   const [activeTab, setActiveTab] = useState<UserPanelTab>(initialTab);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const controller = new AbortController();
+
+    usersService
+      .getCurrentUser(controller.signal)
+      .then((user) => {
+        if (controller.signal.aborted) return;
+
+        setProfileInfo({
+          firstName: user.firstName ?? '',
+          lastName: user.lastName ?? '',
+          city: user.city ?? '',
+          phoneNumber: user.phoneNumber ?? '',
+        });
+        setProfileEmail(user.email ?? '');
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [userId]);
 
   useEffect(() => {
     if (requestedTab === 'favorite') {
