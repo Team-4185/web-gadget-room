@@ -12,12 +12,14 @@ export const useCatalogProducts = ({
   brands,
   sort,
   maxPrice,
+  enabled = true,
 }: {
   currentPage: number;
   sortBy: SortOption;
   brands: string[];
   sort: CatalogApiSort;
   maxPrice: number;
+  enabled?: boolean;
 }) => {
   const [products, setProducts] = useState<IProduct[]>(PRODUCTS.slice(0, CATALOG_PAGE_SIZE));
   const [totalProducts, setTotalProducts] = useState(PRODUCTS.length);
@@ -27,6 +29,8 @@ export const useCatalogProducts = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (!enabled) return;
+
     if (import.meta.env.VITE_USE_TESTING_FALLBACK === 'true') {
       const fallback = getFallbackCatalogProductsPage({
         products: PRODUCTS,
@@ -105,7 +109,7 @@ export const useCatalogProducts = ({
     void loadProducts();
 
     return () => controller.abort();
-  }, [brands, currentPage, maxPrice, sort, sortBy]);
+  }, [brands, currentPage, enabled, maxPrice, sort, sortBy]);
 
   return useMemo(
     () => ({

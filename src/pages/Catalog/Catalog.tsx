@@ -6,6 +6,7 @@ import { CatalogContent, CatalogFilters } from '@/components';
 import { BRANDS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import { useCatalogProducts, useCatalogState } from '@/core/hooks';
+import { useAppSelector } from '@/core/store';
 import {
   buildCatalogBrandOptions,
   getCatalogApiSort,
@@ -15,6 +16,7 @@ import {
 import './Catalog.css';
 
 export const Catalog = () => {
+  const { authLoading, userId } = useAppSelector((state) => state.auth);
   const [contentScrollTrigger, setContentScrollTrigger] = useState(0);
   const [brandOptions, setBrandOptions] = useState(BRANDS);
   const {
@@ -42,9 +44,12 @@ export const Catalog = () => {
     brands: selectedBrands,
     sort: apiSort,
     maxPrice: appliedSliderValue,
+    enabled: !authLoading && Boolean(userId),
   });
 
   useEffect(() => {
+    if (authLoading || !userId) return;
+
     const controller = new AbortController();
 
     const loadBrands = async () => {
@@ -63,7 +68,7 @@ export const Catalog = () => {
     loadBrands();
 
     return () => controller.abort();
-  }, []);
+  }, [authLoading, userId]);
 
   const handleApplyFilters = () => {
     applyFilters();
