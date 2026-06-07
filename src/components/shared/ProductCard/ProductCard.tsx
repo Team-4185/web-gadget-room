@@ -47,6 +47,8 @@ export const ProductCard: FC<IProps> = ({
   const isLiked = forceLiked || wishList.some((item) => item.id === product.id);
   const productImage = product.img || FALLBACK_IMAGE;
   const badge = product.badge;
+  const badgeText =
+    badge === 'Sale' && product.discountPercent ? `-${product.discountPercent}%` : badge;
   const colorOptions = useMemo(() => getCardColorOptions(product), [product]);
   const [selectedColorName, setSelectedColorName] = useState(
     () => product.selectedColor?.name ?? getDefaultPhoneColor(product.colors).name
@@ -102,7 +104,7 @@ export const ProductCard: FC<IProps> = ({
       <div className="product-card__media">
         {badge && showBadge && (
           <span className={`product-card__badge product-card__badge--${badge.toLowerCase()}`}>
-            {badge}
+            {badgeText}
           </span>
         )}
         <img

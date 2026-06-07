@@ -1,6 +1,7 @@
 import type { ComponentType, SVGProps } from 'react';
 
 export type BadgeType = 'New' | 'Hit' | 'Sale';
+export type ApiProductBadge = 'NEW' | 'HIT' | 'SALE';
 
 export interface IProduct {
   id: number;
@@ -8,6 +9,8 @@ export interface IProduct {
   price: number;
   img: string;
   badge?: BadgeType;
+  badges?: BadgeType[];
+  discountPercent?: number;
   inStock?: boolean;
   preOrder?: boolean;
   reviews?: number;
@@ -34,6 +37,8 @@ export type ApiPhone = {
   stock?: number;
   status?: PhoneStockStatus;
   badge?: BadgeType;
+  badges?: ApiProductBadge[];
+  discountPercent?: number;
   colors?: ApiPhoneColor[];
   storageCapacity?: ApiStorageCapacity[];
   images: ApiPhoneImage[];

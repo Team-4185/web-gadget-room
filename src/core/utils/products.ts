@@ -1,4 +1,4 @@
-import type { ApiPhone, BadgeType, IProduct } from '@/core/types';
+import type { ApiPhone, ApiProductBadge, BadgeType, IProduct } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { getDefaultPhoneColor } from './productVariants';
 
@@ -13,26 +13,35 @@ export const formatProductDisplayName = (brand: string | null | undefined, name:
     : `${normalizedBrand} ${normalizedName}`;
 };
 
-const TEMP_PRODUCT_BADGES: Record<number, BadgeType> = {
-  1: 'Sale',
-  2: 'Hit',
-  4: 'New',
-  6: 'Hit',
-  8: 'Sale',
-  10: 'New',
+const BADGE_PRIORITY: BadgeType[] = ['Sale', 'Hit', 'New'];
+
+const mapApiBadgeToProductBadge = (badge: ApiProductBadge): BadgeType => {
+  if (badge === 'SALE') return 'Sale';
+  if (badge === 'HIT') return 'Hit';
+  return 'New';
 };
 
-export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMAGE): IProduct => ({
-  id: phone.id,
-  name: formatProductDisplayName(phone.brand, phone.name),
-  price: phone.price,
-  img,
-  badge: phone.badge ?? TEMP_PRODUCT_BADGES[phone.id],
-  amount: 1,
-  colors: phone.colors ?? [],
-  storageCapacity: phone.storageCapacity ?? [],
-  selectedColor: getDefaultPhoneColor(phone.colors),
-});
+const getPrimaryProductBadge = (badges: BadgeType[]) =>
+  BADGE_PRIORITY.find((badge) => badges.includes(badge));
+
+export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMAGE): IProduct => {
+  const badges = phone.badges?.map(mapApiBadgeToProductBadge) ?? [];
+  const primaryBadge = getPrimaryProductBadge(badges) ?? phone.badge;
+
+  return {
+    id: phone.id,
+    name: formatProductDisplayName(phone.brand, phone.name),
+    price: phone.price,
+    img,
+    badge: primaryBadge,
+    badges,
+    discountPercent: phone.discountPercent ?? 0,
+    amount: 1,
+    colors: phone.colors ?? [],
+    storageCapacity: phone.storageCapacity ?? [],
+    selectedColor: getDefaultPhoneColor(phone.colors),
+  };
+};
 
 const formatStorageCapacity = (storage: NonNullable<ApiPhone['storageCapacity']>[number]) =>
   `${storage.value}${storage.unit}`;
