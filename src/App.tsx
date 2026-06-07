@@ -13,12 +13,18 @@ import { tokenStorage } from '@/core/utils';
 
 import './App.css';
 
+let didBootstrapApp = false;
+
 const App = () => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.auth.userId);
   const authLoading = useAppSelector((state) => state.auth.authLoading);
 
   useEffect(() => {
+    if (didBootstrapApp) return;
+
+    didBootstrapApp = true;
+
     if (tokenStorage.hasSession()) {
       dispatch(authActions.refreshToken());
     } else {

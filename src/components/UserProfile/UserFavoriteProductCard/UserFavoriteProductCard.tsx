@@ -1,11 +1,13 @@
-import type { FC, MouseEvent, SyntheticEvent } from 'react';
-import { Typography } from '@mui/material';
+import { useMemo, useState, type FC, type MouseEvent, type SyntheticEvent } from 'react';
+import { FormControl, MenuItem, Select, Typography } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material/Select';
 
-import { Liked } from '@/assets';
+import { ChevronDown, Liked } from '@/assets';
 import { Button } from '@/components';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector, wishListActions } from '@/core/store';
-import type { IProduct } from '@/core/types';
+import { DEFAULT_PHONE_COLOR, getDefaultPhoneColor } from '@/core/utils';
+import type { ApiPhoneColor, IProduct } from '@/core/types';
 
 import './UserFavoriteProductCard.css';
 
@@ -20,9 +22,27 @@ const formatPrice = (price: number) =>
     maximumFractionDigits: 2,
   }).format(price);
 
+const getFavoriteColorOptions = (product: IProduct): ApiPhoneColor[] => {
+  const colors = product.colors?.length ? product.colors : [DEFAULT_PHONE_COLOR];
+  const hasBlack = colors.some((color) => color.name === DEFAULT_PHONE_COLOR.name);
+
+  return hasBlack ? colors : [DEFAULT_PHONE_COLOR, ...colors];
+};
+
 export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector((state) => state.auth.userId);
+  const colorOptions = useMemo(() => getFavoriteColorOptions(product), [product]);
+  const [selectedColorName, setSelectedColorName] = useState(
+    () => product.selectedColor?.name ?? getDefaultPhoneColor(product.colors).name
+  );
+  const selectedColor =
+    colorOptions.find((color) => color.name === selectedColorName) ??
+    getDefaultPhoneColor(product.colors);
+  const productWithSelectedColor = {
+    ...product,
+    selectedColor,
+  };
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.src = FALLBACK_IMAGE;
@@ -41,7 +61,11 @@ export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
 
   const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    dispatch(cartActions.addProduct(product));
+    dispatch(cartActions.addProduct(productWithSelectedColor));
+  };
+
+  const handleColorChange = (event: SelectChangeEvent<string>) => {
+    setSelectedColorName(event.target.value);
   };
 
   return (
@@ -65,6 +89,55 @@ export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
         >
           {product.name}
         </Typography>
+        <div
+          className="user-favorite-product-card__color"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <span className="user-favorite-product-card__color-label">Color:</span>
+          <FormControl className="user-favorite-product-card__color-control" size="small">
+            <Select
+              className="user-favorite-product-card__color-select"
+              data-style-variant="subtleBorder"
+              value={selectedColor.name}
+              onChange={handleColorChange}
+              IconComponent={ChevronDown}
+              renderValue={(value) => {
+                const color = colorOptions.find((item) => item.name === value) ?? selectedColor;
+
+                return (
+                  <span className="user-favorite-product-card__color-value">
+                    <span
+                      className="user-favorite-product-card__color-swatch"
+                      style={{ backgroundColor: color.hexCode }}
+                      aria-hidden="true"
+                    />
+                    <span>{color.displayName}</span>
+                  </span>
+                );
+              }}
+              MenuProps={{
+                PaperProps: {
+                  className: 'user-favorite-product-card__color-menu',
+                },
+              }}
+            >
+              {colorOptions.map((color) => (
+                <MenuItem
+                  key={color.name}
+                  value={color.name}
+                  className="user-favorite-product-card__color-option"
+                >
+                  <span
+                    className="user-favorite-product-card__color-swatch"
+                    style={{ backgroundColor: color.hexCode }}
+                    aria-hidden="true"
+                  />
+                  <span>{color.displayName}</span>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
         <Typography
           className="user-favorite-product-card__price"
           component="p"

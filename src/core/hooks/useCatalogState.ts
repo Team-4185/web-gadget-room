@@ -17,6 +17,18 @@ const reconcileCatalogActiveItems = (
     return acc;
   }, {});
 
+const areCatalogActiveItemsEqual = (
+  firstItems: Record<string, boolean>,
+  secondItems: Record<string, boolean>
+) => {
+  const firstKeys = Object.keys(firstItems);
+  const secondKeys = Object.keys(secondItems);
+
+  if (firstKeys.length !== secondKeys.length) return false;
+
+  return firstKeys.every((key) => firstItems[key] === secondItems[key]);
+};
+
 export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
   const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,8 +42,14 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
   const [appliedSliderValue, setAppliedSliderValue] = useState<number>(CATALOG_MAX_PRICE);
 
   useEffect(() => {
-    setActiveItems((prev) => reconcileCatalogActiveItems(brandOptions, prev));
-    setAppliedActiveItems((prev) => reconcileCatalogActiveItems(brandOptions, prev));
+    setActiveItems((prev) => {
+      const next = reconcileCatalogActiveItems(brandOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+    setAppliedActiveItems((prev) => {
+      const next = reconcileCatalogActiveItems(brandOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
   }, [brandOptions]);
 
   const toggleItems = useCallback((item: string) => {

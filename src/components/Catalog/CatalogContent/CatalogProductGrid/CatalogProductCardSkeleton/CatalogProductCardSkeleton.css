@@ -1,7 +1,7 @@
 .catalog-product-card-skeleton {
   box-sizing: border-box;
   width: 244px;
-  height: 325px;
+  height: 355px;
   padding: 10px;
   background: var(--white);
   box-shadow: 0 0 7px 0 var(--blue-violet);
@@ -20,6 +20,7 @@
 .catalog-product-card-skeleton__badge,
 .catalog-product-card-skeleton__image,
 .catalog-product-card-skeleton__title,
+.catalog-product-card-skeleton__color,
 .catalog-product-card-skeleton__price,
 .catalog-product-card-skeleton__button,
 .catalog-product-card-skeleton__icon {
@@ -53,7 +54,7 @@
 
 .catalog-product-card-skeleton__info {
   width: 197px;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .catalog-product-card-skeleton__title {
@@ -64,7 +65,13 @@
 .catalog-product-card-skeleton__price {
   width: 92px;
   height: 18px;
-  margin-top: 14px;
+  margin-top: 10px;
+}
+
+.catalog-product-card-skeleton__color {
+  width: 172px;
+  height: 30px;
+  margin-top: 9px;
 }
 
 .catalog-product-card-skeleton__actions {
@@ -72,7 +79,7 @@
   align-items: center;
   justify-content: space-between;
   width: 221px;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .catalog-product-card-skeleton__button {

@@ -18,7 +18,7 @@ import { ProtectedRoutes } from '@/routes/ProtectedRoute';
 import { AdminRoutes } from '@/routes/AdminRoutes';
 import { PRODUCTS } from '@/core/constants';
 import { phonesService } from '@/core/services';
-import { mapApiPhoneToProduct } from '@/core/utils';
+import { ensureAccessTokenForLoader, mapApiPhoneToProduct } from '@/core/utils';
 import App from '@/App';
 import type { ILoaderData } from '@/core/types';
 
@@ -111,6 +111,7 @@ export const router = createBrowserRouter([
               }
 
               try {
+                await ensureAccessTokenForLoader();
                 const phone = await phonesService.getById(productId);
                 const imageUrls = await phonesService.getImageObjectUrls(phone.images ?? []);
 

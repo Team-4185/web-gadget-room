@@ -31,6 +31,74 @@
   gap: 13px;
 }
 
+.cart-item__color {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.cart-item__color-label {
+  white-space: nowrap;
+}
+
+.cart-item__color-control {
+  width: 126px;
+}
+
+.cart-item__color-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--black-opacity-12);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px var(--black-opacity-12);
+}
+
+.cart-item__color-select {
+  width: 126px;
+  height: 32px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.cart-item__color-select .MuiSelect-select {
+  display: flex;
+  align-items: center;
+  padding: 6px 30px 6px 9px;
+}
+
+.cart-item__color-value,
+.cart-item__color-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.cart-item__color-menu {
+  margin-top: 4px;
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+}
+
+.cart-item__color-menu .MuiMenuItem-root {
+  min-height: 34px;
+  gap: 7px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+}
+
+.cart-item__color-menu .MuiMenuItem-root.Mui-selected,
+.cart-item__color-menu .MuiMenuItem-root.Mui-selected:hover {
+  background: rgba(119, 119, 191, 0.12);
+  color: var(--blue-violet);
+}
+
 .cart-item__amount {
   justify-self: center;
   width: 100px;

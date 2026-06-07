@@ -8,7 +8,7 @@ import type {
 } from '@/core/types';
 import { authService } from '@/core/services';
 import type { FormForgotPassword, FormLoginValues } from '@/core/schemas';
-import { setAccessToken } from '@/core/config';
+import { refreshAuthSession, setAccessToken } from '@/core/config';
 import { tokenStorage } from '@/core/utils';
 
 interface IInitialState extends Omit<IJwtResponseDto, 'accessToken'> {
@@ -104,7 +104,7 @@ export const authSlice = createAppSlice({
     refreshToken: create.asyncThunk<IJwtResponseDto, void, { rejectValue: IErrorResponse }>(
       async (_, { rejectWithValue }) => {
         try {
-          return await authService.refreshToken();
+          return await refreshAuthSession();
         } catch (err) {
           if (axios.isAxiosError<IErrorResponse>(err)) {
             return rejectWithValue(err.response!.data);

@@ -9,6 +9,17 @@ import type {
 import { buildPhoneFormData } from '@/core/utils';
 
 const imageObjectUrlCache = new Map<string, string>();
+const catalogRequestCache = new Map<string, Promise<ApiCatalogProductsPage>>();
+
+const getCatalogRequestKey = (params: CatalogProductsRequestParams) =>
+  JSON.stringify({
+    page: params.page,
+    size: params.size,
+    brands: params.brands ?? [],
+    minPrice: params.minPrice,
+    maxPrice: params.maxPrice,
+    sort: params.sort,
+  });
 
 export const phonesService = {
   async create(payload: CreatePhonePayload, imageFile?: File | null) {
@@ -46,19 +57,35 @@ export const phonesService = {
     return data;
   },
   async getCatalog(params: CatalogProductsRequestParams, signal?: AbortSignal) {
-    const { data } = await api.get<ApiCatalogProductsPage>('/api/v1/filter/by', {
-      params: {
-        page: params.page,
-        size: params.size,
-        brands: params.brands?.join(', ') ?? '',
-        minPrice: params.minPrice,
-        maxPrice: params.maxPrice,
-        sort: params.sort,
-      },
-      signal,
-    });
+    const requestKey = signal ? null : getCatalogRequestKey(params);
+    const cachedRequest = requestKey ? catalogRequestCache.get(requestKey) : null;
 
-    return data;
+    if (cachedRequest) return cachedRequest;
+
+    const request = api
+      .get<ApiCatalogProductsPage>('/api/v1/filter/by', {
+        params: {
+          page: params.page,
+          size: params.size,
+          brands: params.brands?.join(', ') ?? '',
+          minPrice: params.minPrice,
+          maxPrice: params.maxPrice,
+          sort: params.sort,
+        },
+        signal,
+      })
+      .then(({ data }) => data)
+      .finally(() => {
+        if (requestKey) {
+          catalogRequestCache.delete(requestKey);
+        }
+      });
+
+    if (requestKey) {
+      catalogRequestCache.set(requestKey, request);
+    }
+
+    return request;
   },
   async getById(id: number, signal?: AbortSignal) {
     const { data } = await api.get<ApiPhone>(`/api/v1/phones/${id}`, { signal });

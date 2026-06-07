@@ -1,6 +1,9 @@
+import type { ApiPhoneColor } from './product';
+
 export type ICartItemDto = {
   phoneId: number;
   amount: number;
+  selectedColor?: ApiPhoneColor;
 };
 
 export type ICartDto = {

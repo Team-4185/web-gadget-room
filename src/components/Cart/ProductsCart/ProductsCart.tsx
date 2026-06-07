@@ -1,11 +1,21 @@
-import type { SyntheticEvent } from 'react';
-import { Typography } from '@mui/material';
+import { useMemo, type SyntheticEvent } from 'react';
+import { FormControl, MenuItem, Select, Typography } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material/Select';
 
 import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
-import { Trash, Plus, Minus } from '@/assets';
+import { Trash, Plus, Minus, ChevronDown } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
+import { DEFAULT_PHONE_COLOR, getDefaultPhoneColor } from '@/core/utils';
+import type { ApiPhoneColor, IProduct } from '@/core/types';
 
 import './ProductsCart.css';
+
+const getCartColorOptions = (product: IProduct): ApiPhoneColor[] => {
+  const colors = product.colors?.length ? product.colors : [DEFAULT_PHONE_COLOR];
+  const hasBlack = colors.some((color) => color.name === DEFAULT_PHONE_COLOR.name);
+
+  return hasBlack ? colors : [DEFAULT_PHONE_COLOR, ...colors];
+};
 
 export const ProductsCart = () => {
   const products = useAppSelector((state) => state.cart.cart);
@@ -37,13 +47,7 @@ export const ProductsCart = () => {
               <Typography variant="body1" component="span" sx={{ fontWeight: 600, lineHeight: 1 }}>
                 {product.name}
               </Typography>
-              <Typography
-                variant="body1"
-                component="span"
-                sx={{ fontSize: '14px', opacity: 0.7, lineHeight: 1.2 }}
-              >
-                Color: Black
-              </Typography>
+              <CartColorSelect product={product} disabled={cartLoading} />
             </div>
 
             <div className="cart-item__amount">
@@ -106,5 +110,65 @@ export const ProductsCart = () => {
         </article>
       ))}
     </>
+  );
+};
+
+const CartColorSelect = ({ product, disabled }: { product: IProduct; disabled: boolean }) => {
+  const dispatch = useAppDispatch();
+  const colorOptions = useMemo(() => getCartColorOptions(product), [product]);
+  const selectedColor = product.selectedColor ?? getDefaultPhoneColor(product.colors);
+  const handleColorChange = (event: SelectChangeEvent<string>) => {
+    dispatch(
+      cartActions.updateProductColor({
+        phoneId: product.id,
+        colorName: event.target.value,
+      })
+    );
+  };
+
+  return (
+    <label className="cart-item__color">
+      <span className="cart-item__color-label">Color:</span>
+      <FormControl className="cart-item__color-control" size="small">
+        <Select
+          className="cart-item__color-select"
+          data-style-variant="subtleBorder"
+          value={selectedColor.name}
+          disabled={disabled}
+          onChange={handleColorChange}
+          IconComponent={ChevronDown}
+          renderValue={(value) => {
+            const color = colorOptions.find((item) => item.name === value) ?? selectedColor;
+
+            return (
+              <span className="cart-item__color-value">
+                <span
+                  className="cart-item__color-swatch"
+                  style={{ backgroundColor: color.hexCode }}
+                  aria-hidden="true"
+                />
+                <span>{color.displayName}</span>
+              </span>
+            );
+          }}
+          MenuProps={{
+            PaperProps: {
+              className: 'cart-item__color-menu',
+            },
+          }}
+        >
+          {colorOptions.map((color) => (
+            <MenuItem key={color.name} value={color.name} className="cart-item__color-option">
+              <span
+                className="cart-item__color-swatch"
+                style={{ backgroundColor: color.hexCode }}
+                aria-hidden="true"
+              />
+              <span>{color.displayName}</span>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </label>
   );
 };

@@ -12,6 +12,9 @@ export interface IProduct {
   preOrder?: boolean;
   reviews?: number;
   amount: number;
+  colors?: ApiPhoneColor[];
+  storageCapacity?: ApiStorageCapacity[];
+  selectedColor?: ApiPhoneColor;
 }
 
 export type ApiPhone = {
@@ -31,10 +34,24 @@ export type ApiPhone = {
   stock?: number;
   status?: PhoneStockStatus;
   badge?: BadgeType;
+  colors?: ApiPhoneColor[];
+  storageCapacity?: ApiStorageCapacity[];
   images: ApiPhoneImage[];
 };
 
 export type PhoneStockStatus = 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+
+export type ApiPhoneColor = {
+  name: string;
+  displayName: string;
+  hexCode: string;
+};
+
+export type ApiStorageCapacity = {
+  name: string;
+  value: number;
+  unit: string;
+};
 
 export type CreatePhonePayload = {
   releaseYear: number;

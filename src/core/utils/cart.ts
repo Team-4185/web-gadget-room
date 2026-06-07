@@ -5,6 +5,7 @@ import { cartService, phonesService } from '@/core/services';
 import type { ICartDto, IProduct } from '@/core/types';
 import { cartStorage } from './cartStorage';
 import { mapApiPhoneToProduct } from './products';
+import { getDefaultPhoneColor } from './productVariants';
 
 export type CartProductsPayload = {
   cart: ICartDto;
@@ -22,16 +23,24 @@ export const mapCartDtoToProducts = (
   cart: ICartDto,
   backendProducts: IProduct[] = []
 ): IProduct[] =>
-  cart.cartItems.map(({ phoneId, amount }) => {
+  cart.cartItems.map(({ phoneId, amount, selectedColor }) => {
     const backendProduct = backendProducts.find((product) => product.id === phoneId);
     if (backendProduct) {
-      return { ...backendProduct, amount };
+      return {
+        ...backendProduct,
+        amount,
+        selectedColor: selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
+      };
     }
 
     const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
 
     if (sourceProduct) {
-      return { ...sourceProduct, amount };
+      return {
+        ...sourceProduct,
+        amount,
+        selectedColor: selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
+      };
     }
 
     return {
@@ -40,6 +49,7 @@ export const mapCartDtoToProducts = (
       price: 0,
       img: FALLBACK_IMAGE,
       amount,
+      selectedColor: selectedColor ?? getDefaultPhoneColor(),
     };
   });
 
