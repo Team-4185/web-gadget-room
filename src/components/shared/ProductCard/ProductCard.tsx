@@ -52,13 +52,15 @@ export const ProductCard: FC<IProps> = ({
     () => product.selectedColor?.name ?? getDefaultPhoneColor(product.colors).name
   );
   const selectedColor =
-    colorOptions.find((color) => color.name === selectedColorName) ?? getDefaultPhoneColor(product.colors);
+    colorOptions.find((color) => color.name === selectedColorName) ??
+    getDefaultPhoneColor(product.colors);
   const productWithSelectedColor = {
     ...product,
     selectedColor,
   };
   const productCardClassName = `product-card ${className}`.trim();
-  const likeIconClassName = `product-card__like ${isLiked ? 'is-active' : ''} ${likeClassName}`.trim();
+  const likeIconClassName =
+    `product-card__like ${isLiked ? 'is-active' : ''} ${likeClassName}`.trim();
   const FavoriteIcon = isLiked ? Liked : Like;
 
   const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
@@ -152,7 +154,11 @@ export const ProductCard: FC<IProps> = ({
               }}
             >
               {colorOptions.map((color) => (
-                <MenuItem key={color.name} value={color.name} className="product-card__color-option">
+                <MenuItem
+                  key={color.name}
+                  value={color.name}
+                  className="product-card__color-option"
+                >
                   <span
                     className="product-card__color-swatch"
                     style={{ backgroundColor: color.hexCode }}
@@ -171,6 +177,7 @@ export const ProductCard: FC<IProps> = ({
             fontSize: '15px',
             fontWeight: 500,
             color: 'var(--black)',
+            marginTop: '9px',
           }}
         >
           ${formatProductPrice(product.price)}
