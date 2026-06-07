@@ -53,7 +53,7 @@ const initialState: CartState = {
   error: null,
 };
 
-const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProduct[] = []) => {
+const applyCartState = (state: CartState, cart: ICartDto, products: IProduct[] = []) => {
   const selectedColorsByProductId = new Map(
     state.cart
       .filter((product) => product.selectedColor)
@@ -63,7 +63,7 @@ const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProd
   state.cartId = cart.id;
   state.totalPrice = cart.totalPrice;
   state.totalAmount = cart.totalAmount;
-  state.cart = mapCartDtoToProducts(cart, backendProducts).map((product) => ({
+  state.cart = products.map((product) => ({
     ...product,
     selectedColor:
       selectedColorsByProductId.get(product.id) ??
@@ -164,10 +164,16 @@ const cartSlice = createAppSlice({
   name: 'cart',
   initialState,
   reducers: (create) => ({
-    hydrateFromLocal: create.asyncThunk<ICartDto | null, void, { rejectValue: string }>(
+    hydrateFromLocal: create.asyncThunk<CartProductsPayload | null, void, { rejectValue: string }>(
       async (_, { rejectWithValue }) => {
         try {
-          return cartStorage.get();
+          const cart = cartStorage.get();
+          if (!cart) return null;
+
+          return {
+            cart,
+            products: await mapCartDtoToProducts(cart),
+          };
         } catch (error) {
           return rejectWithValue(
             toErrorMessage(error, 'Failed to hydrate cart from local storage')
@@ -177,7 +183,7 @@ const cartSlice = createAppSlice({
       {
         fulfilled: (state, action) => {
           if (!action.payload) return;
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
       }
     ),
