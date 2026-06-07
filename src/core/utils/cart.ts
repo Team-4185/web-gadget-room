@@ -5,7 +5,7 @@ import { cartService, phonesService } from '@/core/services';
 import type { ICartDto, ICartItemDto, IProduct } from '@/core/types';
 import { cartStorage } from './cartStorage';
 import { formatProductDisplayName, mapApiPhoneToProduct } from './products';
-import { getDefaultPhoneColor } from './productVariants';
+import { getDefaultPhoneColor, getDefaultStorageCapacity } from './productVariants';
 
 export type CartProductsPayload = {
   cart: ICartDto;
@@ -40,7 +40,7 @@ export const mapCartDtoToProducts = async (
 ): Promise<IProduct[]> => {
   const products = await Promise.all(
     cart.cartItems.map(async (item) => {
-      const { phoneId, selectedColor } = item;
+      const { phoneId, selectedColor, selectedStorage } = item;
       const amount = getCartItemAmount(item);
 
       if (hasRenderableCartItemDetails(item)) {
@@ -60,6 +60,10 @@ export const mapCartDtoToProducts = async (
             selectedColor ??
             backendProduct?.selectedColor ??
             getDefaultPhoneColor(backendProduct?.colors),
+          selectedStorage:
+            selectedStorage ??
+            backendProduct?.selectedStorage ??
+            getDefaultStorageCapacity(backendProduct?.storageCapacity),
           inStock: item.status ? item.status !== 'OUT_OF_STOCK' : undefined,
         };
       }
@@ -71,6 +75,10 @@ export const mapCartDtoToProducts = async (
         amount,
         selectedColor:
           selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
+        selectedStorage:
+          selectedStorage ??
+          backendProduct.selectedStorage ??
+          getDefaultStorageCapacity(backendProduct.storageCapacity),
       };
     }
 
@@ -82,6 +90,10 @@ export const mapCartDtoToProducts = async (
         amount,
         selectedColor:
           selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
+        selectedStorage:
+          selectedStorage ??
+          sourceProduct.selectedStorage ??
+          getDefaultStorageCapacity(sourceProduct.storageCapacity),
       };
     }
 
@@ -92,6 +104,7 @@ export const mapCartDtoToProducts = async (
       img: FALLBACK_IMAGE,
       amount,
       selectedColor: selectedColor ?? getDefaultPhoneColor(),
+      selectedStorage: selectedStorage ?? getDefaultStorageCapacity(),
     };
     })
   );

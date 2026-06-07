@@ -1,4 +1,4 @@
-import type { ApiPhoneColor, ApiPhoneImage, PhoneStockStatus } from './product';
+import type { ApiPhoneColor, ApiPhoneImage, ApiStorageCapacity, PhoneStockStatus } from './product';
 
 export type ICartItemDto = {
   phoneId: number;
@@ -12,6 +12,9 @@ export type ICartItemDto = {
   amount: number;
   lineTotal?: number;
   selectedColor?: ApiPhoneColor;
+  selectedStorage?: ApiStorageCapacity;
+  colors?: ApiPhoneColor[];
+  storageCapacity?: ApiStorageCapacity[];
 };
 
 export type ICartDto = {

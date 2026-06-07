@@ -122,6 +122,16 @@
   line-height: 1.2;
 }
 
+.add-to-cart-modal__variant {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .add-to-cart-modal__color-label {
   white-space: nowrap;
 }

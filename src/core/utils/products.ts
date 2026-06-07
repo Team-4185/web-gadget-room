@@ -1,6 +1,10 @@
 import type { ApiPhone, ApiProductBadge, BadgeType, IProduct } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { getDefaultPhoneColor } from './productVariants';
+import {
+  formatStorageCapacity,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from './productVariants';
 
 export const formatProductDisplayName = (brand: string | null | undefined, name: string) => {
   const normalizedBrand = brand?.trim() ?? '';
@@ -40,11 +44,9 @@ export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMA
     colors: phone.colors ?? [],
     storageCapacity: phone.storageCapacity ?? [],
     selectedColor: getDefaultPhoneColor(phone.colors),
+    selectedStorage: getDefaultStorageCapacity(phone.storageCapacity),
   };
 };
-
-const formatStorageCapacity = (storage: NonNullable<ApiPhone['storageCapacity']>[number]) =>
-  `${storage.value}${storage.unit}`;
 
 const formatCameraValue = (value: string) =>
   value
