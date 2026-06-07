@@ -29,6 +29,7 @@ export const ProductInfo: FC<ProductInfoProps> = ({
   const measureRef = useRef<HTMLParagraphElement | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showToggle, setShowToggle] = useState(false);
+  const [hasExpandedOverflow, setHasExpandedOverflow] = useState(false);
 
   const descriptionText =
     description || 'Enhanced capabilities thanks to an enlarged display and all-day battery life.';
@@ -45,7 +46,9 @@ export const ProductInfo: FC<ProductInfoProps> = ({
       const lineHeight = Number.parseFloat(window.getComputedStyle(element).lineHeight);
       if (!Number.isFinite(lineHeight) || lineHeight <= 0) return;
 
-      setShowToggle(element.scrollHeight > lineHeight * 3 + 1);
+      const lineCount = Math.ceil(element.scrollHeight / lineHeight);
+      setShowToggle(lineCount > 3);
+      setHasExpandedOverflow(lineCount > 10);
     };
 
     measureOverflow();
@@ -101,7 +104,9 @@ export const ProductInfo: FC<ProductInfoProps> = ({
       </Typography>
       <div className="product-info__description-block">
         <Typography
-          className={`product-info__description ${isExpanded ? 'product-info__description--expanded' : ''}`}
+          className={`product-info__description ${
+            isExpanded ? 'product-info__description--expanded' : ''
+          }`}
           sx={{
             fontSize: '14px',
             lineHeight: '171.429%',
@@ -112,6 +117,11 @@ export const ProductInfo: FC<ProductInfoProps> = ({
         >
           {descriptionText}
         </Typography>
+        {isExpanded && hasExpandedOverflow ? (
+          <span className="product-info__description-ellipsis" aria-hidden="true">
+            ...
+          </span>
+        ) : null}
         {showToggle && (
           <button
             type="button"
