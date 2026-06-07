@@ -101,7 +101,7 @@
   padding-top: 1px;
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 9px;
 }
 
 .add-to-cart-modal__name {
@@ -109,7 +109,29 @@
 }
 
 .add-to-cart-modal__price {
-  margin: 24px 0 0;
+  margin: 10px 0 0;
+}
+
+.add-to-cart-modal__color {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.add-to-cart-modal__color-label {
+  white-space: nowrap;
+}
+
+.add-to-cart-modal__color-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--black-opacity-12);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px var(--black-opacity-12);
 }
 
 .add-to-cart-modal__actions {

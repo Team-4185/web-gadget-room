@@ -31,6 +31,11 @@ type RemoveProductPayload = {
 
 type AddProductPayload = number | IProduct;
 
+type AddProductArg = {
+  product: AddProductPayload;
+  showConfirmation?: boolean;
+};
+
 type UpdateProductColorPayload = {
   phoneId: number;
   colorName: string;
@@ -75,6 +80,11 @@ const isMissingUserCartError = (error: unknown) =>
 
 const getProductFromPayload = (payload: AddProductPayload) =>
   typeof payload === 'number' ? PRODUCTS.find((product) => product.id === payload) : payload;
+
+const normalizeAddProductArg = (payload: AddProductPayload | AddProductArg) =>
+  typeof payload === 'object' && 'product' in payload
+    ? payload
+    : { product: payload, showConfirmation: true };
 
 const persistLocalCartState = (state: CartState) => {
   cartStorage.set({
@@ -195,9 +205,14 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    addProduct: create.asyncThunk<CartProductsPayload, AddProductPayload, { rejectValue: string }>(
+    addProduct: create.asyncThunk<
+      CartProductsPayload,
+      AddProductPayload | AddProductArg,
+      { rejectValue: string }
+    >(
       async (payload, { rejectWithValue }) => {
-        const phoneId = typeof payload === 'number' ? payload : payload.id;
+        const { product } = normalizeAddProductArg(payload);
+        const phoneId = typeof product === 'number' ? product : product.id;
 
         try {
           await cartService.putItem({ phoneId, amount: 1 });
@@ -216,26 +231,41 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          const addedProduct = typeof action.meta.arg === 'number' ? null : action.meta.arg;
-          const phoneId = addedProduct ? addedProduct.id : action.meta.arg;
+          const { product: payloadProduct, showConfirmation = true } = normalizeAddProductArg(
+            action.meta.arg
+          );
+          const addedProduct = typeof payloadProduct === 'number' ? null : payloadProduct;
+          const phoneId = addedProduct ? addedProduct.id : payloadProduct;
 
           applyCartState(state, action.payload.cart, action.payload.products);
           if (addedProduct?.selectedColor) {
             const product = state.cart.find((item) => item.id === addedProduct.id);
             if (product) {
               product.selectedColor = addedProduct.selectedColor;
-              state.lastAddedProduct = product;
+              if (showConfirmation) {
+                state.lastAddedProduct = product;
+              }
             }
           }
-          state.lastAddedProduct =
-            state.lastAddedProduct ??
-            getProductFromPayload(action.meta.arg) ??
-            action.payload.products.find((product) => product.id === phoneId) ??
-            null;
+
+          if (showConfirmation) {
+            state.lastAddedProduct =
+              state.lastAddedProduct ??
+              getProductFromPayload(payloadProduct) ??
+              action.payload.products.find((product) => product.id === phoneId) ??
+              null;
+          } else {
+            state.lastAddedProduct = null;
+          }
         },
         rejected: (state, action) => {
+          const { product, showConfirmation = true } = normalizeAddProductArg(action.meta.arg);
+
           if (action.payload === MISSING_USER_CART_ERROR) {
-            addProductLocally(state, action.meta.arg);
+            addProductLocally(state, product);
+            if (!showConfirmation) {
+              state.lastAddedProduct = null;
+            }
             return;
           }
 

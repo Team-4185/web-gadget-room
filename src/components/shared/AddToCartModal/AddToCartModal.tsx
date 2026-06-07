@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { Check, Plus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { getDefaultPhoneColor } from '@/core/utils';
 import { Button } from '@/components/ui';
 
 import './AddToCartModal.css';
@@ -19,6 +20,9 @@ export const AddToCartModal = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.cart.lastAddedProduct);
+  const selectedColor = product
+    ? product.selectedColor ?? getDefaultPhoneColor(product.colors)
+    : null;
 
   const closeModal = () => {
     dispatch(cartActions.closeAddToCartModal());
@@ -102,6 +106,17 @@ export const AddToCartModal = () => {
             >
               ${formatPrice(product.price)}
             </Typography>
+            {selectedColor ? (
+              <div className="add-to-cart-modal__color">
+                <span className="add-to-cart-modal__color-label">Color:</span>
+                <span
+                  className="add-to-cart-modal__color-swatch"
+                  style={{ backgroundColor: selectedColor.hexCode }}
+                  aria-hidden="true"
+                />
+                <span>{selectedColor.displayName}</span>
+              </div>
+            ) : null}
           </div>
         </div>
 
