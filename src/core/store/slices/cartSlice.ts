@@ -3,10 +3,12 @@ import { isAxiosError } from 'axios';
 import { PRODUCTS } from '@/core/constants';
 import { cartService } from '@/core/services';
 import { createAppSlice } from '@/core/store/createAppSlice';
-import type { ICartDto, IProduct } from '@/core/types';
+import type { ApiPhoneColor, ICartDto, IProduct } from '@/core/types';
 import {
   cartStorage,
   fetchAndStoreServerCartWithProducts,
+  getDefaultPhoneColor,
+  getPhoneColorByName,
   mapCartDtoToProducts,
   toErrorMessage,
   type CartProductsPayload,
@@ -29,6 +31,11 @@ type RemoveProductPayload = {
 
 type AddProductPayload = number | IProduct;
 
+type UpdateProductColorPayload = {
+  phoneId: number;
+  colorName: string;
+};
+
 const MISSING_USER_CART_ERROR = 'MISSING_USER_CART';
 
 const initialState: CartState = {
@@ -42,10 +49,22 @@ const initialState: CartState = {
 };
 
 const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProduct[] = []) => {
+  const selectedColorsByProductId = new Map(
+    state.cart
+      .filter((product) => product.selectedColor)
+      .map((product) => [product.id, product.selectedColor as ApiPhoneColor])
+  );
+
   state.cartId = cart.id;
   state.totalPrice = cart.totalPrice;
   state.totalAmount = cart.totalAmount;
-  state.cart = mapCartDtoToProducts(cart, backendProducts);
+  state.cart = mapCartDtoToProducts(cart, backendProducts).map((product) => ({
+    ...product,
+    selectedColor:
+      selectedColorsByProductId.get(product.id) ??
+      product.selectedColor ??
+      getDefaultPhoneColor(product.colors),
+  }));
   state.error = null;
 };
 
@@ -62,9 +81,10 @@ const persistLocalCartState = (state: CartState) => {
     id: state.cartId,
     totalPrice: state.totalPrice,
     totalAmount: state.totalAmount,
-    cartItems: state.cart.map(({ id, amount }) => ({
+    cartItems: state.cart.map(({ id, amount, selectedColor }) => ({
       phoneId: id,
       amount,
+      selectedColor,
     })),
   });
 };
@@ -81,9 +101,15 @@ const addProductLocally = (state: CartState, payload: AddProductPayload) => {
 
   if (existingProduct) {
     existingProduct.amount += 1;
+    existingProduct.selectedColor =
+      product.selectedColor ?? existingProduct.selectedColor ?? getDefaultPhoneColor(product.colors);
     state.lastAddedProduct = existingProduct;
   } else {
-    const cartProduct = { ...product, amount: 1 };
+    const cartProduct = {
+      ...product,
+      amount: 1,
+      selectedColor: product.selectedColor ?? getDefaultPhoneColor(product.colors),
+    };
     state.cart.push(cartProduct);
     state.lastAddedProduct = cartProduct;
   }
@@ -190,11 +216,19 @@ const cartSlice = createAppSlice({
           state.error = null;
         },
         fulfilled: (state, action) => {
-          const phoneId =
-            typeof action.meta.arg === 'number' ? action.meta.arg : action.meta.arg.id;
+          const addedProduct = typeof action.meta.arg === 'number' ? null : action.meta.arg;
+          const phoneId = addedProduct ? addedProduct.id : action.meta.arg;
 
           applyCartState(state, action.payload.cart, action.payload.products);
+          if (addedProduct?.selectedColor) {
+            const product = state.cart.find((item) => item.id === addedProduct.id);
+            if (product) {
+              product.selectedColor = addedProduct.selectedColor;
+              state.lastAddedProduct = product;
+            }
+          }
           state.lastAddedProduct =
+            state.lastAddedProduct ??
             getProductFromPayload(action.meta.arg) ??
             action.payload.products.find((product) => product.id === phoneId) ??
             null;
@@ -329,6 +363,15 @@ const cartSlice = createAppSlice({
     }),
     closeAddToCartModal: create.reducer((state) => {
       state.lastAddedProduct = null;
+    }),
+    updateProductColor: create.reducer<UpdateProductColorPayload>((state, action) => {
+      const product = state.cart.find((item) => item.id === action.payload.phoneId);
+
+      if (!product) return;
+
+      product.selectedColor = getPhoneColorByName(product.colors, action.payload.colorName);
+      state.error = null;
+      persistLocalCartState(state);
     }),
   }),
 });
