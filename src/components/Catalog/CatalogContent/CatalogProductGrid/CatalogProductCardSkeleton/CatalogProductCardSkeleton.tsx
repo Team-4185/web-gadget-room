@@ -8,6 +8,7 @@ export const CatalogProductCardSkeleton = () => (
     </div>
     <div className="catalog-product-card-skeleton__info">
       <span className="catalog-product-card-skeleton__title" />
+      <span className="catalog-product-card-skeleton__color" />
       <span className="catalog-product-card-skeleton__price" />
     </div>
     <div className="catalog-product-card-skeleton__actions">
