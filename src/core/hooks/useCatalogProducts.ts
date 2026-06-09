@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
-import { CATALOG_MIN_PRICE, CATALOG_PAGE_SIZE, PRODUCTS } from '@/core/constants';
+import { CATALOG_PAGE_SIZE, PRODUCTS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { CatalogApiSort, IProduct, SortOption } from '@/core/types';
 import { getFallbackCatalogProductsPage, mapApiPhoneToProduct } from '@/core/utils';
@@ -10,14 +10,20 @@ export const useCatalogProducts = ({
   currentPage,
   sortBy,
   brands,
+  colors,
+  storageCapacities,
   sort,
+  minPrice,
   maxPrice,
   enabled = true,
 }: {
   currentPage: number;
   sortBy: SortOption;
   brands: string[];
+  colors: string[];
+  storageCapacities: string[];
   sort: CatalogApiSort;
+  minPrice: number;
   maxPrice: number;
   enabled?: boolean;
 }) => {
@@ -28,6 +34,8 @@ export const useCatalogProducts = ({
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const brandsKey = brands.join('|');
+  const colorsKey = colors.join('|');
+  const storageCapacitiesKey = storageCapacities.join('|');
 
   useEffect(() => {
     if (!enabled) return;
@@ -56,23 +64,30 @@ export const useCatalogProducts = ({
       setIsLoading(true);
 
       try {
-        const response = await phonesService.getCatalog({
-          page: currentPage,
-          size: CATALOG_PAGE_SIZE,
-          brands,
-          minPrice: CATALOG_MIN_PRICE,
-          maxPrice,
-          sort,
-        });
+        const response = await phonesService.getCatalog(
+          {
+            page: currentPage,
+            size: CATALOG_PAGE_SIZE,
+            brands,
+            colors,
+            storageCapacities,
+            minPrice,
+            maxPrice,
+            sort,
+          },
+          controller.signal
+        );
 
         if (!isActive) return;
 
         const mappedProducts = await Promise.all(
           response.content.map(async (phone) => {
-            const imageUrls = await phonesService.getImageObjectUrls(
-              phone.images ?? [],
-              controller.signal
-            );
+            const previewImageUrl = phone.previewImage?.url
+              ? await phonesService.getImageObjectUrl(phone.previewImage.url, controller.signal)
+              : null;
+            const imageUrls = previewImageUrl
+              ? [previewImageUrl]
+              : await phonesService.getImageObjectUrls(phone.images ?? [], controller.signal);
 
             return mapApiPhoneToProduct(phone, imageUrls[0]);
           })
@@ -116,7 +131,17 @@ export const useCatalogProducts = ({
       isActive = false;
       controller.abort();
     };
-  }, [brandsKey, currentPage, enabled, maxPrice, sort, sortBy]);
+  }, [
+    brandsKey,
+    colorsKey,
+    currentPage,
+    enabled,
+    maxPrice,
+    minPrice,
+    sort,
+    sortBy,
+    storageCapacitiesKey,
+  ]);
 
   return useMemo(
     () => ({

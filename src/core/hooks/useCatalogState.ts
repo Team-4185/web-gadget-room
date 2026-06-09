@@ -4,6 +4,13 @@ import { CATALOG_DEFAULT_SORT, CATALOG_MAX_PRICE } from '@/core/constants';
 import type { ICheckboxOption, SortOption } from '@/core/types';
 import { buildCatalogActiveItems } from '@/core/utils';
 
+type CatalogStateOptions = {
+  brandOptions: ICheckboxOption[];
+  colorOptions: ICheckboxOption[];
+  storageOptions: ICheckboxOption[];
+  maxPrice: number;
+};
+
 const reconcileCatalogActiveItems = (
   brandOptions: ICheckboxOption[],
   currentItems: Record<string, boolean>
@@ -29,7 +36,12 @@ const areCatalogActiveItemsEqual = (
   return firstKeys.every((key) => firstItems[key] === secondItems[key]);
 };
 
-export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
+export const useCatalogState = ({
+  brandOptions,
+  colorOptions,
+  storageOptions,
+  maxPrice,
+}: CatalogStateOptions) => {
   const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeItems, setActiveItems] = useState<Record<string, boolean>>(() =>
@@ -38,8 +50,22 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
   const [appliedActiveItems, setAppliedActiveItems] = useState<Record<string, boolean>>(() =>
     buildCatalogActiveItems(brandOptions)
   );
-  const [sliderValue, setSliderValue] = useState<number>(CATALOG_MAX_PRICE);
-  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(CATALOG_MAX_PRICE);
+  const [activeColorItems, setActiveColorItems] = useState<Record<string, boolean>>(() =>
+    buildCatalogActiveItems(colorOptions)
+  );
+  const [appliedActiveColorItems, setAppliedActiveColorItems] = useState<Record<string, boolean>>(
+    () => buildCatalogActiveItems(colorOptions)
+  );
+  const [activeStorageItems, setActiveStorageItems] = useState<Record<string, boolean>>(() =>
+    buildCatalogActiveItems(storageOptions)
+  );
+  const [appliedActiveStorageItems, setAppliedActiveStorageItems] = useState<
+    Record<string, boolean>
+  >(() => buildCatalogActiveItems(storageOptions));
+  const [sliderValue, setSliderValue] = useState<number>(maxPrice || CATALOG_MAX_PRICE);
+  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(
+    maxPrice || CATALOG_MAX_PRICE
+  );
 
   useEffect(() => {
     setActiveItems((prev) => {
@@ -52,8 +78,45 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
     });
   }, [brandOptions]);
 
+  useEffect(() => {
+    setActiveColorItems((prev) => {
+      const next = reconcileCatalogActiveItems(colorOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+    setAppliedActiveColorItems((prev) => {
+      const next = reconcileCatalogActiveItems(colorOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+  }, [colorOptions]);
+
+  useEffect(() => {
+    setActiveStorageItems((prev) => {
+      const next = reconcileCatalogActiveItems(storageOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+    setAppliedActiveStorageItems((prev) => {
+      const next = reconcileCatalogActiveItems(storageOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+  }, [storageOptions]);
+
+  useEffect(() => {
+    setSliderValue((prev) => (prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev));
+    setAppliedSliderValue((prev) =>
+      prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev
+    );
+  }, [maxPrice]);
+
   const toggleItems = useCallback((item: string) => {
     setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  }, []);
+
+  const toggleColorItems = useCallback((item: string) => {
+    setActiveColorItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  }, []);
+
+  const toggleStorageItems = useCallback((item: string) => {
+    setActiveStorageItems((prev) => ({ ...prev, [item]: !prev[item] }));
   }, []);
 
   const handleSliderChange = useCallback((_event: Event, newValue: number | number[]) => {
@@ -67,29 +130,43 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
 
   const applyFilters = useCallback(() => {
     setAppliedActiveItems(activeItems);
+    setAppliedActiveColorItems(activeColorItems);
+    setAppliedActiveStorageItems(activeStorageItems);
     setAppliedSliderValue(sliderValue);
     setCurrentPage(1);
-  }, [activeItems, sliderValue]);
+  }, [activeColorItems, activeItems, activeStorageItems, sliderValue]);
 
   const resetFilters = useCallback(() => {
     const defaultActiveItems = buildCatalogActiveItems(brandOptions);
+    const defaultActiveColorItems = buildCatalogActiveItems(colorOptions);
+    const defaultActiveStorageItems = buildCatalogActiveItems(storageOptions);
 
     setActiveItems(defaultActiveItems);
     setAppliedActiveItems(defaultActiveItems);
-    setSliderValue(CATALOG_MAX_PRICE);
-    setAppliedSliderValue(CATALOG_MAX_PRICE);
+    setActiveColorItems(defaultActiveColorItems);
+    setAppliedActiveColorItems(defaultActiveColorItems);
+    setActiveStorageItems(defaultActiveStorageItems);
+    setAppliedActiveStorageItems(defaultActiveStorageItems);
+    setSliderValue(maxPrice);
+    setAppliedSliderValue(maxPrice);
     setCurrentPage(1);
-  }, [brandOptions]);
+  }, [brandOptions, colorOptions, maxPrice, storageOptions]);
 
   return {
     sortBy,
     currentPage,
     activeItems,
     appliedActiveItems,
+    activeColorItems,
+    appliedActiveColorItems,
+    activeStorageItems,
+    appliedActiveStorageItems,
     sliderValue,
     appliedSliderValue,
 
     toggleItems,
+    toggleColorItems,
+    toggleStorageItems,
     handleSliderChange,
     handleSortChange,
     applyFilters,
