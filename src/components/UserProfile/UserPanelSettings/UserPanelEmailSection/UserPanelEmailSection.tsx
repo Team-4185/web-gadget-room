@@ -14,20 +14,35 @@ import './UserPanelEmailSection.css';
 interface EmailState {
   current: string;
   next: string;
+  currentPassword: string;
 }
 
 interface UserPanelEmailSectionProps {
   value: EmailState;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (key: keyof EmailState) => (event: ChangeEvent<HTMLInputElement>) => void;
+  isSaving?: boolean;
+  onSubmit: () => void;
 }
 
-export const UserPanelEmailSection: FC<UserPanelEmailSectionProps> = ({ value, onChange }) => {
+export const UserPanelEmailSection: FC<UserPanelEmailSectionProps> = ({
+  value,
+  onChange,
+  isSaving = false,
+  onSubmit,
+}) => {
   return (
     <UserPanelSettingsSection
       icon={<Mail width={30} height={30} />}
       title="E-mail"
       subtitle="Change email address"
-      action={<UserPanelSettingsActionButton text="Change email" maxWidth="192px" />}
+      action={
+        <UserPanelSettingsActionButton
+          text={isSaving ? 'Saving...' : 'Change email'}
+          maxWidth="192px"
+          disabled={isSaving}
+          onClick={onSubmit}
+        />
+      }
     >
       <div className="user-profile__settings-content">
         <div className="user-profile__settings-text-input">
@@ -44,7 +59,18 @@ export const UserPanelEmailSection: FC<UserPanelEmailSectionProps> = ({ value, o
           placeholder="New email address"
           size="medium"
           value={value.next}
-          onChange={onChange}
+          onChange={onChange('next')}
+          autoComplete="email"
+        />
+
+        <Input
+          label="Current Password"
+          placeholder="Current password"
+          size="medium"
+          value={value.currentPassword}
+          isPassword
+          onChange={onChange('currentPassword')}
+          autoComplete="current-password"
         />
 
         <UserPanelSettingsInfoMessage

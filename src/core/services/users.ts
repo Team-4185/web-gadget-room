@@ -1,5 +1,7 @@
 import { api } from '@/core/config';
 import type {
+  ChangeUserEmailPayload,
+  ChangeUserPasswordPayload,
   UpdateUserProfilePayload,
   UserPersonalInfoResponseDto,
   UserProfileDto,
@@ -16,5 +18,11 @@ export const usersService = {
       payload
     );
     return data;
+  },
+  async changePassword(payload: ChangeUserPasswordPayload) {
+    await api.patch<void>('/api/v1/users/me/password', payload);
+  },
+  async changeEmail(payload: ChangeUserEmailPayload) {
+    await api.patch<void>('/api/v1/users/me/email', payload);
   },
 };

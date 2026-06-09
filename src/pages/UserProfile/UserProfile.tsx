@@ -249,6 +249,7 @@ export const UserProfile = () => {
                 email={profile.email}
                 profile={profileInfo}
                 onProfileSaved={setProfileInfo}
+                onEmailSaved={setProfileEmail}
               />
             )}
           </div>

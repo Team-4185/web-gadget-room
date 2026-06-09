@@ -34,6 +34,9 @@ export const tokenStorage = {
   markSession() {
     localStorage.setItem(SESSION_KEY, 'true');
   },
+  setEmail(email: string) {
+    localStorage.setItem(EMAIL_KEY, email);
+  },
   clearSession() {
     this.clear();
     localStorage.removeItem(SESSION_KEY);

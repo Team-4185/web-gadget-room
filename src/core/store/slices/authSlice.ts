@@ -32,6 +32,9 @@ export const authSlice = createAppSlice({
     finishAuthLoading: create.reducer((state) => {
       state.authLoading = false;
     }),
+    updateEmailLocal: create.reducer<string>((state, action) => {
+      state.email = action.payload;
+    }),
     register: create.asyncThunk<
       IJwtResponseDto,
       FormRegisterValuesDto,

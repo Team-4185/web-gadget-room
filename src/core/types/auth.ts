@@ -45,6 +45,17 @@ export type UserPersonalInfoResponseDto = {
   favorites: unknown[];
 };
 
+export type ChangeUserPasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
+
+export type ChangeUserEmailPayload = {
+  newEmail: string;
+  currentPassword: string;
+};
+
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
 
 export interface IErrorResponse {

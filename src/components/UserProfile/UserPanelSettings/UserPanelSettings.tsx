@@ -11,7 +11,8 @@ import {
   UserPanelPersonalInfoSection,
 } from '@/components';
 import { usersService } from '@/core/services';
-import { normalizePhoneNumber, toErrorMessage, toValidationMessages } from '@/core/utils';
+import { normalizePhoneNumber, tokenStorage, toErrorMessage, toValidationMessages } from '@/core/utils';
+import { authActions, useAppDispatch } from '@/core/store';
 import type { UpdateUserProfilePayload } from '@/core/types';
 import { type UserProfileFormValues, userProfileSchema } from '@/core/schemas';
 
@@ -22,6 +23,7 @@ interface UserPanelSettingsProps {
   email: string;
   profile: UpdateUserProfilePayload;
   onProfileSaved: (profile: UpdateUserProfilePayload) => void;
+  onEmailSaved: (email: string) => void;
 }
 
 export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
@@ -29,16 +31,21 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
   email,
   profile,
   onProfileSaved,
+  onEmailSaved,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm<UserProfileFormValues>({
     resolver: zodResolver(userProfileSchema),
     defaultValues: profile,
   });
   const [isSavingProfile, setIsSavingProfile] = useState(false);
+  const [isSavingEmail, setIsSavingEmail] = useState(false);
+  const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [emailState, setEmailState] = useState({
     current: email,
     next: '',
+    currentPassword: '',
   });
   const [passwordState, setPasswordState] = useState({
     current: '',
@@ -66,9 +73,10 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
     (key: keyof typeof passwordState) => (event: ChangeEvent<HTMLInputElement>) => {
       setPasswordState((prev) => ({ ...prev, [key]: event.target.value }));
     };
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmailState((prev) => ({ ...prev, next: event.target.value }));
-  };
+  const handleEmailChange =
+    (key: keyof typeof emailState) => (event: ChangeEvent<HTMLInputElement>) => {
+      setEmailState((prev) => ({ ...prev, [key]: event.target.value }));
+    };
   const handleNotificationToggle = (key: keyof typeof notificationState) => {
     setNotificationState((prev) => ({ ...prev, [key]: !prev[key] }));
   };
@@ -114,6 +122,93 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
     }
   };
 
+  const handleEmailSave = async () => {
+    const nextEmail = emailState.next.trim();
+    const currentPassword = emailState.currentPassword;
+
+    if (!nextEmail || !currentPassword) {
+      enqueueSnackbar('Enter new email and current password.', { variant: 'warning' });
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(nextEmail)) {
+      enqueueSnackbar('Enter a valid email address.', { variant: 'warning' });
+      return;
+    }
+
+    setIsSavingEmail(true);
+
+    try {
+      await usersService.changeEmail({
+        newEmail: nextEmail,
+        currentPassword,
+      });
+
+      setEmailState({
+        current: nextEmail,
+        next: '',
+        currentPassword: '',
+      });
+      onEmailSaved(nextEmail);
+      dispatch(authActions.updateEmailLocal(nextEmail));
+      tokenStorage.setEmail(nextEmail);
+      enqueueSnackbar('Email updated.', { variant: 'success' });
+    } catch (error) {
+      const validationMessages = toValidationMessages(error);
+
+      if (validationMessages.length) {
+        validationMessages.forEach((message) => {
+          enqueueSnackbar(message, { variant: 'warning' });
+        });
+      } else {
+        enqueueSnackbar(toErrorMessage(error, 'Failed to update email.'), { variant: 'error' });
+      }
+    } finally {
+      setIsSavingEmail(false);
+    }
+  };
+
+  const handlePasswordSave = async () => {
+    if (!passwordState.current || !passwordState.next || !passwordState.confirm) {
+      enqueueSnackbar('Fill all password fields.', { variant: 'warning' });
+      return;
+    }
+
+    if (passwordState.next !== passwordState.confirm) {
+      enqueueSnackbar("Passwords don't match.", { variant: 'warning' });
+      return;
+    }
+
+    setIsSavingPassword(true);
+
+    try {
+      await usersService.changePassword({
+        currentPassword: passwordState.current,
+        newPassword: passwordState.next,
+        confirmNewPassword: passwordState.confirm,
+      });
+
+      setPasswordState({
+        current: '',
+        next: '',
+        confirm: '',
+      });
+      enqueueSnackbar('Password updated.', { variant: 'success' });
+    } catch (error) {
+      const validationMessages = toValidationMessages(error);
+
+      if (validationMessages.length) {
+        validationMessages.forEach((message) => {
+          enqueueSnackbar(message, { variant: 'warning' });
+        });
+      } else {
+        enqueueSnackbar(toErrorMessage(error, 'Failed to update password.'), { variant: 'error' });
+      }
+    } finally {
+      setIsSavingPassword(false);
+    }
+  };
+
   return (
     <div className="user-profile__settings" aria-label="Account settings">
       <div className="user-profile__settings-head">
@@ -130,8 +225,18 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
         isSaving={isSavingProfile}
         onSave={handleSubmit(handleProfileSave)}
       />
-      <UserPanelEmailSection value={emailState} onChange={handleEmailChange} />
-      <UserPanelPasswordSection value={passwordState} onChange={handlePasswordChange} />
+      <UserPanelEmailSection
+        value={emailState}
+        isSaving={isSavingEmail}
+        onChange={handleEmailChange}
+        onSubmit={() => void handleEmailSave()}
+      />
+      <UserPanelPasswordSection
+        value={passwordState}
+        isSaving={isSavingPassword}
+        onChange={handlePasswordChange}
+        onSubmit={() => void handlePasswordSave()}
+      />
       <UserPanelNotificationsSection value={notificationState} onToggle={handleNotificationToggle} />
     </div>
   );
