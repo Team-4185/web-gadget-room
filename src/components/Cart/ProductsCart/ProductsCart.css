@@ -45,6 +45,12 @@
   white-space: nowrap;
 }
 
+.cart-item__storage {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .cart-item__color-control {
   width: 126px;
 }

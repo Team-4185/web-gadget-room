@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router';
 import { Check, Plus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
-import { getDefaultPhoneColor } from '@/core/utils';
+import {
+  formatStorageCapacity,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from '@/core/utils';
 import { Button } from '@/components/ui';
 
 import './AddToCartModal.css';
@@ -22,6 +26,9 @@ export const AddToCartModal = () => {
   const product = useAppSelector((state) => state.cart.lastAddedProduct);
   const selectedColor = product
     ? product.selectedColor ?? getDefaultPhoneColor(product.colors)
+    : null;
+  const selectedStorage = product
+    ? product.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity)
     : null;
 
   const closeModal = () => {
@@ -115,6 +122,12 @@ export const AddToCartModal = () => {
                   aria-hidden="true"
                 />
                 <span>{selectedColor.displayName}</span>
+              </div>
+            ) : null}
+            {selectedStorage ? (
+              <div className="add-to-cart-modal__variant">
+                <span>Storage:</span>
+                <span>{formatStorageCapacity(selectedStorage)}</span>
               </div>
             ) : null}
           </div>

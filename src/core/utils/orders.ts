@@ -19,6 +19,7 @@ import {
 } from '@/core/constants';
 import { deliveryCheckoutSchema } from '@/core/schemas';
 import { normalizePhoneNumber } from '@/core/utils/phoneFormat';
+import { getDefaultPhoneColor, getDefaultStorageCapacity } from './productVariants';
 
 export const TEMP_ORDER_ITEM_COLOR = 'BLACK';
 export const TEMP_ORDER_ITEM_STORAGE = 'CAPACITY_128GB';
@@ -39,6 +40,16 @@ const DELIVERY_METHOD_BY_FORM_METHOD: Record<DeliveryMethod, OrderDeliveryMethod
 
 const getOptionName = (options: ISelectOption[], value: string) =>
   options.find((option) => option.value === value)?.name ?? value;
+
+const getCheckoutItemColor = (item: ICartItemDto) =>
+  item.selectedColor?.name ?? getDefaultPhoneColor(item.colors).name ?? TEMP_ORDER_ITEM_COLOR;
+
+const getCheckoutItemStorage = (item: ICartItemDto) =>
+  item.selectedStorage?.name ??
+  getDefaultStorageCapacity(item.storageCapacity).name ??
+  TEMP_ORDER_ITEM_STORAGE;
+
+const getCheckoutItemQuantity = (item: ICartItemDto) => item.amount ?? item.quantity ?? 0;
 
 export const createOrderPayloadFromCheckout = (
   form: DeliveryCheckoutForm,
@@ -78,11 +89,11 @@ export const createOrderPayloadFromCheckout = (
             country: selectedBranchAddress.country,
             zipCode: selectedBranchAddress.zipCode,
           },
-    items: cartItems.map(({ phoneId, amount }) => ({
-      phoneId,
-      quantity: amount,
-      color: TEMP_ORDER_ITEM_COLOR,
-      storage: TEMP_ORDER_ITEM_STORAGE,
+    items: cartItems.map((item) => ({
+      phoneId: item.phoneId,
+      quantity: getCheckoutItemQuantity(item),
+      color: getCheckoutItemColor(item),
+      storage: getCheckoutItemStorage(item),
     })),
   };
 };

@@ -4,7 +4,8 @@ import { Typography } from '@mui/material';
 
 import { PRODUCT_SPECS_META } from '@/core/constants';
 import { useAppDispatch, cartActions } from '@/core/store';
-import type { IProduct } from '@/core/types';
+import type { ApiStorageCapacity, IProduct } from '@/core/types';
+import { formatStorageCapacity } from '@/core/utils';
 import { ProductTitlePrice, ProductSpecItem, Button } from '@/components';
 
 import './ProductInfo.css';
@@ -15,6 +16,8 @@ interface ProductInfoProps {
   description: string;
   loading: boolean;
   error: string | null;
+  selectedStorage?: ApiStorageCapacity;
+  onStorageSelect?: (storage: ApiStorageCapacity) => void;
 }
 
 export const ProductInfo: FC<ProductInfoProps> = ({
@@ -23,6 +26,8 @@ export const ProductInfo: FC<ProductInfoProps> = ({
   description,
   loading,
   error,
+  selectedStorage,
+  onStorageSelect,
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -132,6 +137,31 @@ export const ProductInfo: FC<ProductInfoProps> = ({
           </button>
         )}
       </div>
+      {product.storageCapacity?.length ? (
+        <div className="product-info__storage" aria-label="Storage options">
+          <Typography className="product-info__storage-label" component="span">
+            Storage
+          </Typography>
+          <div className="product-info__storage-options">
+            {product.storageCapacity.map((storage) => {
+              const isSelected = selectedStorage?.name === storage.name;
+
+              return (
+                <button
+                  key={storage.name}
+                  type="button"
+                  className={`product-info__storage-option ${
+                    isSelected ? 'product-info__storage-option--selected' : ''
+                  }`}
+                  onClick={() => onStorageSelect?.(storage)}
+                >
+                  {formatStorageCapacity(storage)}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
       <div className="product-info__actions">
         <Button maxWidth="257px" height="56px" onClick={addToCart}>
           Add To Cart

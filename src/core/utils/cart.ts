@@ -2,10 +2,10 @@ import { isAxiosError } from 'axios';
 
 import { FALLBACK_IMAGE, PRODUCTS } from '@/core/constants';
 import { cartService, phonesService } from '@/core/services';
-import type { ICartDto, IProduct } from '@/core/types';
+import type { ICartDto, ICartItemDto, IProduct } from '@/core/types';
 import { cartStorage } from './cartStorage';
-import { mapApiPhoneToProduct } from './products';
-import { getDefaultPhoneColor } from './productVariants';
+import { formatProductDisplayName, mapApiPhoneToProduct } from './products';
+import { getDefaultPhoneColor, getDefaultStorageCapacity } from './productVariants';
 
 export type CartProductsPayload = {
   cart: ICartDto;
@@ -19,17 +19,66 @@ const EMPTY_CART: ICartDto = {
   cartItems: [],
 };
 
-export const mapCartDtoToProducts = (
+const getCartItemAmount = (item: ICartItemDto) => item.amount ?? item.quantity ?? 0;
+
+const hasRenderableCartItemDetails = (item: ICartItemDto) =>
+  Boolean(item.productName && item.price !== undefined);
+
+const mapCartItemPreviewImage = async (item: ICartItemDto): Promise<string> => {
+  if (!item.previewImage?.url) return FALLBACK_IMAGE;
+
+  try {
+    return await phonesService.getImageObjectUrl(item.previewImage.url);
+  } catch {
+    return FALLBACK_IMAGE;
+  }
+};
+
+export const mapCartDtoToProducts = async (
   cart: ICartDto,
   backendProducts: IProduct[] = []
-): IProduct[] =>
-  cart.cartItems.map(({ phoneId, amount, selectedColor }) => {
+): Promise<IProduct[]> => {
+  const products = await Promise.all(
+    cart.cartItems.map(async (item) => {
+      const { phoneId, selectedColor, selectedStorage } = item;
+      const amount = getCartItemAmount(item);
+
+      if (hasRenderableCartItemDetails(item)) {
+        const img = await mapCartItemPreviewImage(item);
+        const backendProduct = backendProducts.find((product) => product.id === phoneId);
+
+        return {
+          ...(backendProduct ?? {}),
+          id: phoneId,
+          name: formatProductDisplayName(item.brand, item.productName ?? `Phone #${phoneId}`),
+          price: Number(item.price ?? backendProduct?.price ?? 0),
+          img,
+          amount,
+          colors: backendProduct?.colors ?? [],
+          storageCapacity: backendProduct?.storageCapacity ?? [],
+          selectedColor:
+            selectedColor ??
+            backendProduct?.selectedColor ??
+            getDefaultPhoneColor(backendProduct?.colors),
+          selectedStorage:
+            selectedStorage ??
+            backendProduct?.selectedStorage ??
+            getDefaultStorageCapacity(backendProduct?.storageCapacity),
+          inStock: item.status ? item.status !== 'OUT_OF_STOCK' : undefined,
+        };
+      }
+
     const backendProduct = backendProducts.find((product) => product.id === phoneId);
     if (backendProduct) {
       return {
         ...backendProduct,
         amount,
-        selectedColor: selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
+        selectedColor:
+          selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
+        selectedStorage:
+          selectedStorage ??
+          backendProduct.selectedStorage ??
+          getDefaultStorageCapacity(backendProduct.storageCapacity),
       };
     }
 
@@ -39,7 +88,12 @@ export const mapCartDtoToProducts = (
       return {
         ...sourceProduct,
         amount,
-        selectedColor: selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
+        selectedColor:
+          selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
+        selectedStorage:
+          selectedStorage ??
+          sourceProduct.selectedStorage ??
+          getDefaultStorageCapacity(sourceProduct.storageCapacity),
       };
     }
 
@@ -50,8 +104,13 @@ export const mapCartDtoToProducts = (
       img: FALLBACK_IMAGE,
       amount,
       selectedColor: selectedColor ?? getDefaultPhoneColor(),
+      selectedStorage: selectedStorage ?? getDefaultStorageCapacity(),
     };
-  });
+    })
+  );
+
+  return products;
+};
 
 export const fetchAndStoreServerCart = async () => {
   try {
@@ -70,12 +129,14 @@ export const fetchAndStoreServerCart = async () => {
 
 export const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => {
   const results = await Promise.allSettled(
-    cart.cartItems.map(async ({ phoneId }) => {
+    cart.cartItems
+      .filter((item) => !hasRenderableCartItemDetails(item))
+      .map(async ({ phoneId }) => {
       const phone = await phonesService.getById(phoneId);
       const imageUrls = await phonesService.getImageObjectUrls(phone.images ?? []);
 
       return mapApiPhoneToProduct(phone, imageUrls[0]);
-    })
+      })
   );
 
   return results.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []));
@@ -83,7 +144,8 @@ export const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => 
 
 export const fetchAndStoreServerCartWithProducts = async (): Promise<CartProductsPayload> => {
   const cart = await fetchAndStoreServerCart();
-  const products = await fetchCartProducts(cart);
+  const backendProducts = await fetchCartProducts(cart);
+  const products = await mapCartDtoToProducts(cart, backendProducts);
 
   return { cart, products };
 };
