@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import axios from 'axios';
 
 import { CatalogContent, CatalogFilters } from '@/components';
-import { BRANDS } from '@/core/constants';
+import { BRANDS, CATALOG_MAX_PRICE, CATALOG_MIN_PRICE } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import { useCatalogProducts, useCatalogState } from '@/core/hooks';
 import { useAppSelector } from '@/core/store';
@@ -19,6 +19,10 @@ export const Catalog = () => {
   const { authLoading, userId } = useAppSelector((state) => state.auth);
   const [contentScrollTrigger, setContentScrollTrigger] = useState(0);
   const [brandOptions, setBrandOptions] = useState(BRANDS);
+  const [priceRange, setPriceRange] = useState({
+    minPrice: CATALOG_MIN_PRICE,
+    maxPrice: CATALOG_MAX_PRICE,
+  });
   const {
     sortBy,
     activeItems,
@@ -32,7 +36,10 @@ export const Catalog = () => {
     resetFilters,
     currentPage,
     setCurrentPage,
-  } = useCatalogState(brandOptions);
+  } = useCatalogState({
+    brandOptions,
+    maxPrice: priceRange.maxPrice,
+  });
   const selectedBrands = useMemo(
     () => getSelectedCatalogBrands(appliedActiveItems, brandOptions),
     [appliedActiveItems, brandOptions]
@@ -43,6 +50,7 @@ export const Catalog = () => {
     sortBy,
     brands: selectedBrands,
     sort: apiSort,
+    minPrice: priceRange.minPrice,
     maxPrice: appliedSliderValue,
     enabled: !authLoading && Boolean(userId),
   });
@@ -52,20 +60,25 @@ export const Catalog = () => {
 
     const controller = new AbortController();
 
-    const loadBrands = async () => {
+    const loadFilterMetadata = async () => {
       try {
-        const brands = await phonesService.getBrands(controller.signal);
-        const nextBrandOptions = buildCatalogBrandOptions(brands);
+        const metadata = await phonesService.getFilterMetadata(controller.signal);
+        const nextBrandOptions = buildCatalogBrandOptions(metadata.brands);
 
         if (nextBrandOptions.length) {
           setBrandOptions(nextBrandOptions);
         }
+
+        setPriceRange({
+          minPrice: Number(metadata.priceRange?.minPrice ?? CATALOG_MIN_PRICE),
+          maxPrice: Number(metadata.priceRange?.maxPrice ?? CATALOG_MAX_PRICE),
+        });
       } catch (error) {
         if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
       }
     };
 
-    loadBrands();
+    loadFilterMetadata();
 
     return () => controller.abort();
   }, [authLoading, userId]);
@@ -89,6 +102,8 @@ export const Catalog = () => {
             activeItems={activeItems}
             onToggle={toggleItems}
             sliderValue={sliderValue}
+            minPrice={priceRange.minPrice}
+            maxPrice={priceRange.maxPrice}
             onSliderChange={handleSliderChange}
             onApply={handleApplyFilters}
             onReset={handleResetFilters}

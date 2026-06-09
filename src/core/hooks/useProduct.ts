@@ -54,8 +54,11 @@ export const useProduct = (): UseProductResult => {
           controller.signal
         );
         const resolvedImages = normalizeGalleryImages(resolvedObjectUrls);
+        const previewImageUrl = phone.previewImage?.url
+          ? await phonesService.getImageObjectUrl(phone.previewImage.url, controller.signal)
+          : null;
 
-        setProduct(mapApiPhoneToProduct(phone, resolvedImages[0]));
+        setProduct(mapApiPhoneToProduct(phone, previewImageUrl ?? resolvedImages[0]));
         setSpecs(buildSpecs(phone));
         setDescription(phone.description ?? '');
         setGalleryImages(resolvedImages);

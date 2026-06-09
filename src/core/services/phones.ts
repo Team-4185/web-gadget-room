@@ -1,6 +1,7 @@
 import { api } from '@/core/config';
 import type {
   ApiCatalogProductsPage,
+  ApiCatalogFilterMetadata,
   ApiPhone,
   ApiPhoneImage,
   CatalogProductsRequestParams,
@@ -16,6 +17,8 @@ const getCatalogRequestKey = (params: CatalogProductsRequestParams) =>
     page: params.page,
     size: params.size,
     brands: params.brands ?? [],
+    inStock: params.inStock,
+    preOrder: params.preOrder,
     minPrice: params.minPrice,
     maxPrice: params.maxPrice,
     sort: params.sort,
@@ -56,6 +59,12 @@ export const phonesService = {
     const { data } = await api.get<string[]>('/api/v1/phones/brands', { signal });
     return data;
   },
+  async getFilterMetadata(signal?: AbortSignal) {
+    const { data } = await api.get<ApiCatalogFilterMetadata>('/api/v1/filter/metadata', {
+      signal,
+    });
+    return data;
+  },
   async getCatalog(params: CatalogProductsRequestParams, signal?: AbortSignal) {
     const requestKey = signal ? null : getCatalogRequestKey(params);
     const cachedRequest = requestKey ? catalogRequestCache.get(requestKey) : null;
@@ -68,6 +77,8 @@ export const phonesService = {
           page: params.page,
           size: params.size,
           brands: params.brands?.join(', ') ?? '',
+          inStock: params.inStock,
+          preOrder: params.preOrder,
           minPrice: params.minPrice,
           maxPrice: params.maxPrice,
           sort: params.sort,

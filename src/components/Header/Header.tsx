@@ -27,7 +27,7 @@ export const Header: FC = () => {
   const cartLength = useAppSelector((state) => state.cart.totalAmount);
   const user = useAppSelector((state) => state.auth.userId);
 
-  const authPage = currentPath === '/' || currentPath === '/register';
+  const authPage = ['/', '/login', '/register', '/forgot-password'].includes(currentPath);
 
   const activeStep = ORDERING_STEPS.findIndex((step) => location.pathname === step.href) ?? 0;
 
@@ -67,7 +67,7 @@ export const Header: FC = () => {
             )}
           </div>
 
-          {user ? (
+          {user && !authPage ? (
             <div className="header__icons">
               {headerIcons.map((icon) => {
                 const IconComponent = icon.icon;

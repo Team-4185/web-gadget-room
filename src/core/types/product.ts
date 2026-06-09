@@ -37,6 +37,7 @@ export type ApiPhone = {
   sku?: string;
   stock?: number;
   status?: PhoneStockStatus;
+  previewImage?: ApiPhoneImage | null;
   badge?: BadgeType;
   badges?: ApiProductBadge[];
   discountPercent?: number;
@@ -104,9 +105,23 @@ export type CatalogProductsRequestParams = {
   page: number;
   size: number;
   brands?: string[];
+  inStock?: boolean;
+  preOrder?: boolean;
   minPrice: number;
   maxPrice: number;
   sort: CatalogApiSort;
+};
+
+export type ApiCatalogFilterMetadata = {
+  brands: string[];
+  colors: ApiPhoneColor[];
+  storageCapacities: ApiStorageCapacity[];
+  priceRange: {
+    minPrice: number;
+    maxPrice: number;
+  };
+  stockOptions: string[];
+  badges: ApiProductBadge[];
 };
 
 export type ApiCatalogProductsPage = {

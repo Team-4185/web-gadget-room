@@ -4,6 +4,11 @@ import { CATALOG_DEFAULT_SORT, CATALOG_MAX_PRICE } from '@/core/constants';
 import type { ICheckboxOption, SortOption } from '@/core/types';
 import { buildCatalogActiveItems } from '@/core/utils';
 
+type CatalogStateOptions = {
+  brandOptions: ICheckboxOption[];
+  maxPrice: number;
+};
+
 const reconcileCatalogActiveItems = (
   brandOptions: ICheckboxOption[],
   currentItems: Record<string, boolean>
@@ -29,7 +34,10 @@ const areCatalogActiveItemsEqual = (
   return firstKeys.every((key) => firstItems[key] === secondItems[key]);
 };
 
-export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
+export const useCatalogState = ({
+  brandOptions,
+  maxPrice,
+}: CatalogStateOptions) => {
   const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeItems, setActiveItems] = useState<Record<string, boolean>>(() =>
@@ -38,8 +46,10 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
   const [appliedActiveItems, setAppliedActiveItems] = useState<Record<string, boolean>>(() =>
     buildCatalogActiveItems(brandOptions)
   );
-  const [sliderValue, setSliderValue] = useState<number>(CATALOG_MAX_PRICE);
-  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(CATALOG_MAX_PRICE);
+  const [sliderValue, setSliderValue] = useState<number>(maxPrice || CATALOG_MAX_PRICE);
+  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(
+    maxPrice || CATALOG_MAX_PRICE
+  );
 
   useEffect(() => {
     setActiveItems((prev) => {
@@ -51,6 +61,13 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
       return areCatalogActiveItemsEqual(prev, next) ? prev : next;
     });
   }, [brandOptions]);
+
+  useEffect(() => {
+    setSliderValue((prev) => (prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev));
+    setAppliedSliderValue((prev) =>
+      prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev
+    );
+  }, [maxPrice]);
 
   const toggleItems = useCallback((item: string) => {
     setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));
@@ -76,10 +93,10 @@ export const useCatalogState = (brandOptions: ICheckboxOption[]) => {
 
     setActiveItems(defaultActiveItems);
     setAppliedActiveItems(defaultActiveItems);
-    setSliderValue(CATALOG_MAX_PRICE);
-    setAppliedSliderValue(CATALOG_MAX_PRICE);
+    setSliderValue(maxPrice);
+    setAppliedSliderValue(maxPrice);
     setCurrentPage(1);
-  }, [brandOptions]);
+  }, [brandOptions, maxPrice]);
 
   return {
     sortBy,
