@@ -10,8 +10,6 @@ export const useCatalogProducts = ({
   currentPage,
   sortBy,
   brands,
-  colors,
-  storageCapacities,
   sort,
   minPrice,
   maxPrice,
@@ -20,8 +18,6 @@ export const useCatalogProducts = ({
   currentPage: number;
   sortBy: SortOption;
   brands: string[];
-  colors: string[];
-  storageCapacities: string[];
   sort: CatalogApiSort;
   minPrice: number;
   maxPrice: number;
@@ -34,8 +30,6 @@ export const useCatalogProducts = ({
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const brandsKey = brands.join('|');
-  const colorsKey = colors.join('|');
-  const storageCapacitiesKey = storageCapacities.join('|');
 
   useEffect(() => {
     if (!enabled) return;
@@ -69,8 +63,6 @@ export const useCatalogProducts = ({
             page: currentPage,
             size: CATALOG_PAGE_SIZE,
             brands,
-            colors,
-            storageCapacities,
             minPrice,
             maxPrice,
             sort,
@@ -133,14 +125,12 @@ export const useCatalogProducts = ({
     };
   }, [
     brandsKey,
-    colorsKey,
     currentPage,
     enabled,
     maxPrice,
     minPrice,
     sort,
     sortBy,
-    storageCapacitiesKey,
   ]);
 
   return useMemo(

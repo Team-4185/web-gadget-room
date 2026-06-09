@@ -13,22 +13,6 @@ export const buildCatalogBrandOptions = (brands: string[]): ICheckboxOption[] =>
       label: brand,
     }));
 
-export const buildCatalogColorOptions = (
-  colors: { name: string; displayName: string }[]
-): ICheckboxOption[] =>
-  colors.map((color) => ({
-    value: color.name,
-    label: color.displayName,
-  }));
-
-export const buildCatalogStorageOptions = (
-  storageCapacities: { name: string; value: number; unit: string }[]
-): ICheckboxOption[] =>
-  storageCapacities.map((storage) => ({
-    value: storage.name,
-    label: `${storage.value}${storage.unit}`,
-  }));
-
 export const buildCatalogActiveItems = (brandOptions: ICheckboxOption[]) =>
   brandOptions.reduce<Record<string, boolean>>((acc, item) => {
     acc[item.value] = false;
@@ -39,11 +23,6 @@ export const getSelectedCatalogBrands = (
   activeItems: Record<string, boolean>,
   brandOptions: ICheckboxOption[]
 ) => brandOptions.filter((brand) => activeItems[brand.value]).map((brand) => brand.label);
-
-export const getSelectedCatalogOptionValues = (
-  activeItems: Record<string, boolean>,
-  options: ICheckboxOption[]
-) => options.filter((option) => activeItems[option.value]).map((option) => option.value);
 
 export const sortFallbackCatalogProducts = (products: IProduct[], sortBy: SortOption) => {
   const sortedProducts = [...products];

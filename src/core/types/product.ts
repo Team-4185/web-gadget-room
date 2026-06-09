@@ -105,8 +105,6 @@ export type CatalogProductsRequestParams = {
   page: number;
   size: number;
   brands?: string[];
-  colors?: string[];
-  storageCapacities?: string[];
   inStock?: boolean;
   preOrder?: boolean;
   minPrice: number;

@@ -9,36 +9,24 @@ import './CatalogFilters.css';
 
 interface ICatalogFiltersProps {
   brandOptions: ICheckboxOption[];
-  colorOptions: ICheckboxOption[];
-  storageOptions: ICheckboxOption[];
   activeItems: Record<string, boolean>;
-  activeColorItems: Record<string, boolean>;
-  activeStorageItems: Record<string, boolean>;
   sliderValue: number;
   minPrice: number;
   maxPrice: number;
   onSliderChange: (_event: Event, newValue: number | number[]) => void;
   onToggle: (item: string) => void;
-  onToggleColor: (item: string) => void;
-  onToggleStorage: (item: string) => void;
   onApply: () => void;
   onReset: () => void;
 }
 
 export const CatalogFilters: FC<ICatalogFiltersProps> = ({
   brandOptions,
-  colorOptions,
-  storageOptions,
   activeItems,
-  activeColorItems,
-  activeStorageItems,
   sliderValue,
   minPrice,
   maxPrice,
   onSliderChange,
   onToggle,
-  onToggleColor,
-  onToggleStorage,
   onApply,
   onReset,
 }) => {
@@ -48,20 +36,6 @@ export const CatalogFilters: FC<ICatalogFiltersProps> = ({
 
       <Box className="catalog__filters-layout">
         <Accordion title="Brand" items={brandOptions} active={activeItems} onToggle={onToggle} />
-        <Accordion
-          title="Color"
-          items={colorOptions}
-          active={activeColorItems}
-          onToggle={onToggleColor}
-          defaultExpanded={false}
-        />
-        <Accordion
-          title="Storage"
-          items={storageOptions}
-          active={activeStorageItems}
-          onToggle={onToggleStorage}
-          defaultExpanded={false}
-        />
 
         <SliderPrice
           className="catalog__slider"

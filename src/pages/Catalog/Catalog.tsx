@@ -9,13 +9,9 @@ import { useCatalogProducts, useCatalogState } from '@/core/hooks';
 import { useAppSelector } from '@/core/store';
 import {
   buildCatalogBrandOptions,
-  buildCatalogColorOptions,
-  buildCatalogStorageOptions,
   getCatalogApiSort,
-  getSelectedCatalogOptionValues,
   getSelectedCatalogBrands,
 } from '@/core/utils';
-import type { ICheckboxOption } from '@/core/types';
 
 import './Catalog.css';
 
@@ -23,8 +19,6 @@ export const Catalog = () => {
   const { authLoading, userId } = useAppSelector((state) => state.auth);
   const [contentScrollTrigger, setContentScrollTrigger] = useState(0);
   const [brandOptions, setBrandOptions] = useState(BRANDS);
-  const [colorOptions, setColorOptions] = useState<ICheckboxOption[]>([]);
-  const [storageOptions, setStorageOptions] = useState<ICheckboxOption[]>([]);
   const [priceRange, setPriceRange] = useState({
     minPrice: CATALOG_MIN_PRICE,
     maxPrice: CATALOG_MAX_PRICE,
@@ -33,13 +27,7 @@ export const Catalog = () => {
     sortBy,
     activeItems,
     appliedActiveItems,
-    activeColorItems,
-    appliedActiveColorItems,
-    activeStorageItems,
-    appliedActiveStorageItems,
     toggleItems,
-    toggleColorItems,
-    toggleStorageItems,
     sliderValue,
     appliedSliderValue,
     handleSliderChange,
@@ -50,29 +38,17 @@ export const Catalog = () => {
     setCurrentPage,
   } = useCatalogState({
     brandOptions,
-    colorOptions,
-    storageOptions,
     maxPrice: priceRange.maxPrice,
   });
   const selectedBrands = useMemo(
     () => getSelectedCatalogBrands(appliedActiveItems, brandOptions),
     [appliedActiveItems, brandOptions]
   );
-  const selectedColors = useMemo(
-    () => getSelectedCatalogOptionValues(appliedActiveColorItems, colorOptions),
-    [appliedActiveColorItems, colorOptions]
-  );
-  const selectedStorageCapacities = useMemo(
-    () => getSelectedCatalogOptionValues(appliedActiveStorageItems, storageOptions),
-    [appliedActiveStorageItems, storageOptions]
-  );
   const apiSort = useMemo(() => getCatalogApiSort(sortBy), [sortBy]);
   const { products, totalPages, isLoading } = useCatalogProducts({
     currentPage,
     sortBy,
     brands: selectedBrands,
-    colors: selectedColors,
-    storageCapacities: selectedStorageCapacities,
     sort: apiSort,
     minPrice: priceRange.minPrice,
     maxPrice: appliedSliderValue,
@@ -93,8 +69,6 @@ export const Catalog = () => {
           setBrandOptions(nextBrandOptions);
         }
 
-        setColorOptions(buildCatalogColorOptions(metadata.colors));
-        setStorageOptions(buildCatalogStorageOptions(metadata.storageCapacities));
         setPriceRange({
           minPrice: Number(metadata.priceRange?.minPrice ?? CATALOG_MIN_PRICE),
           maxPrice: Number(metadata.priceRange?.maxPrice ?? CATALOG_MAX_PRICE),
@@ -125,14 +99,8 @@ export const Catalog = () => {
         <div className="catalog__layout">
           <CatalogFilters
             brandOptions={brandOptions}
-            colorOptions={colorOptions}
-            storageOptions={storageOptions}
             activeItems={activeItems}
-            activeColorItems={activeColorItems}
-            activeStorageItems={activeStorageItems}
             onToggle={toggleItems}
-            onToggleColor={toggleColorItems}
-            onToggleStorage={toggleStorageItems}
             sliderValue={sliderValue}
             minPrice={priceRange.minPrice}
             maxPrice={priceRange.maxPrice}
