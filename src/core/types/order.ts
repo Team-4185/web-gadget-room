@@ -24,8 +24,8 @@ export type OrderShippingAddressPayload = {
   zipCode?: string;
 };
 
-export type OrderItemColor = 'BLACK';
-export type OrderItemStorage = 'CAPACITY_128GB';
+export type OrderItemColor = string;
+export type OrderItemStorage = string;
 
 export type CreateOrderItemPayload = {
   phoneId: number;

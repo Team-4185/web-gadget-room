@@ -3,8 +3,8 @@ import { Container } from '@mui/material';
 
 import { ProductGallery, ProductInfo } from '@/components';
 import { useProduct } from '@/core/hooks';
-import type { ApiPhoneColor } from '@/core/types';
-import { getDefaultPhoneColor } from '@/core/utils';
+import type { ApiPhoneColor, ApiStorageCapacity } from '@/core/types';
+import { getDefaultPhoneColor, getDefaultStorageCapacity } from '@/core/utils';
 
 import './ProductPage.css';
 
@@ -12,6 +12,9 @@ export const ProductPage: FC = () => {
   const { product, specs, description, galleryImages, loading, error } = useProduct();
   const [selectedColor, setSelectedColor] = useState<ApiPhoneColor | undefined>(
     getDefaultPhoneColor(product.colors)
+  );
+  const [selectedStorage, setSelectedStorage] = useState<ApiStorageCapacity | undefined>(
+    getDefaultStorageCapacity(product.storageCapacity)
   );
 
   useEffect(() => {
@@ -23,12 +26,22 @@ export const ProductPage: FC = () => {
     }
   }, [product.colors, selectedColor?.name]);
 
-  const productWithSelectedColor = useMemo(
+  useEffect(() => {
+    const storageCapacity = product.storageCapacity ?? [];
+    const stillAvailable = storageCapacity.some((storage) => storage.name === selectedStorage?.name);
+
+    if (!stillAvailable) {
+      setSelectedStorage(getDefaultStorageCapacity(storageCapacity));
+    }
+  }, [product.storageCapacity, selectedStorage?.name]);
+
+  const productWithSelectedVariants = useMemo(
     () => ({
       ...product,
       selectedColor,
+      selectedStorage,
     }),
-    [product, selectedColor]
+    [product, selectedColor, selectedStorage]
   );
 
   return (
@@ -45,11 +58,13 @@ export const ProductPage: FC = () => {
 
           {/* Info */}
           <ProductInfo
-            product={productWithSelectedColor}
+            product={productWithSelectedVariants}
             specs={specs}
             description={description}
             loading={loading}
             error={error}
+            selectedStorage={selectedStorage}
+            onStorageSelect={setSelectedStorage}
           />
         </div>
       </Container>

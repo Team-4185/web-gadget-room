@@ -5,7 +5,12 @@ import type { SelectChangeEvent } from '@mui/material/Select';
 import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
 import { Trash, Plus, Minus, ChevronDown } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { DEFAULT_PHONE_COLOR, getDefaultPhoneColor } from '@/core/utils';
+import {
+  DEFAULT_PHONE_COLOR,
+  formatStorageCapacity,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from '@/core/utils';
 import type { ApiPhoneColor, IProduct } from '@/core/types';
 
 import './ProductsCart.css';
@@ -48,6 +53,12 @@ export const ProductsCart = () => {
                 {product.name}
               </Typography>
               <CartColorSelect product={product} disabled={cartLoading} />
+              <span className="cart-item__storage">
+                Storage:{' '}
+                {formatStorageCapacity(
+                  product.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity)
+                )}
+              </span>
             </div>
 
             <div className="cart-item__amount">

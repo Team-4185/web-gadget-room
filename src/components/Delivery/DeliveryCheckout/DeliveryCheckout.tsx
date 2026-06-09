@@ -51,6 +51,10 @@ export const DeliveryCheckout = () => {
   const cartItems = cartProducts.map((product) => ({
     phoneId: product.id,
     amount: product.amount,
+    selectedColor: product.selectedColor,
+    selectedStorage: product.selectedStorage,
+    colors: product.colors,
+    storageCapacity: product.storageCapacity,
   }));
 
   useEffect(() => {

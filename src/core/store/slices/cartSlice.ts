@@ -3,11 +3,12 @@ import { isAxiosError } from 'axios';
 import { PRODUCTS } from '@/core/constants';
 import { cartService } from '@/core/services';
 import { createAppSlice } from '@/core/store/createAppSlice';
-import type { ApiPhoneColor, ICartDto, IProduct } from '@/core/types';
+import type { ApiPhoneColor, ApiStorageCapacity, ICartDto, IProduct } from '@/core/types';
 import {
   cartStorage,
   fetchAndStoreServerCartWithProducts,
   getDefaultPhoneColor,
+  getDefaultStorageCapacity,
   getPhoneColorByName,
   mapCartDtoToProducts,
   toErrorMessage,
@@ -41,6 +42,11 @@ type UpdateProductColorPayload = {
   colorName: string;
 };
 
+type UpdateProductStoragePayload = {
+  phoneId: number;
+  storageName: string;
+};
+
 const MISSING_USER_CART_ERROR = 'MISSING_USER_CART';
 
 const initialState: CartState = {
@@ -53,24 +59,34 @@ const initialState: CartState = {
   error: null,
 };
 
-const applyCartState = (state: CartState, cart: ICartDto, backendProducts: IProduct[] = []) => {
+const applyCartState = (state: CartState, cart: ICartDto, products: IProduct[] = []) => {
   const selectedColorsByProductId = new Map(
     state.cart
       .filter((product) => product.selectedColor)
       .map((product) => [product.id, product.selectedColor as ApiPhoneColor])
   );
+  const selectedStorageByProductId = new Map(
+    state.cart
+      .filter((product) => product.selectedStorage)
+      .map((product) => [product.id, product.selectedStorage as ApiStorageCapacity])
+  );
 
   state.cartId = cart.id;
   state.totalPrice = cart.totalPrice;
   state.totalAmount = cart.totalAmount;
-  state.cart = mapCartDtoToProducts(cart, backendProducts).map((product) => ({
+  state.cart = products.map((product) => ({
     ...product,
     selectedColor:
       selectedColorsByProductId.get(product.id) ??
       product.selectedColor ??
       getDefaultPhoneColor(product.colors),
+    selectedStorage:
+      selectedStorageByProductId.get(product.id) ??
+      product.selectedStorage ??
+      getDefaultStorageCapacity(product.storageCapacity),
   }));
   state.error = null;
+  persistLocalCartState(state);
 };
 
 const isMissingUserCartError = (error: unknown) =>
@@ -91,10 +107,11 @@ const persistLocalCartState = (state: CartState) => {
     id: state.cartId,
     totalPrice: state.totalPrice,
     totalAmount: state.totalAmount,
-    cartItems: state.cart.map(({ id, amount, selectedColor }) => ({
+    cartItems: state.cart.map(({ id, amount, selectedColor, selectedStorage }) => ({
       phoneId: id,
       amount,
       selectedColor,
+      selectedStorage,
     })),
   });
 };
@@ -113,12 +130,17 @@ const addProductLocally = (state: CartState, payload: AddProductPayload) => {
     existingProduct.amount += 1;
     existingProduct.selectedColor =
       product.selectedColor ?? existingProduct.selectedColor ?? getDefaultPhoneColor(product.colors);
+    existingProduct.selectedStorage =
+      product.selectedStorage ??
+      existingProduct.selectedStorage ??
+      getDefaultStorageCapacity(product.storageCapacity);
     state.lastAddedProduct = existingProduct;
   } else {
     const cartProduct = {
       ...product,
       amount: 1,
       selectedColor: product.selectedColor ?? getDefaultPhoneColor(product.colors),
+      selectedStorage: product.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity),
     };
     state.cart.push(cartProduct);
     state.lastAddedProduct = cartProduct;
@@ -164,10 +186,16 @@ const cartSlice = createAppSlice({
   name: 'cart',
   initialState,
   reducers: (create) => ({
-    hydrateFromLocal: create.asyncThunk<ICartDto | null, void, { rejectValue: string }>(
+    hydrateFromLocal: create.asyncThunk<CartProductsPayload | null, void, { rejectValue: string }>(
       async (_, { rejectWithValue }) => {
         try {
-          return cartStorage.get();
+          const cart = cartStorage.get();
+          if (!cart) return null;
+
+          return {
+            cart,
+            products: await mapCartDtoToProducts(cart),
+          };
         } catch (error) {
           return rejectWithValue(
             toErrorMessage(error, 'Failed to hydrate cart from local storage')
@@ -177,7 +205,7 @@ const cartSlice = createAppSlice({
       {
         fulfilled: (state, action) => {
           if (!action.payload) return;
-          applyCartState(state, action.payload);
+          applyCartState(state, action.payload.cart, action.payload.products);
         },
       }
     ),
@@ -238,10 +266,11 @@ const cartSlice = createAppSlice({
           const phoneId = addedProduct ? addedProduct.id : payloadProduct;
 
           applyCartState(state, action.payload.cart, action.payload.products);
-          if (addedProduct?.selectedColor) {
+          if (addedProduct?.selectedColor || addedProduct?.selectedStorage) {
             const product = state.cart.find((item) => item.id === addedProduct.id);
             if (product) {
-              product.selectedColor = addedProduct.selectedColor;
+              product.selectedColor = addedProduct.selectedColor ?? product.selectedColor;
+              product.selectedStorage = addedProduct.selectedStorage ?? product.selectedStorage;
               if (showConfirmation) {
                 state.lastAddedProduct = product;
               }
@@ -400,6 +429,17 @@ const cartSlice = createAppSlice({
       if (!product) return;
 
       product.selectedColor = getPhoneColorByName(product.colors, action.payload.colorName);
+      state.error = null;
+      persistLocalCartState(state);
+    }),
+    updateProductStorage: create.reducer<UpdateProductStoragePayload>((state, action) => {
+      const product = state.cart.find((item) => item.id === action.payload.phoneId);
+
+      if (!product) return;
+
+      product.selectedStorage =
+        product.storageCapacity?.find((storage) => storage.name === action.payload.storageName) ??
+        getDefaultStorageCapacity(product.storageCapacity);
       state.error = null;
       persistLocalCartState(state);
     }),
