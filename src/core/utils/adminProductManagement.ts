@@ -1,5 +1,5 @@
 import { api } from '@/core/config';
-import { FALLBACK_IMAGE } from '@/core/constants';
+import { EMPTY_ADMIN_PRODUCT_VARIANT, FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import { formatProductDisplayName } from './products';
 import type {
@@ -170,6 +170,14 @@ export const mapAdminProductToDraft = (
   mainCamera: '',
   batteryCapacity: '',
   description: '',
+  variants: [
+    {
+      ...EMPTY_ADMIN_PRODUCT_VARIANT,
+      clientId: 'variant-1',
+      price: getNumericPrice(product.price),
+      stock: getNumericStock(product.stock),
+    },
+  ],
 });
 
 export const mapPhoneToAdminProductDraft = (
@@ -189,6 +197,25 @@ export const mapPhoneToAdminProductDraft = (
   mainCamera: phone.mainCamera ?? '',
   batteryCapacity: phone.batteryCapacity ?? '',
   description: phone.description ?? '',
+  variants: phone.variants?.length
+    ? phone.variants.map((variant) => ({
+        clientId: `persisted-${variant.id}`,
+        id: variant.id,
+        color: variant.color,
+        storageCapacity: variant.storageCapacity,
+        price: String(variant.price),
+        stock: String(variant.stock),
+        sku: variant.sku,
+        isPersisted: true,
+      }))
+    : [
+        {
+          ...EMPTY_ADMIN_PRODUCT_VARIANT,
+          clientId: 'variant-1',
+          price: String(phone.price ?? getNumberValue(getNumericPrice(product.price))),
+          stock: String(phone.stock ?? getIntegerValue(getNumericStock(product.stock))),
+        },
+      ],
 });
 
 export const buildAdminPhonePayload = (

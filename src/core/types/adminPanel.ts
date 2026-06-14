@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
-import type { ApiPhoneImage, PhoneStockStatus } from './product';
+import type { ApiPhoneColorName, ApiPhoneImage, ApiStorageCapacityName, PhoneStockStatus } from './product';
 import type { OrderDeliveryMethod, OrderPaymentMethod } from './order';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
@@ -80,9 +80,28 @@ export interface IAdminProductFormState {
   mainCamera: string;
   batteryCapacity: string;
   description: string;
+  variants: AdminProductVariantDraft[];
 }
 
 export type AdminProductFormErrors = Partial<Record<keyof IAdminProductFormState, string>>;
+
+export type AdminProductVariantDraft = {
+  clientId: string;
+  id?: number;
+  color: ApiPhoneColorName;
+  storageCapacity: ApiStorageCapacityName;
+  price: string;
+  stock: string;
+  sku?: string;
+  isPersisted?: boolean;
+};
+
+export type AdminProductVariantField = 'color' | 'storageCapacity' | 'price' | 'stock';
+
+export type AdminProductVariantErrors = Record<
+  string,
+  Partial<Record<AdminProductVariantField, string>>
+>;
 
 export interface IAdminPanelOrderItem {
   id: string;
