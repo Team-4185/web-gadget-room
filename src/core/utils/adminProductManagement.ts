@@ -1,6 +1,7 @@
 import { api } from '@/core/config';
 import { EMPTY_ADMIN_PRODUCT_VARIANT, FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
+import { buildProductSku, buildVariantPayloads, getDerivedProductTotals } from './adminProductVariants';
 import { formatProductDisplayName } from './products';
 import type {
   AdminProductFormErrors,
@@ -220,23 +221,28 @@ export const mapPhoneToAdminProductDraft = (
 
 export const buildAdminPhonePayload = (
   draft: IAdminProductFormState,
-  status: AdminProductStatus
-): CreatePhonePayload => ({
-  releaseYear: getIntegerValue(draft.releaseYear),
-  batteryCapacity: draft.batteryCapacity.trim(),
-  brand: draft.brand.trim(),
-  cpu: draft.cpu.trim(),
-  price: getNumberValue(draft.price),
-  name: draft.name.trim(),
-  screenSize: draft.screenSize.trim(),
-  frontCamera: draft.frontCamera.trim(),
-  mainCamera: draft.mainCamera.trim(),
-  status,
-  stock: getIntegerValue(draft.stock),
-  description: draft.description.trim(),
-  coresNumber: Math.max(1, getIntegerValue(draft.coresNumber)),
-  sku: draft.sku.trim(),
-});
+  _status: AdminProductStatus
+): CreatePhonePayload => {
+  const totals = getDerivedProductTotals(draft.variants);
+
+  return {
+    releaseYear: getIntegerValue(draft.releaseYear),
+    batteryCapacity: draft.batteryCapacity.trim(),
+    brand: draft.brand.trim(),
+    cpu: draft.cpu.trim(),
+    price: totals.price,
+    name: draft.name.trim(),
+    screenSize: draft.screenSize.trim(),
+    frontCamera: draft.frontCamera.trim(),
+    mainCamera: draft.mainCamera.trim(),
+    status: totals.status,
+    stock: totals.stock,
+    description: draft.description.trim(),
+    coresNumber: Math.max(1, getIntegerValue(draft.coresNumber)),
+    sku: buildProductSku(draft.brand, draft.name),
+    variants: buildVariantPayloads(draft),
+  };
+};
 
 export const validateAdminProductDraft = (
   draft: IAdminProductFormState,
@@ -262,24 +268,6 @@ export const validateAdminProductDraft = (
     errors.sku = 'SKU is required.';
   } else if (payload.sku.trim().length < 3 || payload.sku.trim().length > 64) {
     errors.sku = 'SKU length must be 3 to 64 characters.';
-  }
-
-  const hasValidPriceNumber = /^\d+(?:[.,]\d+)?$/.test(draft.price.trim());
-  if (!draft.price.trim()) {
-    errors.price = 'Price is required.';
-  } else if (!hasValidPriceNumber) {
-    errors.price = 'Price must be a valid number.';
-  } else if (payload.price < 0) {
-    errors.price = 'Price must be 0 or greater.';
-  }
-
-  const hasValidStockNumber = /^\d+$/.test(draft.stock.trim());
-  if (!draft.stock.trim()) {
-    errors.stock = 'Stock is required.';
-  } else if (!hasValidStockNumber) {
-    errors.stock = 'Stock must be a whole number.';
-  } else if (payload.stock < 0) {
-    errors.stock = 'Stock must be 0 or greater.';
   }
 
   const hasValidReleaseYear = /^\d{4}$/.test(draft.releaseYear.trim());
