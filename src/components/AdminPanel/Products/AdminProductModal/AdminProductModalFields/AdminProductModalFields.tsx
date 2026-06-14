@@ -1,5 +1,12 @@
 import { LabeledFormField } from '@/components';
 import type { IAdminProductFormState } from '@/core/types';
+import {
+  formatAdminBatteryCapacityInput,
+  formatAdminCpuInput,
+  formatAdminFrontCameraInput,
+  formatAdminMainCameraInput,
+  formatAdminScreenSizeInput,
+} from '@/core/utils';
 
 import './AdminProductModalFields.css';
 
@@ -59,7 +66,7 @@ export const AdminProductModalFields = ({
       placeholder="Snapdragon 8 Gen 3"
       errorMessage={fieldErrors?.cpu}
       tooltipText={fieldTooltips?.cpu}
-      onChange={(value) => onValueChange('cpu', value)}
+      onChange={(value) => onValueChange('cpu', formatAdminCpuInput(value))}
     />
 
     <LabeledFormField
@@ -78,40 +85,42 @@ export const AdminProductModalFields = ({
       label="Screen size"
       required
       value={values.screenSize}
-      placeholder='6.8"'
+      placeholder="6.8"
       errorMessage={fieldErrors?.screenSize}
       tooltipText={fieldTooltips?.screenSize}
-      onChange={(value) => onValueChange('screenSize', value)}
+      onChange={(value) => onValueChange('screenSize', formatAdminScreenSizeInput(value))}
     />
 
     <LabeledFormField
       label="Front camera"
       required
       value={values.frontCamera}
-      placeholder="12 MP"
+      placeholder="12"
       errorMessage={fieldErrors?.frontCamera}
       tooltipText={fieldTooltips?.frontCamera}
-      onChange={(value) => onValueChange('frontCamera', value)}
+      onChange={(value) => onValueChange('frontCamera', formatAdminFrontCameraInput(value))}
     />
 
     <LabeledFormField
       label="Main camera"
       required
       value={values.mainCamera}
-      placeholder="64-12-12 MP"
+      placeholder="64-12-12"
       errorMessage={fieldErrors?.mainCamera}
       tooltipText={fieldTooltips?.mainCamera}
-      onChange={(value) => onValueChange('mainCamera', value)}
+      onChange={(value) => onValueChange('mainCamera', formatAdminMainCameraInput(value))}
     />
 
     <LabeledFormField
       label="Battery capacity"
       required
       value={values.batteryCapacity}
-      placeholder="5000 mAh"
+      placeholder="5000"
       errorMessage={fieldErrors?.batteryCapacity}
       tooltipText={fieldTooltips?.batteryCapacity}
-      onChange={(value) => onValueChange('batteryCapacity', value)}
+      onChange={(value) =>
+        onValueChange('batteryCapacity', formatAdminBatteryCapacityInput(value))
+      }
     />
 
     <LabeledFormField

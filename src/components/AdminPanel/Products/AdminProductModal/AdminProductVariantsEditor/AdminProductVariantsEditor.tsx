@@ -1,7 +1,7 @@
-import { FormControl, MenuItem, Select, Typography } from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import { Button } from '@/components';
+import { Button, LabeledFormField } from '@/components';
 import {
   ADMIN_PRODUCT_COLOR_OPTIONS,
   ADMIN_PRODUCT_STORAGE_OPTIONS,
@@ -48,9 +48,6 @@ export const AdminProductVariantsEditor = ({
   return (
     <section className="admin-product-variants-editor">
       <div className="admin-product-variants-editor__header">
-        <Typography component="h4" sx={{ fontSize: '20px', fontWeight: 600 }}>
-          Sale variants
-        </Typography>
         <Button
           type="button"
           maxWidth="160px"
@@ -65,14 +62,6 @@ export const AdminProductVariantsEditor = ({
       </div>
 
       <div className="admin-product-variants-editor__grid">
-        <div className="admin-product-variants-editor__columns" aria-hidden="true">
-          <span>Color</span>
-          <span>Storage</span>
-          <span>Price, $</span>
-          <span>Stock</span>
-          <span>Action</span>
-        </div>
-
         {variants.map((variant) => {
           const rowErrors = errors[variant.clientId] ?? {};
           const rowError =
@@ -88,62 +77,66 @@ export const AdminProductVariantsEditor = ({
               }`.trim()}
               key={variant.clientId}
             >
-              <FormControl fullWidth size="small" error={Boolean(rowErrors.color)}>
-                <Select
-                  value={variant.color}
-                  onChange={handleSelectChange(variant.clientId, 'color')}
-                >
-                  {ADMIN_PRODUCT_COLOR_OPTIONS.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <label className="admin-product-variants-editor__select-field">
+                <span className="admin-product-variants-editor__label">Color</span>
+                <FormControl fullWidth size="small" error={Boolean(rowErrors.color)}>
+                  <Select
+                    value={variant.color}
+                    onChange={handleSelectChange(variant.clientId, 'color')}
+                  >
+                    {ADMIN_PRODUCT_COLOR_OPTIONS.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </label>
 
-              <FormControl fullWidth size="small" error={Boolean(rowErrors.storageCapacity)}>
-                <Select
-                  value={variant.storageCapacity}
-                  onChange={handleSelectChange(variant.clientId, 'storageCapacity')}
-                >
-                  {ADMIN_PRODUCT_STORAGE_OPTIONS.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <label className="admin-product-variants-editor__select-field">
+                <span className="admin-product-variants-editor__label">Storage</span>
+                <FormControl fullWidth size="small" error={Boolean(rowErrors.storageCapacity)}>
+                  <Select
+                    value={variant.storageCapacity}
+                    onChange={handleSelectChange(variant.clientId, 'storageCapacity')}
+                  >
+                    {ADMIN_PRODUCT_STORAGE_OPTIONS.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </label>
 
-              <input
-                className="admin-product-variants-editor__input"
+              <LabeledFormField
+                label="Price"
+                required
                 type="number"
                 min="0"
                 step="1"
                 value={variant.price}
                 placeholder="0.00"
-                aria-label="Variant price"
-                onChange={(event) =>
-                  onVariantChange(variant.clientId, 'price', event.target.value)
-                }
+                errorMessage={rowErrors.price}
+                onChange={(value) => onVariantChange(variant.clientId, 'price', value)}
               />
 
-              <input
-                className="admin-product-variants-editor__input"
+              <LabeledFormField
+                label="Stock"
+                required
                 type="number"
                 min="0"
                 step="1"
                 value={variant.stock}
                 placeholder="0"
-                aria-label="Variant stock"
-                onChange={(event) =>
-                  onVariantChange(variant.clientId, 'stock', event.target.value)
-                }
+                errorMessage={rowErrors.stock}
+                onChange={(value) => onVariantChange(variant.clientId, 'stock', value)}
               />
 
               <Button
                 type="button"
                 maxWidth="100%"
-                height="32px"
+                height="34px"
                 fontSize="14px"
                 fontWeight={600}
                 borderRadius="8px"

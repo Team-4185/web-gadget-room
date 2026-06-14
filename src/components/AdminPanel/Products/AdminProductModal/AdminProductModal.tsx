@@ -86,7 +86,6 @@ export const AdminProductModal = ({
   const tabs: { id: AdminProductModalTab; label: string }[] = [
     { id: 'details', label: 'Details' },
     { id: 'variants', label: 'Sale variants' },
-    { id: 'images', label: 'Images' },
   ];
 
   return (
@@ -137,13 +136,23 @@ export const AdminProductModal = ({
           onSubmit={(event) => event.preventDefault()}
         >
           {activeTab === 'details' ? (
-            <AdminProductModalFields
-              values={values}
-              editDescriptionLabel={editDescriptionLabel}
-              fieldErrors={fieldErrors}
-              fieldTooltips={fieldTooltips}
-              onValueChange={onValueChange}
-            />
+            <>
+              <AdminProductModalFields
+                values={values}
+                editDescriptionLabel={editDescriptionLabel}
+                fieldErrors={fieldErrors}
+                fieldTooltips={fieldTooltips}
+                onValueChange={onValueChange}
+              />
+
+              <AdminProductImageManager
+                images={images}
+                imageName={imageName}
+                uploadLabel={uploadLabel}
+                onImageChange={onImageChange}
+                onImageDelete={onImageDelete}
+              />
+            </>
           ) : null}
 
           {activeTab === 'variants' ? (
@@ -157,15 +166,6 @@ export const AdminProductModal = ({
             />
           ) : null}
 
-          {activeTab === 'images' ? (
-            <AdminProductImageManager
-              images={images}
-              imageName={imageName}
-              uploadLabel={uploadLabel}
-              onImageChange={onImageChange}
-              onImageDelete={onImageDelete}
-            />
-          ) : null}
         </form>
 
         <div className="admin-product-modal__actions">

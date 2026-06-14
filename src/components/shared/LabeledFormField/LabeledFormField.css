@@ -33,7 +33,7 @@
 }
 
 .labeled-form-field textarea {
-  resize: vertical;
+  resize: none;
   min-height: 72px;
 }
 
