@@ -172,10 +172,15 @@ export const AdminProductManagementTable: FC<IProps> = ({
         editDescriptionLabel={productModal.isEditingProduct ? 'Edit description' : 'Description'}
         images={productModal.isEditingProduct ? productModal.productImages : undefined}
         fieldErrors={productModal.fieldErrors}
+        variantErrors={productModal.variantErrors}
         fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
         onClose={productModal.closeProductModal}
         onSave={() => void productModal.saveProductModal()}
         onValueChange={productModal.handleDraftChange}
+        onVariantChange={productModal.handleVariantChange}
+        onAddVariant={productModal.addVariant}
+        onRemoveDraftVariant={productModal.removeDraftVariant}
+        onRequestDeleteVariant={productModal.requestDeleteVariant}
         onImageChange={productModal.handleImageChange}
         onImageDelete={(imageId) => void productModal.deleteProductImage(imageId)}
       />

@@ -5,15 +5,20 @@ import { EMPTY_ADMIN_PRODUCT_FORM } from '@/core/constants';
 import { adminProductsService, phonesService } from '@/core/services';
 import type {
   AdminProductFormErrors,
+  AdminProductVariantDraft,
+  AdminProductVariantErrors,
+  AdminProductVariantField,
   IAdminPanelManagedProduct,
   IAdminProductFormState,
   IAdminProductModalImage,
 } from '@/core/types';
 import {
   buildAdminPhonePayload,
+  createAdminProductVariantDraft,
   mapAdminProductToDraft,
   mapPhoneToAdminProductDraft,
   validateAdminProductDraft,
+  validateAdminProductVariants,
 } from '@/core/utils';
 
 interface IProps {
@@ -30,6 +35,8 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
   const [draftProduct, setDraftProduct] =
     useState<IAdminProductFormState>(EMPTY_ADMIN_PRODUCT_FORM);
   const [fieldErrors, setFieldErrors] = useState<AdminProductFormErrors>({});
+  const [variantErrors, setVariantErrors] = useState<AdminProductVariantErrors>({});
+  const [variantToDelete, setVariantToDelete] = useState<AdminProductVariantDraft | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -55,6 +62,8 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     setImageFile(null);
     setProductImages([]);
     setFieldErrors({});
+    setVariantErrors({});
+    setVariantToDelete(null);
   };
 
   const openAddModal = () => {
@@ -82,6 +91,8 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     setIsAddModalOpen(false);
     setEditingProduct(product);
     setFieldErrors({});
+    setVariantErrors({});
+    setVariantToDelete(null);
     setImageFile(null);
     setImageName('');
     setProductImages([]);
@@ -148,6 +159,65 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     }
   };
 
+  const handleVariantChange = (
+    clientId: string,
+    field: AdminProductVariantField,
+    value: string
+  ) => {
+    if (variantErrors[clientId]?.[field]) {
+      setVariantErrors((prev) => ({
+        ...prev,
+        [clientId]: { ...prev[clientId], [field]: undefined },
+      }));
+    }
+
+    setDraftProduct((prev) => ({
+      ...prev,
+      variants: prev.variants.map((variant) =>
+        variant.clientId === clientId ? { ...variant, [field]: value } : variant
+      ),
+    }));
+  };
+
+  const addVariant = () => {
+    setDraftProduct((prev) => ({
+      ...prev,
+      variants: [
+        ...prev.variants,
+        createAdminProductVariantDraft(prev.variants.length + 1, {
+          price: prev.variants.at(-1)?.price ?? '',
+          stock: '0',
+        }),
+      ],
+    }));
+  };
+
+  const removeDraftVariant = (clientId: string) => {
+    setDraftProduct((prev) => {
+      if (prev.variants.length <= 1) return prev;
+
+      return {
+        ...prev,
+        variants: prev.variants.filter((variant) => variant.clientId !== clientId),
+      };
+    });
+  };
+
+  const requestDeleteVariant = (variant: AdminProductVariantDraft) => {
+    if (draftProduct.variants.length <= 1) return;
+
+    if (!variant.isPersisted || !variant.id) {
+      removeDraftVariant(variant.clientId);
+      return;
+    }
+
+    setVariantToDelete(variant);
+  };
+
+  const closeDeleteVariantConfirmation = () => {
+    setVariantToDelete(null);
+  };
+
   const saveProductModal = async () => {
     const resolvedStatus = editingProduct?.status ?? 'IN_STOCK';
     const payload = buildAdminPhonePayload(draftProduct, resolvedStatus);
@@ -156,6 +226,13 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     if (Object.keys(validationErrors).length) {
       setFieldErrors(validationErrors);
       enqueueSnackbar('Please fix the highlighted fields.', { variant: 'error' });
+      return;
+    }
+
+    const nextVariantErrors = validateAdminProductVariants(draftProduct.variants);
+    if (Object.keys(nextVariantErrors).length) {
+      setVariantErrors(nextVariantErrors);
+      enqueueSnackbar('Please fix the sale variants.', { variant: 'error' });
       return;
     }
 
@@ -191,13 +268,20 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     imageName,
     productImages,
     fieldErrors,
+    variantErrors,
     productToDelete,
+    variantToDelete,
     isDeleting,
     openAddModal,
     openEditModal,
     closeProductModal,
     saveProductModal,
     handleDraftChange,
+    handleVariantChange,
+    addVariant,
+    removeDraftVariant,
+    requestDeleteVariant,
+    closeDeleteVariantConfirmation,
     handleImageChange,
     deleteProductImage,
     openDeleteConfirmation,
