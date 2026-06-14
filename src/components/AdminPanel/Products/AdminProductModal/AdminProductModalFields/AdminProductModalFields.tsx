@@ -31,16 +31,6 @@ export const AdminProductModalFields = ({
     />
 
     <LabeledFormField
-      label="SKU"
-      required
-      value={values.sku}
-      placeholder="XXX-XX-XXX"
-      errorMessage={fieldErrors?.sku}
-      tooltipText={fieldTooltips?.sku}
-      onChange={(value) => onValueChange('sku', value)}
-    />
-
-    <LabeledFormField
       label="Brand"
       required
       value={values.brand}
@@ -48,32 +38,6 @@ export const AdminProductModalFields = ({
       errorMessage={fieldErrors?.brand}
       tooltipText={fieldTooltips?.brand}
       onChange={(value) => onValueChange('brand', value)}
-    />
-
-    <LabeledFormField
-      label="Price (USD)"
-      required
-      type="number"
-      min="0"
-      step="1"
-      value={values.price}
-      placeholder="0.00"
-      errorMessage={fieldErrors?.price}
-      tooltipText={fieldTooltips?.price}
-      onChange={(value) => onValueChange('price', value)}
-    />
-
-    <LabeledFormField
-      label="In stock"
-      required
-      type="number"
-      min="0"
-      step="1"
-      value={values.stock}
-      placeholder="0"
-      errorMessage={fieldErrors?.stock}
-      tooltipText={fieldTooltips?.stock}
-      onChange={(value) => onValueChange('stock', value)}
     />
 
     <LabeledFormField

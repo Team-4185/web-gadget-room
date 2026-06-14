@@ -87,7 +87,6 @@ export const buildVariantPayloads = (
       storageCapacity: variant.storageCapacity,
       price: getNumberValue(variant.price),
       stock,
-      status: resolveProductStatus(stock),
     };
   });
 };

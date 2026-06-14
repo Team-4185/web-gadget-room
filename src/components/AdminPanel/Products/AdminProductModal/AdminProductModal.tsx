@@ -2,9 +2,16 @@ import { useEffect, type ChangeEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { Button } from '@/components';
-import type { IAdminProductFormState, IAdminProductModalImage } from '@/core/types';
+import type {
+  AdminProductVariantDraft,
+  AdminProductVariantErrors,
+  AdminProductVariantField,
+  IAdminProductFormState,
+  IAdminProductModalImage,
+} from '@/core/types';
 import { AdminProductImageManager } from './AdminProductImageManager';
 import { AdminProductModalFields } from './AdminProductModalFields';
+import { AdminProductVariantsEditor } from './AdminProductVariantsEditor';
 
 import './AdminProductModal.css';
 
@@ -19,9 +26,18 @@ interface IProps {
   images?: IAdminProductModalImage[];
   fieldErrors?: Partial<Record<keyof IAdminProductFormState, string>>;
   fieldTooltips?: Partial<Record<keyof IAdminProductFormState, string>>;
+  variantErrors?: AdminProductVariantErrors;
   onClose: () => void;
   onSave: () => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
+  onVariantChange?: (
+    clientId: string,
+    field: AdminProductVariantField,
+    value: string
+  ) => void;
+  onAddVariant?: () => void;
+  onRemoveDraftVariant?: (clientId: string) => void;
+  onRequestDeleteVariant?: (variant: AdminProductVariantDraft) => void;
   onImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onImageDelete?: (imageId: number) => void;
 }
@@ -37,9 +53,14 @@ export const AdminProductModal = ({
   images,
   fieldErrors,
   fieldTooltips,
+  variantErrors,
   onClose,
   onSave,
   onValueChange,
+  onVariantChange,
+  onAddVariant,
+  onRemoveDraftVariant,
+  onRequestDeleteVariant,
   onImageChange,
   onImageDelete,
 }: IProps) => {
@@ -90,6 +111,17 @@ export const AdminProductModal = ({
             fieldErrors={fieldErrors}
             fieldTooltips={fieldTooltips}
             onValueChange={onValueChange}
+          />
+
+          <AdminProductVariantsEditor
+            productBrand={values.brand}
+            productName={values.name}
+            variants={values.variants}
+            errors={variantErrors}
+            onVariantChange={onVariantChange}
+            onAddVariant={onAddVariant}
+            onRemoveDraftVariant={onRemoveDraftVariant}
+            onRequestDeleteVariant={onRequestDeleteVariant}
           />
 
           <AdminProductImageManager
