@@ -6,6 +6,7 @@ import type {
   AdminProductVariantDraft,
   AdminProductVariantErrors,
   AdminProductVariantField,
+  AdminProductModalTab,
   IAdminProductFormState,
   IAdminProductModalImage,
 } from '@/core/types';
@@ -21,6 +22,7 @@ interface IProps {
   submitLabel: string;
   imageName: string;
   values: IAdminProductFormState;
+  activeTab: AdminProductModalTab;
   uploadLabel?: string;
   editDescriptionLabel?: string;
   images?: IAdminProductModalImage[];
@@ -29,6 +31,7 @@ interface IProps {
   variantErrors?: AdminProductVariantErrors;
   onClose: () => void;
   onSave: () => void;
+  onTabChange: (tab: AdminProductModalTab) => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
   onVariantChange?: (
     clientId: string,
@@ -48,6 +51,7 @@ export const AdminProductModal = ({
   submitLabel,
   imageName,
   values,
+  activeTab,
   uploadLabel,
   editDescriptionLabel,
   images,
@@ -56,6 +60,7 @@ export const AdminProductModal = ({
   variantErrors,
   onClose,
   onSave,
+  onTabChange,
   onValueChange,
   onVariantChange,
   onAddVariant,
@@ -77,6 +82,12 @@ export const AdminProductModal = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const tabs: { id: AdminProductModalTab; label: string }[] = [
+    { id: 'details', label: 'Details' },
+    { id: 'variants', label: 'Sale variants' },
+    { id: 'images', label: 'Images' },
+  ];
 
   return (
     <div className="admin-product-modal__backdrop" role="presentation">
@@ -104,33 +115,57 @@ export const AdminProductModal = ({
           </button>
         </div>
 
-        <form className="admin-product-modal__form" onSubmit={(event) => event.preventDefault()}>
-          <AdminProductModalFields
-            values={values}
-            editDescriptionLabel={editDescriptionLabel}
-            fieldErrors={fieldErrors}
-            fieldTooltips={fieldTooltips}
-            onValueChange={onValueChange}
-          />
+        <div className="admin-product-modal__tabs" role="tablist" aria-label="Product sections">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              className={`admin-product-modal__tab ${
+                activeTab === tab.id ? 'is-active' : ''
+              }`.trim()}
+              onClick={() => onTabChange(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          <AdminProductVariantsEditor
-            productBrand={values.brand}
-            productName={values.name}
-            variants={values.variants}
-            errors={variantErrors}
-            onVariantChange={onVariantChange}
-            onAddVariant={onAddVariant}
-            onRemoveDraftVariant={onRemoveDraftVariant}
-            onRequestDeleteVariant={onRequestDeleteVariant}
-          />
+        <form
+          className="admin-product-modal__form"
+          onSubmit={(event) => event.preventDefault()}
+        >
+          {activeTab === 'details' ? (
+            <AdminProductModalFields
+              values={values}
+              editDescriptionLabel={editDescriptionLabel}
+              fieldErrors={fieldErrors}
+              fieldTooltips={fieldTooltips}
+              onValueChange={onValueChange}
+            />
+          ) : null}
 
-          <AdminProductImageManager
-            images={images}
-            imageName={imageName}
-            uploadLabel={uploadLabel}
-            onImageChange={onImageChange}
-            onImageDelete={onImageDelete}
-          />
+          {activeTab === 'variants' ? (
+            <AdminProductVariantsEditor
+              variants={values.variants}
+              errors={variantErrors}
+              onVariantChange={onVariantChange}
+              onAddVariant={onAddVariant}
+              onRemoveDraftVariant={onRemoveDraftVariant}
+              onRequestDeleteVariant={onRequestDeleteVariant}
+            />
+          ) : null}
+
+          {activeTab === 'images' ? (
+            <AdminProductImageManager
+              images={images}
+              imageName={imageName}
+              uploadLabel={uploadLabel}
+              onImageChange={onImageChange}
+              onImageDelete={onImageDelete}
+            />
+          ) : null}
         </form>
 
         <div className="admin-product-modal__actions">

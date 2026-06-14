@@ -4,6 +4,7 @@ import type { ApiPhoneColorName, ApiPhoneImage, ApiStorageCapacityName, PhoneSto
 import type { OrderDeliveryMethod, OrderPaymentMethod } from './order';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';
+export type AdminProductModalTab = 'details' | 'variants' | 'images';
 
 export interface IAdminPanelMenuItem {
   id: AdminPanelTab;

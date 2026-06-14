@@ -167,6 +167,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
         title={productModal.isEditingProduct ? 'Edit product' : 'Add a new product'}
         submitLabel={productModal.isEditingProduct ? 'Save edit' : 'Save'}
         values={productModal.draftProduct}
+        activeTab={productModal.activeTab}
         imageName={productModal.imageName}
         uploadLabel={productModal.isEditingProduct ? 'Edit an image' : 'Upload an image'}
         editDescriptionLabel={productModal.isEditingProduct ? 'Edit description' : 'Description'}
@@ -176,6 +177,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
         fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
         onClose={productModal.closeProductModal}
         onSave={() => void productModal.saveProductModal()}
+        onTabChange={productModal.setActiveTab}
         onValueChange={productModal.handleDraftChange}
         onVariantChange={productModal.handleVariantChange}
         onAddVariant={productModal.addVariant}
@@ -206,6 +208,26 @@ export const AdminProductManagementTable: FC<IProps> = ({
         isLoading={productModal.isDeleting}
         onCancel={productModal.closeDeleteConfirmation}
         onConfirm={() => void productModal.deleteProduct()}
+      />
+
+      <ConfirmationModal
+        isOpen={Boolean(productModal.variantToDelete)}
+        title="Delete variant"
+        description={
+          <p>
+            Delete variant{' '}
+            <strong>
+              {productModal.variantToDelete?.color} /{' '}
+              {productModal.variantToDelete?.storageCapacity}
+            </strong>
+            ?
+          </p>
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        isLoading={productModal.isDeletingVariant}
+        onCancel={productModal.closeDeleteVariantConfirmation}
+        onConfirm={() => void productModal.deleteVariant()}
       />
     </section>
   );

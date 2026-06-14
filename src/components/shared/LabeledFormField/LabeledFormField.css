@@ -27,6 +27,7 @@
   width: 100%;
   background: transparent;
   color: var(--black);
+  font-family: inherit;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -39,6 +40,7 @@
 .labeled-form-field input::placeholder,
 .labeled-form-field textarea::placeholder {
   color: var(--black-opacity-65);
+  font-family: inherit;
 }
 
 .labeled-form-field.is-error {
