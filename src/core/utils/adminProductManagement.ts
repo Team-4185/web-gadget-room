@@ -180,7 +180,7 @@ export const formatAdminFrontCameraInput = (value: string) => {
 export const formatAdminMainCameraInput = (value: string) => {
   const cleaned = value
     .replace(/MP/gi, '')
-    .replace(/[^\d-]/g, '')
+    .replace(/[^\d-]/g, '-')
     .replace(/-{2,}/g, '-');
   const parts = cleaned.split('-').slice(0, 4);
   const formatted = parts.map((part) => part.slice(0, 3)).join('-');

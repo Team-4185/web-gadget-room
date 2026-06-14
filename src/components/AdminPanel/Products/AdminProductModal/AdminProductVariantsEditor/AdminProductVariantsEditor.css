@@ -94,7 +94,7 @@
 .admin-product-variants-editor__error {
   grid-column: 1 / -1;
   font-size: 12px;
-  color: var(--alert-red);
+  color: var(--coralRed);
 }
 
 .admin-product-variants-editor__action {

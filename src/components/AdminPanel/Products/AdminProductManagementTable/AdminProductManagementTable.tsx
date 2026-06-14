@@ -189,6 +189,7 @@ export const AdminProductManagementTable: FC<IProps> = ({
 
       <AdminProductOverviewModal
         product={overviewModal.product}
+        productDetails={overviewModal.productDetails}
         description={overviewModal.description}
         isLoading={overviewModal.isLoading}
         onClose={overviewModal.closeOverviewModal}
