@@ -5,7 +5,13 @@ import { cartService, phonesService } from '@/core/services';
 import type { ICartDto, ICartItemDto, IProduct } from '@/core/types';
 import { cartStorage } from './cartStorage';
 import { formatProductDisplayName, mapApiPhoneToProduct } from './products';
-import { getDefaultPhoneColor, getDefaultStorageCapacity } from './productVariants';
+import {
+  applySelectedProductVariant,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+  getPhoneColorFromVariant,
+  getStorageCapacityFromVariant,
+} from './productVariants';
 
 export type CartProductsPayload = {
   cart: ICartDto;
@@ -40,61 +46,85 @@ export const mapCartDtoToProducts = async (
 ): Promise<IProduct[]> => {
   const products = await Promise.all(
     cart.cartItems.map(async (item) => {
-      const { phoneId, selectedColor, selectedStorage } = item;
+      const { phoneId, selectedColor, selectedStorage, variant, variantId } = item;
       const amount = getCartItemAmount(item);
 
       if (hasRenderableCartItemDetails(item)) {
         const img = await mapCartItemPreviewImage(item);
         const backendProduct = backendProducts.find((product) => product.id === phoneId);
 
-        return {
+        const product = {
           ...(backendProduct ?? {}),
           id: phoneId,
           name: formatProductDisplayName(item.brand, item.productName ?? `Phone #${phoneId}`),
-          price: Number(item.price ?? backendProduct?.price ?? 0),
+          price: Number(variant?.price ?? item.price ?? backendProduct?.price ?? 0),
           img,
           amount,
           colors: backendProduct?.colors ?? [],
           storageCapacity: backendProduct?.storageCapacity ?? [],
+          variants: backendProduct?.variants ?? (variant ? [variant] : []),
+          selectedVariantId: variantId ?? variant?.id,
           selectedColor:
+            (variant && getPhoneColorFromVariant(variant.color, backendProduct?.colors)) ??
             selectedColor ??
             backendProduct?.selectedColor ??
             getDefaultPhoneColor(backendProduct?.colors),
           selectedStorage:
+            (variant &&
+              getStorageCapacityFromVariant(
+                variant.storageCapacity,
+                backendProduct?.storageCapacity
+              )) ??
             selectedStorage ??
             backendProduct?.selectedStorage ??
             getDefaultStorageCapacity(backendProduct?.storageCapacity),
-          inStock: item.status ? item.status !== 'OUT_OF_STOCK' : undefined,
+          stock: variant?.stock ?? item.stock,
+          status: variant?.status ?? item.status,
+          inStock: variant
+            ? variant.status !== 'OUT_OF_STOCK' && variant.stock > 0
+            : item.status
+              ? item.status !== 'OUT_OF_STOCK'
+              : undefined,
         };
+
+        return product;
       }
 
     const backendProduct = backendProducts.find((product) => product.id === phoneId);
     if (backendProduct) {
-      return {
+      return applySelectedProductVariant({
         ...backendProduct,
         amount,
+        selectedVariantId: variantId ?? variant?.id ?? backendProduct.selectedVariantId,
         selectedColor:
+          (variant && getPhoneColorFromVariant(variant.color, backendProduct.colors)) ??
           selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
         selectedStorage:
+          (variant &&
+            getStorageCapacityFromVariant(variant.storageCapacity, backendProduct.storageCapacity)) ??
           selectedStorage ??
           backendProduct.selectedStorage ??
           getDefaultStorageCapacity(backendProduct.storageCapacity),
-      };
+      }, variant?.color ?? selectedColor?.name, variant?.storageCapacity ?? selectedStorage?.name);
     }
 
     const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
 
     if (sourceProduct) {
-      return {
+      return applySelectedProductVariant({
         ...sourceProduct,
         amount,
+        selectedVariantId: variantId ?? variant?.id ?? sourceProduct.selectedVariantId,
         selectedColor:
+          (variant && getPhoneColorFromVariant(variant.color, sourceProduct.colors)) ??
           selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
         selectedStorage:
+          (variant &&
+            getStorageCapacityFromVariant(variant.storageCapacity, sourceProduct.storageCapacity)) ??
           selectedStorage ??
           sourceProduct.selectedStorage ??
           getDefaultStorageCapacity(sourceProduct.storageCapacity),
-      };
+      }, variant?.color ?? selectedColor?.name, variant?.storageCapacity ?? selectedStorage?.name);
     }
 
     return {
@@ -103,6 +133,8 @@ export const mapCartDtoToProducts = async (
       price: 0,
       img: FALLBACK_IMAGE,
       amount,
+      variants: variant ? [variant] : [],
+      selectedVariantId: variantId ?? variant?.id,
       selectedColor: selectedColor ?? getDefaultPhoneColor(),
       selectedStorage: selectedStorage ?? getDefaultStorageCapacity(),
     };
@@ -128,15 +160,14 @@ export const fetchAndStoreServerCart = async () => {
 };
 
 export const fetchCartProducts = async (cart: ICartDto): Promise<IProduct[]> => {
+  const phoneIds = Array.from(new Set(cart.cartItems.map((item) => item.phoneId)));
   const results = await Promise.allSettled(
-    cart.cartItems
-      .filter((item) => !hasRenderableCartItemDetails(item))
-      .map(async ({ phoneId }) => {
+    phoneIds.map(async (phoneId) => {
       const phone = await phonesService.getById(phoneId);
       const imageUrls = await phonesService.getImageObjectUrls(phone.images ?? []);
 
       return mapApiPhoneToProduct(phone, imageUrls[0]);
-      })
+    })
   );
 
   return results.flatMap((result) => (result.status === 'fulfilled' ? [result.value] : []));

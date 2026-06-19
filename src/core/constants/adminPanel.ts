@@ -9,6 +9,7 @@ import type {
   IAdminCustomerItem,
   IAdminCustomerKpiItem,
   IAdminProductFormState,
+  AdminProductVariantDraft,
   IAdminPanelLowStockItem,
   IAdminPanelMenuItem,
   IAdminPanelManagedProduct,
@@ -224,6 +225,36 @@ export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
   },
 ];
 
+export const ADMIN_PRODUCT_COLOR_OPTIONS = [
+  { value: 'BLACK', name: 'Black' },
+  { value: 'WHITE', name: 'White' },
+  { value: 'GRAY', name: 'Gray' },
+  { value: 'SILVER', name: 'Silver' },
+  { value: 'GOLD', name: 'Gold' },
+  { value: 'RED', name: 'Red' },
+  { value: 'BLUE', name: 'Blue' },
+  { value: 'GREEN', name: 'Green' },
+  { value: 'YELLOW', name: 'Yellow' },
+  { value: 'PINK', name: 'Pink' },
+] as const;
+
+export const ADMIN_PRODUCT_STORAGE_OPTIONS = [
+  { value: 'CAPACITY_64GB', name: '64GB' },
+  { value: 'CAPACITY_128GB', name: '128GB' },
+  { value: 'CAPACITY_256GB', name: '256GB' },
+  { value: 'CAPACITY_512GB', name: '512GB' },
+  { value: 'CAPACITY_1TB', name: '1TB' },
+  { value: 'CAPACITY_2TB', name: '2TB' },
+] as const;
+
+export const EMPTY_ADMIN_PRODUCT_VARIANT: AdminProductVariantDraft = {
+  clientId: 'new-variant',
+  color: 'BLACK',
+  storageCapacity: 'CAPACITY_128GB',
+  price: '',
+  stock: '',
+};
+
 export const EMPTY_ADMIN_PRODUCT_FORM: IAdminProductFormState = {
   name: '',
   sku: '',
@@ -238,6 +269,7 @@ export const EMPTY_ADMIN_PRODUCT_FORM: IAdminProductFormState = {
   mainCamera: '',
   batteryCapacity: '',
   description: '',
+  variants: [{ ...EMPTY_ADMIN_PRODUCT_VARIANT, clientId: 'variant-1' }],
 };
 
 export const ADMIN_PRODUCT_STATUS_LABELS: Record<AdminProductStatus, string> = {
@@ -255,11 +287,11 @@ export const ADMIN_PRODUCT_STATUS_OPTIONS: ISelectOption[] = [
 
 export const ADMIN_PRODUCT_FIELD_TOOLTIPS: Partial<Record<keyof IAdminProductFormState, string>> = {
   releaseYear: 'Format: 2026 (4 digits)',
-  coresNumber: 'Whole number, min 1',
-  screenSize: 'Format: 6.7"',
-  frontCamera: 'Format: 12 MP',
-  mainCamera: 'Format: 48-12-12 MP',
-  batteryCapacity: 'Format: 4323 mAh',
+  coresNumber: 'Whole number, 1 to 32',
+  screenSize: 'Enter number with optional decimal point. Inch mark is added on save.',
+  frontCamera: 'Enter megapixels only. MP is added on save.',
+  mainCamera: 'Enter camera values separated by hyphen. MP is added on save.',
+  batteryCapacity: 'Enter number only. mAh is added on save.',
 };
 
 export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [

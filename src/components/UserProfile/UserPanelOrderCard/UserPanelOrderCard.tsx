@@ -12,7 +12,6 @@ interface IProps {
 
 export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
   const status = STATUS_META[order.status];
-  const StatusIcon = status.icon;
 
   return (
     <article className="user-panel-order-card">
@@ -28,7 +27,6 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
         <div>
           <Typography sx={{ marginBottom: '7px', fontWeight: 500 }}>Status</Typography>
           <span className={`user-panel-order-card__status ${status.className}`}>
-            <StatusIcon width={17} height={17} style={{ color: 'var(--white)' }} />
             <Typography component="span" sx={{ fontSize: '14px', color: 'inherit' }}>
               {status.label}
             </Typography>
@@ -61,6 +59,16 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
                 <Typography sx={{ lineHeight: 1, fontWeight: 300 }}>
                   {`Quantity: ${item.quantity}`}
                 </Typography>
+                {item.color ? (
+                  <Typography sx={{ marginTop: '8px', lineHeight: 1, fontWeight: 300 }}>
+                    {`Color: ${item.color}`}
+                  </Typography>
+                ) : null}
+                {item.storage ? (
+                  <Typography sx={{ marginTop: '8px', lineHeight: 1, fontWeight: 300 }}>
+                    {`Storage: ${item.storage}`}
+                  </Typography>
+                ) : null}
               </div>
             </div>
             <Typography sx={{ fontWeight: 500 }}>{`$ ${item.price.toFixed(2)}`}</Typography>

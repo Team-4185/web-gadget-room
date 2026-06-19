@@ -2,6 +2,24 @@ import type { ComponentType, SVGProps } from 'react';
 
 export type BadgeType = 'New' | 'Hit' | 'Sale';
 export type ApiProductBadge = 'NEW' | 'HIT' | 'SALE';
+export type ApiPhoneColorName =
+  | 'BLACK'
+  | 'WHITE'
+  | 'GRAY'
+  | 'SILVER'
+  | 'GOLD'
+  | 'RED'
+  | 'BLUE'
+  | 'GREEN'
+  | 'YELLOW'
+  | 'PINK';
+export type ApiStorageCapacityName =
+  | 'CAPACITY_64GB'
+  | 'CAPACITY_128GB'
+  | 'CAPACITY_256GB'
+  | 'CAPACITY_512GB'
+  | 'CAPACITY_1TB'
+  | 'CAPACITY_2TB';
 
 export interface IProduct {
   id: number;
@@ -17,8 +35,12 @@ export interface IProduct {
   amount: number;
   colors?: ApiPhoneColor[];
   storageCapacity?: ApiStorageCapacity[];
+  variants?: ApiProductVariant[];
+  selectedVariantId?: number;
   selectedColor?: ApiPhoneColor;
   selectedStorage?: ApiStorageCapacity;
+  stock?: number;
+  status?: PhoneStockStatus;
 }
 
 export type ApiPhone = {
@@ -43,10 +65,21 @@ export type ApiPhone = {
   discountPercent?: number;
   colors?: ApiPhoneColor[];
   storageCapacity?: ApiStorageCapacity[];
+  variants?: ApiProductVariant[];
   images: ApiPhoneImage[];
 };
 
 export type PhoneStockStatus = 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+
+export type ApiProductVariant = {
+  id: number;
+  sku: string;
+  color: ApiPhoneColorName;
+  storageCapacity: ApiStorageCapacityName;
+  price: number;
+  stock: number;
+  status: PhoneStockStatus;
+};
 
 export type ApiPhoneColor = {
   name: string;
@@ -75,6 +108,16 @@ export type CreatePhonePayload = {
   description: string;
   coresNumber: number;
   sku: string;
+  variants?: AdminProductVariantPayload[];
+};
+
+export type AdminProductVariantPayload = {
+  sku: string;
+  color: ApiPhoneColorName;
+  storageCapacity: ApiStorageCapacityName;
+  price: number;
+  stock: number;
+  status?: PhoneStockStatus;
 };
 
 export type ApiPhoneImage = {

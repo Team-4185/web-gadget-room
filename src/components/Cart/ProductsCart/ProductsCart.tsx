@@ -1,26 +1,15 @@
-import { useMemo, type SyntheticEvent } from 'react';
-import { FormControl, MenuItem, Select, Typography } from '@mui/material';
-import type { SelectChangeEvent } from '@mui/material/Select';
+import { type SyntheticEvent } from 'react';
+import { Typography } from '@mui/material';
 
 import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
-import { Trash, Plus, Minus, ChevronDown } from '@/assets';
+import { Trash, Plus, Minus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import {
-  DEFAULT_PHONE_COLOR,
   formatStorageCapacity,
   getDefaultPhoneColor,
   getDefaultStorageCapacity,
 } from '@/core/utils';
-import type { ApiPhoneColor, IProduct } from '@/core/types';
-
 import './ProductsCart.css';
-
-const getCartColorOptions = (product: IProduct): ApiPhoneColor[] => {
-  const colors = product.colors?.length ? product.colors : [DEFAULT_PHONE_COLOR];
-  const hasBlack = colors.some((color) => color.name === DEFAULT_PHONE_COLOR.name);
-
-  return hasBlack ? colors : [DEFAULT_PHONE_COLOR, ...colors];
-};
 
 export const ProductsCart = () => {
   const products = useAppSelector((state) => state.cart.cart);
@@ -34,7 +23,7 @@ export const ProductsCart = () => {
   return (
     <>
       {products.map((product, idx) => (
-        <article key={product.id} className="cart-item">
+        <article key={`${product.id}-${product.selectedVariantId ?? 'phone'}`} className="cart-item">
           {idx === 0 ? null : <div className="cart-item__divider" />}
 
           <div className="cart-item__main">
@@ -52,7 +41,23 @@ export const ProductsCart = () => {
               <Typography variant="body1" component="span" sx={{ fontWeight: 600, lineHeight: 1 }}>
                 {product.name}
               </Typography>
-              <CartColorSelect product={product} disabled={cartLoading} />
+              <span className="cart-item__color">
+                <span className="cart-item__color-label">Color:</span>
+                <span className="cart-item__color-value">
+                  <span
+                    className="cart-item__color-swatch"
+                    style={{
+                      backgroundColor: (
+                        product.selectedColor ?? getDefaultPhoneColor(product.colors)
+                      ).hexCode,
+                    }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    {(product.selectedColor ?? getDefaultPhoneColor(product.colors)).displayName}
+                  </span>
+                </span>
+              </span>
               <span className="cart-item__storage">
                 Storage:{' '}
                 {formatStorageCapacity(
@@ -63,9 +68,10 @@ export const ProductsCart = () => {
 
             <div className="cart-item__amount">
               <button
-                onClick={() => dispatch(cartActions.decreaseAmount(product.id))}
+                onClick={() => dispatch(cartActions.decreaseAmount(product))}
                 className="cart-item__amount-btn"
-                disabled={cartLoading}
+                disabled={cartLoading || product.amount <= 1}
+                aria-label="Decrease quantity"
               >
                 <Minus width={12} height={12} />
               </button>
@@ -83,9 +89,10 @@ export const ProductsCart = () => {
                 {product.amount}
               </Typography>
               <button
-                onClick={() => dispatch(cartActions.increaseAmount(product.id))}
+                onClick={() => dispatch(cartActions.increaseAmount(product))}
                 className="cart-item__amount-btn"
                 disabled={cartLoading}
+                aria-label="Increase quantity"
               >
                 <Plus width={12} height={12} />
               </button>
@@ -104,7 +111,13 @@ export const ProductsCart = () => {
           <div
             onClick={() => {
               if (cartLoading) return;
-              dispatch(cartActions.removeProduct({ phoneId: product.id, amount: product.amount }));
+              dispatch(
+                cartActions.removeProduct({
+                  phoneId: product.id,
+                  variantId: product.selectedVariantId,
+                  amount: product.amount,
+                })
+              );
             }}
             className="cart-item__remove"
             aria-disabled={cartLoading}
@@ -124,62 +137,3 @@ export const ProductsCart = () => {
   );
 };
 
-const CartColorSelect = ({ product, disabled }: { product: IProduct; disabled: boolean }) => {
-  const dispatch = useAppDispatch();
-  const colorOptions = useMemo(() => getCartColorOptions(product), [product]);
-  const selectedColor = product.selectedColor ?? getDefaultPhoneColor(product.colors);
-  const handleColorChange = (event: SelectChangeEvent<string>) => {
-    dispatch(
-      cartActions.updateProductColor({
-        phoneId: product.id,
-        colorName: event.target.value,
-      })
-    );
-  };
-
-  return (
-    <label className="cart-item__color">
-      <span className="cart-item__color-label">Color:</span>
-      <FormControl className="cart-item__color-control" size="small">
-        <Select
-          className="cart-item__color-select"
-          data-style-variant="subtleBorder"
-          value={selectedColor.name}
-          disabled={disabled}
-          onChange={handleColorChange}
-          IconComponent={ChevronDown}
-          renderValue={(value) => {
-            const color = colorOptions.find((item) => item.name === value) ?? selectedColor;
-
-            return (
-              <span className="cart-item__color-value">
-                <span
-                  className="cart-item__color-swatch"
-                  style={{ backgroundColor: color.hexCode }}
-                  aria-hidden="true"
-                />
-                <span>{color.displayName}</span>
-              </span>
-            );
-          }}
-          MenuProps={{
-            PaperProps: {
-              className: 'cart-item__color-menu',
-            },
-          }}
-        >
-          {colorOptions.map((color) => (
-            <MenuItem key={color.name} value={color.name} className="cart-item__color-option">
-              <span
-                className="cart-item__color-swatch"
-                style={{ backgroundColor: color.hexCode }}
-                aria-hidden="true"
-              />
-              <span>{color.displayName}</span>
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </label>
-  );
-};

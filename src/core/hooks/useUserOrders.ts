@@ -2,8 +2,20 @@ import { useEffect, useState } from 'react';
 
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { ordersService, phonesService } from '@/core/services';
-import type { IUserPanelOrder, OrderResponse, OrderStatus } from '@/core/types';
-import { formatProductDisplayName, toErrorMessage } from '@/core/utils';
+import type {
+  ApiPhoneColorName,
+  ApiStorageCapacityName,
+  IUserPanelOrder,
+  OrderResponse,
+  OrderStatus,
+} from '@/core/types';
+import {
+  formatProductDisplayName,
+  formatStorageCapacity,
+  getPhoneColorFromVariant,
+  getStorageCapacityFromVariant,
+  toErrorMessage,
+} from '@/core/utils';
 
 const mapOrderStatus = (status: string): OrderStatus => {
   switch (status.toUpperCase()) {
@@ -46,6 +58,18 @@ const getOrderItemImage = async (imageUrl?: string, signal?: AbortSignal) => {
   }
 };
 
+const formatOrderItemColor = (value?: string) => {
+  if (!value) return undefined;
+
+  return getPhoneColorFromVariant(value as ApiPhoneColorName).displayName;
+};
+
+const formatOrderItemStorage = (value?: string) => {
+  if (!value) return undefined;
+
+  return formatStorageCapacity(getStorageCapacityFromVariant(value as ApiStorageCapacityName));
+};
+
 const mapOrderToUserPanelOrder = async (
   order: OrderResponse,
   signal?: AbortSignal
@@ -58,6 +82,10 @@ const mapOrderToUserPanelOrder = async (
           ? formatProductDisplayName(item.phone?.brand, item.productName || item.phone.name)
           : `Phone #${item.phone?.id ?? item.id}`,
       quantity: item.quantity,
+      color: formatOrderItemColor(item.variant?.color ?? item.selectedColor ?? item.color),
+      storage: formatOrderItemStorage(
+        item.variant?.storageCapacity ?? item.selectedStorage ?? item.storageCapacity ?? item.storage
+      ),
       price: item.totalPrice,
       image: await getOrderItemImage(item.phone?.images?.[0]?.url, signal),
     }))

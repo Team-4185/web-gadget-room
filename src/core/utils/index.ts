@@ -16,3 +16,4 @@ export * from './error';
 export * from './phoneFormat';
 export * from './authBootstrap';
 export * from './productVariants';
+export * from './adminProductVariants';

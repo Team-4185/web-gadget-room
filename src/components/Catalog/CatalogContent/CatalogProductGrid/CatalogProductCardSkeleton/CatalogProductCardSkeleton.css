@@ -1,7 +1,7 @@
 .catalog-product-card-skeleton {
   box-sizing: border-box;
   width: 244px;
-  height: 355px;
+  height: 370px;
   padding: 10px;
   background: var(--white);
   box-shadow: 0 0 7px 0 var(--blue-violet);

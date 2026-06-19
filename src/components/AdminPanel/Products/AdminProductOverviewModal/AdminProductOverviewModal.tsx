@@ -1,20 +1,31 @@
 import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 
-import { ADMIN_PRODUCT_STATUS_LABELS } from '@/core/constants';
-import type { IAdminPanelManagedProduct } from '@/core/types';
+import {
+  ADMIN_PRODUCT_COLOR_OPTIONS,
+  ADMIN_PRODUCT_STATUS_LABELS,
+  ADMIN_PRODUCT_STORAGE_OPTIONS,
+} from '@/core/constants';
+import type { ApiPhone, IAdminPanelManagedProduct } from '@/core/types';
 
 import './AdminProductOverviewModal.css';
 
 interface IProps {
   product: IAdminPanelManagedProduct | null;
+  productDetails: ApiPhone | null;
   description: string;
   isLoading?: boolean;
   onClose: () => void;
 }
 
+const getOptionLabel = <T extends string>(
+  value: T,
+  options: readonly { value: T; name: string }[]
+) => options.find((option) => option.value === value)?.name ?? value;
+
 export const AdminProductOverviewModal = ({
   product,
+  productDetails,
   description,
   isLoading = false,
   onClose,
@@ -32,6 +43,32 @@ export const AdminProductOverviewModal = ({
   }, [product, onClose]);
 
   if (!product) return null;
+
+  const variants = productDetails?.variants ?? [];
+  const variantRows = variants.length
+    ? variants.map((variant) => ({
+        id: variant.id,
+        color: getOptionLabel(variant.color, ADMIN_PRODUCT_COLOR_OPTIONS),
+        storage: getOptionLabel(variant.storageCapacity, ADMIN_PRODUCT_STORAGE_OPTIONS),
+        price: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(variant.price),
+        stock: `${variant.stock} pcs`,
+        status: variant.status,
+      }))
+    : [
+        {
+          id: product.id,
+          color: 'Not set',
+          storage: 'Not set',
+          price: product.price,
+          stock: product.stock,
+          status: product.status,
+        },
+      ];
 
   return (
     <div className="admin-product-overview-modal__backdrop" role="presentation">
@@ -65,7 +102,7 @@ export const AdminProductOverviewModal = ({
         {isLoading ? (
           <div className="admin-product-overview-modal__loading">Loading product overview...</div>
         ) : (
-          <>
+          <div className="admin-product-overview-modal__content">
             <div className="admin-product-overview-modal__summary">
               <img
                 className="admin-product-overview-modal__image"
@@ -86,34 +123,31 @@ export const AdminProductOverviewModal = ({
               </div>
             </div>
 
-            <dl className="admin-product-overview-modal__metrics">
-              <div>
-                <Typography component="dt" fontSize="20px" fontWeight={600}>
-                  Price
-                </Typography>
-                <Typography component="dd" fontSize="16px" fontWeight={300} marginTop="9px">
-                  {product.price}
-                </Typography>
+            <div className="admin-product-overview-modal__variants">
+              <div className="admin-product-overview-modal__variant-row admin-product-overview-modal__variant-row--header">
+                <span>Color</span>
+                <span>Storage</span>
+                <span>Price</span>
+                <span>Stock</span>
+                <span>Status</span>
               </div>
-              <div>
-                <Typography component="dt" fontSize="20px" fontWeight={600}>
-                  Stock
-                </Typography>
-                <Typography component="dd" fontSize="16px" fontWeight={300} marginTop="9px">
-                  {product.stock}
-                </Typography>
+
+              <div className="admin-product-overview-modal__variant-list">
+                {variantRows.map((variant) => (
+                  <div className="admin-product-overview-modal__variant-row" key={variant.id}>
+                    <span>{variant.color}</span>
+                    <span>{variant.storage}</span>
+                    <span>{variant.price}</span>
+                    <span>{variant.stock}</span>
+                    <span>
+                      <span className={`admin-product-overview-modal__status is-${variant.status}`}>
+                        {ADMIN_PRODUCT_STATUS_LABELS[variant.status]}
+                      </span>
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div>
-                <Typography component="dt" fontSize="20px" fontWeight={600}>
-                  Status
-                </Typography>
-                <Typography component="dd" marginTop="9px">
-                  <span className={`admin-product-overview-modal__status is-${product.status}`}>
-                    {ADMIN_PRODUCT_STATUS_LABELS[product.status]}
-                  </span>
-                </Typography>
-              </div>
-            </dl>
+            </div>
 
             <div className="admin-product-overview-modal__description">
               <Typography component="h4" fontSize="20px" fontWeight={600} lineHeight={1.2}>
@@ -129,7 +163,7 @@ export const AdminProductOverviewModal = ({
                 {description}
               </Typography>
             </div>
-          </>
+          </div>
         )}
       </section>
     </div>

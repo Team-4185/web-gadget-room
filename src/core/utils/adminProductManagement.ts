@@ -1,6 +1,7 @@
 import { api } from '@/core/config';
-import { FALLBACK_IMAGE } from '@/core/constants';
+import { EMPTY_ADMIN_PRODUCT_VARIANT, FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
+import { buildProductSku, buildVariantPayloads, getDerivedProductTotals } from './adminProductVariants';
 import { formatProductDisplayName } from './products';
 import type {
   AdminProductFormErrors,
@@ -154,6 +155,68 @@ const getIntegerValue = (value: string) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
+export const formatAdminScreenSizeInput = (value: string) => {
+  const cleaned = value.replace(/,/g, '.').replace(/[^\d.]/g, '');
+  const firstDotIndex = cleaned.indexOf('.');
+  const normalized =
+    firstDotIndex === -1
+      ? cleaned
+      : `${cleaned.slice(0, firstDotIndex + 1)}${cleaned
+          .slice(firstDotIndex + 1)
+          .replace(/\./g, '')}`;
+
+  const [integer = '', decimal] = normalized.split('.');
+  const normalizedInteger = integer.replace(/^0+(?=\d)/, '');
+  const trimmedInteger = normalizedInteger.slice(0, 2);
+  const trimmedDecimal = decimal === undefined ? undefined : decimal.slice(0, 1);
+
+  return trimmedDecimal === undefined ? trimmedInteger : `${trimmedInteger}.${trimmedDecimal}`;
+};
+
+export const formatAdminFrontCameraInput = (value: string) => {
+  return value.replace(/\D/g, '').slice(0, 3);
+};
+
+export const formatAdminMainCameraInput = (value: string) => {
+  const cleaned = value
+    .replace(/MP/gi, '')
+    .replace(/[^\d-]/g, '-')
+    .replace(/-{2,}/g, '-');
+  const parts = cleaned.split('-').slice(0, 4);
+  const formatted = parts.map((part) => part.slice(0, 3)).join('-');
+  return formatted.startsWith('-') ? formatted.slice(1) : formatted;
+};
+
+export const formatAdminBatteryCapacityInput = (value: string) => {
+  return value.replace(/\D/g, '').slice(0, 5);
+};
+
+export const formatAdminCpuInput = (value: string) =>
+  value.replace(/[^A-Za-z0-9\s-]/g, '').replace(/\s+/g, ' ').slice(0, 30);
+
+const toBackendScreenSize = (value: string) => {
+  const screenSize = formatAdminScreenSizeInput(value);
+  return screenSize ? `${screenSize}"` : '';
+};
+
+const toBackendCamera = (value: string) => {
+  const camera = formatAdminFrontCameraInput(value);
+  return camera ? `${camera} MP` : '';
+};
+
+const toBackendMainCamera = (value: string) => {
+  const camera = formatAdminMainCameraInput(value)
+    .split('-')
+    .filter(Boolean)
+    .join('-');
+  return camera ? `${camera} MP` : '';
+};
+
+const toBackendBatteryCapacity = (value: string) => {
+  const capacity = formatAdminBatteryCapacityInput(value);
+  return capacity ? `${capacity} mAh` : '';
+};
+
 export const mapAdminProductToDraft = (
   product: IAdminPanelManagedProduct
 ): IAdminProductFormState => ({
@@ -170,6 +233,14 @@ export const mapAdminProductToDraft = (
   mainCamera: '',
   batteryCapacity: '',
   description: '',
+  variants: [
+    {
+      ...EMPTY_ADMIN_PRODUCT_VARIANT,
+      clientId: 'variant-1',
+      price: getNumericPrice(product.price),
+      stock: getNumericStock(product.stock),
+    },
+  ],
 });
 
 export const mapPhoneToAdminProductDraft = (
@@ -184,32 +255,56 @@ export const mapPhoneToAdminProductDraft = (
   releaseYear: String(phone.releaseYear ?? ''),
   cpu: phone.cpu ?? '',
   coresNumber: String(phone.coresNumber ?? ''),
-  screenSize: phone.screenSize ?? '',
-  frontCamera: phone.frontCamera ?? '',
-  mainCamera: phone.mainCamera ?? '',
-  batteryCapacity: phone.batteryCapacity ?? '',
+  screenSize: formatAdminScreenSizeInput(phone.screenSize ?? ''),
+  frontCamera: formatAdminFrontCameraInput(phone.frontCamera ?? ''),
+  mainCamera: formatAdminMainCameraInput(phone.mainCamera ?? ''),
+  batteryCapacity: formatAdminBatteryCapacityInput(phone.batteryCapacity ?? ''),
   description: phone.description ?? '',
+  variants: phone.variants?.length
+    ? phone.variants.map((variant) => ({
+        clientId: `persisted-${variant.id}`,
+        id: variant.id,
+        color: variant.color,
+        storageCapacity: variant.storageCapacity,
+        price: String(variant.price),
+        stock: String(variant.stock),
+        sku: variant.sku,
+        isPersisted: true,
+      }))
+    : [
+        {
+          ...EMPTY_ADMIN_PRODUCT_VARIANT,
+          clientId: 'variant-1',
+          price: String(phone.price ?? getNumberValue(getNumericPrice(product.price))),
+          stock: String(phone.stock ?? getIntegerValue(getNumericStock(product.stock))),
+        },
+      ],
 });
 
 export const buildAdminPhonePayload = (
   draft: IAdminProductFormState,
-  status: AdminProductStatus
-): CreatePhonePayload => ({
-  releaseYear: getIntegerValue(draft.releaseYear),
-  batteryCapacity: draft.batteryCapacity.trim(),
-  brand: draft.brand.trim(),
-  cpu: draft.cpu.trim(),
-  price: getNumberValue(draft.price),
-  name: draft.name.trim(),
-  screenSize: draft.screenSize.trim(),
-  frontCamera: draft.frontCamera.trim(),
-  mainCamera: draft.mainCamera.trim(),
-  status,
-  stock: getIntegerValue(draft.stock),
-  description: draft.description.trim(),
-  coresNumber: Math.max(1, getIntegerValue(draft.coresNumber)),
-  sku: draft.sku.trim(),
-});
+  _status: AdminProductStatus
+): CreatePhonePayload => {
+  const totals = getDerivedProductTotals(draft.variants);
+
+  return {
+    releaseYear: getIntegerValue(draft.releaseYear),
+    batteryCapacity: toBackendBatteryCapacity(draft.batteryCapacity),
+    brand: draft.brand.trim(),
+    cpu: formatAdminCpuInput(draft.cpu).trim(),
+    price: totals.price,
+    name: draft.name.trim(),
+    screenSize: toBackendScreenSize(draft.screenSize),
+    frontCamera: toBackendCamera(draft.frontCamera),
+    mainCamera: toBackendMainCamera(draft.mainCamera),
+    status: totals.status,
+    stock: totals.stock,
+    description: draft.description.trim(),
+    coresNumber: Math.max(1, getIntegerValue(draft.coresNumber)),
+    sku: buildProductSku(draft.brand, draft.name),
+    variants: buildVariantPayloads(draft),
+  };
+};
 
 export const validateAdminProductDraft = (
   draft: IAdminProductFormState,
@@ -237,24 +332,6 @@ export const validateAdminProductDraft = (
     errors.sku = 'SKU length must be 3 to 64 characters.';
   }
 
-  const hasValidPriceNumber = /^\d+(?:[.,]\d+)?$/.test(draft.price.trim());
-  if (!draft.price.trim()) {
-    errors.price = 'Price is required.';
-  } else if (!hasValidPriceNumber) {
-    errors.price = 'Price must be a valid number.';
-  } else if (payload.price < 0) {
-    errors.price = 'Price must be 0 or greater.';
-  }
-
-  const hasValidStockNumber = /^\d+$/.test(draft.stock.trim());
-  if (!draft.stock.trim()) {
-    errors.stock = 'Stock is required.';
-  } else if (!hasValidStockNumber) {
-    errors.stock = 'Stock must be a whole number.';
-  } else if (payload.stock < 0) {
-    errors.stock = 'Stock must be 0 or greater.';
-  }
-
   const hasValidReleaseYear = /^\d{4}$/.test(draft.releaseYear.trim());
   if (!draft.releaseYear.trim()) {
     errors.releaseYear = 'Release year is required.';
@@ -262,6 +339,8 @@ export const validateAdminProductDraft = (
     errors.releaseYear = 'Release year must be 4 digits (e.g. 2026).';
   } else if (payload.releaseYear < 1970) {
     errors.releaseYear = 'Release year must be 1970 or newer.';
+  } else if (payload.releaseYear > 2026) {
+    errors.releaseYear = 'Release year must be 2026 or earlier.';
   }
 
   const hasValidCoresNumber = /^\d+$/.test(draft.coresNumber.trim());
@@ -271,9 +350,17 @@ export const validateAdminProductDraft = (
     errors.coresNumber = 'Cores number must be a whole number.';
   } else if (payload.coresNumber < 1) {
     errors.coresNumber = 'Cores number must be at least 1.';
+  } else if (payload.coresNumber > 32) {
+    errors.coresNumber = 'Cores number must be at most 32.';
   }
 
   if (!payload.description.trim()) errors.description = 'Description is required.';
+
+  if (!/^[A-Za-z0-9\s-]+$/.test(payload.cpu)) {
+    errors.cpu = 'CPU can contain only letters, numbers, spaces and hyphens.';
+  } else if (payload.cpu.length > 30) {
+    errors.cpu = 'CPU must be at most 30 characters.';
+  }
 
   if (!/^\d+(?:\.\d+)?\smAh$/.test(payload.batteryCapacity)) {
     errors.batteryCapacity = 'Use format: 4323 mAh';
@@ -287,8 +374,8 @@ export const validateAdminProductDraft = (
     errors.frontCamera = 'Use format: 12 MP';
   }
 
-  if (!/^\d+-\d+-\d+\sMP$/.test(payload.mainCamera)) {
-    errors.mainCamera = 'Use exact format: 48-12-12 MP';
+  if (!/^\d+(-\d+)*\sMP$/.test(payload.mainCamera)) {
+    errors.mainCamera = 'Use format: 48-12-12 MP';
   }
 
   return errors;

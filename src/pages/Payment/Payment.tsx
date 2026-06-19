@@ -124,6 +124,7 @@ export const Payment = () => {
 
   const cartItems = cartProducts.map((product) => ({
     phoneId: product.id,
+    variantId: product.selectedVariantId,
     amount: product.amount,
     selectedColor: product.selectedColor,
     selectedStorage: product.selectedStorage,

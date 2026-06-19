@@ -6,10 +6,10 @@ import { createAppSlice } from '@/core/store/createAppSlice';
 import type { ApiPhoneColor, ApiStorageCapacity, ICartDto, IProduct } from '@/core/types';
 import {
   cartStorage,
+  applySelectedProductVariant,
   fetchAndStoreServerCartWithProducts,
   getDefaultPhoneColor,
   getDefaultStorageCapacity,
-  getPhoneColorByName,
   mapCartDtoToProducts,
   toErrorMessage,
   type CartProductsPayload,
@@ -27,10 +27,12 @@ type CartState = {
 
 type RemoveProductPayload = {
   phoneId: number;
+  variantId?: number;
   amount: number;
 };
 
 type AddProductPayload = number | IProduct;
+type CartLinePayload = number | IProduct;
 
 type AddProductArg = {
   product: AddProductPayload;
@@ -39,12 +41,20 @@ type AddProductArg = {
 
 type UpdateProductColorPayload = {
   phoneId: number;
+  variantId?: number;
   colorName: string;
 };
 
 type UpdateProductStoragePayload = {
   phoneId: number;
+  variantId?: number;
   storageName: string;
+};
+
+type UpdateProductVariantPayload = {
+  product: IProduct;
+  colorName?: string;
+  storageName?: string;
 };
 
 const MISSING_USER_CART_ERROR = 'MISSING_USER_CART';
@@ -77,12 +87,12 @@ const applyCartState = (state: CartState, cart: ICartDto, products: IProduct[] =
   state.cart = products.map((product) => ({
     ...product,
     selectedColor:
-      selectedColorsByProductId.get(product.id) ??
       product.selectedColor ??
+      selectedColorsByProductId.get(product.id) ??
       getDefaultPhoneColor(product.colors),
     selectedStorage:
-      selectedStorageByProductId.get(product.id) ??
       product.selectedStorage ??
+      selectedStorageByProductId.get(product.id) ??
       getDefaultStorageCapacity(product.storageCapacity),
   }));
   state.error = null;
@@ -97,6 +107,19 @@ const isMissingUserCartError = (error: unknown) =>
 const getProductFromPayload = (payload: AddProductPayload) =>
   typeof payload === 'number' ? PRODUCTS.find((product) => product.id === payload) : payload;
 
+const getCartLineRequest = (product: CartLinePayload, amount = 1) =>
+  typeof product === 'number'
+    ? { phoneId: product, amount }
+    : {
+        phoneId: product.id,
+        ...(product.selectedVariantId ? { variantId: product.selectedVariantId } : {}),
+        amount,
+      };
+
+const isSameCartLine = (item: IProduct, phoneId: number, variantId?: number) =>
+  item.id === phoneId &&
+  (variantId === undefined || item.selectedVariantId === variantId || !item.selectedVariantId);
+
 const normalizeAddProductArg = (payload: AddProductPayload | AddProductArg) =>
   typeof payload === 'object' && 'product' in payload
     ? payload
@@ -107,8 +130,9 @@ const persistLocalCartState = (state: CartState) => {
     id: state.cartId,
     totalPrice: state.totalPrice,
     totalAmount: state.totalAmount,
-    cartItems: state.cart.map(({ id, amount, selectedColor, selectedStorage }) => ({
+    cartItems: state.cart.map(({ id, amount, selectedColor, selectedStorage, selectedVariantId }) => ({
       phoneId: id,
+      variantId: selectedVariantId,
       amount,
       selectedColor,
       selectedStorage,
@@ -124,7 +148,9 @@ const addProductLocally = (state: CartState, payload: AddProductPayload) => {
     return;
   }
 
-  const existingProduct = state.cart.find((item) => item.id === product.id);
+  const existingProduct = state.cart.find((item) =>
+    isSameCartLine(item, product.id, product.selectedVariantId)
+  );
 
   if (existingProduct) {
     existingProduct.amount += 1;
@@ -152,8 +178,8 @@ const addProductLocally = (state: CartState, payload: AddProductPayload) => {
   persistLocalCartState(state);
 };
 
-const increaseProductLocally = (state: CartState, phoneId: number) => {
-  const product = state.cart.find((item) => item.id === phoneId);
+const increaseProductLocally = (state: CartState, phoneId: number, variantId?: number) => {
+  const product = state.cart.find((item) => isSameCartLine(item, phoneId, variantId));
 
   if (!product) return;
 
@@ -164,8 +190,8 @@ const increaseProductLocally = (state: CartState, phoneId: number) => {
   persistLocalCartState(state);
 };
 
-const decreaseProductLocally = (state: CartState, phoneId: number, amount = 1) => {
-  const product = state.cart.find((item) => item.id === phoneId);
+const decreaseProductLocally = (state: CartState, phoneId: number, amount = 1, variantId?: number) => {
+  const product = state.cart.find((item) => isSameCartLine(item, phoneId, variantId));
 
   if (!product) return;
 
@@ -175,7 +201,7 @@ const decreaseProductLocally = (state: CartState, phoneId: number, amount = 1) =
   state.totalPrice -= product.price * amountToRemove;
 
   if (product.amount <= 0) {
-    state.cart = state.cart.filter((item) => item.id !== phoneId);
+    state.cart = state.cart.filter((item) => !isSameCartLine(item, phoneId, variantId));
   }
 
   state.error = null;
@@ -240,10 +266,10 @@ const cartSlice = createAppSlice({
     >(
       async (payload, { rejectWithValue }) => {
         const { product } = normalizeAddProductArg(payload);
-        const phoneId = typeof product === 'number' ? product : product.id;
+        const request = getCartLineRequest(product);
 
         try {
-          await cartService.putItem({ phoneId, amount: 1 });
+          await cartService.putItem(request);
           return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           if (isMissingUserCartError(error)) {
@@ -267,8 +293,11 @@ const cartSlice = createAppSlice({
 
           applyCartState(state, action.payload.cart, action.payload.products);
           if (addedProduct?.selectedColor || addedProduct?.selectedStorage) {
-            const product = state.cart.find((item) => item.id === addedProduct.id);
+            const product = state.cart.find((item) =>
+              isSameCartLine(item, addedProduct.id, addedProduct.selectedVariantId)
+            );
             if (product) {
+              product.selectedVariantId = addedProduct.selectedVariantId ?? product.selectedVariantId;
               product.selectedColor = addedProduct.selectedColor ?? product.selectedColor;
               product.selectedStorage = addedProduct.selectedStorage ?? product.selectedStorage;
               if (showConfirmation) {
@@ -305,10 +334,10 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    increaseAmount: create.asyncThunk<CartProductsPayload, number, { rejectValue: string }>(
-      async (phoneId, { rejectWithValue }) => {
+    increaseAmount: create.asyncThunk<CartProductsPayload, CartLinePayload, { rejectValue: string }>(
+      async (payload, { rejectWithValue }) => {
         try {
-          await cartService.putItem({ phoneId, amount: 1 });
+          await cartService.putItem(getCartLineRequest(payload));
           return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           if (isMissingUserCartError(error)) {
@@ -328,7 +357,8 @@ const cartSlice = createAppSlice({
         },
         rejected: (state, action) => {
           if (action.payload === MISSING_USER_CART_ERROR) {
-            increaseProductLocally(state, action.meta.arg);
+            const request = getCartLineRequest(action.meta.arg);
+            increaseProductLocally(state, request.phoneId, request.variantId);
             return;
           }
 
@@ -339,10 +369,10 @@ const cartSlice = createAppSlice({
         },
       }
     ),
-    decreaseAmount: create.asyncThunk<CartProductsPayload, number, { rejectValue: string }>(
-      async (phoneId, { rejectWithValue }) => {
+    decreaseAmount: create.asyncThunk<CartProductsPayload, CartLinePayload, { rejectValue: string }>(
+      async (payload, { rejectWithValue }) => {
         try {
-          await cartService.removeItem({ phoneId, amount: 1 });
+          await cartService.removeItem(getCartLineRequest(payload));
           return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           if (isMissingUserCartError(error)) {
@@ -362,7 +392,8 @@ const cartSlice = createAppSlice({
         },
         rejected: (state, action) => {
           if (action.payload === MISSING_USER_CART_ERROR) {
-            decreaseProductLocally(state, action.meta.arg);
+            const request = getCartLineRequest(action.meta.arg);
+            decreaseProductLocally(state, request.phoneId, request.amount, request.variantId);
             return;
           }
 
@@ -378,9 +409,9 @@ const cartSlice = createAppSlice({
       RemoveProductPayload,
       { rejectValue: string }
     >(
-      async ({ phoneId, amount }, { rejectWithValue }) => {
+      async ({ phoneId, amount, variantId }, { rejectWithValue }) => {
         try {
-          await cartService.removeItem({ phoneId, amount });
+          await cartService.removeItem({ phoneId, variantId, amount });
           return await fetchAndStoreServerCartWithProducts();
         } catch (error) {
           if (isMissingUserCartError(error)) {
@@ -400,11 +431,80 @@ const cartSlice = createAppSlice({
         },
         rejected: (state, action) => {
           if (action.payload === MISSING_USER_CART_ERROR) {
-            decreaseProductLocally(state, action.meta.arg.phoneId, action.meta.arg.amount);
+            decreaseProductLocally(
+              state,
+              action.meta.arg.phoneId,
+              action.meta.arg.amount,
+              action.meta.arg.variantId
+            );
             return;
           }
 
           state.error = action.payload ?? 'Failed to remove product';
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    updateProductVariant: create.asyncThunk<
+      CartProductsPayload,
+      UpdateProductVariantPayload,
+      { rejectValue: string }
+    >(
+      async ({ product, colorName, storageName }, { rejectWithValue }) => {
+        const nextProduct = applySelectedProductVariant(
+          product,
+          colorName ?? product.selectedColor?.name,
+          storageName ?? product.selectedStorage?.name
+        );
+
+        try {
+          if (nextProduct.selectedVariantId !== product.selectedVariantId) {
+            await cartService.removeItem(getCartLineRequest(product, product.amount));
+            await cartService.putItem(getCartLineRequest(nextProduct, product.amount));
+          }
+
+          return await fetchAndStoreServerCartWithProducts();
+        } catch (error) {
+          if (isMissingUserCartError(error)) {
+            return rejectWithValue(MISSING_USER_CART_ERROR);
+          }
+
+          return rejectWithValue(toErrorMessage(error, 'Failed to update product variant'));
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, action) => {
+          applyCartState(state, action.payload.cart, action.payload.products);
+        },
+        rejected: (state, action) => {
+          if (action.payload === MISSING_USER_CART_ERROR) {
+            const { product, colorName, storageName } = action.meta.arg;
+            const cartProduct = state.cart.find((item) =>
+              isSameCartLine(item, product.id, product.selectedVariantId)
+            );
+
+            if (cartProduct) {
+              Object.assign(
+                cartProduct,
+                applySelectedProductVariant(
+                  cartProduct,
+                  colorName ?? cartProduct.selectedColor?.name,
+                  storageName ?? cartProduct.selectedStorage?.name
+                )
+              );
+              persistLocalCartState(state);
+            }
+
+            return;
+          }
+
+          state.error = action.payload ?? 'Failed to update product variant';
         },
         settled: (state) => {
           state.loading = false;
@@ -424,22 +524,38 @@ const cartSlice = createAppSlice({
       state.lastAddedProduct = null;
     }),
     updateProductColor: create.reducer<UpdateProductColorPayload>((state, action) => {
-      const product = state.cart.find((item) => item.id === action.payload.phoneId);
+      const product = state.cart.find((item) =>
+        isSameCartLine(item, action.payload.phoneId, action.payload.variantId)
+      );
 
       if (!product) return;
 
-      product.selectedColor = getPhoneColorByName(product.colors, action.payload.colorName);
+      Object.assign(
+        product,
+        applySelectedProductVariant(
+          product,
+          action.payload.colorName,
+          product.selectedStorage?.name
+        )
+      );
       state.error = null;
       persistLocalCartState(state);
     }),
     updateProductStorage: create.reducer<UpdateProductStoragePayload>((state, action) => {
-      const product = state.cart.find((item) => item.id === action.payload.phoneId);
+      const product = state.cart.find((item) =>
+        isSameCartLine(item, action.payload.phoneId, action.payload.variantId)
+      );
 
       if (!product) return;
 
-      product.selectedStorage =
-        product.storageCapacity?.find((storage) => storage.name === action.payload.storageName) ??
-        getDefaultStorageCapacity(product.storageCapacity);
+      Object.assign(
+        product,
+        applySelectedProductVariant(
+          product,
+          product.selectedColor?.name,
+          action.payload.storageName
+        )
+      );
       state.error = null;
       persistLocalCartState(state);
     }),

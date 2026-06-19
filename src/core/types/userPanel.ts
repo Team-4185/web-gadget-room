@@ -21,6 +21,8 @@ export interface IUserPanelOrderItem {
   id: string;
   title: string;
   quantity: number;
+  color?: string;
+  storage?: string;
   price: number;
   image: string;
 }

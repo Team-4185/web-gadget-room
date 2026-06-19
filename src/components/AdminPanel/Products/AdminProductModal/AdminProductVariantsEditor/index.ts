@@ -1,0 +1,1 @@
+export { AdminProductVariantsEditor } from './AdminProductVariantsEditor';

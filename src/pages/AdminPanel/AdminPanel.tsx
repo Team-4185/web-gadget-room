@@ -169,6 +169,7 @@ export const AdminPanel = () => {
         title="Add a new product"
         submitLabel="Save"
         values={dashboardProductModal.draftProduct}
+        activeTab={dashboardProductModal.activeTab}
         imageName={dashboardProductModal.imageName}
         uploadLabel="Upload an image"
         editDescriptionLabel="Description"
@@ -176,7 +177,13 @@ export const AdminPanel = () => {
         fieldTooltips={ADMIN_PRODUCT_FIELD_TOOLTIPS}
         onClose={dashboardProductModal.closeProductModal}
         onSave={() => void dashboardProductModal.saveProductModal()}
+        onTabChange={dashboardProductModal.setActiveTab}
         onValueChange={dashboardProductModal.handleDraftChange}
+        variantErrors={dashboardProductModal.variantErrors}
+        onVariantChange={dashboardProductModal.handleVariantChange}
+        onAddVariant={dashboardProductModal.addVariant}
+        onRemoveDraftVariant={dashboardProductModal.removeDraftVariant}
+        onRequestDeleteVariant={dashboardProductModal.requestDeleteVariant}
         onImageChange={dashboardProductModal.handleImageChange}
       />
     </section>

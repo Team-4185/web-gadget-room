@@ -1,4 +1,4 @@
-import type { ApiPhone } from './product';
+import type { ApiPhone, ApiProductVariant } from './product';
 
 export type OrderPaymentMethod = 'CARD' | 'CASH_ON_DELIVERY';
 export type OrderDeliveryMethod = 'COURIER' | 'POST_OFFICE' | 'PICKUP';
@@ -28,16 +28,18 @@ export type OrderItemColor = string;
 export type OrderItemStorage = string;
 
 export type CreateOrderItemPayload = {
-  phoneId: number;
+  phoneId?: number;
+  variantId?: number;
   quantity: number;
-  color: OrderItemColor;
-  storage: OrderItemStorage;
+  color?: OrderItemColor;
+  storage?: OrderItemStorage;
 };
 
 export type CheckoutItemSelectionPayload = {
-  phoneId: number;
-  color: OrderItemColor;
-  storage: OrderItemStorage;
+  phoneId?: number;
+  variantId?: number;
+  color?: OrderItemColor;
+  storage?: OrderItemStorage;
 };
 
 export type CreateOrderPayload = {
@@ -59,6 +61,13 @@ export type CheckoutOrderPayload = Omit<CreateOrderPayload, 'items'> & {
 export type OrderResponseItem = {
   id: number;
   phone: ApiPhone;
+  variantId?: number;
+  variant?: ApiProductVariant;
+  color?: string;
+  storage?: string;
+  storageCapacity?: string;
+  selectedColor?: string;
+  selectedStorage?: string;
   productName: string;
   sku: string;
   unitPrice: number;

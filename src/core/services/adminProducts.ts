@@ -1,8 +1,10 @@
 import { api } from '@/core/config';
 import type {
+  AdminProductVariantPayload,
   AdminProductsRequestParams,
   ApiPhone,
   ApiPhoneImage,
+  ApiProductVariant,
   CreatePhonePayload,
 } from '@/core/types';
 import {
@@ -26,13 +28,13 @@ export const adminProductsService = {
     return data;
   },
   async create(payload: CreatePhonePayload, imageFile?: File | null) {
-    const { data } = await api.post<ApiPhone>('/api/v1/admin/products', payload);
-
+    const formData = new FormData();
+    formData.append('product', new Blob([JSON.stringify(payload)], { type: 'application/json' }));
     if (imageFile) {
-      await addAdminProductImage(data.id, imageFile);
+      formData.append('images', imageFile);
     }
 
-    return data;
+    await api.post('/api/v1/admin/products', formData);
   },
   async update(id: number, payload: CreatePhonePayload) {
     const { data } = await api.put<ApiPhone>(`/api/v1/admin/products/${id}`, payload);
@@ -52,6 +54,27 @@ export const adminProductsService = {
   },
   async deleteImage(productId: number, imageId: number) {
     await api.delete(`/api/v1/admin/products/${productId}/images/${imageId}`);
+  },
+  async addVariant(productId: number, payload: AdminProductVariantPayload) {
+    const { data } = await api.post<ApiProductVariant>(
+      `/api/v1/admin/products/${productId}/variants`,
+      payload
+    );
+    return data;
+  },
+  async updateVariant(
+    productId: number,
+    variantId: number,
+    payload: Partial<AdminProductVariantPayload>
+  ) {
+    const { data } = await api.put<ApiProductVariant>(
+      `/api/v1/admin/products/${productId}/variants/${variantId}`,
+      payload
+    );
+    return data;
+  },
+  async deleteVariant(productId: number, variantId: number) {
+    await api.delete(`/api/v1/admin/products/${productId}/variants/${variantId}`);
   },
   async getProducts({
     page,
