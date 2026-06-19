@@ -7,11 +7,21 @@ import { adminOrdersService, type ApiAdminOrder, type ApiAdminOrdersKpi } from '
 import type {
   AdminOrderAction,
   AdminOrderStatus,
+  ApiPhoneColorName,
   ApiAdminOrderStatus,
+  ApiStorageCapacityName,
+  IAdminOrderDetails,
+  IAdminOrderDetailsItem,
   IAdminManagedOrderItem,
   IAdminOrderKpiItem,
 } from '@/core/types';
-import { toErrorMessage } from '@/core/utils';
+import {
+  formatProductDisplayName,
+  formatStorageCapacity,
+  getPhoneColorFromVariant,
+  getStorageCapacityFromVariant,
+  toErrorMessage,
+} from '@/core/utils';
 import { useAdminPanelData } from './useAdminPanelData';
 import type { AdminOrderFilterId } from '@/core/constants';
 
@@ -65,6 +75,34 @@ const formatOrderDateTime = (value: string) => {
   };
 };
 
+const formatVariantColor = (value?: string) =>
+  value ? getPhoneColorFromVariant(value as ApiPhoneColorName).displayName : undefined;
+
+const formatVariantStorage = (value?: string) =>
+  value
+    ? formatStorageCapacity(getStorageCapacityFromVariant(value as ApiStorageCapacityName))
+    : undefined;
+
+const formatShippingAddress = (order: ApiAdminOrder) => {
+  const address = order.shippingAddress;
+
+  if (!address) return order.pickupPointId ?? 'Not specified';
+
+  return [
+    address.logisticsCompany,
+    address.logisticPostOffice,
+    address.street,
+    address.houseNumber,
+    address.apartmentNumber,
+    address.city,
+    address.region,
+    address.country,
+    address.zipCode,
+  ]
+    .filter(Boolean)
+    .join(', ');
+};
+
 const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
   const dateTime = formatOrderDateTime(order.createdAt);
   const customer = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ');
@@ -81,6 +119,49 @@ const mapAdminOrder = (order: ApiAdminOrder): IAdminManagedOrderItem => {
     date: dateTime.date,
     time: dateTime.time,
     status: mapApiStatusToFrontendStatus(order.status),
+    availableActions: order.availableActions ?? [],
+  };
+};
+
+const mapAdminOrderDetailsItem = (item: NonNullable<ApiAdminOrder['items']>[number]) => {
+  const phone = item.phone;
+  const title =
+    item.productName || phone?.name
+      ? formatProductDisplayName(phone?.brand, item.productName || phone?.name || '')
+      : `Product #${item.id}`;
+
+  return {
+    id: String(item.id),
+    title,
+    sku: item.sku ?? item.variant?.sku ?? 'Not specified',
+    image: phone?.previewImage?.url ?? phone?.images?.[0]?.url ?? '',
+    quantity: item.quantity,
+    color: formatVariantColor(item.variant?.color ?? item.selectedColor),
+    storage: formatVariantStorage(item.variant?.storageCapacity ?? item.selectedStorage),
+    unitPrice: item.unitPrice ?? item.variant?.price ?? 0,
+    totalPrice: item.totalPrice,
+  } satisfies IAdminOrderDetailsItem;
+};
+
+const mapAdminOrderDetails = (order: ApiAdminOrder): IAdminOrderDetails => {
+  const dateTime = formatOrderDateTime(order.createdAt);
+  const customer = [order.customerFirstName, order.customerLastName].filter(Boolean).join(' ');
+
+  return {
+    id: String(order.id),
+    orderNumber: `#ORD-${order.id}`,
+    customer: customer || order.user?.email || 'Guest',
+    email: order.customerEmail,
+    phone: order.customerPhoneNumber || 'Not specified',
+    date: dateTime.date,
+    time: dateTime.time,
+    status: mapApiStatusToFrontendStatus(order.status),
+    paymentMethod: order.paymentMethod,
+    paymentStatus: order.paymentDetails?.paymentStatus ?? order.paymentStatus,
+    deliveryMethod: order.deliveryMethod,
+    shippingAddress: formatShippingAddress(order),
+    total: order.total,
+    items: (order.items ?? []).map(mapAdminOrderDetailsItem),
     availableActions: order.availableActions ?? [],
   };
 };
@@ -104,6 +185,9 @@ export const useAdminOrdersData = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedOrderDetails, setSelectedOrderDetails] = useState<IAdminOrderDetails | null>(null);
+  const [isOrderDetailsLoading, setIsOrderDetailsLoading] = useState(false);
+  const [isOrderActionLoading, setIsOrderActionLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<AdminOrderFilterId>('all');
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -185,15 +269,45 @@ export const useAdminOrdersData = () => {
   const applyOrderAction = useCallback(
     async (orderId: string, action: AdminOrderAction) => {
       try {
+        setIsOrderActionLoading(true);
         await adminOrdersService.applyAction(Number(orderId), action);
         setReloadKey((key) => key + 1);
+        const details = await adminOrdersService.getOrder(Number(orderId));
+        setSelectedOrderDetails(mapAdminOrderDetails(details));
         enqueueSnackbar('Order updated.', { variant: 'success' });
       } catch (error) {
         enqueueSnackbar(toErrorMessage(error, 'Failed to update order.'), { variant: 'error' });
+        setReloadKey((key) => key + 1);
+      } finally {
+        setIsOrderActionLoading(false);
       }
     },
     [enqueueSnackbar]
   );
+
+  const openOrderDetails = useCallback(
+    async (orderId: string) => {
+      setIsOrderDetailsLoading(true);
+
+      try {
+        const details = await adminOrdersService.getOrder(Number(orderId));
+        setSelectedOrderDetails(mapAdminOrderDetails(details));
+      } catch (error) {
+        enqueueSnackbar(toErrorMessage(error, 'Failed to load order details.'), {
+          variant: 'error',
+        });
+      } finally {
+        setIsOrderDetailsLoading(false);
+      }
+    },
+    [enqueueSnackbar]
+  );
+
+  const closeOrderDetails = useCallback(() => {
+    setSelectedOrderDetails(null);
+    setIsOrderDetailsLoading(false);
+    setIsOrderActionLoading(false);
+  }, []);
 
   return useMemo(
     () => ({
@@ -208,11 +322,16 @@ export const useAdminOrdersData = () => {
       isFirstPage,
       isLastPage,
       isLoading,
+      selectedOrderDetails,
+      isOrderDetailsLoading,
+      isOrderActionLoading,
       activeFilter,
       onFilterChange,
       goToPreviousPage,
       goToNextPage,
       applyOrderAction,
+      openOrderDetails,
+      closeOrderDetails,
     }),
     [
       activeFilter,
@@ -224,10 +343,13 @@ export const useAdminOrdersData = () => {
       isFirstPage,
       isLastPage,
       isLoading,
+      isOrderActionLoading,
+      isOrderDetailsLoading,
       kpis,
       menu,
       onFilterChange,
       orders,
+      selectedOrderDetails,
       subtitle,
       totalOrders,
       totalPages,

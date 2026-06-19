@@ -20,6 +20,7 @@ export {
 export { AdminOrdersTab } from './Orders/AdminOrdersTab/AdminOrdersTab';
 export { AdminOrderKpiCard } from './Orders/AdminOrderKpiCard/AdminOrderKpiCard';
 export { AdminOrdersTable } from './Orders/AdminOrdersTable/AdminOrdersTable';
+export { AdminOrderDetailsModal } from './Orders/AdminOrderDetailsModal';
 
 export { AdminCustomersTab } from './Customers/AdminCustomersTab/AdminCustomersTab';
 export { AdminCustomerKpiCard } from './Customers/AdminCustomerKpiCard/AdminCustomerKpiCard';

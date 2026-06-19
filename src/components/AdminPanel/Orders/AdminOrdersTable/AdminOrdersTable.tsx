@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
-import type { IAdminManagedOrderItem } from '@/core/types';
+import type { AdminOrderAction, IAdminManagedOrderItem, IAdminOrderDetails } from '@/core/types';
 import { Visibility } from '@/assets';
 import {
   ADMIN_ORDER_FILTER_TABS,
@@ -12,6 +12,7 @@ import {
 } from '@/core/constants';
 import { Button } from '@/components/ui';
 import { AdminPagination } from '@/components/shared';
+import { AdminOrderDetailsModal } from '../AdminOrderDetailsModal';
 
 import './AdminOrdersTable.css';
 
@@ -23,10 +24,16 @@ interface IProps {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
+  selectedOrderDetails: IAdminOrderDetails | null;
+  isOrderDetailsLoading: boolean;
+  isOrderActionLoading: boolean;
   activeFilter: AdminOrderFilterId;
   onFilterChange: (filter: AdminOrderFilterId) => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
+  onViewOrder: (orderId: string) => void;
+  onCloseOrderDetails: () => void;
+  onApplyOrderAction: (orderId: string, action: AdminOrderAction) => void;
 }
 
 export const AdminOrdersTable: FC<IProps> = ({
@@ -37,10 +44,16 @@ export const AdminOrdersTable: FC<IProps> = ({
   isFirstPage,
   isLastPage,
   isLoading,
+  selectedOrderDetails,
+  isOrderDetailsLoading,
+  isOrderActionLoading,
   activeFilter,
   onFilterChange,
   onPreviousPage,
   onNextPage,
+  onViewOrder,
+  onCloseOrderDetails,
+  onApplyOrderAction,
 }) => {
   return (
     <section className="admin-orders-table" aria-label="Order management">
@@ -119,7 +132,11 @@ export const AdminOrdersTable: FC<IProps> = ({
                 </td>
                 <td>
                   <div className="admin-orders-table__actions">
-                    <button type="button" aria-label={`View ${order.orderNumber}`}>
+                    <button
+                      type="button"
+                      aria-label={`View ${order.orderNumber}`}
+                      onClick={() => onViewOrder(order.id)}
+                    >
                       <Visibility />
                     </button>
                   </div>
@@ -140,6 +157,14 @@ export const AdminOrdersTable: FC<IProps> = ({
         isLoading={isLoading}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}
+      />
+
+      <AdminOrderDetailsModal
+        order={selectedOrderDetails}
+        isLoading={isOrderDetailsLoading}
+        isActionLoading={isOrderActionLoading}
+        onClose={onCloseOrderDetails}
+        onAction={onApplyOrderAction}
       />
     </section>
   );

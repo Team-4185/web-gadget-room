@@ -55,10 +55,16 @@ export const AdminPanel = () => {
     isFirstPage: isOrdersFirstPage,
     isLastPage: isOrdersLastPage,
     isLoading: isOrdersLoading,
+    selectedOrderDetails,
+    isOrderDetailsLoading,
+    isOrderActionLoading,
     activeFilter: ordersActiveFilter,
     onFilterChange: onOrdersFilterChange,
     goToPreviousPage: goToPreviousOrdersPage,
     goToNextPage: goToNextOrdersPage,
+    openOrderDetails,
+    closeOrderDetails,
+    applyOrderAction,
   } = useAdminOrdersData();
   const {
     kpis: customersKpis,
@@ -138,10 +144,16 @@ export const AdminPanel = () => {
                 isFirstPage={isOrdersFirstPage}
                 isLastPage={isOrdersLastPage}
                 isLoading={isOrdersLoading}
+                selectedOrderDetails={selectedOrderDetails}
+                isOrderDetailsLoading={isOrderDetailsLoading}
+                isOrderActionLoading={isOrderActionLoading}
                 activeFilter={ordersActiveFilter}
                 onFilterChange={onOrdersFilterChange}
                 onPreviousPage={goToPreviousOrdersPage}
                 onNextPage={goToNextOrdersPage}
+                onViewOrder={openOrderDetails}
+                onCloseOrderDetails={closeOrderDetails}
+                onApplyOrderAction={applyOrderAction}
               />
             )}
             {isCustomersTab && (
