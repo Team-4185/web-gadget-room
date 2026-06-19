@@ -2,7 +2,6 @@ import type { ApiPhone, ApiProductBadge, BadgeType, IProduct } from '@/core/type
 import { FALLBACK_IMAGE } from '@/core/constants';
 import {
   applySelectedProductVariant,
-  formatStorageCapacity,
   getDefaultPhoneColor,
   getDefaultStorageCapacity,
   getProductColorOptions,
@@ -80,11 +79,4 @@ export const buildSpecs = (phone: ApiPhone) => [
   { label: 'Main camera', value: formatCameraValue(phone.mainCamera) },
   { label: 'Front camera', value: phone.frontCamera },
   { label: 'Battery', value: phone.batteryCapacity },
-  { label: 'Release year', value: String(phone.releaseYear) },
-  {
-    label: 'Storage',
-    value: phone.storageCapacity?.length
-      ? phone.storageCapacity.map(formatStorageCapacity).join('\n')
-      : 'Not specified',
-  },
 ];
