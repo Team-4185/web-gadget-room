@@ -70,7 +70,8 @@ export const ProductsCart = () => {
               <button
                 onClick={() => dispatch(cartActions.decreaseAmount(product))}
                 className="cart-item__amount-btn"
-                disabled={cartLoading}
+                disabled={cartLoading || product.amount <= 1}
+                aria-label="Decrease quantity"
               >
                 <Minus width={12} height={12} />
               </button>
@@ -91,6 +92,7 @@ export const ProductsCart = () => {
                 onClick={() => dispatch(cartActions.increaseAmount(product))}
                 className="cart-item__amount-btn"
                 disabled={cartLoading}
+                aria-label="Increase quantity"
               >
                 <Plus width={12} height={12} />
               </button>
