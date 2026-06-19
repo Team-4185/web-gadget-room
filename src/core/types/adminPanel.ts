@@ -216,6 +216,36 @@ export interface IAdminManagedOrderItem {
   availableActions?: AdminOrderAction[];
 }
 
+export interface IAdminOrderDetailsItem {
+  id: string;
+  title: string;
+  sku: string;
+  image: string;
+  quantity: number;
+  color?: string;
+  storage?: string;
+  unitPrice: number;
+  totalPrice: number;
+}
+
+export interface IAdminOrderDetails {
+  id: string;
+  orderNumber: string;
+  customer: string;
+  email: string;
+  phone: string;
+  date: string;
+  time: string;
+  status: AdminOrderStatus;
+  paymentMethod: OrderPaymentMethod;
+  paymentStatus: ApiAdminPaymentStatus;
+  deliveryMethod: OrderDeliveryMethod;
+  shippingAddress: string;
+  total: number;
+  items: IAdminOrderDetailsItem[];
+  availableActions: AdminOrderAction[];
+}
+
 export type AdminAnalyticsRange = 'week' | 'month' | 'year';
 
 export interface IAdminSalesAnalyticsPoint {

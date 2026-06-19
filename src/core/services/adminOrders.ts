@@ -4,12 +4,23 @@ import type {
   AdminOrdersRequestParams,
   ApiAdminOrderStatus,
   ApiAdminPaymentStatus,
+  ApiPhone,
+  ApiProductVariant,
+  OrderShippingAddressPayload,
   OrderDeliveryMethod,
   OrderPaymentMethod,
 } from '@/core/types';
 
 export type ApiAdminOrder = {
   id: number;
+  user?: {
+    id: number;
+    email: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    city?: string | null;
+    phoneNumber?: string | null;
+  };
   customerId?: number;
   customerEmail: string;
   customerFirstName?: string;
@@ -19,14 +30,29 @@ export type ApiAdminOrder = {
   status: ApiAdminOrderStatus;
   paymentMethod: OrderPaymentMethod;
   paymentStatus: ApiAdminPaymentStatus;
+  paymentDetails?: {
+    paymentStatus: ApiAdminPaymentStatus;
+    transactionId?: string | null;
+  };
   deliveryMethod: OrderDeliveryMethod;
+  shippingAddress?: OrderShippingAddressPayload | null;
+  pickupPointId?: string | null;
+  estimatedDeliveryDate?: string | null;
+  deliveryPrice?: number;
   total: number;
   itemsCount?: number;
   createdAt: string;
   updatedAt: string | null;
   items?: {
     id: number;
+    phone?: ApiPhone;
+    variantId?: number | null;
+    variant?: ApiProductVariant;
     productName?: string;
+    sku?: string;
+    selectedColor?: string;
+    selectedStorage?: string;
+    unitPrice?: number;
     quantity: number;
     totalPrice: number;
   }[];
@@ -65,6 +91,14 @@ export type ApiAdminOrdersKpi = {
   processing: number;
   delivered: number;
   cancelled: number;
+};
+
+const ADMIN_ORDER_ACTION_ENDPOINTS: Record<AdminOrderAction, string> = {
+  confirm: 'confirm',
+  cancel: 'cancel',
+  process: 'process',
+  ship: 'ship',
+  deliver: 'deliver',
 };
 
 const normalizeAdminOrdersPage = (
@@ -107,9 +141,9 @@ export const adminOrdersService = {
     return data;
   },
   async applyAction(id: number, action: AdminOrderAction) {
-    const { data } = await api.post<ApiAdminOrder>(`/api/v1/admin/orders/${id}/actions`, {
-      action,
-    });
+    const { data } = await api.post<ApiAdminOrder>(
+      `/api/v1/admin/orders/${id}/${ADMIN_ORDER_ACTION_ENDPOINTS[action]}`
+    );
     return data;
   },
 };

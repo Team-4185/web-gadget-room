@@ -1,6 +1,7 @@
 import type {
   AdminOrderStatus,
   AdminAnalyticsRange,
+  ApiAdminPaymentStatus,
   AdminProductStatus,
   IAdminManagedOrderItem,
   IAdminOrderKpiItem,
@@ -408,12 +409,12 @@ export const ADMIN_ORDER_PAYMENT_METHOD_LABELS = {
   CASH_ON_DELIVERY: 'Cash on delivery',
 } as const;
 
-export const ADMIN_ORDER_PAYMENT_STATUS_LABELS = {
+export const ADMIN_ORDER_PAYMENT_STATUS_LABELS: Record<ApiAdminPaymentStatus, string> = {
   PENDING: 'Pending',
   PAID: 'Paid',
-  FAILED: 'Cancelled',
+  FAILED: 'Failed',
   REFUNDED: 'Refunded',
-} as const;
+};
 
 export const ADMIN_ORDER_FILTER_TABS = [
   { id: 'all', label: 'All orders' },
