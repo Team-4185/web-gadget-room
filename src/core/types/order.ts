@@ -28,16 +28,18 @@ export type OrderItemColor = string;
 export type OrderItemStorage = string;
 
 export type CreateOrderItemPayload = {
-  phoneId: number;
+  phoneId?: number;
+  variantId?: number;
   quantity: number;
-  color: OrderItemColor;
-  storage: OrderItemStorage;
+  color?: OrderItemColor;
+  storage?: OrderItemStorage;
 };
 
 export type CheckoutItemSelectionPayload = {
-  phoneId: number;
-  color: OrderItemColor;
-  storage: OrderItemStorage;
+  phoneId?: number;
+  variantId?: number;
+  color?: OrderItemColor;
+  storage?: OrderItemStorage;
 };
 
 export type CreateOrderPayload = {

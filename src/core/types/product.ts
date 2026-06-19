@@ -35,8 +35,12 @@ export interface IProduct {
   amount: number;
   colors?: ApiPhoneColor[];
   storageCapacity?: ApiStorageCapacity[];
+  variants?: ApiProductVariant[];
+  selectedVariantId?: number;
   selectedColor?: ApiPhoneColor;
   selectedStorage?: ApiStorageCapacity;
+  stock?: number;
+  status?: PhoneStockStatus;
 }
 
 export type ApiPhone = {

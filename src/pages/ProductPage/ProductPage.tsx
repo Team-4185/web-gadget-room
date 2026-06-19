@@ -4,7 +4,11 @@ import { Container } from '@mui/material';
 import { ProductGallery, ProductInfo } from '@/components';
 import { useProduct } from '@/core/hooks';
 import type { ApiPhoneColor, ApiStorageCapacity } from '@/core/types';
-import { getDefaultPhoneColor, getDefaultStorageCapacity } from '@/core/utils';
+import {
+  applySelectedProductVariant,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from '@/core/utils';
 
 import './ProductPage.css';
 
@@ -38,8 +42,7 @@ export const ProductPage: FC = () => {
   const productWithSelectedVariants = useMemo(
     () => ({
       ...product,
-      selectedColor,
-      selectedStorage,
+      ...applySelectedProductVariant(product, selectedColor?.name, selectedStorage?.name),
     }),
     [product, selectedColor, selectedStorage]
   );
@@ -63,7 +66,7 @@ export const ProductPage: FC = () => {
             description={description}
             loading={loading}
             error={error}
-            selectedStorage={selectedStorage}
+            selectedStorage={productWithSelectedVariants.selectedStorage}
             onStorageSelect={setSelectedStorage}
           />
         </div>

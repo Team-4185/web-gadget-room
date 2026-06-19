@@ -90,10 +90,14 @@ export const createOrderPayloadFromCheckout = (
             zipCode: selectedBranchAddress.zipCode,
           },
     items: cartItems.map((item) => ({
-      phoneId: item.phoneId,
+      ...(item.variantId
+        ? { variantId: item.variantId }
+        : {
+            phoneId: item.phoneId,
+            color: getCheckoutItemColor(item),
+            storage: getCheckoutItemStorage(item),
+          }),
       quantity: getCheckoutItemQuantity(item),
-      color: getCheckoutItemColor(item),
-      storage: getCheckoutItemStorage(item),
     })),
   };
 };
@@ -107,10 +111,8 @@ export const createCheckoutPayloadFromDeliveryAndPayment = (
 
   return {
     ...orderDetails,
-    itemSelections: items.map(({ phoneId, color, storage }) => ({
-      phoneId,
-      color,
-      storage,
+    itemSelections: items.map(({ phoneId, variantId, color, storage }) => ({
+      ...(variantId ? { variantId } : { phoneId, color, storage }),
     })),
   };
 };

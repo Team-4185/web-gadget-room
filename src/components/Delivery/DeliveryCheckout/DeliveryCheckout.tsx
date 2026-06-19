@@ -50,6 +50,7 @@ export const DeliveryCheckout = () => {
     DELIVERY_OPTIONS.find((option) => option.id === form.delivery.method)?.price ?? 0;
   const cartItems = cartProducts.map((product) => ({
     phoneId: product.id,
+    variantId: product.selectedVariantId,
     amount: product.amount,
     selectedColor: product.selectedColor,
     selectedStorage: product.selectedStorage,

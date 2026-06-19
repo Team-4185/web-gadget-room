@@ -1,13 +1,12 @@
-import { useMemo, useState, type FC, type MouseEvent, type SyntheticEvent } from 'react';
-import { FormControl, MenuItem, Select, Typography } from '@mui/material';
-import type { SelectChangeEvent } from '@mui/material/Select';
+import { type FC, type MouseEvent, type SyntheticEvent } from 'react';
+import { Typography } from '@mui/material';
 
-import { CartAdd, ChevronDown, Like, Liked } from '@/assets';
+import { CartAdd, Like, Liked } from '@/assets';
 import { useAppDispatch, useAppSelector, cartActions, wishListActions } from '@/core/store';
 import { Button } from '@/components';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { DEFAULT_PHONE_COLOR, getDefaultPhoneColor } from '@/core/utils';
-import type { ApiPhoneColor, IProduct } from '@/core/types';
+import { applySelectedProductVariant, formatStorageCapacity, getDefaultPhoneColor, getDefaultStorageCapacity } from '@/core/utils';
+import type { IProduct } from '@/core/types';
 
 import './ProductCard.css';
 
@@ -26,13 +25,6 @@ const formatProductPrice = (price: number) =>
     maximumFractionDigits: 2,
   }).format(price);
 
-const getCardColorOptions = (product: IProduct): ApiPhoneColor[] => {
-  const colors = product.colors?.length ? product.colors : [DEFAULT_PHONE_COLOR];
-  const hasBlack = colors.some((color) => color.name === DEFAULT_PHONE_COLOR.name);
-
-  return hasBlack ? colors : [DEFAULT_PHONE_COLOR, ...colors];
-};
-
 export const ProductCard: FC<IProps> = ({
   product,
   className = '',
@@ -49,17 +41,15 @@ export const ProductCard: FC<IProps> = ({
   const badge = product.badge;
   const badgeText =
     badge === 'Sale' && product.discountPercent ? `-${product.discountPercent}%` : badge;
-  const colorOptions = useMemo(() => getCardColorOptions(product), [product]);
-  const [selectedColorName, setSelectedColorName] = useState(
-    () => product.selectedColor?.name ?? getDefaultPhoneColor(product.colors).name
+  const productWithSelectedVariant = applySelectedProductVariant(
+    product,
+    product.selectedColor?.name,
+    product.selectedStorage?.name
   );
   const selectedColor =
-    colorOptions.find((color) => color.name === selectedColorName) ??
-    getDefaultPhoneColor(product.colors);
-  const productWithSelectedColor = {
-    ...product,
-    selectedColor,
-  };
+    productWithSelectedVariant.selectedColor ?? getDefaultPhoneColor(product.colors);
+  const selectedStorage =
+    productWithSelectedVariant.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity);
   const productCardClassName = `product-card ${className}`.trim();
   const likeIconClassName =
     `product-card__like ${isLiked ? 'is-active' : ''} ${likeClassName}`.trim();
@@ -67,11 +57,7 @@ export const ProductCard: FC<IProps> = ({
 
   const addToCart = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    dispatch(cartActions.addProduct(productWithSelectedColor));
-  };
-
-  const handleColorChange = (event: SelectChangeEvent<string>) => {
-    setSelectedColorName(event.target.value);
+    dispatch(cartActions.addProduct(productWithSelectedVariant));
   };
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
@@ -126,51 +112,20 @@ export const ProductCard: FC<IProps> = ({
         >
           {product.name}
         </Typography>
-        <div className="product-card__color" onClick={(event) => event.stopPropagation()}>
+        <div className="product-card__color">
           <span className="product-card__color-label">Color:</span>
-          <FormControl className="product-card__color-control" size="small">
-            <Select
-              className="product-card__color-select"
-              data-style-variant="subtleBorder"
-              value={selectedColor.name}
-              onChange={handleColorChange}
-              IconComponent={ChevronDown}
-              renderValue={(value) => {
-                const color = colorOptions.find((item) => item.name === value) ?? selectedColor;
-
-                return (
-                  <span className="product-card__color-value">
-                    <span
-                      className="product-card__color-swatch"
-                      style={{ backgroundColor: color.hexCode }}
-                      aria-hidden="true"
-                    />
-                    <span>{color.displayName}</span>
-                  </span>
-                );
-              }}
-              MenuProps={{
-                PaperProps: {
-                  className: 'product-card__color-menu',
-                },
-              }}
-            >
-              {colorOptions.map((color) => (
-                <MenuItem
-                  key={color.name}
-                  value={color.name}
-                  className="product-card__color-option"
-                >
-                  <span
-                    className="product-card__color-swatch"
-                    style={{ backgroundColor: color.hexCode }}
-                    aria-hidden="true"
-                  />
-                  <span>{color.displayName}</span>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <span className="product-card__color-value">
+            <span
+              className="product-card__color-swatch"
+              style={{ backgroundColor: selectedColor.hexCode }}
+              aria-hidden="true"
+            />
+            <span>{selectedColor.displayName}</span>
+          </span>
+        </div>
+        <div className="product-card__storage">
+          <span className="product-card__color-label">Storage:</span>
+          <span>{formatStorageCapacity(selectedStorage)}</span>
         </div>
         <Typography
           className="product-card__price"
@@ -182,7 +137,7 @@ export const ProductCard: FC<IProps> = ({
             marginTop: '9px',
           }}
         >
-          ${formatProductPrice(product.price)}
+          ${formatProductPrice(productWithSelectedVariant.price)}
         </Typography>
       </div>
 

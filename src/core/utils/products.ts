@@ -1,9 +1,12 @@
 import type { ApiPhone, ApiProductBadge, BadgeType, IProduct } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import {
+  applySelectedProductVariant,
   formatStorageCapacity,
   getDefaultPhoneColor,
   getDefaultStorageCapacity,
+  getProductColorOptions,
+  getProductStorageOptions,
 } from './productVariants';
 
 export const formatProductDisplayName = (brand: string | null | undefined, name: string) => {
@@ -31,8 +34,7 @@ const getPrimaryProductBadge = (badges: BadgeType[]) =>
 export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMAGE): IProduct => {
   const badges = phone.badges?.map(mapApiBadgeToProductBadge) ?? [];
   const primaryBadge = getPrimaryProductBadge(badges) ?? phone.badge;
-
-  return {
+  const baseProduct: IProduct = {
     id: phone.id,
     name: formatProductDisplayName(phone.brand, phone.name),
     price: phone.price,
@@ -41,11 +43,27 @@ export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMA
     badges,
     discountPercent: phone.discountPercent ?? 0,
     amount: 1,
-    colors: phone.colors ?? [],
-    storageCapacity: phone.storageCapacity ?? [],
+    colors: getProductColorOptions({
+      colors: phone.colors ?? [],
+      variants: phone.variants ?? [],
+    }),
+    storageCapacity: getProductStorageOptions({
+      storageCapacity: phone.storageCapacity ?? [],
+      variants: phone.variants ?? [],
+    }),
+    variants: phone.variants ?? [],
     selectedColor: getDefaultPhoneColor(phone.colors),
     selectedStorage: getDefaultStorageCapacity(phone.storageCapacity),
+    stock: phone.stock,
+    status: phone.status,
+    inStock: phone.status ? phone.status !== 'OUT_OF_STOCK' : undefined,
   };
+
+  return applySelectedProductVariant(
+    baseProduct,
+    baseProduct.selectedColor?.name,
+    baseProduct.selectedStorage?.name
+  );
 };
 
 const formatCameraValue = (value: string) =>

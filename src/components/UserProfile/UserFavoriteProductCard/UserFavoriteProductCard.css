@@ -57,6 +57,16 @@
   line-height: 1.2;
 }
 
+.user-favorite-product-card__storage {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .user-favorite-product-card__color-label {
   white-space: nowrap;
 }
