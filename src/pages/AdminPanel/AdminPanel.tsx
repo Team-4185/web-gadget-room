@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 
 import {
+  AdminCustomerMessageModal,
   AdminCustomersTab,
   AdminDashboardTab,
   AdminProductModal,
@@ -9,6 +10,7 @@ import {
   AdminPanelSidebar,
   AdminProductsTab,
 } from '@/components';
+import { ConfirmationModal } from '@/components/shared';
 import { ADMIN_PRODUCT_FIELD_TOOLTIPS } from '@/core/constants';
 import {
   useAdminCustomersData,
@@ -75,10 +77,19 @@ export const AdminPanel = () => {
     isFirstPage: isCustomersFirstPage,
     isLastPage: isCustomersLastPage,
     isLoadingCustomers,
+    customerToDelete,
+    customerToMessage,
+    isDeletingCustomer,
     searchQuery: customersSearchQuery,
     onSearchChange: onCustomersSearchChange,
     goToPreviousCustomerPage,
     goToNextCustomerPage,
+    requestCustomerDelete,
+    closeCustomerDeleteConfirmation,
+    deleteCustomer,
+    openCustomerMessageModal,
+    closeCustomerMessageModal,
+    sendCustomerMessage,
   } = useAdminCustomersData();
 
   const isDashboardTab = activeTab === 'dashboard';
@@ -167,6 +178,8 @@ export const AdminPanel = () => {
                 isFirstPage={isCustomersFirstPage}
                 isLastPage={isCustomersLastPage}
                 isLoadingCustomers={isLoadingCustomers}
+                onEmailCustomer={openCustomerMessageModal}
+                onDeleteCustomer={requestCustomerDelete}
                 onSearchChange={onCustomersSearchChange}
                 onPreviousPage={goToPreviousCustomerPage}
                 onNextPage={goToNextCustomerPage}
@@ -197,6 +210,28 @@ export const AdminPanel = () => {
         onRemoveDraftVariant={dashboardProductModal.removeDraftVariant}
         onRequestDeleteVariant={dashboardProductModal.requestDeleteVariant}
         onImageChange={dashboardProductModal.handleImageChange}
+      />
+
+      <AdminCustomerMessageModal
+        customer={customerToMessage}
+        onClose={closeCustomerMessageModal}
+        onSend={sendCustomerMessage}
+      />
+
+      <ConfirmationModal
+        isOpen={Boolean(customerToDelete)}
+        title="Delete customer"
+        description={
+          <p>
+            Are you sure you want to delete{' '}
+            <strong>{customerToDelete?.name || customerToDelete?.email}</strong>?
+          </p>
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        isLoading={isDeletingCustomer}
+        onCancel={closeCustomerDeleteConfirmation}
+        onConfirm={() => void deleteCustomer()}
       />
     </section>
   );

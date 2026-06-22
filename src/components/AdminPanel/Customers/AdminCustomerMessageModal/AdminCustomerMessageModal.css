@@ -1,0 +1,84 @@
+.admin-customer-message-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--black-opacity-25);
+  backdrop-filter: blur(3px);
+}
+
+.admin-customer-message-modal {
+  width: min(100%, 480px);
+  background: var(--white);
+  border: 0;
+  border-radius: 35px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 28px 30px 24px;
+}
+
+.admin-customer-message-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-customer-message-modal__close {
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admin-customer-message-modal__field,
+.admin-customer-message-modal__message {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 10px 12px;
+}
+
+.admin-customer-message-modal__field span,
+.admin-customer-message-modal__message span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-customer-message-modal__field p {
+  margin: 4px 0 0;
+  color: var(--black-opacity-65);
+  font-size: 14px;
+}
+
+.admin-customer-message-modal__message textarea {
+  min-height: 120px;
+  resize: none;
+  border: 0;
+  outline: 0;
+  padding: 8px 0 0;
+  color: var(--black);
+  font: inherit;
+  font-size: 14px;
+}
+
+.admin-customer-message-modal__message textarea::placeholder {
+  color: var(--black-opacity-65);
+  font: inherit;
+}
+
+.admin-customer-message-modal__actions {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}

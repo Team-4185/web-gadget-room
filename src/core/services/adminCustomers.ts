@@ -76,4 +76,7 @@ export const adminCustomersService = {
     });
     return normalizeCustomersPage(data, params.page, params.size);
   },
+  async deleteCustomer(id: number) {
+    await api.delete<void>(`/api/v1/users/${id}`);
+  },
 };

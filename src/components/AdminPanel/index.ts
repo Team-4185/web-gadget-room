@@ -25,3 +25,4 @@ export { AdminOrderDetailsModal } from './Orders/AdminOrderDetailsModal';
 export { AdminCustomersTab } from './Customers/AdminCustomersTab/AdminCustomersTab';
 export { AdminCustomerKpiCard } from './Customers/AdminCustomerKpiCard/AdminCustomerKpiCard';
 export { AdminCustomersTable } from './Customers/AdminCustomersTable/AdminCustomersTable';
+export { AdminCustomerMessageModal } from './Customers/AdminCustomerMessageModal/AdminCustomerMessageModal';
