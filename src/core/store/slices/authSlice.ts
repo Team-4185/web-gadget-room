@@ -8,6 +8,7 @@ import type {
 } from '@/core/types';
 import { authService } from '@/core/services';
 import type { FormForgotPassword, FormLoginValues } from '@/core/schemas';
+import type { ResetPasswordPayload } from '@/core/services/auth';
 import { refreshAuthSession, setAccessToken } from '@/core/config';
 import { tokenStorage } from '@/core/utils';
 
@@ -146,6 +147,31 @@ export const authSlice = createAppSlice({
       async (email, { rejectWithValue }) => {
         try {
           await authService.forgotPassword(email);
+        } catch (err) {
+          if (axios.isAxiosError<IErrorResponse>(err)) {
+            return rejectWithValue(err.response!.data);
+          } else {
+            throw err;
+          }
+        }
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        rejected: (state, action) => {
+          state.error = action.payload ?? null;
+        },
+        settled: (state) => {
+          state.loading = false;
+        },
+      }
+    ),
+    resetPassword: create.asyncThunk<void, ResetPasswordPayload, { rejectValue: IErrorResponse }>(
+      async (payload, { rejectWithValue }) => {
+        try {
+          await authService.resetPassword(payload);
         } catch (err) {
           if (axios.isAxiosError<IErrorResponse>(err)) {
             return rejectWithValue(err.response!.data);

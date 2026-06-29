@@ -20,6 +20,12 @@
   margin: 146px 40px 0 auto;
 }
 
+.auth__content--reset-password {
+  max-width: 543px;
+  width: 100%;
+  margin: 146px 40px 0 auto;
+}
+
 .auth__media {
   position: absolute;
   top: 201px;

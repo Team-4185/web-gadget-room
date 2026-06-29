@@ -48,7 +48,8 @@
 }
 
 .auth__form--login,
-.auth__form--forgot-password {
+.auth__form--forgot-password,
+.auth__form--reset-password {
   margin-left: 57px;
 }
 
