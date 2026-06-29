@@ -283,7 +283,9 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     try {
       if (editingProduct) {
         const productId = Number(editingProduct.id);
-        await adminProductsService.update(productId, payload);
+        const { variants: _variants, ...productPayload } = payload;
+
+        await adminProductsService.update(productId, productPayload);
         await persistEditedProductVariants(productId);
         if (imageFile) {
           await adminProductsService.addImage(productId, imageFile);
