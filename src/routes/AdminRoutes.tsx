@@ -6,7 +6,7 @@ import { CircularProgress } from '@/components';
 import { adminNavigationService } from '@/core/services';
 import { useAppSelector } from '@/core/store';
 
-type AdminAccessStatus = 'checking' | 'allowed' | 'denied';
+type AdminAccessStatus = 'checking' | 'allowed' | 'unauthorized' | 'forbidden';
 
 export const AdminRoutes = () => {
   const { userId, authLoading } = useAppSelector((state) => state.auth);
@@ -16,7 +16,7 @@ export const AdminRoutes = () => {
     if (authLoading) return;
 
     if (!userId) {
-      setAccessStatus('denied');
+      setAccessStatus('unauthorized');
       return;
     }
 
@@ -25,20 +25,22 @@ export const AdminRoutes = () => {
     setAccessStatus('checking');
 
     adminNavigationService
-      .getSidebarCounters(controller.signal)
+      .checkAdminAccess(controller.signal)
       .then(() => setAccessStatus('allowed'))
       .catch((error: unknown) => {
         if (controller.signal.aborted) return;
 
-        if (
-          axios.isAxiosError(error) &&
-          (error.response?.status === 401 || error.response?.status === 403)
-        ) {
-          setAccessStatus('denied');
+        if (axios.isAxiosError(error) && error.response?.status === 403) {
+          setAccessStatus('forbidden');
           return;
         }
 
-        setAccessStatus('denied');
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          setAccessStatus('unauthorized');
+          return;
+        }
+
+        setAccessStatus('forbidden');
       });
 
     return () => {
@@ -48,5 +50,7 @@ export const AdminRoutes = () => {
 
   if (authLoading || accessStatus === 'checking') return <CircularProgress />;
 
-  return accessStatus === 'allowed' ? <Outlet /> : <Navigate to="/home" replace />;
+  if (accessStatus === 'allowed') return <Outlet />;
+
+  return <Navigate to={accessStatus === 'unauthorized' ? '/login' : '/404'} replace />;
 };
