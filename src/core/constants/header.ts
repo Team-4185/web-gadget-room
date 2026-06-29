@@ -1,4 +1,4 @@
-import { Bell, Cart, Liked, Search, User } from '@/assets';
+import { Bell, Cart, Liked, User } from '@/assets';
 
 const PageName = {
   Home: 'Home',
@@ -13,14 +13,12 @@ const PageName = {
 } as const;
 
 export const HEADER_ICONS = [
-  { id: 0, icon: Search, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
   { id: 2, icon: Liked, href: '/userProfile?tab=favorite' },
   { id: 3, icon: Cart, href: '/cart' },
 ];
 
 export const USER_PANEL_ICONS = [
-  { id: 0, icon: Bell, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
   { id: 2, icon: Cart, href: '/cart' },
 ];

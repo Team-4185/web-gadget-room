@@ -72,7 +72,7 @@ export const Footer: FC = () => {
 
                   <Copy
                     className="footer__copy"
-                    onClick={() => navigator.clipboard?.writeText('info@gadgetroom.ua')}
+                    onClick={() => navigator.clipboard?.writeText('0 800 123 456')}
                   />
                 </div>
 
