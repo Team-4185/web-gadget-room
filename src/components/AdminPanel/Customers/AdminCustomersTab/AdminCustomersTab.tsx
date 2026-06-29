@@ -13,6 +13,8 @@ interface IProps {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoadingCustomers?: boolean;
+  onEmailCustomer: (customer: IAdminCustomerItem) => void;
+  onDeleteCustomer: (customer: IAdminCustomerItem) => void;
   onSearchChange: (value: string) => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
@@ -28,6 +30,8 @@ export const AdminCustomersTab = ({
   isFirstPage,
   isLastPage,
   isLoadingCustomers = false,
+  onEmailCustomer,
+  onDeleteCustomer,
   onSearchChange,
   onPreviousPage,
   onNextPage,
@@ -49,6 +53,8 @@ export const AdminCustomersTab = ({
         isFirstPage={isFirstPage}
         isLastPage={isLastPage}
         isLoading={isLoadingCustomers}
+        onEmailCustomer={onEmailCustomer}
+        onDeleteCustomer={onDeleteCustomer}
         onSearchChange={onSearchChange}
         onPreviousPage={onPreviousPage}
         onNextPage={onNextPage}

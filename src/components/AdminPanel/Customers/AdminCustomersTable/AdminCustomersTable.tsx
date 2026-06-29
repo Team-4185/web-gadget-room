@@ -17,6 +17,8 @@ interface IProps {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading?: boolean;
+  onEmailCustomer: (customer: IAdminCustomerItem) => void;
+  onDeleteCustomer: (customer: IAdminCustomerItem) => void;
   onSearchChange: (value: string) => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
@@ -37,6 +39,8 @@ export const AdminCustomersTable: FC<IProps> = ({
   isFirstPage,
   isLastPage,
   isLoading = false,
+  onEmailCustomer,
+  onDeleteCustomer,
   onSearchChange,
   onPreviousPage,
   onNextPage,
@@ -62,6 +66,15 @@ export const AdminCustomersTable: FC<IProps> = ({
 
       <div className="admin-customers-table__table-wrap">
         <table className="admin-customers-table__table">
+          <colgroup>
+            <col className="admin-customers-table__col-client" />
+            <col className="admin-customers-table__col-contact" />
+            <col className="admin-customers-table__col-orders" />
+            <col className="admin-customers-table__col-spent" />
+            <col className="admin-customers-table__col-date" />
+            <col className="admin-customers-table__col-status" />
+            <col className="admin-customers-table__col-actions" />
+          </colgroup>
           <thead>
             <tr>
               <th>Client</th>
@@ -76,7 +89,11 @@ export const AdminCustomersTable: FC<IProps> = ({
           <tbody>
             {customers.map((customer) => (
               <tr key={customer.id}>
-                <td className="is-strong">{customer.name}</td>
+                <td>
+                  <span className="admin-customers-table__client-name" title={customer.name}>
+                    {customer.name}
+                  </span>
+                </td>
                 <td>
                   <div className="admin-customers-table__contact">
                     <span>
@@ -91,7 +108,11 @@ export const AdminCustomersTable: FC<IProps> = ({
                 </td>
                 <td>{customer.orders}</td>
                 <td>{customer.spent}</td>
-                <td>{customer.registeredAt}</td>
+                <td>
+                  <div className="admin-customers-table__date">
+                    <span>{customer.registeredAt}</span>
+                  </div>
+                </td>
                 <td>
                   <span className={`admin-customers-table__status is-${customer.status}`}>
                     {STATUS_LABELS[customer.status]}
@@ -99,10 +120,18 @@ export const AdminCustomersTable: FC<IProps> = ({
                 </td>
                 <td>
                   <div className="admin-customers-table__actions">
-                    <button type="button" aria-label={`Email ${customer.name}`}>
+                    <button
+                      type="button"
+                      aria-label={`Email ${customer.name}`}
+                      onClick={() => onEmailCustomer(customer)}
+                    >
                       <MailOutlined style={{ color: 'var(--green)' }} />
                     </button>
-                    <button type="button" aria-label={`Delete ${customer.name}`}>
+                    <button
+                      type="button"
+                      aria-label={`Delete ${customer.name}`}
+                      onClick={() => onDeleteCustomer(customer)}
+                    >
                       <Trash />
                     </button>
                   </div>

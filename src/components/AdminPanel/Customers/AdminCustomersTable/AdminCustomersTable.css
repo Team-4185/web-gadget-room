@@ -26,8 +26,37 @@
 
 .admin-customers-table__table {
   width: 100%;
-  min-width: 840px;
+  min-width: 960px;
+  table-layout: fixed;
   border-collapse: collapse;
+}
+
+.admin-customers-table__col-client {
+  width: 19%;
+}
+
+.admin-customers-table__col-contact {
+  width: 27%;
+}
+
+.admin-customers-table__col-orders {
+  width: 8%;
+}
+
+.admin-customers-table__col-spent {
+  width: 11%;
+}
+
+.admin-customers-table__col-date {
+  width: 17%;
+}
+
+.admin-customers-table__col-status {
+  width: 10%;
+}
+
+.admin-customers-table__col-actions {
+  width: 8%;
 }
 
 .admin-customers-table__table th,
@@ -48,9 +77,13 @@
   border-bottom: 1px solid var(--light-violet);
 }
 
-.admin-customers-table__table td.is-strong {
+.admin-customers-table__client-name {
+  display: block;
+  max-width: 100%;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-customers-table__contact {
@@ -65,6 +98,20 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  min-width: 0;
+}
+
+.admin-customers-table__contact span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-customers-table__date {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  white-space: nowrap;
 }
 
 .admin-customers-table__status {
