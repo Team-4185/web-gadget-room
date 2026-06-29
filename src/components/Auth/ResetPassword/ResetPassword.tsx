@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useState, type FC } from 'react';
 import { Link, Typography } from '@mui/material';
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router';
 import { motion } from 'framer-motion';
@@ -23,6 +23,7 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { enqueueSnackbar } = useSnackbar();
+  const [isResetDone, setIsResetDone] = useState(false);
   const isLoading = useAppSelector((state) => state.auth.loading);
   const token = searchParams.get('token') ?? '';
   const hasToken = Boolean(token);
@@ -44,10 +45,10 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
     const resultAction = await dispatch(authActions.resetPassword({ token, newPassword }));
 
     if (authActions.resetPassword.fulfilled.match(resultAction)) {
+      setIsResetDone(true);
       enqueueSnackbar('Password has been reset. Please log in with your new password.', {
         variant: 'success',
       });
-      navigate('/login', { replace: true });
       return;
     }
 
@@ -103,19 +104,46 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
               letterSpacing: '-1px',
             }}
           >
-            Almost done!
+            {isResetDone ? 'Done!' : 'Almost done!'}
           </Typography>{' '}
-          Create a new password for your account.
+          {isResetDone
+            ? 'Your password has been reset successfully.'
+            : 'Create a new password for your account.'}
         </Typography>
         <Stepper
           mode="default"
           showStepConnector={true}
           steps={PASSWORD_RESET_STEPS}
+          activeStep={isResetDone ? 2 : 1}
           sx={{ gap: '8px', marginTop: '30px' }}
         />
       </div>
 
-      <form className="reset-password__form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      {isResetDone ? (
+        <div className="reset-password__done">
+          <Typography
+            sx={{
+              fontWeight: 600,
+              fontSize: '14px',
+              color: 'var(--muted-violet)',
+              letterSpacing: '-1px',
+            }}
+          >
+            You can now log in with your new password.
+          </Typography>
+          <Button
+            type="button"
+            maxWidth="549px"
+            height="36px"
+            textTransform="uppercase"
+            sx={{ marginTop: '40px' }}
+            onClick={() => navigate('/login', { replace: true })}
+          >
+            Back to Login
+          </Button>
+        </div>
+      ) : (
+        <form className="reset-password__form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormInput
           type="password"
           name="newPassword"
@@ -173,6 +201,7 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
           Reset Password
         </Button>
       </form>
+      )}
 
       <Typography
         sx={{
