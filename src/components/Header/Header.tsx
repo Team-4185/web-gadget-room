@@ -27,7 +27,9 @@ export const Header: FC = () => {
   const cartLength = useAppSelector((state) => state.cart.totalAmount);
   const user = useAppSelector((state) => state.auth.userId);
 
-  const authPage = ['/', '/login', '/register', '/forgot-password'].includes(currentPath);
+  const authPage = ['/', '/login', '/register', '/forgot-password', '/reset-password'].includes(
+    currentPath
+  );
 
   const activeStep = ORDERING_STEPS.findIndex((step) => location.pathname === step.href) ?? 0;
 

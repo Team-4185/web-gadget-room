@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Typography, Link } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Link as RouterLink } from 'react-router';
@@ -20,6 +20,7 @@ interface IProps {
 
 export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
   const dispatch = useAppDispatch();
+  const [isLinkSent, setIsLinkSent] = useState(false);
 
   const { control, handleSubmit, formState, reset } = useForm<FormForgotPassword>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -39,6 +40,7 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
     const resultAction = await dispatch(authActions.forgotPassword(data));
 
     if (authActions.forgotPassword.fulfilled.match(resultAction)) {
+      setIsLinkSent(true);
       enqueueSnackbar('A password reset link has been sent to your email.', { variant: 'success' });
     } else {
       if (resultAction.payload) {
@@ -101,6 +103,7 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
           mode="default"
           showStepConnector={true}
           steps={PASSWORD_RESET_STEPS}
+          activeStep={isLinkSent ? 1 : 0}
           sx={{ gap: '8px', marginTop: '30px' }}
         />
       </div>
@@ -123,6 +126,7 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
           }}
         >
           We'll send a password reset link to this email address.
+          {isLinkSent ? ' Check your inbox and follow the reset link.' : ''}
         </Typography>
 
         <Button
@@ -132,7 +136,7 @@ export const ForgotPassword: FC<IProps> = ({ className = '' }) => {
           textTransform="uppercase"
           sx={{ marginTop: '40px' }}
         >
-          Sent Reset Link
+          Send Reset Link
         </Button>
       </form>
       <Typography
