@@ -13,6 +13,8 @@ const options = {
   withCredentials: true,
 };
 
+const PUBLIC_ENDPOINT_PREFIXES = ['/api/v1/phones', '/api/v1/filter', '/api/v1/images'];
+
 export const apiAuth = axios.create(options);
 
 export const api = axios.create(options);
@@ -52,6 +54,21 @@ export const refreshAuthSession = async () => {
   return refreshPromise;
 };
 
+const getRequestPath = (url?: string) => {
+  if (!url) return '';
+
+  try {
+    return new URL(url, options.baseURL).pathname;
+  } catch {
+    return url;
+  }
+};
+
+const isPublicEndpoint = (url?: string) => {
+  const path = getRequestPath(url);
+  return PUBLIC_ENDPOINT_PREFIXES.some((prefix) => path.startsWith(prefix));
+};
+
 api.interceptors.request.use((config) => {
   if (accessToken) {
     config.headers = config.headers ?? {};
@@ -69,7 +86,8 @@ api.interceptors.response.use(
       isAxiosError(error) &&
       error.response?.status === 401 &&
       tokenStorage.hasSession() &&
-      !originalRequest._isRetry
+      !originalRequest._isRetry &&
+      !isPublicEndpoint(originalRequest.url)
     ) {
       originalRequest._isRetry = true;
 
