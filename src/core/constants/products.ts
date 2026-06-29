@@ -1,4 +1,5 @@
 import type { IProduct } from '@/core/types';
+import { FALLBACK_IMAGE } from './productMedia';
 import {
   ProductInfoBatteryIcon,
   ProductInfoCameraIcon,
@@ -14,7 +15,7 @@ import {
 export const PRODUCTS: IProduct[] = [
   {
     id: 1,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Apple iPhone 17 Pro Max',
     price: 1300,
     badge: 'Sale',
@@ -25,7 +26,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 2,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Samsung Galaxy S22',
     price: 956,
     badge: 'Hit',
@@ -36,7 +37,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 3,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Xiaomi 12',
     price: 699,
     inStock: false,
@@ -46,7 +47,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 4,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Apple iPhone 15 Pro',
     price: 1099,
     badge: 'New',
@@ -57,7 +58,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 5,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Xiaomi 13 Pro',
     price: 899,
     inStock: true,
@@ -67,7 +68,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 6,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Xiaomi 13T Pro',
     price: 749,
     badge: 'Hit',
@@ -78,7 +79,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 7,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'OnePlus 11 5G',
     price: 749,
     inStock: true,
@@ -88,7 +89,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 8,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'OnePlus Nord 3',
     price: 549,
     badge: 'Sale',
@@ -99,7 +100,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 9,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Honor Magic 5 Pro',
     price: 899,
     inStock: true,
@@ -109,7 +110,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 10,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Honor 90',
     price: 499,
     badge: 'New',
@@ -120,7 +121,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 11,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Poco F5 Pro',
     price: 1300,
     inStock: true,
@@ -130,7 +131,7 @@ export const PRODUCTS: IProduct[] = [
   },
   {
     id: 12,
-    img: '/icons/GraySquare.svg',
+    img: FALLBACK_IMAGE,
     name: 'Poco X5 Pro',
     price: 399,
     inStock: false,
@@ -200,6 +201,18 @@ export const PRODUCT_SPECS_META = [
     icon: ProductInfoBatteryIcon,
     alt: 'Battery icon',
   },
+  {
+    id: 7,
+    label: 'Release year',
+    icon: ProductInfoPhoneIcon,
+    alt: 'Release year icon',
+  },
+  {
+    id: 8,
+    label: 'Storage',
+    icon: ProductInfoCoreIcon,
+    alt: 'Storage icon',
+  },
 ] as const;
 
 export const SPECS = [
@@ -244,6 +257,20 @@ export const SPECS = [
     value: '4323 mAh',
     icon: ProductInfoBatteryIcon,
     alt: 'Battery icon',
+  },
+  {
+    id: 7,
+    label: 'Release year',
+    value: '2024',
+    icon: ProductInfoPhoneIcon,
+    alt: 'Release year icon',
+  },
+  {
+    id: 8,
+    label: 'Storage',
+    value: '128GB',
+    icon: ProductInfoCoreIcon,
+    alt: 'Storage icon',
   },
 ];
 

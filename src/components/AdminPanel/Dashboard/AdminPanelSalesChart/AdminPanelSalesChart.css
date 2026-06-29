@@ -1,0 +1,94 @@
+.admin-panel-sales-chart {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 20px;
+  max-width: 588px;
+}
+
+.admin-panel-sales-chart__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.admin-panel-sales-chart__filters {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.admin-panel-sales-chart__filters button.is-active {
+  background: var(--blue-violet);
+  color: var(--white);
+}
+
+.admin-panel-sales-chart__graph {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  z-index: 5;
+}
+
+.admin-panel-sales-chart__graph-scroll {
+  width: 100%;
+  overflow: auto;
+}
+
+.admin-panel-sales-chart__graph-scroll svg {
+  width: 100%;
+  min-width: 520px;
+  height: auto;
+  display: block;
+}
+
+.admin-panel-sales-chart__y-labels {
+  fill: var(--black-opacity-65);
+  font-size: 11px;
+}
+
+.admin-panel-sales-chart__x-labels-svg {
+  fill: var(--black-opacity-65);
+  font-size: 12px;
+}
+
+.admin-panel-sales-chart__point {
+  cursor: pointer;
+}
+
+.admin-panel-sales-chart__tooltip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--blue-violet);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
+  z-index: 50;
+  min-width: 128px;
+}
+
+.admin-panel-sales-chart__tooltip-title {
+  font-weight: 600;
+}
+
+.admin-panel-sales-chart__caption {
+  margin: 0 0 8px;
+  color: var(--black-opacity-65);
+}
+
+.admin-panel-sales-chart__meta {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-panel-sales-chart__loading {
+  font-size: 13px;
+  color: var(--black-opacity-65);
+}

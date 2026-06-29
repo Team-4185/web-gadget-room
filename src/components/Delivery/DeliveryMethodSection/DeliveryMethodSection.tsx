@@ -1,9 +1,12 @@
 import { Typography } from '@mui/material';
+import type { FieldError } from 'react-hook-form';
 
-import { Button, RadioButton, Select } from '@/components';
+import { Button, Input, RadioButton, Select } from '@/components';
 import { Map } from '@/assets';
 import type {
   BranchSelectionMap,
+  CourierAddressForm,
+  DeliveryCheckoutErrors,
   DeliveryBranchesMap,
   DeliveryMethod,
   DeliveryOptionConfig,
@@ -16,17 +19,26 @@ type DeliveryMethodSectionProps = {
   onDeliveryMethodChange: (method: DeliveryMethod) => void;
   options: DeliveryOptionConfig[];
   branchByMethod: BranchSelectionMap;
+  errors?: DeliveryCheckoutErrors['delivery'];
   onBranchChange: (method: DeliveryMethod, branch: string) => void;
   branchesByMethod: DeliveryBranchesMap;
+  courierAddress: CourierAddressForm;
+  onCourierAddressChange: (field: keyof CourierAddressForm, value: string) => void;
 };
+
+const toFieldError = (message?: string): FieldError | undefined =>
+  message ? { type: 'manual', message } : undefined;
 
 export const DeliveryMethodSection = ({
   deliveryMethod,
   onDeliveryMethodChange,
   options,
   branchByMethod,
+  errors,
   onBranchChange,
   branchesByMethod,
+  courierAddress,
+  onCourierAddressChange,
 }: DeliveryMethodSectionProps) => {
   return (
     <div className="delivery-method-section">
@@ -52,39 +64,98 @@ export const DeliveryMethodSection = ({
                 </Typography>
               </div>
               <Typography variant="body1" sx={{ fontSize: '15px', fontWeight: 500 }}>
-                {'\u20AC'} {option.price.toFixed(2)}
+                $ {option.price.toFixed(2)}
               </Typography>
             </button>
 
             {deliveryMethod === option.id && (
               <div className="delivery-method-section__option-details">
-                <Select
-                  data={branchesByMethod[option.id]}
-                  maxWidth="330px"
-                  height="44px"
-                  color="var(--black)"
-                  fontSize="16px"
-                  value={branchByMethod[option.id]}
-                  onChange={(value) => onBranchChange(option.id, value)}
-                  placeholder="Select the appropriate branch"
-                  styleVariant="subtleBorder"
-                />
-                <Button
-                  maxWidth="233px"
-                  height="44px"
-                  borderRadius="8px"
-                  border="none"
-                  sx={{
-                    background: 'var(--blue-violet)',
-                    color: 'var(--white)',
-                    '&:hover': { background: 'var(--blue-violet)', color: 'var(--white)' },
-                  }}
-                >
-                  <div className="delivery-method-section__map-btn">
-                    <Map width={18} height={18} fill="currentColor" />
-                    <span>Select on the map</span>
+                {option.id === 'courier' ? (
+                  <div className="delivery-method-section__address">
+                    <div className="delivery-method-section__address-row">
+                      <Input
+                        value={courierAddress.city}
+                        onChange={(e) => onCourierAddressChange('city', e.target.value)}
+                        label="City"
+                        sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.city)}
+                        required
+                      />
+                      <Input
+                        value={courierAddress.street}
+                        onChange={(e) => onCourierAddressChange('street', e.target.value)}
+                        label="Street"
+                        sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.street)}
+                        required
+                      />
+                    </div>
+                    <div className="delivery-method-section__address-row delivery-method-section__address-row--three">
+                      <Input
+                        value={courierAddress.houseNumber}
+                        onChange={(e) => onCourierAddressChange('houseNumber', e.target.value)}
+                        label="House"
+                        sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.houseNumber)}
+                        required
+                      />
+                      <Input
+                        value={courierAddress.apartmentNumber}
+                        onChange={(e) => onCourierAddressChange('apartmentNumber', e.target.value)}
+                        label="Apartment"
+                        sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.apartmentNumber)}
+                      />
+                      <Input
+                        value={courierAddress.zipCode}
+                        onChange={(e) => onCourierAddressChange('zipCode', e.target.value)}
+                        label="ZIP code"
+                        sx={{ maxWidth: '100%' }}
+                        error={toFieldError(errors?.courierAddress?.zipCode)}
+                        required
+                      />
+                    </div>
+                    <Input
+                      value={courierAddress.country}
+                      onChange={(e) => onCourierAddressChange('country', e.target.value)}
+                      label="Country"
+                      sx={{ maxWidth: '100%' }}
+                      error={toFieldError(errors?.courierAddress?.country)}
+                      required
+                    />
                   </div>
-                </Button>
+                ) : (
+                  <>
+                    <Select
+                      data={branchesByMethod[option.id]}
+                      maxWidth="330px"
+                      height="44px"
+                      color="var(--black)"
+                      fontSize="16px"
+                      value={branchByMethod[option.id]}
+                      onChange={(value) => onBranchChange(option.id, value)}
+                      placeholder="Select the appropriate branch"
+                      styleVariant="subtleBorder"
+                      error={Boolean(errors?.branchByMethod?.[option.id])}
+                    />
+                    <Button
+                      maxWidth="233px"
+                      height="44px"
+                      borderRadius="8px"
+                      border="none"
+                      sx={{
+                        background: 'var(--blue-violet)',
+                        color: 'var(--white)',
+                        '&:hover': { background: 'var(--blue-violet)', color: 'var(--white)' },
+                      }}
+                    >
+                      <div className="delivery-method-section__map-btn">
+                        <Map width={18} height={18} fill="currentColor" />
+                        <span>Select on the map</span>
+                      </div>
+                    </Button>
+                  </>
+                )}
               </div>
             )}
           </div>

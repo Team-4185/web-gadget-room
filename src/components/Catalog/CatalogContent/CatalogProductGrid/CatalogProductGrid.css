@@ -1,0 +1,14 @@
+.catalog__products {
+  display: grid;
+  grid-template-columns: repeat(3, 244px);
+  gap: 35px;
+  margin-top: 45px;
+}
+
+.catalog__products-status {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--black);
+}

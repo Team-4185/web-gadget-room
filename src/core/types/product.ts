@@ -1,6 +1,25 @@
 import type { ComponentType, SVGProps } from 'react';
 
 export type BadgeType = 'New' | 'Hit' | 'Sale';
+export type ApiProductBadge = 'NEW' | 'HIT' | 'SALE';
+export type ApiPhoneColorName =
+  | 'BLACK'
+  | 'WHITE'
+  | 'GRAY'
+  | 'SILVER'
+  | 'GOLD'
+  | 'RED'
+  | 'BLUE'
+  | 'GREEN'
+  | 'YELLOW'
+  | 'PINK';
+export type ApiStorageCapacityName =
+  | 'CAPACITY_64GB'
+  | 'CAPACITY_128GB'
+  | 'CAPACITY_256GB'
+  | 'CAPACITY_512GB'
+  | 'CAPACITY_1TB'
+  | 'CAPACITY_2TB';
 
 export interface IProduct {
   id: number;
@@ -8,10 +27,20 @@ export interface IProduct {
   price: number;
   img: string;
   badge?: BadgeType;
+  badges?: BadgeType[];
+  discountPercent?: number;
   inStock?: boolean;
   preOrder?: boolean;
   reviews?: number;
   amount: number;
+  colors?: ApiPhoneColor[];
+  storageCapacity?: ApiStorageCapacity[];
+  variants?: ApiProductVariant[];
+  selectedVariantId?: number;
+  selectedColor?: ApiPhoneColor;
+  selectedStorage?: ApiStorageCapacity;
+  stock?: number;
+  status?: PhoneStockStatus;
 }
 
 export type ApiPhone = {
@@ -27,7 +56,68 @@ export type ApiPhone = {
   frontCamera: string;
   mainCamera: string;
   batteryCapacity: string;
+  sku?: string;
+  stock?: number;
+  status?: PhoneStockStatus;
+  previewImage?: ApiPhoneImage | null;
+  badge?: BadgeType;
+  badges?: ApiProductBadge[];
+  discountPercent?: number;
+  colors?: ApiPhoneColor[];
+  storageCapacity?: ApiStorageCapacity[];
+  variants?: ApiProductVariant[];
   images: ApiPhoneImage[];
+};
+
+export type PhoneStockStatus = 'IN_STOCK' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+
+export type ApiProductVariant = {
+  id: number;
+  sku: string;
+  color: ApiPhoneColorName;
+  storageCapacity: ApiStorageCapacityName;
+  price: number;
+  stock: number;
+  status: PhoneStockStatus;
+};
+
+export type ApiPhoneColor = {
+  name: string;
+  displayName: string;
+  hexCode: string;
+};
+
+export type ApiStorageCapacity = {
+  name: string;
+  value: number;
+  unit: string;
+};
+
+export type CreatePhonePayload = {
+  releaseYear: number;
+  batteryCapacity: string;
+  brand: string;
+  cpu: string;
+  price: number;
+  name: string;
+  screenSize: string;
+  frontCamera: string;
+  mainCamera: string;
+  status: PhoneStockStatus;
+  stock: number;
+  description: string;
+  coresNumber: number;
+  sku: string;
+  variants?: AdminProductVariantPayload[];
+};
+
+export type AdminProductVariantPayload = {
+  sku: string;
+  color: ApiPhoneColorName;
+  storageCapacity: ApiStorageCapacityName;
+  price: number;
+  stock: number;
+  status?: PhoneStockStatus;
 };
 
 export type ApiPhoneImage = {
@@ -45,13 +135,47 @@ export type BrandInfo = {
   descr: string;
 };
 
-export type SortOption =
+export type CatalogApiSort =
+  | 'name_asc'
+  | 'name_desc'
+  | 'price_asc'
+  | 'price_desc'
   | 'popularity'
-  | 'name A to Z'
-  | 'name Z to A'
-  | 'price decreasing'
-  | 'price increasing'
-  | 'number of reviews';
+  | 'popularity_desc';
+export type SortOption = CatalogApiSort;
+
+export type CatalogProductsRequestParams = {
+  page: number;
+  size: number;
+  brands?: string[];
+  inStock?: boolean;
+  preOrder?: boolean;
+  minPrice: number;
+  maxPrice: number;
+  sort: CatalogApiSort;
+};
+
+export type ApiCatalogFilterMetadata = {
+  brands: string[];
+  colors: ApiPhoneColor[];
+  storageCapacities: ApiStorageCapacity[];
+  priceRange: {
+    minPrice: number;
+    maxPrice: number;
+  };
+  stockOptions: string[];
+  badges: ApiProductBadge[];
+};
+
+export type ApiCatalogProductsPage = {
+  content: ApiPhone[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
+};
 
 export type UseProductResult = {
   product: IProduct;

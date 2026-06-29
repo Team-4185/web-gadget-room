@@ -1,4 +1,4 @@
-import { Cart, Liked, Search, User } from '@/assets';
+import { Bell, Cart, Liked, Search, User } from '@/assets';
 
 const PageName = {
   Home: 'Home',
@@ -12,11 +12,22 @@ const PageName = {
   ProductPage: 'ProductPage',
 } as const;
 
-export const ICONS = [
+export const HEADER_ICONS = [
   { id: 0, icon: Search, href: '#' },
   { id: 1, icon: User, href: '/userProfile' },
-  { id: 2, icon: Liked, href: '#' },
+  { id: 2, icon: Liked, href: '/userProfile?tab=favorite' },
   { id: 3, icon: Cart, href: '/cart' },
+];
+
+export const USER_PANEL_ICONS = [
+  { id: 0, icon: Bell, href: '#' },
+  { id: 1, icon: User, href: '/userProfile' },
+  { id: 2, icon: Cart, href: '/cart' },
+];
+
+export const ADMIN_PANEL_ICONS = [
+  { id: 0, icon: Bell, href: '#' },
+  { id: 1, icon: User, href: '/userProfile' },
 ];
 
 export const PAGES = [
@@ -30,16 +41,6 @@ export const AUTHBUTTON = [
   { id: 1, name: PageName.Register, href: '/register' },
 ];
 
-export const ROUTES_WITHOUT_BREADCRUMBS = [
-  '/',
-  '/cart',
-  '/payment',
-  '/delivery',
-  '/register',
-  '/404',
-  '/empty-cart',
-  '/userProfile',
-  '/home',
-];
+export const ROUTES_WITH_BREADCRUMBS = ['/catalog', '/product/:id'];
 
 export const ROUTES_WITH_ORDERING_STEPS = ['/cart', '/payment', '/delivery'];

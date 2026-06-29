@@ -25,23 +25,31 @@
 .user-panel-order-card__status {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
   height: 20px;
   border-radius: 999px;
-  padding: 0 8px;
+  padding: 0 10px;
   color: var(--white);
+}
+
+.user-panel-order-card__status.is-new,
+.user-panel-order-card__status.is-confirmed {
+  background: var(--blue-violet);
+}
+
+.user-panel-order-card__status.is-processing {
+  background: var(--amber);
+}
+
+.user-panel-order-card__status.is-shipped {
+  background: var(--blue);
 }
 
 .user-panel-order-card__status.is-delivered {
   background: var(--chateau-green);
 }
 
-.user-panel-order-card__status.is-shipped {
-  background: var(--amber);
-}
-
-.user-panel-order-card__status.is-processing {
-  background: var(--blue);
+.user-panel-order-card__status.is-cancelled {
+  background: var(--red);
 }
 
 .user-panel-order-card__total {

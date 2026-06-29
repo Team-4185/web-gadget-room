@@ -1,0 +1,577 @@
+import type {
+  AdminOrderStatus,
+  AdminAnalyticsRange,
+  ApiAdminPaymentStatus,
+  AdminProductStatus,
+  IAdminManagedOrderItem,
+  IAdminOrderKpiItem,
+  IAdminPanelBrandItem,
+  IAdminSalesAnalyticsPoint,
+  IAdminCustomerItem,
+  IAdminCustomerKpiItem,
+  IAdminProductFormState,
+  AdminProductVariantDraft,
+  IAdminPanelLowStockItem,
+  IAdminPanelMenuItem,
+  IAdminPanelManagedProduct,
+  IAdminPanelOrderItem,
+  IAdminPanelProductItem,
+  IAdminPanelStatItem,
+  ISelectOption,
+} from '@/core/types';
+import { FALLBACK_IMAGE } from './productMedia';
+import {
+  ArrowRightUp,
+  Customers,
+  Dashboard,
+  Dollar,
+  Order,
+  Product,
+  SmallClock,
+  SmallTruck,
+  Star,
+  StatusCancelled,
+  StatusDelivered,
+} from '@/assets';
+
+export const ADMIN_PANEL_MENU: IAdminPanelMenuItem[] = [
+  { id: 'dashboard', label: 'Dashboard', icon: Dashboard },
+  { id: 'product', label: 'Products', icon: Product, badge: 100 },
+  { id: 'orders', label: 'Orders', icon: Order, badge: 10 },
+  { id: 'customers', label: 'Customers', icon: Customers },
+];
+
+export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
+  {
+    id: 'revenue',
+    title: 'Total revenue',
+    value: '$ 120,000',
+    subtitle: 'Over the last 30 days',
+    trend: '+18.2%',
+    isPositive: true,
+    icon: Dollar,
+  },
+  {
+    id: 'orders',
+    title: 'Total orders',
+    value: '1,847',
+    subtitle: '124 in processing',
+    trend: '+12.5%',
+    isPositive: true,
+    icon: Order,
+  },
+  {
+    id: 'stock',
+    title: 'Items in stock',
+    value: '3,856',
+    subtitle: '12 running low',
+    trend: '-3.1%',
+    isPositive: false,
+    icon: Product,
+  },
+  {
+    id: 'clients',
+    title: 'New clients',
+    value: '100',
+    subtitle: 'This month',
+    trend: '+24.8%',
+    isPositive: true,
+    icon: Customers,
+  },
+];
+
+export const ADMIN_PANEL_BRANDS: IAdminPanelBrandItem[] = [
+  { id: 'apple', label: 'Apple', share: 35, color: '#4285f4' },
+  { id: 'samsung', label: 'Samsung', share: 28, color: '#8a3ffc' },
+  { id: 'xiaomi', label: 'Xiaomi', share: 18, color: '#d930b9' },
+  { id: 'google', label: 'Google', share: 12, color: '#eaa60f' },
+  { id: 'other', label: 'Other', share: 7, color: '#5f6b83' },
+];
+
+export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [
+  {
+    id: '1',
+    title: 'iPhone 15 Pro Max',
+    sales: '342 sales - USD 444,558',
+    trend: '+12%',
+    stock: '45 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '2',
+    title: 'Samsung Galaxy S24 Ultra',
+    sales: '298 sales - USD 357,020',
+    trend: '+8%',
+    stock: '62 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '3',
+    title: 'Google Pixel 8 Pro',
+    sales: '187 sales - USD 186,813',
+    trend: '+15%',
+    stock: '38 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '4',
+    title: 'Xiaomi 14 Pro',
+    sales: '156 sales - USD 132,444',
+    trend: '+22%',
+    stock: '89 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '5',
+    title: 'OnePlus 11',
+    sales: '134 sales - USD 107,066',
+    trend: '+5%',
+    stock: '54 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '6',
+    title: 'Samsung Galaxy S22',
+    sales: '342 sales - USD 444,558',
+    trend: '+18%',
+    stock: '16 pcs',
+    statusLabel: 'Low Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '7',
+    title: 'Honor 90',
+    sales: '342 sales - USD 444,558',
+    trend: '+8%',
+    stock: '30 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '8',
+    title: 'iPhone 11 128 GB',
+    sales: '342 sales - USD 444,558',
+    trend: '+40%',
+    stock: '60 pcs',
+    statusLabel: 'In Stock',
+    image: FALLBACK_IMAGE,
+  },
+];
+
+export const ADMIN_PANEL_MANAGED_PRODUCTS: IAdminPanelManagedProduct[] = [
+  {
+    id: '1',
+    title: 'iPhone 15 Pro Max',
+    sku: 'IPH-15-PM-256',
+    brand: 'Apple',
+    price: '$1,299',
+    stock: '45 pcs',
+    status: 'IN_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '2',
+    title: 'Samsung Galaxy S24 Ultra',
+    sku: 'SAM-S24-U-512',
+    brand: 'Samsung',
+    price: '$1,199',
+    stock: '62 pcs',
+    status: 'IN_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '3',
+    title: 'Google Pixel 8 Pro',
+    sku: 'GOO-P8-P-256',
+    brand: 'Google',
+    price: '$999',
+    stock: '38 pcs',
+    status: 'IN_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '4',
+    title: 'Xiaomi 14 Pro',
+    sku: 'XIA-14-P-256',
+    brand: 'Xiaomi',
+    price: '$849',
+    stock: '89 pcs',
+    status: 'IN_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '5',
+    title: 'OnePlus 11',
+    sku: 'ONE-12-256',
+    brand: 'OnePlus',
+    price: '$799',
+    stock: '54 pcs',
+    status: 'IN_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+  {
+    id: '6',
+    title: 'iPhone 14',
+    sku: 'IPH-14-128',
+    brand: 'Apple',
+    price: '$699',
+    stock: '8 pcs',
+    status: 'LOW_STOCK',
+    image: FALLBACK_IMAGE,
+  },
+];
+
+export const ADMIN_PRODUCT_COLOR_OPTIONS = [
+  { value: 'BLACK', name: 'Black' },
+  { value: 'WHITE', name: 'White' },
+  { value: 'GRAY', name: 'Gray' },
+  { value: 'SILVER', name: 'Silver' },
+  { value: 'GOLD', name: 'Gold' },
+  { value: 'RED', name: 'Red' },
+  { value: 'BLUE', name: 'Blue' },
+  { value: 'GREEN', name: 'Green' },
+  { value: 'YELLOW', name: 'Yellow' },
+  { value: 'PINK', name: 'Pink' },
+] as const;
+
+export const ADMIN_PRODUCT_STORAGE_OPTIONS = [
+  { value: 'CAPACITY_64GB', name: '64GB' },
+  { value: 'CAPACITY_128GB', name: '128GB' },
+  { value: 'CAPACITY_256GB', name: '256GB' },
+  { value: 'CAPACITY_512GB', name: '512GB' },
+  { value: 'CAPACITY_1TB', name: '1TB' },
+  { value: 'CAPACITY_2TB', name: '2TB' },
+] as const;
+
+export const EMPTY_ADMIN_PRODUCT_VARIANT: AdminProductVariantDraft = {
+  clientId: 'new-variant',
+  color: 'BLACK',
+  storageCapacity: 'CAPACITY_128GB',
+  price: '',
+  stock: '',
+};
+
+export const EMPTY_ADMIN_PRODUCT_FORM: IAdminProductFormState = {
+  name: '',
+  sku: '',
+  brand: '',
+  price: '',
+  stock: '',
+  releaseYear: '',
+  cpu: '',
+  coresNumber: '',
+  screenSize: '',
+  frontCamera: '',
+  mainCamera: '',
+  batteryCapacity: '',
+  description: '',
+  variants: [{ ...EMPTY_ADMIN_PRODUCT_VARIANT, clientId: 'variant-1' }],
+};
+
+export const ADMIN_PRODUCT_STATUS_LABELS: Record<AdminProductStatus, string> = {
+  IN_STOCK: 'In Stock',
+  LOW_STOCK: 'Low Stock',
+  OUT_OF_STOCK: 'Out of stock',
+};
+
+export const ADMIN_PRODUCT_STATUS_OPTIONS: ISelectOption[] = [
+  { value: '', name: 'All statuses' },
+  { value: 'IN_STOCK', name: 'In Stock' },
+  { value: 'LOW_STOCK', name: 'Low Stock' },
+  { value: 'OUT_OF_STOCK', name: 'Out of stock' },
+];
+
+export const ADMIN_PRODUCT_FIELD_TOOLTIPS: Partial<Record<keyof IAdminProductFormState, string>> = {
+  releaseYear: 'Format: 2026 (4 digits)',
+  coresNumber: 'Whole number, 1 to 32',
+  screenSize: 'Enter number with optional decimal point. Inch mark is added on save.',
+  frontCamera: 'Enter megapixels only. MP is added on save.',
+  mainCamera: 'Enter camera values separated by hyphen. MP is added on save.',
+  batteryCapacity: 'Enter number only. mAh is added on save.',
+};
+
+export const ADMIN_PANEL_RECENT_ORDERS: IAdminPanelOrderItem[] = [
+  {
+    id: '1',
+    orderNumber: '#ORD-8472',
+    customer: 'John Smith',
+    email: 'john.smith@example.com',
+    age: '5 min',
+    status: 'processing',
+  },
+  {
+    id: '2',
+    orderNumber: '#ORD-8471',
+    customer: 'Maria Johnson',
+    email: 'maria.johnson@example.com',
+    age: '12 min',
+    status: 'confirmed',
+  },
+  {
+    id: '3',
+    orderNumber: '#ORD-8470',
+    customer: 'Alex Brown',
+    email: 'alex.brown@example.com',
+    age: '28 min',
+    status: 'delivered',
+  },
+];
+
+export const ADMIN_PANEL_LOW_STOCK: IAdminPanelLowStockItem[] = [
+  { id: '1', title: 'iPhone 15 Pro 256GB Black', left: 3, threshold: 10 },
+  { id: '2', title: 'Samsung S24 Ultra 512GB Grey', left: 5, threshold: 15 },
+  { id: '3', title: 'Google Pixel 8 Pro 128GB White', left: 7, threshold: 12 },
+];
+
+export const ADMIN_CUSTOMER_KPIS: IAdminCustomerKpiItem[] = [
+  { id: 'total', title: 'Total clients', value: '100', icon: Customers },
+  { id: 'new_month', title: 'New (month)', value: '89', icon: Star },
+  { id: 'inactive', title: 'Inactive', value: '60', icon: ArrowRightUp },
+  { id: 'receipt', title: 'Wed receipt', value: '$2,200', icon: Dollar },
+];
+
+export const ADMIN_CUSTOMERS: IAdminCustomerItem[] = [
+  {
+    id: '1',
+    name: 'Ivan Petrov',
+    email: 'ivan@gmail.com',
+    phone: '+380 630000000',
+    orders: 12,
+    spent: '$8,450',
+    registeredAt: 'January 15, 2025',
+    status: 'inactive',
+  },
+  {
+    id: '2',
+    name: 'Maria Ivanova',
+    email: 'maria@gmail.com',
+    phone: '+380 630000000',
+    orders: 8,
+    spent: '$5,230',
+    registeredAt: 'March 3, 2024',
+    status: 'active',
+  },
+  {
+    id: '3',
+    name: 'Alex Smirnov',
+    email: 'alex@gmail.com',
+    phone: '+380 630000000',
+    orders: 12,
+    spent: '$12,890',
+    registeredAt: 'December 22, 2023',
+    status: 'inactive',
+  },
+  {
+    id: '4',
+    name: 'Elena Kozlova',
+    email: 'elena@gmail.com',
+    phone: '+380 630000000',
+    orders: 3,
+    spent: '$2,150',
+    registeredAt: 'July 10, 2025',
+    status: 'new',
+  },
+  {
+    id: '5',
+    name: 'Dmitry Volkov',
+    email: 'volk@gmail.com',
+    phone: '+380 630000000',
+    orders: 6,
+    spent: '$4,780',
+    registeredAt: 'May 5, 2024',
+    status: 'active',
+  },
+];
+
+export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
+  { id: 'confirmed', title: 'Confirmed', value: '23', icon: StatusDelivered },
+  { id: 'processing', title: 'Processing', value: '856', icon: SmallClock },
+  { id: 'delivered', title: 'Delivered', value: '60', icon: SmallTruck },
+  { id: 'cancelled', title: 'Cancelled', value: '23', icon: StatusCancelled },
+];
+
+export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
+  new: 'New',
+  confirmed: 'Confirmed',
+  processing: 'Processing',
+  shipped: 'Shipped',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled',
+};
+
+export const ADMIN_ORDER_PAYMENT_METHOD_LABELS = {
+  CARD: 'Card online',
+  CASH_ON_DELIVERY: 'Cash on delivery',
+} as const;
+
+export const ADMIN_ORDER_PAYMENT_STATUS_LABELS: Record<ApiAdminPaymentStatus, string> = {
+  PENDING: 'Pending',
+  PAID: 'Paid',
+  FAILED: 'Failed',
+  REFUNDED: 'Refunded',
+};
+
+export const ADMIN_ORDER_FILTER_TABS = [
+  { id: 'all', label: 'All orders' },
+  { id: 'new', label: 'New' },
+  { id: 'confirmed', label: 'Confirmed' },
+  { id: 'processing', label: 'Processing' },
+  { id: 'shipped', label: 'Shipped' },
+  { id: 'delivered', label: 'Delivered' },
+  { id: 'cancelled', label: 'Cancelled' },
+] as const;
+
+export type AdminOrderFilterId = (typeof ADMIN_ORDER_FILTER_TABS)[number]['id'];
+
+export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
+  {
+    id: '1',
+    orderNumber: '#ORD-8472',
+    customer: 'Ivan Petrov',
+    email: 'ivan@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '12 Oct 2025',
+    time: '14:30',
+    status: 'new',
+  },
+  {
+    id: '2',
+    orderNumber: '#ORD-8471',
+    customer: 'Maria Ivanova',
+    email: 'mari@gmail.com',
+    paymentMethod: 'CASH_ON_DELIVERY',
+    paymentStatus: 'PENDING',
+    deliveryMethod: 'COURIER',
+    itemsCount: 1,
+    date: '12 Oct 2025',
+    time: '13:45',
+    status: 'confirmed',
+  },
+  {
+    id: '3',
+    orderNumber: '#ORD-8470',
+    customer: 'Alexey Smirov',
+    email: 'smir@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 2,
+    date: '12 Oct 2025',
+    time: '11:20',
+    status: 'shipped',
+  },
+  {
+    id: '4',
+    orderNumber: '#ORD-8469',
+    customer: 'Elena Kozlova',
+    email: 'elen@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '16:15',
+    status: 'delivered',
+  },
+  {
+    id: '5',
+    orderNumber: '#ORD-8468',
+    customer: 'Dmitry Volkov',
+    email: 'gima@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'FAILED',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '10:00',
+    status: 'cancelled',
+  },
+  {
+    id: '6',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CASH_ON_DELIVERY',
+    paymentStatus: 'PENDING',
+    deliveryMethod: 'COURIER',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+  {
+    id: '7',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'delivered',
+  },
+  {
+    id: '8',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+  {
+    id: '9',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+];
+
+export const ADMIN_SALES_ANALYTICS_MOCK: Record<AdminAnalyticsRange, IAdminSalesAnalyticsPoint[]> =
+  {
+    week: [
+      { label: '1 Oct', revenue: 6400, orders: 22 },
+      { label: '8 Oct', revenue: 6600, orders: 25 },
+      { label: '15 Oct', revenue: 11200, orders: 40 },
+      { label: '22 Oct', revenue: 11400, orders: 45 },
+      { label: '29 Oct', revenue: 11000, orders: 47 },
+      { label: '5 Nov', revenue: 11300, orders: 35 },
+      { label: '12 Nov', revenue: 8300, orders: 34 },
+    ],
+    month: [
+      { label: 'Jan', revenue: 29200, orders: 122 },
+      { label: 'Feb', revenue: 30400, orders: 134 },
+      { label: 'Mar', revenue: 34100, orders: 150 },
+      { label: 'Apr', revenue: 32700, orders: 142 },
+      { label: 'May', revenue: 35900, orders: 162 },
+      { label: 'Jun', revenue: 37200, orders: 170 },
+    ],
+    year: [
+      { label: '2021', revenue: 264000, orders: 1150 },
+      { label: '2022', revenue: 312000, orders: 1320 },
+      { label: '2023', revenue: 356000, orders: 1510 },
+      { label: '2024', revenue: 402000, orders: 1660 },
+      { label: '2025', revenue: 438000, orders: 1810 },
+    ],
+  };

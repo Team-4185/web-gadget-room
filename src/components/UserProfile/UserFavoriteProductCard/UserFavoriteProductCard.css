@@ -1,0 +1,126 @@
+.user-favorite-product-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 296px;
+  padding: 12px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 0 7px 0 var(--blue-violet);
+  cursor: pointer;
+}
+
+.user-favorite-product-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 103px;
+}
+
+.user-favorite-product-card__image {
+  width: 102px;
+  height: 102px;
+  object-fit: contain;
+}
+
+.user-favorite-product-card__like {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  color: var(--blue-violet);
+  cursor: pointer;
+}
+
+.user-favorite-product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.user-favorite-product-card__title {
+  overflow: hidden;
+  max-height: 44px;
+}
+
+.user-favorite-product-card__price {
+  margin: 0;
+}
+
+.user-favorite-product-card__color {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.user-favorite-product-card__storage {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.user-favorite-product-card__color-label {
+  white-space: nowrap;
+}
+
+.user-favorite-product-card__color-control {
+  width: 126px;
+}
+
+.user-favorite-product-card__color-swatch {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--black-opacity-12);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px var(--black-opacity-12);
+}
+
+.user-favorite-product-card__color-select {
+  width: 126px;
+  height: 30px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.user-favorite-product-card__color-select .MuiSelect-select {
+  display: flex;
+  align-items: center;
+  padding: 5px 30px 5px 9px;
+}
+
+.user-favorite-product-card__color-value,
+.user-favorite-product-card__color-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.user-favorite-product-card__color-menu {
+  margin-top: 4px;
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+}
+
+.user-favorite-product-card__color-menu .MuiMenuItem-root {
+  min-height: 34px;
+  gap: 7px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+}
+
+.user-favorite-product-card__color-menu .MuiMenuItem-root.Mui-selected,
+.user-favorite-product-card__color-menu .MuiMenuItem-root.Mui-selected:hover {
+  background: rgba(119, 119, 191, 0.12);
+  color: var(--blue-violet);
+}

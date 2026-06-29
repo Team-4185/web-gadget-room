@@ -1,66 +1,72 @@
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
+import type { Control } from 'react-hook-form';
 
 import { User } from '@/assets';
-import { Input, UserPanelSettingsActionButton, UserPanelSettingsSection } from '@/components';
+import { FormInput, UserPanelSettingsActionButton, UserPanelSettingsSection } from '@/components';
+import { PROFILE_NAME_TOOLTIP, PROFILE_PHONE_TOOLTIP } from '@/core/constants';
+import { formatPhoneNumber, normalizePhoneNumber } from '@/core/utils';
+import type { UserProfileFormValues } from '@/core/schemas';
 
 import './UserPanelPersonalInfoSection.css';
 
-interface PersonalInfoState {
-  firstName: string;
-  lastName: string;
-  streetAddress: string;
-  country: string;
-  city: string;
-  phoneNumber: string;
-}
-
 interface UserPanelPersonalInfoSectionProps {
-  value: PersonalInfoState;
-  onChange: (key: keyof PersonalInfoState) => (event: ChangeEvent<HTMLInputElement>) => void;
+  control: Control<UserProfileFormValues>;
+  isSaving?: boolean;
+  onSave: () => void;
 }
 
 export const UserPanelPersonalInfoSection: FC<UserPanelPersonalInfoSectionProps> = ({
-  value,
-  onChange,
+  control,
+  isSaving = false,
+  onSave,
 }) => {
   return (
     <UserPanelSettingsSection
       icon={<User width={30} height={30} />}
       title="Personal Information"
       subtitle="Update your personal data"
-      action={<UserPanelSettingsActionButton text="Save changes" maxWidth="192px" />}
+      action={
+        <UserPanelSettingsActionButton
+          text={isSaving ? 'Saving' : 'Save changes'}
+          maxWidth="192px"
+          disabled={isSaving}
+          onClick={onSave}
+        />
+      }
     >
       <div className="user-profile__settings-input-grid">
-        <Input
+        <FormInput
+          name="firstName"
+          control={control}
           label="First Name"
-          placeholder="First Name"
-          value={value.firstName}
-          onChange={onChange('firstName')}
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
         />
-        <Input
+        <FormInput
+          name="lastName"
+          control={control}
           label="Last Name"
-          placeholder="Last Name"
-          value={value.lastName}
-          onChange={onChange('lastName')}
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
         />
-        <Input
-          label="Street Address"
-          placeholder="Street Address"
-          value={value.streetAddress}
-          onChange={onChange('streetAddress')}
-        />
-        <Input
-          label="Country"
-          placeholder="Country"
-          value={value.country}
-          onChange={onChange('country')}
-        />
-        <Input label="City" placeholder="City" value={value.city} onChange={onChange('city')} />
-        <Input
+        <FormInput
+          name="phoneNumber"
+          control={control}
           label="Phone Number"
-          placeholder="Phone Number"
-          value={value.phoneNumber}
-          onChange={onChange('phoneNumber')}
+          tooltipText={PROFILE_PHONE_TOOLTIP}
+          type="tel"
+          inputMode="tel"
+          placeholder="+380 (50) 555-55-55"
+          formatValue={formatPhoneNumber}
+          parseValue={normalizePhoneNumber}
+          required
+        />
+        <FormInput
+          name="city"
+          control={control}
+          label="City"
+          tooltipText={PROFILE_NAME_TOOLTIP}
+          required
         />
       </div>
     </UserPanelSettingsSection>

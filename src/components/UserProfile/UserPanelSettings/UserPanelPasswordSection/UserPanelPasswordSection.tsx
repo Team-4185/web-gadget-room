@@ -19,18 +19,29 @@ interface PasswordState {
 interface UserPanelPasswordSectionProps {
   value: PasswordState;
   onChange: (key: keyof PasswordState) => (event: ChangeEvent<HTMLInputElement>) => void;
+  isSaving?: boolean;
+  onSubmit: () => void;
 }
 
 export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
   value,
   onChange,
+  isSaving = false,
+  onSubmit,
 }) => {
   return (
     <UserPanelSettingsSection
       icon={<Settings width={30} height={30} />}
       title="Change password"
       subtitle="Update your password for security"
-      action={<UserPanelSettingsActionButton text="Change password" maxWidth="232px" />}
+      action={
+        <UserPanelSettingsActionButton
+          text={isSaving ? 'Saving...' : 'Change password'}
+          maxWidth="232px"
+          disabled={isSaving}
+          onClick={onSubmit}
+        />
+      }
     >
       <div className="user-profile__settings-content">
         <Input
@@ -40,6 +51,7 @@ export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
           value={value.current}
           isPassword
           onChange={onChange('current')}
+          autoComplete="current-password"
         />
         <Input
           label="New Password"
@@ -48,6 +60,7 @@ export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
           value={value.next}
           isPassword
           onChange={onChange('next')}
+          autoComplete="new-password"
         />
         <Input
           label="Confirm New Password"
@@ -56,6 +69,7 @@ export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
           value={value.confirm}
           isPassword
           onChange={onChange('confirm')}
+          autoComplete="new-password"
         />
 
         <UserPanelSettingsInfoMessage

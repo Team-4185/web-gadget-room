@@ -8,5 +8,5 @@ export const ProtectedRoutes = () => {
 
   if (authLoading) return <CircularProgress />;
 
-  return userId ? <Outlet /> : <Navigate to="/" replace />;
+  return userId ? <Outlet /> : <Navigate to="/login" replace />;
 };

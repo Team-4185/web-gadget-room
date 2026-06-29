@@ -39,3 +39,28 @@ export const PASSWORD_TOOLTIP = (
     </Typography>
   </div>
 );
+
+export const PROFILE_NAME_TOOLTIP = (
+  <div>
+    <Typography variant="caption" component="div">
+      - 3-255 chars
+    </Typography>
+    <Typography variant="caption" component="div">
+      - Letters, spaces, hyphens, apostrophes
+    </Typography>
+    <Typography variant="caption" component="div">
+      - One or more words
+    </Typography>
+  </div>
+);
+
+export const PROFILE_PHONE_TOOLTIP = (
+  <div>
+    <Typography variant="caption" component="div">
+      - Format: +380 (50) 555-55-55
+    </Typography>
+    <Typography variant="caption" component="div">
+      - Country code +380 is added automatically
+    </Typography>
+  </div>
+);

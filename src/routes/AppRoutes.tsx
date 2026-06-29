@@ -8,14 +8,21 @@ import {
   Delivery,
   EmptyCart,
   Home,
+  Payment,
   ProductPage,
   UserProfile,
+  AdminPanel,
   PageNotFound,
 } from '@/pages';
 import { ProtectedRoutes } from '@/routes/ProtectedRoute';
+import { AdminRoutes } from '@/routes/AdminRoutes';
 import { PRODUCTS } from '@/core/constants';
+import { phonesService } from '@/core/services';
+import { ensureAccessTokenForLoader, mapApiPhoneToProduct } from '@/core/utils';
 import App from '@/App';
 import type { ILoaderData } from '@/core/types';
+
+const getFallbackProduct = (id?: string) => PRODUCTS.find((product) => product.id === Number(id));
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +31,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
+        Component: AuthPage,
+      },
+      {
+        path: 'login',
         Component: AuthPage,
       },
       {
@@ -58,8 +69,21 @@ export const router = createBrowserRouter([
             Component: Delivery,
           },
           {
+            path: 'payment',
+            Component: Payment,
+          },
+          {
             path: 'userProfile',
             Component: UserProfile,
+          },
+          {
+            Component: AdminRoutes,
+            children: [
+              {
+                path: 'adminPanel',
+                Component: AdminPanel,
+              },
+            ],
           },
           {
             path: 'catalog',
@@ -74,32 +98,49 @@ export const router = createBrowserRouter([
           {
             path: 'about',
             Component: About,
-            handle: {
-              breadcrumb: () => [
-                { id: 1, path: '/home', label: 'Home' },
-                { id: 2, path: '/about', label: 'About' },
-              ],
-            },
           },
           {
             path: 'product/:id',
             Component: ProductPage,
             loader: async ({ params }) => {
-              return PRODUCTS.find((product) => product.id === Number(params.id));
+              const useTestingFallback = import.meta.env.VITE_USE_TESTING_FALLBACK === 'true';
+              const productId = Number(params.id);
+
+              if (!productId || Number.isNaN(productId)) {
+                return null;
+              }
+
+              if (useTestingFallback) {
+                return getFallbackProduct(params.id) ?? null;
+              }
+
+              try {
+                await ensureAccessTokenForLoader();
+                const phone = await phonesService.getById(productId);
+                const imageUrls = await phonesService.getImageObjectUrls(phone.images ?? []);
+
+                return mapApiPhoneToProduct(phone, imageUrls[0]);
+              } catch {
+                return getFallbackProduct(params.id) ?? null;
+              }
             },
             handle: {
-              breadcrumb: (data: ILoaderData) => [
+              breadcrumb: (data: ILoaderData | null) => [
                 { id: 1, path: '/home', label: 'Home' },
                 { id: 2, path: '/catalog', label: 'Catalog' },
-                { id: 3, path: `/product/${data.id}`, label: data.name },
+                {
+                  id: 3,
+                  path: data ? `/product/${data.id}` : '/catalog',
+                  label: data?.name ?? 'Product',
+                },
               ],
             },
           },
+          {
+            path: '404',
+            Component: PageNotFound,
+          },
         ],
-      },
-      {
-        path: '404',
-        Component: PageNotFound,
       },
       {
         path: '*',

@@ -1,0 +1,158 @@
+.admin-customers-table {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 30px 40px;
+}
+
+.admin-customers-table__search {
+  margin-top: 20px;
+  border: 1px solid var(--blue-violet);
+  border-radius: 12px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  background: var(--white);
+  min-height: 44px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.admin-customers-table__table-wrap {
+  overflow: auto;
+  margin-top: 30px;
+}
+
+.admin-customers-table__table {
+  width: 100%;
+  min-width: 960px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.admin-customers-table__col-client {
+  width: 19%;
+}
+
+.admin-customers-table__col-contact {
+  width: 27%;
+}
+
+.admin-customers-table__col-orders {
+  width: 8%;
+}
+
+.admin-customers-table__col-spent {
+  width: 11%;
+}
+
+.admin-customers-table__col-date {
+  width: 17%;
+}
+
+.admin-customers-table__col-status {
+  width: 10%;
+}
+
+.admin-customers-table__col-actions {
+  width: 8%;
+}
+
+.admin-customers-table__table th,
+.admin-customers-table__table td {
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 14px;
+}
+
+.admin-customers-table__table th {
+  font-weight: 600;
+  color: var(--black);
+  white-space: nowrap;
+}
+
+.admin-customers-table__table td {
+  color: var(--black);
+  border-bottom: 1px solid var(--light-violet);
+}
+
+.admin-customers-table__client-name {
+  display: block;
+  max-width: 100%;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-customers-table__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--black-opacity-65);
+  font-size: 12px;
+}
+
+.admin-customers-table__contact span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-customers-table__contact span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-customers-table__date {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.admin-customers-table__status {
+  min-width: 70px;
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  color: var(--white);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.admin-customers-table__status.is-inactive {
+  background: var(--red);
+}
+
+.admin-customers-table__status.is-active {
+  background: var(--blue);
+}
+
+.admin-customers-table__status.is-new {
+  background: var(--chateau-green);
+}
+
+.admin-customers-table__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-customers-table__actions button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  line-height: 1;
+  color: var(--chateau-green);
+  cursor: pointer;
+}
+
+.admin-customers-table__actions button:last-child {
+  color: var(--red);
+}

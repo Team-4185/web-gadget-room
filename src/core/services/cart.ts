@@ -4,7 +4,8 @@ import { api } from '@/core/config';
 import type { ICartDto } from '@/core/types';
 
 type MutateCartBody = {
-  phoneId: number;
+  phoneId?: number;
+  variantId?: number;
   amount: number;
 };
 
@@ -32,6 +33,9 @@ export const cartService = {
   },
   async removeItem(payload: MutateCartBody) {
     return mutateCart('/api/v1/me/cart/remove', payload);
+  },
+  async clearCart() {
+    await api.post<void>('/api/v1/me/cart/clear');
   },
 };
 

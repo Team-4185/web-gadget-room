@@ -1,9 +1,11 @@
 .product-spec-item {
   border-radius: 7px;
-  padding: 16px;
+  padding: 10px;
   width: 100%;
+  min-height: 84px;
   background: var(--product-specs-background);
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
@@ -24,4 +26,10 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.product-spec-item__value {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }

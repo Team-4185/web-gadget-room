@@ -15,7 +15,7 @@ export const UserPanelStatCard: FC<IProps> = ({ item }) => {
   return (
     <article className="user-panel-stat-card">
       <div className="user-panel-stat-card__icon">
-        <Icon width={25} height={25} fill="var(--white)" />
+        <Icon width={25} height={25} style={{ color: 'var(--white)' }} />
       </div>
       <Typography component="p" sx={{ marginBottom: '6px', fontSize: '16px', fontWeight: 500 }}>
         {item.label}

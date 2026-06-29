@@ -8,3 +8,4 @@ export { Select } from './Select/Select';
 export { RadioButton } from './RadioButton/RadioButton';
 export { CircularProgress } from './CircularProgress/CircularProgress';
 export { Stepper } from './Stepper/Stepper';
+export { Search } from './Search/Search';

@@ -12,7 +12,7 @@ export const AboutHeroSection = () => {
             sx={{
               fontSize: '64px',
               lineHeight: '72px',
-              letterSpacing: '-2px',
+              letterSpacing: '-3px',
               color: 'var(--white)',
               fontWeight: 400,
             }}
@@ -24,7 +24,7 @@ export const AboutHeroSection = () => {
             sx={{
               fontSize: '96px',
               lineHeight: '72px',
-              letterSpacing: '-2px',
+              letterSpacing: '-3px',
               color: 'var(--white)',
               fontWeight: 700,
             }}
@@ -150,4 +150,3 @@ export const AboutHeroSection = () => {
     </section>
   );
 };
-

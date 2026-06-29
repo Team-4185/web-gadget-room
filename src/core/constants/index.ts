@@ -1,4 +1,5 @@
 export * from './checkbox';
+export * from './catalog';
 export * from './home';
 export * from './payment';
 export * from './products';
@@ -11,3 +12,4 @@ export * from './userPanel';
 export * from './productMedia';
 export * from './about';
 export * from './stepper';
+export * from './adminPanel';

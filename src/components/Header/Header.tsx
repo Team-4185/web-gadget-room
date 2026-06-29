@@ -1,16 +1,18 @@
 import type { FC } from 'react';
 import { Container, Badge } from '@mui/material';
-import { Link as RouterLink, NavLink, useLocation } from 'react-router';
+import { Link as RouterLink, matchPath, NavLink, useLocation } from 'react-router';
 
 import { BreadCrumbs, Stepper } from '@/components';
 import { useAppSelector } from '@/core/store';
 import {
   AUTHBUTTON,
-  ICONS,
+  ADMIN_PANEL_ICONS,
+  HEADER_ICONS,
   ORDERING_STEPS,
   PAGES,
-  ROUTES_WITHOUT_BREADCRUMBS,
+  ROUTES_WITH_BREADCRUMBS,
   ROUTES_WITH_ORDERING_STEPS,
+  USER_PANEL_ICONS,
 } from '@/core/constants';
 import { Cart } from '@/assets';
 
@@ -25,12 +27,21 @@ export const Header: FC = () => {
   const cartLength = useAppSelector((state) => state.cart.totalAmount);
   const user = useAppSelector((state) => state.auth.userId);
 
-  const authPage = currentPath === '/' || currentPath === '/register';
+  const authPage = ['/', '/login', '/register', '/forgot-password'].includes(currentPath);
 
   const activeStep = ORDERING_STEPS.findIndex((step) => location.pathname === step.href) ?? 0;
 
-  const shouldShowBreadcrumbs = !ROUTES_WITHOUT_BREADCRUMBS.includes(currentPath);
+  const shouldShowBreadcrumbs = ROUTES_WITH_BREADCRUMBS.some((route) =>
+    matchPath({ path: route, end: true }, currentPath)
+  );
   const shouldShowOrderingSteps = ROUTES_WITH_ORDERING_STEPS.includes(currentPath);
+  const isUserPanel = currentPath === '/userProfile';
+  const isAdminPanel = currentPath === '/adminPanel';
+  const headerIcons = isAdminPanel
+    ? ADMIN_PANEL_ICONS
+    : isUserPanel
+      ? USER_PANEL_ICONS
+      : HEADER_ICONS;
 
   return (
     <header className="header">
@@ -56,9 +67,9 @@ export const Header: FC = () => {
             )}
           </div>
 
-          {user ? (
+          {user && !authPage ? (
             <div className="header__icons">
-              {ICONS.map((icon) => {
+              {headerIcons.map((icon) => {
                 const IconComponent = icon.icon;
 
                 return (

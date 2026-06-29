@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Typography } from '@mui/material';
 
 import type { IUserPanelOrder } from '@/core/types';
-import { STATUS_META } from '@/core/constants';
+import { FALLBACK_IMAGE, STATUS_META } from '@/core/constants';
 
 import './UserPanelOrderCard.css';
 
@@ -12,7 +12,6 @@ interface IProps {
 
 export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
   const status = STATUS_META[order.status];
-  const StatusIcon = status.icon;
 
   return (
     <article className="user-panel-order-card">
@@ -28,7 +27,6 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
         <div>
           <Typography sx={{ marginBottom: '7px', fontWeight: 500 }}>Status</Typography>
           <span className={`user-panel-order-card__status ${status.className}`}>
-            <StatusIcon width={17} height={17} fill="var(--white)" />
             <Typography component="span" sx={{ fontSize: '14px', color: 'inherit' }}>
               {status.label}
             </Typography>
@@ -36,7 +34,7 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
         </div>
         <div className="user-panel-order-card__total">
           <Typography sx={{ marginBottom: '7px', fontWeight: 500 }}>Total</Typography>
-          <Typography sx={{ fontWeight: 500 }}>{`€ ${order.total.toFixed(2)}`}</Typography>
+          <Typography sx={{ fontWeight: 500 }}>{`$ ${order.total.toFixed(2)}`}</Typography>
         </div>
       </div>
 
@@ -49,6 +47,9 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
                   src={item.image}
                   alt={item.title}
                   className="user-panel-order-card__item-image"
+                  onError={(event) => {
+                    event.currentTarget.src = FALLBACK_IMAGE;
+                  }}
                 />
               </div>
               <div>
@@ -58,9 +59,19 @@ export const UserPanelOrderCard: FC<IProps> = ({ order }) => {
                 <Typography sx={{ lineHeight: 1, fontWeight: 300 }}>
                   {`Quantity: ${item.quantity}`}
                 </Typography>
+                {item.color ? (
+                  <Typography sx={{ marginTop: '8px', lineHeight: 1, fontWeight: 300 }}>
+                    {`Color: ${item.color}`}
+                  </Typography>
+                ) : null}
+                {item.storage ? (
+                  <Typography sx={{ marginTop: '8px', lineHeight: 1, fontWeight: 300 }}>
+                    {`Storage: ${item.storage}`}
+                  </Typography>
+                ) : null}
               </div>
             </div>
-            <Typography sx={{ fontWeight: 500 }}>{`€ ${item.price.toFixed(2)}`}</Typography>
+            <Typography sx={{ fontWeight: 500 }}>{`$ ${item.price.toFixed(2)}`}</Typography>
           </div>
         ))}
       </div>

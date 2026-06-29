@@ -1,27 +1,94 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import { ChevronRight } from '@/assets';
 import {
-  ProductCard,
+  CircularProgress,
+  UserFavoriteProductCard,
   UserPanelOrderCard,
   UserPanelSettings,
   UserPanelSidebar,
   UserPanelStatCard,
 } from '@/components';
-import { USER_PANEL_FAVORITE_PRODUCTS } from '@/core/constants';
-import { useUserPanelData } from '@/core/hooks';
-import type { UserPanelTab } from '@/core/types';
+import { useUserOrders, useUserPanelData } from '@/core/hooks';
+import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { usersService } from '@/core/services';
+import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  const { greeting, subtitle, menu, stats, orders, profile } = useUserPanelData();
-  const [activeTab, setActiveTab] = useState<UserPanelTab>('overview');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector((state) => state.auth.userId);
+  const favorites = useAppSelector((state) => state.wishList.wishList);
+  const favoritesLoading = useAppSelector((state) => state.wishList.loading);
+  const favoritesError = useAppSelector((state) => state.wishList.error);
+  const [profileInfo, setProfileInfo] = useState<UpdateUserProfilePayload>({
+    firstName: '',
+    lastName: '',
+    city: '',
+    phoneNumber: '',
+  });
+  const [profileEmail, setProfileEmail] = useState('');
+  const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
+  const requestedTab = searchParams.get('tab');
+  const initialTab: UserPanelTab = requestedTab === 'favorite' ? 'favorite' : 'overview';
+  const { greeting, subtitle, menu, stats, profile } = useUserPanelData(
+    profileInfo,
+    totalElements,
+    favorites.length,
+    profileEmail
+  );
+  const [activeTab, setActiveTab] = useState<UserPanelTab>(initialTab);
 
-  const handleLogout = () => {
+  useEffect(() => {
+    if (!userId) return;
+
+    const controller = new AbortController();
+
+    usersService
+      .getCurrentUser(controller.signal)
+      .then((user) => {
+        if (controller.signal.aborted) return;
+
+        setProfileInfo({
+          firstName: user.firstName ?? '',
+          lastName: user.lastName ?? '',
+          city: user.city ?? '',
+          phoneNumber: user.phoneNumber ?? '',
+        });
+        setProfileEmail(user.email ?? '');
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    if (requestedTab === 'favorite') {
+      setActiveTab('favorite');
+    }
+  }, [requestedTab]);
+
+  const handleTabChange = (tab: UserPanelTab) => {
+    setActiveTab(tab);
+
+    if (tab === 'favorite') {
+      setSearchParams({ tab: 'favorite' }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
+
+  const handleLogout = async () => {
+    await dispatch(authActions.logout());
     navigate('/login');
   };
 
@@ -40,7 +107,7 @@ export const UserProfile = () => {
             email={profile.email}
             menu={menu}
             activeTab={activeTab}
-            onTabChange={setActiveTab}
+            onTabChange={handleTabChange}
             onLogout={handleLogout}
           />
 
@@ -91,7 +158,7 @@ export const UserProfile = () => {
                     <button
                       type="button"
                       className="user-profile__view-all"
-                      onClick={() => setActiveTab('orders')}
+                      onClick={() => handleTabChange('orders')}
                     >
                       <Typography component="span" sx={{ fontSize: '20px', color: 'inherit' }}>
                         View All
@@ -101,9 +168,18 @@ export const UserProfile = () => {
                   </div>
 
                   <div className="user-profile__orders-list">
-                    {recentOrders.map((order) => (
-                      <UserPanelOrderCard key={order.id} order={order} />
-                    ))}
+                    {ordersLoading ? <CircularProgress /> : null}
+                    {!ordersLoading && ordersError ? (
+                      <Typography component="p">{ordersError}</Typography>
+                    ) : null}
+                    {!ordersLoading && !ordersError && !recentOrders.length ? (
+                      <Typography component="p">No recent orders yet.</Typography>
+                    ) : null}
+                    {!ordersLoading &&
+                      !ordersError &&
+                      recentOrders.map((order) => (
+                        <UserPanelOrderCard key={order.id} order={order} />
+                      ))}
                   </div>
                 </div>
               </>
@@ -121,9 +197,16 @@ export const UserProfile = () => {
                 </div>
 
                 <div className="user-profile__orders-list">
-                  {orders.map((order) => (
-                    <UserPanelOrderCard key={order.id} order={order} />
-                  ))}
+                  {ordersLoading ? <CircularProgress /> : null}
+                  {!ordersLoading && ordersError ? (
+                    <Typography component="p">{ordersError}</Typography>
+                  ) : null}
+                  {!ordersLoading && !ordersError && !orders.length ? (
+                    <Typography component="p">No orders yet.</Typography>
+                  ) : null}
+                  {!ordersLoading &&
+                    !ordersError &&
+                    orders.map((order) => <UserPanelOrderCard key={order.id} order={order} />)}
                 </div>
               </div>
             )}
@@ -140,14 +223,35 @@ export const UserProfile = () => {
                 </div>
 
                 <div className="user-profile__favorites-grid">
-                  {USER_PANEL_FAVORITE_PRODUCTS.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
+                  {favoritesLoading ? <CircularProgress /> : null}
+                  {!favoritesLoading && favoritesError ? (
+                    <Typography component="p">{favoritesError}</Typography>
+                  ) : null}
+                  {!favoritesLoading && !favoritesError && !favorites.length ? (
+                    <Typography component="p">No favorites yet.</Typography>
+                  ) : null}
+                  {!favoritesLoading &&
+                    !favoritesError &&
+                    favorites.map((product) => (
+                      <UserFavoriteProductCard
+                        key={product.id}
+                        product={product}
+                        onClick={() => navigate(`/product/${product.id}`)}
+                      />
+                    ))}
                 </div>
               </div>
             )}
 
-            {isSettingsTab && <UserPanelSettings email={profile.email} />}
+            {isSettingsTab && (
+              <UserPanelSettings
+                userId={userId}
+                email={profile.email}
+                profile={profileInfo}
+                onProfileSaved={setProfileInfo}
+                onEmailSaved={setProfileEmail}
+              />
+            )}
           </div>
         </div>
       </Container>

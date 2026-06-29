@@ -41,10 +41,9 @@ export const EmptyCartContent: FC<Props> = ({ onBackToCatalog }) => {
 
         <Button
           onClick={onBackToCatalog}
-          maxWidth="220px"
+          maxWidth="190px"
           height="56px"
           fontWeight={500}
-          borderRadius="30px"
           textTransform="uppercase"
           sx={{
             marginTop: '10px',

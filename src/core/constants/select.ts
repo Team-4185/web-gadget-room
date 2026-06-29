@@ -2,20 +2,24 @@ import type { ISelectOption } from '@/core/types';
 
 export const SORT_BY: ISelectOption[] = [
   {
-    name: 'Popularity',
-    value: 'popularity',
+    name: 'Name: A to Z',
+    value: 'name_asc',
   },
   {
-    name: 'New',
-    value: 'new',
+    name: 'Name: Z to A',
+    value: 'name_desc',
   },
   {
-    name: 'Increase',
-    value: 'increase',
+    name: 'Price: Low to High',
+    value: 'price_asc',
   },
   {
-    name: 'Reduction',
-    value: 'reduction',
+    name: 'Price: High to Low',
+    value: 'price_desc',
+  },
+  {
+    name: 'Popularity: High to Low',
+    value: 'popularity_desc',
   },
 ];
 
@@ -53,3 +57,20 @@ export const DHL_BRANCHES: ISelectOption[] = [
   { name: 'DHL Service Point #5, Kyiv', value: 'dhl-5' },
   { name: 'DHL Service Point #11, Kyiv', value: 'dhl-11' },
 ];
+
+export const DEFAULT_BRANCH_ADDRESS = {
+  country: 'Ukraine',
+  zipCode: '01001',
+};
+
+export const BRANCH_ADDRESS_BY_ID: Record<string, typeof DEFAULT_BRANCH_ADDRESS> = {
+  'nova-104': { country: 'Ukraine', zipCode: '02094' },
+  'nova-17': { country: 'Ukraine', zipCode: '01054' },
+  'nova-9': { country: 'Ukraine', zipCode: '03150' },
+  'ukr-22': { country: 'Ukraine', zipCode: '02002' },
+  'ukr-49': { country: 'Ukraine', zipCode: '03049' },
+  'ukr-103': { country: 'Ukraine', zipCode: '02103' },
+  'dhl-2': { country: 'Ukraine', zipCode: '01001' },
+  'dhl-5': { country: 'Ukraine', zipCode: '04070' },
+  'dhl-11': { country: 'Ukraine', zipCode: '03113' },
+};

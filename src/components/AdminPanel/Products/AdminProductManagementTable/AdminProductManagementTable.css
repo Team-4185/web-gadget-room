@@ -1,0 +1,67 @@
+.admin-product-management {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 40px;
+}
+
+.admin-product-management__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-product-management__filters {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 147px 131px;
+  gap: 10px;
+}
+
+.admin-product-management__search {
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  background: var(--white);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.admin-product-management__table-wrap {
+  overflow: auto;
+  margin-top: 20px;
+}
+
+.admin-product-management__table {
+  width: 100%;
+  min-width: 840px;
+  border-collapse: collapse;
+}
+
+.admin-product-management__table th {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 6px 15px;
+}
+
+.admin-product-management__table td {
+  padding: 13px 6px;
+  border-bottom: 1px solid var(--light-violet);
+  font-size: 14px;
+  color: var(--black-opacity-65);
+}
+
+.admin-product-management__table td.is-strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+.admin-product-management__add-product-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

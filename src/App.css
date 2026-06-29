@@ -11,6 +11,7 @@
   --blue-opacity-40: rgba(119, 119, 191, 0.4);
   --blue-opacity-45: rgba(119, 119, 191, 0.45);
   --blue-opacity-50: rgba(119, 119, 191, 0.5);
+  --blue-violet-opacity-57: rgba(119, 119, 191, 0.57);
 
   --white: #ffffff;
   --ghost-white: #fdfdff;
@@ -43,6 +44,8 @@
   --very-light-violet: #e8e8f0;
   --muted-violet: #8f8faf;
   --gray-violet: #8888aa;
+  --dark-gray-violet: #525f7c;
+  --alert-red: rgba(235, 0, 27, 0.37);
 }
 
 ol[role='list'],

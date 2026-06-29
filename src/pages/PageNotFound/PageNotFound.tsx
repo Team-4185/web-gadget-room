@@ -9,7 +9,7 @@ export const PageNotFound = () => {
   return (
     <section aria-label="Page Not Found">
       <Container disableGutters>
-        <NotFoundContent onBackHome={() => navigate('/')} />
+        <NotFoundContent onBackHome={() => navigate('/home')} />
       </Container>
     </section>
   );

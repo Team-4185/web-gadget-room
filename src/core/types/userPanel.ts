@@ -1,7 +1,7 @@
 import type { ComponentType, SVGProps } from 'react';
 
 export type UserPanelTab = 'overview' | 'orders' | 'favorite' | 'settings';
-export type OrderStatus = 'delivered' | 'shipped' | 'processing';
+export type OrderStatus = 'new' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 export interface IUserPanelMenuItem {
   id: UserPanelTab;
@@ -21,6 +21,8 @@ export interface IUserPanelOrderItem {
   id: string;
   title: string;
   quantity: number;
+  color?: string;
+  storage?: string;
   price: number;
   image: string;
 }

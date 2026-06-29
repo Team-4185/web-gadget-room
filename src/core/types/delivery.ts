@@ -18,14 +18,32 @@ export type RecipientForm = {
   region: string;
 };
 
+export type CourierAddressForm = {
+  street: string;
+  houseNumber: string;
+  apartmentNumber: string;
+  city: string;
+  country: string;
+  zipCode: string;
+};
+
 export type BranchSelectionMap = Record<DeliveryMethod, string>;
 export type DeliveryBranchesMap = Record<DeliveryMethod, ISelectOption[]>;
+export type DeliveryCheckoutErrors = {
+  recipient?: Partial<Record<keyof RecipientForm, string>>;
+  delivery?: {
+    branchByMethod?: Partial<Record<DeliveryMethod, string>>;
+    courierAddress?: Partial<Record<keyof CourierAddressForm, string>>;
+  };
+  cart?: string;
+};
 
 export type DeliveryCheckoutForm = {
   recipient: RecipientForm;
   delivery: {
     method: DeliveryMethod;
     branchByMethod: BranchSelectionMap;
+    courierAddress: CourierAddressForm;
   };
   payment: {
     method: CheckoutPaymentMethod;

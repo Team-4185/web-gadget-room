@@ -3,10 +3,16 @@ import { Typography } from '@mui/material';
 
 import { Select } from '@/components';
 import { SORT_BY } from '@/core/constants';
+import type { SortOption } from '@/core/types';
 
 import './CatalogHeader.css';
 
-export const CatalogHeader: FC = () => {
+interface IProps {
+  sortBy: SortOption;
+  onSortChange: (value: string) => void;
+}
+
+export const CatalogHeader: FC<IProps> = ({ sortBy, onSortChange }) => {
   return (
     <div className="catalog__header">
       <Typography className="catalog__title" variant="h4" sx={{ fontWeight: 600 }}>
@@ -19,10 +25,13 @@ export const CatalogHeader: FC = () => {
         </Typography>
         <Select
           data={SORT_BY}
-          maxWidth="135px"
+          maxWidth="fit-content"
+          minWidth="226px"
           height="36px"
           color="var(--black)"
           fontSize="16px"
+          value={sortBy}
+          onChange={onSortChange}
         />
       </div>
     </div>

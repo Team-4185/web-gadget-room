@@ -9,8 +9,8 @@
 .product-info__specs {
   gap: 15px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   align-items: center;
   justify-content: center;
 }
@@ -30,16 +30,31 @@
 }
 
 .product-info__description {
-  display: -webkit-box;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  line-height: 171.429%;
+  max-height: calc(1em * 1.71429 * 3);
   overflow: hidden;
+}
+
+.product-info__description:not(.product-info__description--expanded) {
+  padding-right: 56px;
 }
 
 .product-info__description--expanded {
   display: block;
-  overflow: visible;
+  max-height: calc(1em * 1.71429 * 10);
+  overflow: hidden;
+  padding-right: 38px;
+}
+
+.product-info__description-ellipsis {
+  position: absolute;
+  right: 34px;
+  bottom: 0;
+  padding-left: 8px;
+  background: var(--white);
+  color: var(--product-description-color);
+  font-size: 14px;
+  line-height: 171.429%;
 }
 
 .product-info__description-measure {
@@ -51,9 +66,30 @@
 }
 
 .product-info__description-block {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+.product-info__description-block
+  .product-info__description:not(.product-info__description--expanded)
+  + .product-info__description-link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  padding-left: 6px;
+}
+
+.product-info__description-block
+  .product-info__description--expanded
+  ~ .product-info__description-link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: var(--white);
+  padding-left: 6px;
 }
 
 .product-info__actions {
@@ -62,8 +98,41 @@
   gap: 16px;
 }
 
-.product-info__meta {
+.product-info__storage {
   display: flex;
-  width: 100%;
-  gap: 32px;
+  flex-direction: column;
+  gap: 12px;
 }
+
+.product-info__storage-label {
+  color: var(--black);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.product-info__storage-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.product-info__storage-option {
+  min-width: 86px;
+  height: 40px;
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--black);
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.product-info__storage-option:hover,
+.product-info__storage-option--selected {
+  background: var(--blue-violet);
+  color: var(--white);
+}
+

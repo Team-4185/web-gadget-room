@@ -25,7 +25,7 @@ export const WelcomeSection: FC<IProps> = ({
   const location = useLocation();
 
   const isRegister = location.pathname === '/register';
-  const isLogin = location.pathname === '/';
+  const isLogin = location.pathname === '/' || location.pathname === '/login';
 
   return (
     <motion.div className="auth__welcome" variants={FADEUP} initial="hidden" animate="visible">

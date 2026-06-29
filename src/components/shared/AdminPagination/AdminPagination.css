@@ -1,0 +1,18 @@
+.admin-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-pagination p span {
+  color: var(--blue-violet);
+  font-weight: 500;
+}
+
+.admin-pagination__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}

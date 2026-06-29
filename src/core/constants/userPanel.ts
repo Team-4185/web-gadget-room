@@ -1,10 +1,10 @@
 import { Liked, Logout, Order, Settings, User } from '@/assets';
 import type { IUserPanelData } from '@/core/types';
 import { PRODUCTS } from '@/core/constants/products';
-import { SmallClock, SmallTruck, StatusDelivered } from '@/assets';
+import { SmallClock, SmallTruck, StatusCancelled, StatusDelivered } from '@/assets';
 
 export const USER_PANEL_DATA: IUserPanelData = {
-  greeting: 'Welcome back Taras!',
+  greeting: 'Welcome back, Taras!',
   subtitle: "Here's what's happening with your account",
   menu: [
     { id: 'overview', label: 'Overview', icon: User },
@@ -97,19 +97,34 @@ export const USER_PANEL_LOGOUT = {
 export const USER_PANEL_FAVORITE_PRODUCTS = PRODUCTS.slice(0, 6);
 
 export const STATUS_META = {
-  delivered: {
-    label: 'Delivered',
+  new: {
+    label: 'New',
+    icon: SmallClock,
+    className: 'is-new',
+  },
+  confirmed: {
+    label: 'Confirmed',
     icon: StatusDelivered,
-    className: 'is-delivered',
+    className: 'is-confirmed',
+  },
+  processing: {
+    label: 'Processing',
+    icon: SmallClock,
+    className: 'is-processing',
   },
   shipped: {
     label: 'Shipped',
     icon: SmallTruck,
     className: 'is-shipped',
   },
-  processing: {
-    label: 'Processing',
-    icon: SmallClock,
-    className: 'is-processing',
+  delivered: {
+    label: 'Delivered',
+    icon: StatusDelivered,
+    className: 'is-delivered',
+  },
+  cancelled: {
+    label: 'Cancelled',
+    icon: StatusCancelled,
+    className: 'is-cancelled',
   },
 } as const;

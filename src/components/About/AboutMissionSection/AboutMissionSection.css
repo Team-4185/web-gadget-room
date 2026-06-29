@@ -5,14 +5,14 @@
 
 .about-mission__layout {
   display: grid;
-  grid-template-columns: 698px 501px;
-  gap: 34px;
+  grid-template-columns: 712px 501px;
+  gap: 65px;
   align-items: end;
 }
 
 .about-mission__title-wrap {
-  margin-top: 20px;
-  max-width: 608px;
+  margin-top: 48px;
+  max-width: 712px;
 }
 
 .about-mission__title-highlight {
@@ -20,11 +20,11 @@
 }
 
 .about-mission__paragraph {
-  max-width: 699px;
+  max-width: 712px;
 }
 
 .about-mission__paragraph--first {
-  margin-top: 30px;
+  margin-top: 45px;
 }
 
 .about-mission__paragraph--second {
@@ -35,65 +35,39 @@
   color: var(--blue-violet);
 }
 
-.about-mission__content button {
-  margin-top: 26px;
-  border-radius: 50px;
-  box-shadow: 0 1px 4px 0 var(--blue-violet);
-}
-
 .about-mission__cards {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 240px);
+  grid-auto-rows: 240px;
+  gap: 17px 21px;
   width: 501px;
-  height: 497px;
 }
 
 .about-mission__card {
-  position: absolute;
   width: 240px;
-  border: 1px solid #c8c8eb;
+  height: 240px;
+  border: none;
   border-radius: 24px;
   background: var(--white-opacity-10);
   padding: 17px 12px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
-}
-
-.about-mission__card--original {
-  left: 0;
-  top: 0;
-  min-height: 240px;
-}
-
-.about-mission__card--warranty {
-  left: 261px;
-  top: 58px;
-  min-height: 213px;
-}
-
-.about-mission__card--payment {
-  left: 0;
-  top: 257px;
-  min-height: 240px;
-}
-
-.about-mission__card--delivery {
-  left: 261px;
-  top: 284px;
-  min-height: 213px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .about-mission__card-header {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .about-mission__card-icon {
-  width: 27px;
-  height: 27px;
-  flex: 0 0 27px;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
 }
 
 .about-mission__card-copy {
   margin-top: 16px;
 }
-

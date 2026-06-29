@@ -8,6 +8,7 @@ import type { ISelectOption } from '@/core/types';
 interface IProps {
   data: ISelectOption[];
   maxWidth: string;
+  minWidth?: string;
   height: string;
   color: string;
   fontSize: string;
@@ -16,6 +17,7 @@ interface IProps {
   startIcon?: ReactNode;
   initialValue?: string;
   placeholder?: string;
+  error?: boolean;
   value?: string;
   onChange?: (value: string) => void;
 }
@@ -23,6 +25,7 @@ interface IProps {
 export const Select: FC<IProps> = ({
   data,
   maxWidth,
+  minWidth,
   height,
   color,
   fontSize,
@@ -31,6 +34,7 @@ export const Select: FC<IProps> = ({
   startIcon,
   initialValue,
   placeholder,
+  error = false,
   value,
   onChange,
 }) => {
@@ -54,19 +58,37 @@ export const Select: FC<IProps> = ({
           height,
           color,
           fontSize,
+          minWidth,
           '& .MuiSelect-select.MuiSelect-select': {
             padding: selectPadding,
           },
+          ...(error && {
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--coralRed)',
+            },
+          }),
         }}
         data-style-variant={styleVariant === 'subtleBorder' ? 'subtleBorder' : undefined}
         value={selectedValue}
         onChange={handleChange}
         displayEmpty
+        autoWidth
         MenuProps={{
           PaperProps: {
             sx: {
               maxHeight: 48 * 6,
               overflowY: 'auto',
+              width: 'max-content',
+              minWidth: 'max-content',
+              '& .MuiMenuItem-root': {
+                whiteSpace: 'nowrap',
+              },
             },
           },
         }}

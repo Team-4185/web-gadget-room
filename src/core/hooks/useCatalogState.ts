@@ -1,47 +1,116 @@
-import { useState } from 'react';
-import type { SelectChangeEvent } from '@mui/material/Select';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { SortOption } from '@/core/types';
+import { CATALOG_DEFAULT_SORT, CATALOG_MAX_PRICE } from '@/core/constants';
+import type { ICheckboxOption, SortOption } from '@/core/types';
+import { buildCatalogActiveItems } from '@/core/utils';
 
-export const useCatalogState = () => {
-  const [sortBy, setSortBy] = useState<SortOption>('popularity');
+type CatalogStateOptions = {
+  brandOptions: ICheckboxOption[];
+  maxPrice: number;
+};
 
-  const [activeItems, setActiveItems] = useState<Record<string, boolean>>({
-    apple: false,
-    samsung: false,
-    xiaomi: false,
-    oneplus: false,
-    honor: false,
-    poco: false,
-    inStock: false,
-    preOrder: false,
-  });
+const reconcileCatalogActiveItems = (
+  brandOptions: ICheckboxOption[],
+  currentItems: Record<string, boolean>
+) =>
+  brandOptions.reduce<Record<string, boolean>>((acc, item) => {
+    acc[item.value] =
+      currentItems[item.value] ??
+      currentItems[item.label] ??
+      currentItems[item.value.toLowerCase()] ??
+      false;
+    return acc;
+  }, {});
 
-  const [sliderValue, setSliderValue] = useState<number>(2000);
+const areCatalogActiveItemsEqual = (
+  firstItems: Record<string, boolean>,
+  secondItems: Record<string, boolean>
+) => {
+  const firstKeys = Object.keys(firstItems);
+  const secondKeys = Object.keys(secondItems);
 
-  const toggleItems = (item: string) => {
+  if (firstKeys.length !== secondKeys.length) return false;
+
+  return firstKeys.every((key) => firstItems[key] === secondItems[key]);
+};
+
+export const useCatalogState = ({
+  brandOptions,
+  maxPrice,
+}: CatalogStateOptions) => {
+  const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeItems, setActiveItems] = useState<Record<string, boolean>>(() =>
+    buildCatalogActiveItems(brandOptions)
+  );
+  const [appliedActiveItems, setAppliedActiveItems] = useState<Record<string, boolean>>(() =>
+    buildCatalogActiveItems(brandOptions)
+  );
+  const [sliderValue, setSliderValue] = useState<number>(maxPrice || CATALOG_MAX_PRICE);
+  const [appliedSliderValue, setAppliedSliderValue] = useState<number>(
+    maxPrice || CATALOG_MAX_PRICE
+  );
+
+  useEffect(() => {
+    setActiveItems((prev) => {
+      const next = reconcileCatalogActiveItems(brandOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+    setAppliedActiveItems((prev) => {
+      const next = reconcileCatalogActiveItems(brandOptions, prev);
+      return areCatalogActiveItemsEqual(prev, next) ? prev : next;
+    });
+  }, [brandOptions]);
+
+  useEffect(() => {
+    setSliderValue((prev) => (prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev));
+    setAppliedSliderValue((prev) =>
+      prev === CATALOG_MAX_PRICE || prev > maxPrice ? maxPrice : prev
+    );
+  }, [maxPrice]);
+
+  const toggleItems = useCallback((item: string) => {
     setActiveItems((prev) => ({ ...prev, [item]: !prev[item] }));
-  };
+  }, []);
 
-  //  handler for Slider
-  const handleSliderChange = (_event: Event, newValue: number | number[]) => {
+  const handleSliderChange = useCallback((_event: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number);
-  };
+  }, []);
 
-  // handler for Select
-  const handleSortChange = (event: SelectChangeEvent<string>) => {
-    setSortBy(event.target.value as SortOption);
-  };
+  const handleSortChange = useCallback((value: string) => {
+    setSortBy(value as SortOption);
+    setCurrentPage(1);
+  }, []);
+
+  const applyFilters = useCallback(() => {
+    setAppliedActiveItems(activeItems);
+    setAppliedSliderValue(sliderValue);
+    setCurrentPage(1);
+  }, [activeItems, sliderValue]);
+
+  const resetFilters = useCallback(() => {
+    const defaultActiveItems = buildCatalogActiveItems(brandOptions);
+
+    setActiveItems(defaultActiveItems);
+    setAppliedActiveItems(defaultActiveItems);
+    setSliderValue(maxPrice);
+    setAppliedSliderValue(maxPrice);
+    setCurrentPage(1);
+  }, [brandOptions, maxPrice]);
 
   return {
-    // state
     sortBy,
+    currentPage,
     activeItems,
+    appliedActiveItems,
     sliderValue,
+    appliedSliderValue,
 
-    // actions
     toggleItems,
     handleSliderChange,
     handleSortChange,
+    applyFilters,
+    resetFilters,
+    setCurrentPage,
   };
 };

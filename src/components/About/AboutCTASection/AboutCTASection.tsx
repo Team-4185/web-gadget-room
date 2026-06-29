@@ -38,7 +38,7 @@ export const AboutCTASection = () => {
             maxWidth="239px"
             height="76px"
             fontSize="16px"
-            borderRadius="30px"
+            borderRadius="8px"
             onClick={() => navigate('/catalog')}
           >
             GO TO CATALOG
@@ -48,4 +48,3 @@ export const AboutCTASection = () => {
     </section>
   );
 };
-

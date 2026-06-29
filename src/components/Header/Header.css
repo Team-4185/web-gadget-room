@@ -1,7 +1,7 @@
 .header__wrapper {
   display: flex;
   justify-content: space-between;
-  padding: 28px 0;
+  padding: 34px 0;
 }
 
 .header__left {
@@ -28,8 +28,29 @@
 }
 
 .header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
+  color: var(--blue-violet);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.header__icon.active {
+  color: var(--blue-violet);
+}
+
+.header__icon:hover {
+  color: var(--blue-violet);
+  transform: scale(1.08);
+}
+
+.header__icon svg,
+.header__icon svg path {
+  color: inherit;
+  fill: currentColor;
 }
 
 .header__auth {

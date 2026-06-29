@@ -31,8 +31,8 @@ export const OrderSummary = ({
   continueLabel = 'continue to payment',
   continueDisabled = false,
   showContinueButton = true,
-  taxAmount = 13,
-  shippingAmount = 13,
+  taxAmount = 0,
+  shippingAmount = 0,
   className,
 }: OrderSummaryProps) => {
   const amountOfProducts = useAppSelector((state) => state.cart.totalAmount);
@@ -63,27 +63,20 @@ export const OrderSummary = ({
             Subtotal
           </Typography>
           <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? subTotal.toFixed(2) : 0}
+            $ {amountOfProducts ? subTotal.toFixed(2) : 0}
           </Typography>
         </div>
 
-        <div className="order-summary__row">
-          <Typography variant="body1" component="span" sx={rowLabelSx}>
-            Tax
-          </Typography>
-          <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? taxAmount.toFixed(2) : 0}
-          </Typography>
-        </div>
-
-        <div className="order-summary__row">
-          <Typography variant="body1" component="span" sx={rowLabelSx}>
-            Delivery
-          </Typography>
-          <Typography variant="body1" component="span" sx={rowValueSx}>
-            {'\u20AC'} {amountOfProducts ? shippingAmount.toFixed(2) : 0}
-          </Typography>
-        </div>
+        {shippingAmount > 0 && (
+          <div className="order-summary__row">
+            <Typography variant="body1" component="span" sx={rowLabelSx}>
+              Delivery
+            </Typography>
+            <Typography variant="body1" component="span" sx={rowValueSx}>
+              $ {amountOfProducts ? shippingAmount.toFixed(2) : 0}
+            </Typography>
+          </div>
+        )}
       </div>
 
       <div className="order-summary__divider" />
@@ -93,7 +86,7 @@ export const OrderSummary = ({
           Total
         </Typography>
         <Typography variant="h6" component="span" sx={totalValueSx}>
-          {'\u20AC'} {amountOfProducts ? total.toFixed(2) : 0}
+          $ {amountOfProducts ? total.toFixed(2) : 0}
         </Typography>
       </div>
 
@@ -102,7 +95,6 @@ export const OrderSummary = ({
           className="order-summary__button "
           maxWidth="425px"
           height="56px"
-          borderRadius="24px"
           onClick={handleContinue}
           disabled={continueDisabled}
           textTransform="upperCase"

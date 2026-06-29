@@ -15,6 +15,47 @@ export interface IJwtResponseDto {
   accessToken: string;
 }
 
+export type UpdateUserProfilePayload = {
+  firstName: string;
+  lastName: string;
+  city: string;
+  phoneNumber: string;
+};
+
+export type UserProfileDto = UpdateUserProfilePayload & {
+  id?: number;
+  email?: string;
+};
+
+export type UserPersonalInfoResponseDto = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  city: string | null;
+  phoneNumber: string | null;
+  role: {
+    id?: number;
+    name?: string;
+  };
+  cart: unknown;
+  orders: unknown[];
+  favorites: unknown[];
+};
+
+export type ChangeUserPasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
+
+export type ChangeUserEmailPayload = {
+  newEmail: string;
+  currentPassword: string;
+};
+
 export type FormRegisterValuesDto = Omit<FormRegisterValues, 'terms'>;
 
 export interface IErrorResponse {
