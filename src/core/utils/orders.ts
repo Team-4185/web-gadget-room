@@ -66,7 +66,7 @@ export const createOrderPayloadFromCheckout = (
   const selectedBranchOption = getBranchOption(form.delivery.method, selectedBranch);
   const selectedBranchAddress = BRANCH_ADDRESS_BY_ID[selectedBranch] ?? DEFAULT_BRANCH_ADDRESS;
   const region = getOptionName(UKRAINE_REGIONS, form.recipient.region);
-  const postOffice = selectedBranchOption?.name ?? selectedBranch;
+  const postOffice = selectedBranchOption?.fullName ?? selectedBranchOption?.name ?? selectedBranch;
   const postOfficeCity = selectedBranchOption?.city ?? region;
 
   return {

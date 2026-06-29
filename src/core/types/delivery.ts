@@ -24,6 +24,7 @@ export type DeliveryRegionMapConfig = {
 };
 
 export type DeliveryBranchOption = ISelectOption & {
+  fullName?: string;
   provider: DeliveryBranchProvider;
   city?: string;
   address?: string;

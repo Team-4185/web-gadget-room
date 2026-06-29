@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { Typography } from '@mui/material';
 import type { FieldError } from 'react-hook-form';
-import { divIcon, type LatLngBoundsExpression } from 'leaflet';
+import { divIcon, type LatLngBoundsExpression, type Marker as LeafletMarker } from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -67,6 +67,30 @@ const RegionBounds = ({ bounds }: { bounds: LatLngBoundsExpression }) => {
   return null;
 };
 
+type FocusBranchProps = {
+  branch?: DeliveryBranchOption;
+  markerRefs: MutableRefObject<Record<string, LeafletMarker | null>>;
+};
+
+const FocusBranch = ({ branch, markerRefs }: FocusBranchProps) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!branch || typeof branch.lat !== 'number' || typeof branch.lon !== 'number') return;
+
+    map.flyTo([branch.lat, branch.lon], Math.max(map.getZoom(), 16), {
+      animate: true,
+      duration: 0.6,
+    });
+
+    window.setTimeout(() => {
+      markerRefs.current[branch.value]?.openPopup();
+    }, 650);
+  }, [branch, map, markerRefs]);
+
+  return null;
+};
+
 export const DeliveryMethodSection = ({
   deliveryMethod,
   onDeliveryMethodChange,
@@ -85,6 +109,8 @@ export const DeliveryMethodSection = ({
   );
   const [loadingMethods, setLoadingMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
   const [failedMethods, setFailedMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
+  const [focusedBranchValue, setFocusedBranchValue] = useState('');
+  const markerRefs = useRef<Record<string, LeafletMarker | null>>({});
 
   const selectedMapOption = options.find((option) => option.id === mapMethod);
   const selectedRegion = UKRAINE_REGION_MAP_CONFIG[region];
@@ -101,6 +127,7 @@ export const DeliveryMethodSection = ({
         : [],
     [branchesByMethod, loadedBranches, mapMethod]
   );
+  const focusedBranch = mapBranches.find((branch) => branch.value === focusedBranchValue);
 
   useEffect(() => {
     if (!mapMethod) return;
@@ -175,7 +202,17 @@ export const DeliveryMethodSection = ({
   const handleOpenMap = (method: DeliveryMethod) => {
     if (!selectedRegion) return;
 
+    setFocusedBranchValue(branchByMethod[method] || '');
     setMapMethod(method);
+  };
+
+  const handleBranchFocus = (branch: DeliveryBranchOption) => {
+    if (typeof branch.lat !== 'number' || typeof branch.lon !== 'number') {
+      if (mapMethod) handleMapBranchSelect(mapMethod, branch.value);
+      return;
+    }
+
+    setFocusedBranchValue(branch.value);
   };
 
   return (
@@ -339,7 +376,7 @@ export const DeliveryMethodSection = ({
                   Select branch
                 </Typography>
                 <p>
-                  {selectedMapOption.title} · {selectedRegion.name}
+                  {selectedMapOption.title} - {selectedRegion.name}
                 </p>
               </div>
               <button
@@ -361,6 +398,7 @@ export const DeliveryMethodSection = ({
                   className="delivery-method-section__leaflet-map"
                 >
                   <RegionBounds bounds={selectedRegion.bounds} />
+                  <FocusBranch branch={focusedBranch} markerRefs={markerRefs} />
                   <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -371,10 +409,13 @@ export const DeliveryMethodSection = ({
                     return (
                       <Marker
                         key={branch.value}
+                        ref={(marker) => {
+                          markerRefs.current[branch.value] = marker;
+                        }}
                         position={[branch.lat as number, branch.lon as number]}
                         icon={isSelected ? selectedMarkerIcon : markerIcon}
                         eventHandlers={{
-                          click: () => onBranchChange(mapMethod, branch.value),
+                          click: () => setFocusedBranchValue(branch.value),
                         }}
                       >
                         <Popup>
@@ -410,10 +451,13 @@ export const DeliveryMethodSection = ({
                       type="button"
                       className="delivery-method-section__map-list-item"
                       data-selected={isSelected || undefined}
-                      onClick={() => handleMapBranchSelect(mapMethod, branch.value)}
+                      data-focused={focusedBranchValue === branch.value || undefined}
+                      onClick={() => handleBranchFocus(branch)}
                     >
                       <span>{branch.name}</span>
-                      <small>{branch.source === 'osm' ? 'OpenStreetMap' : 'Fallback'}</small>
+                      <small>
+                        {branch.address ?? (branch.source === 'osm' ? 'OpenStreetMap' : 'Fallback')}
+                      </small>
                     </button>
                   );
                 })}
@@ -442,3 +486,5 @@ export const DeliveryMethodSection = ({
     </div>
   );
 };
+
+

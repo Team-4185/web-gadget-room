@@ -5,6 +5,10 @@ import type {
 } from '@/core/types';
 
 type NominatimAddress = {
+  road?: string;
+  house_number?: string;
+  suburb?: string;
+  city_district?: string;
   city?: string;
   town?: string;
   village?: string;
@@ -30,6 +34,11 @@ const PROVIDER_SEARCH_QUERY: Record<DeliveryBranchProvider, string> = {
   UKR_POSHTA: 'Ukrposhta',
 };
 
+const PROVIDER_DISPLAY_NAME: Record<DeliveryBranchProvider, string> = {
+  NOVA_POSHTA: 'Nova Poshta',
+  UKR_POSHTA: 'Ukrposhta',
+};
+
 const cache = new Map<string, DeliveryBranchOption[]>();
 
 const getViewbox = (region: DeliveryRegionMapConfig) => {
@@ -41,6 +50,47 @@ const getViewbox = (region: DeliveryRegionMapConfig) => {
 const getPlaceCity = (address?: NominatimAddress) =>
   address?.city ?? address?.town ?? address?.village ?? address?.municipality ?? address?.state;
 
+const normalizeProviderName = (value: string, provider: DeliveryBranchProvider) => {
+  const displayName = PROVIDER_DISPLAY_NAME[provider];
+
+  if (provider === 'NOVA_POSHTA') {
+    return value.replace(/nova\s+poshta|nova\s+post/gi, displayName);
+  }
+
+  return value.replace(/ukr\s*poshta|ukrposhta/gi, displayName);
+};
+
+const formatBranchLabel = (place: NominatimPlace, provider: DeliveryBranchProvider) => {
+  const rawName = place.name || place.display_name.split(',')[0]?.trim() || 'Branch';
+  const name = normalizeProviderName(rawName, provider);
+  const branchNumber = name.match(/(?:#|\u2116)\s*\d+/)?.[0];
+
+  if (branchNumber) return `${PROVIDER_DISPLAY_NAME[provider]} ${branchNumber.replace('#', 'No. ')}`;
+
+  const address = place.address;
+  const street = address?.road;
+  const house = address?.house_number;
+
+  if (street && house) return `${name}, ${street} ${house}`;
+  if (street) return `${name}, ${street}`;
+
+  return name;
+};
+
+const formatBranchAddress = (place: NominatimPlace) => {
+  const address = place.address;
+
+  if (!address) return place.display_name;
+
+  const street = [address.road, address.house_number].filter(Boolean).join(' ');
+  const district = address.suburb ?? address.city_district;
+  const city = getPlaceCity(address);
+  const postcode = address.postcode;
+  const parts = [street, district, city, postcode].filter(Boolean);
+
+  return parts.length ? parts.join(', ') : place.display_name;
+};
+
 const mapPlaceToBranch = (
   place: NominatimPlace,
   provider: DeliveryBranchProvider
@@ -50,14 +100,16 @@ const mapPlaceToBranch = (
 
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
 
-  const name = place.name || place.display_name.split(',')[0]?.trim() || place.display_name;
+  const label = formatBranchLabel(place, provider);
+  const fullAddress = formatBranchAddress(place);
 
   return {
-    name: place.display_name,
+    name: label,
+    fullName: place.display_name,
     value: place.display_name,
     provider,
     city: getPlaceCity(place.address),
-    address: name !== place.display_name ? place.display_name : undefined,
+    address: fullAddress,
     lat,
     lon,
     source: 'osm',
