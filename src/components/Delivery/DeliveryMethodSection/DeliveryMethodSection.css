@@ -87,3 +87,197 @@
   align-items: center;
   gap: 10px;
 }
+
+.delivery-method-section__branch-message {
+  grid-column: 1 / -1;
+  margin: -8px 0 0;
+  color: var(--coralRed);
+  font-size: 13px;
+}
+
+.delivery-method-section__map-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--black-opacity-25);
+  backdrop-filter: blur(3px);
+}
+
+.delivery-method-section__map-modal {
+  width: min(100%, 780px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  background: var(--white);
+  border-radius: 35px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  padding: 28px 30px 30px;
+}
+
+.delivery-method-section__map-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.delivery-method-section__map-modal-header p {
+  margin: 6px 0 0;
+  color: var(--black-opacity-65);
+  font-size: 15px;
+}
+
+.delivery-method-section__map-modal-close {
+  border: 0;
+  background: transparent;
+  color: var(--blue-violet);
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.delivery-method-section__map-modal-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.delivery-method-section__map-canvas {
+  position: relative;
+  min-height: 370px;
+  overflow: hidden;
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+}
+
+.delivery-method-section__leaflet-map {
+  width: 100%;
+  height: 370px;
+  min-height: 370px;
+}
+
+.delivery-method-section__leaflet-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--white);
+  border-radius: 999px;
+  box-shadow: 0 0 8px 0 var(--blue-violet);
+  background: var(--blue-violet);
+}
+
+.delivery-method-section__leaflet-marker span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--white);
+}
+
+.delivery-method-section__leaflet-marker--selected {
+  background: var(--coralRed);
+}
+
+.delivery-method-section__map-empty {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 500;
+  width: min(80%, 320px);
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  background: var(--white);
+  padding: 12px;
+  color: var(--black-opacity-65);
+  font-size: 14px;
+  text-align: center;
+}
+
+.delivery-method-section__map-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.delivery-method-section__map-popup strong {
+  color: var(--black);
+  font-size: 14px;
+}
+
+.delivery-method-section__map-popup span {
+  color: var(--black-opacity-65);
+  font-size: 13px;
+}
+
+.delivery-method-section__map-popup button {
+  height: 32px;
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delivery-method-section__map-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.delivery-method-section__map-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  min-height: 68px;
+  padding: 10px 12px;
+  border: 1px solid var(--blue-violet);
+  border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  background: var(--white);
+  color: var(--black);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delivery-method-section__map-list-item:hover,
+.delivery-method-section__map-list-item[data-selected='true'] {
+  background: rgba(126, 125, 196, 0.12);
+}
+
+.delivery-method-section__map-list-item span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.delivery-method-section__map-list-item small {
+  color: var(--black-opacity-65);
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .delivery-method-section__map-modal {
+    border-radius: 24px;
+    padding: 22px 18px;
+  }
+
+  .delivery-method-section__map-modal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .delivery-method-section__map-canvas {
+    min-height: 300px;
+  }
+}

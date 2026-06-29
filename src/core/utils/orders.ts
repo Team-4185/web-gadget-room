@@ -14,6 +14,7 @@ import type {
 import {
   BRANCH_ADDRESS_BY_ID,
   DEFAULT_BRANCH_ADDRESS,
+  DELIVERY_BRANCHES_BY_METHOD,
   MOCK_CARD_PAYMENT_DETAILS,
   UKRAINE_REGIONS,
 } from '@/core/constants';
@@ -41,6 +42,9 @@ const DELIVERY_METHOD_BY_FORM_METHOD: Record<DeliveryMethod, OrderDeliveryMethod
 const getOptionName = (options: ISelectOption[], value: string) =>
   options.find((option) => option.value === value)?.name ?? value;
 
+const getBranchOption = (method: DeliveryMethod, value: string) =>
+  DELIVERY_BRANCHES_BY_METHOD[method].find((option) => option.value === value);
+
 const getCheckoutItemColor = (item: ICartItemDto) =>
   item.selectedColor?.name ?? getDefaultPhoneColor(item.colors).name ?? TEMP_ORDER_ITEM_COLOR;
 
@@ -59,8 +63,11 @@ export const createOrderPayloadFromCheckout = (
   const deliveryMethod = DELIVERY_METHOD_BY_FORM_METHOD[form.delivery.method];
   const paymentMethod = form.payment.method === 'receipt' ? 'CASH_ON_DELIVERY' : 'CARD';
   const selectedBranch = form.delivery.branchByMethod[form.delivery.method];
+  const selectedBranchOption = getBranchOption(form.delivery.method, selectedBranch);
   const selectedBranchAddress = BRANCH_ADDRESS_BY_ID[selectedBranch] ?? DEFAULT_BRANCH_ADDRESS;
   const region = getOptionName(UKRAINE_REGIONS, form.recipient.region);
+  const postOffice = selectedBranchOption?.name ?? selectedBranch;
+  const postOfficeCity = selectedBranchOption?.city ?? region;
 
   return {
     customerEmail: form.recipient.email.trim(),
@@ -84,7 +91,8 @@ export const createOrderPayloadFromCheckout = (
           }
         : {
             logisticsCompany: LOGISTICS_COMPANY_BY_METHOD[form.delivery.method],
-            logisticPostOffice: selectedBranch,
+            logisticPostOffice: postOffice,
+            city: postOfficeCity,
             region,
             country: selectedBranchAddress.country,
             zipCode: selectedBranchAddress.zipCode,

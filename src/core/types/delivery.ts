@@ -10,6 +10,28 @@ export type DeliveryOptionConfig = {
   price: number;
 };
 
+export type DeliveryBranchProvider = 'NOVA_POSHTA' | 'UKR_POSHTA';
+
+export type DeliveryBranchSource = 'osm' | 'fallback';
+
+export type DeliveryMapBounds = [[number, number], [number, number]];
+
+export type DeliveryRegionMapConfig = {
+  value: string;
+  name: string;
+  center: [number, number];
+  bounds: DeliveryMapBounds;
+};
+
+export type DeliveryBranchOption = ISelectOption & {
+  provider: DeliveryBranchProvider;
+  city?: string;
+  address?: string;
+  lat?: number;
+  lon?: number;
+  source: DeliveryBranchSource;
+};
+
 export type RecipientForm = {
   firstName: string;
   lastName: string;
@@ -28,7 +50,7 @@ export type CourierAddressForm = {
 };
 
 export type BranchSelectionMap = Record<DeliveryMethod, string>;
-export type DeliveryBranchesMap = Record<DeliveryMethod, ISelectOption[]>;
+export type DeliveryBranchesMap = Record<DeliveryMethod, DeliveryBranchOption[]>;
 export type DeliveryCheckoutErrors = {
   recipient?: Partial<Record<keyof RecipientForm, string>>;
   delivery?: {
