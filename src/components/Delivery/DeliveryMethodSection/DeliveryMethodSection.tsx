@@ -324,12 +324,6 @@ export const DeliveryMethodSection = ({
                       maxWidth="233px"
                       height="44px"
                       borderRadius="8px"
-                      border="none"
-                      sx={{
-                        background: 'var(--blue-violet)',
-                        color: 'var(--white)',
-                        '&:hover': { background: 'var(--blue-violet)', color: 'var(--white)' },
-                      }}
                       disabled={!selectedRegion || Boolean(loadingMethods[option.id])}
                       onClick={() => handleOpenMap(option.id)}
                     >

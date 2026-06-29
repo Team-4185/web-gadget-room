@@ -114,7 +114,18 @@
   background: var(--white);
   border-radius: 35px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  font-family: inherit;
   padding: 26px 30px;
+}
+
+.delivery-method-section__map-modal * {
+  font-family: inherit;
+}
+
+.delivery-method-section__map-modal .leaflet-container,
+.delivery-method-section__map-modal .leaflet-popup-content,
+.delivery-method-section__map-modal .leaflet-control {
+  font-family: inherit;
 }
 
 .delivery-method-section__map-modal-header {
@@ -225,11 +236,23 @@
   height: 32px;
   border: 1px solid var(--blue-violet);
   border-radius: 8px;
+  box-shadow: 0 0 6.9px 0 var(--blue-violet);
   background: var(--white);
   color: var(--black);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.7s ease;
+}
+
+.delivery-method-section__map-popup button:hover {
+  background: var(--blue-violet);
+  color: var(--white);
+}
+
+.delivery-method-section__map-popup button:active {
+  transform: translateY(1px);
 }
 
 .delivery-method-section__map-list {
