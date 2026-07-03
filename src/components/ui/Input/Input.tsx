@@ -55,6 +55,8 @@ export const Input: FC<IProps> = ({
   sx,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const hasValue = typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
+  const isVisuallyValid = !error && (success || hasValue);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -132,14 +134,14 @@ export const Input: FC<IProps> = ({
           width: '100%',
 
           '& .MuiInputLabel-root': {
-            ...(success && { color: 'var(--chateau-green)' }),
+            ...(isVisuallyValid && { color: 'var(--chateau-green)' }),
 
             '&.Mui-disabled': {
               color: 'var(--black-opacity-13)',
             },
 
             '&.Mui-focused': {
-              color: success ? 'var(--chateau-green)' : 'var(--black)',
+              color: 'var(--dark-yellow)',
             },
 
             '&.Mui-error': {
@@ -149,7 +151,7 @@ export const Input: FC<IProps> = ({
 
           '& .MuiFilledInput-root': {
             borderRadius: '8px',
-            border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--light-yellow)'}`,
+            border: `1px solid ${isVisuallyValid ? 'var(--chateau-green)' : 'var(--blue-violet)'}`,
             backgroundColor: 'var(--white)',
             ...(size === 'medium' && {
               minHeight: '64px',
@@ -161,7 +163,7 @@ export const Input: FC<IProps> = ({
 
             '&.Mui-focused': {
               backgroundColor: 'var(--white)',
-              border: `1px solid ${success ? 'var(--chateau-green)' : 'var(--blue-violet)'}`,
+              border: '1px solid var(--dark-yellow)',
             },
 
             '&.Mui-error': {

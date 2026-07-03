@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 
 import { PRODUCT_SPECS_META } from '@/core/constants';
 import { useAppDispatch, cartActions } from '@/core/store';
-import type { ApiStorageCapacity, IProduct } from '@/core/types';
+import type { ApiPhoneColor, ApiStorageCapacity, IProduct } from '@/core/types';
 import { formatStorageCapacity } from '@/core/utils';
 import { ProductTitlePrice, ProductSpecItem, Button } from '@/components';
 
@@ -16,6 +16,9 @@ interface ProductInfoProps {
   description: string;
   loading: boolean;
   error: string | null;
+  colors?: ApiPhoneColor[];
+  selectedColor?: ApiPhoneColor;
+  onColorSelect?: (color: ApiPhoneColor) => void;
   selectedStorage?: ApiStorageCapacity;
   onStorageSelect?: (storage: ApiStorageCapacity) => void;
 }
@@ -26,6 +29,9 @@ export const ProductInfo: FC<ProductInfoProps> = ({
   description,
   loading,
   error,
+  colors = [],
+  selectedColor,
+  onColorSelect,
   selectedStorage,
   onStorageSelect,
 }) => {
@@ -83,6 +89,72 @@ export const ProductInfo: FC<ProductInfoProps> = ({
     <div className="product-info">
       <ProductTitlePrice name={product.name} price={product.price} />
       {error && <Typography color="error">{error}</Typography>}
+      {colors.length ? (
+        <div className="product-info__option-group" aria-label="Color options">
+          <Typography
+            className="product-info__option-label"
+            component="span"
+            sx={{ fontWeight: 600, fontSize: '24px' }}
+          >
+            Color: {selectedColor?.displayName ?? colors[0]?.displayName}
+          </Typography>
+          <div className="product-info__color-options">
+            {colors.map((color) => {
+              const isSelected = selectedColor?.name === color.name;
+
+              return (
+                <button
+                  type="button"
+                  key={color.name}
+                  className={`product-info__color-option ${
+                    isSelected ? 'product-info__color-option--selected' : ''
+                  }`}
+                  style={{ backgroundColor: color.hexCode }}
+                  title={color.displayName}
+                  aria-label={color.displayName}
+                  aria-pressed={isSelected}
+                  onClick={() => onColorSelect?.(color)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+      {product.storageCapacity?.length ? (
+        <div className="product-info__option-group" aria-label="Storage options">
+          <Typography
+            className="product-info__option-label"
+            component="span"
+            sx={{ fontWeight: 600, fontSize: '24px' }}
+          >
+            Storage: {formatStorageCapacity(selectedStorage ?? product.storageCapacity[0])}
+          </Typography>
+          <div className="product-info__storage-options">
+            {product.storageCapacity.map((storage) => {
+              const isSelected = selectedStorage?.name === storage.name;
+              const storageLabel = formatStorageCapacity(storage);
+
+              return (
+                <Button
+                  key={storage.name}
+                  type="button"
+                  maxWidth="70px"
+                  height="33px"
+                  fontSize="16px"
+                  fontWeight={500}
+                  className={`product-info__storage-option ${
+                    isSelected ? 'product-info__storage-option--selected' : ''
+                  }`}
+                  aria-pressed={isSelected}
+                  onClick={() => onStorageSelect?.(storage)}
+                >
+                  {storageLabel}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
       <div className="product-info__specs">
         {specs.map((spec, index) => (
           <ProductSpecItem
@@ -137,31 +209,6 @@ export const ProductInfo: FC<ProductInfoProps> = ({
           </button>
         )}
       </div>
-      {product.storageCapacity?.length ? (
-        <div className="product-info__storage" aria-label="Storage options">
-          <Typography className="product-info__storage-label" component="span">
-            Storage
-          </Typography>
-          <div className="product-info__storage-options">
-            {product.storageCapacity.map((storage) => {
-              const isSelected = selectedStorage?.name === storage.name;
-
-              return (
-                <button
-                  key={storage.name}
-                  type="button"
-                  className={`product-info__storage-option ${
-                    isSelected ? 'product-info__storage-option--selected' : ''
-                  }`}
-                  onClick={() => onStorageSelect?.(storage)}
-                >
-                  {formatStorageCapacity(storage)}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ) : null}
       <div className="product-info__actions">
         <Button maxWidth="257px" height="56px" onClick={addToCart}>
           Add To Cart

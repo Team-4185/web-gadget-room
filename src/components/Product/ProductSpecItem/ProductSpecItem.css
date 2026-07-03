@@ -1,8 +1,8 @@
 .product-spec-item {
   border-radius: 7px;
-  padding: 10px;
+  padding: 0px 10px;
   width: 100%;
-  min-height: 84px;
+  height: 64px;
   background: var(--product-specs-background);
   display: flex;
   align-items: center;

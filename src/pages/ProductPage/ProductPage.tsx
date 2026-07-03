@@ -52,12 +52,7 @@ export const ProductPage: FC = () => {
       <Container disableGutters>
         <div className="product__layout">
           {/* Images */}
-          <ProductGallery
-            images={galleryImages}
-            colors={product.colors}
-            selectedColorName={selectedColor?.name}
-            onColorSelect={setSelectedColor}
-          />
+          <ProductGallery images={galleryImages} />
 
           {/* Info */}
           <ProductInfo
@@ -66,6 +61,9 @@ export const ProductPage: FC = () => {
             description={description}
             loading={loading}
             error={error}
+            colors={product.colors}
+            selectedColor={productWithSelectedVariants.selectedColor}
+            onColorSelect={setSelectedColor}
             selectedStorage={productWithSelectedVariants.selectedStorage}
             onStorageSelect={setSelectedStorage}
           />

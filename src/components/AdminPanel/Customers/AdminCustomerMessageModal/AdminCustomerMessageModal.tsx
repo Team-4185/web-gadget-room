@@ -66,7 +66,11 @@ export const AdminCustomerMessageModal = ({ customer, onClose, onSend }: IProps)
           <p>{customer.email}</p>
         </div>
 
-        <label className="admin-customer-message-modal__message">
+        <label
+          className={`admin-customer-message-modal__message ${
+            trimmedMessage ? 'admin-customer-message-modal__message--filled' : ''
+          }`.trim()}
+        >
           <span>Message</span>
           <textarea
             value={message}
