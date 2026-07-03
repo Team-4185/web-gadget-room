@@ -15,6 +15,7 @@ interface IProps {
   className?: string;
   likeClassName?: string;
   showBadge?: boolean;
+  showVariantInfo?: boolean;
   forceLiked?: boolean;
   onClick?: () => void;
 }
@@ -30,6 +31,7 @@ export const ProductCard: FC<IProps> = ({
   className = '',
   likeClassName = '',
   showBadge = true,
+  showVariantInfo = true,
   forceLiked = false,
   onClick,
 }) => {
@@ -112,21 +114,25 @@ export const ProductCard: FC<IProps> = ({
         >
           {product.name}
         </Typography>
-        <div className="product-card__color">
-          <span className="product-card__color-label">Color:</span>
-          <span className="product-card__color-value">
-            <span
-              className="product-card__color-swatch"
-              style={{ backgroundColor: selectedColor.hexCode }}
-              aria-hidden="true"
-            />
-            <span>{selectedColor.displayName}</span>
-          </span>
-        </div>
-        <div className="product-card__storage">
-          <span className="product-card__color-label">Storage:</span>
-          <span>{formatStorageCapacity(selectedStorage)}</span>
-        </div>
+        {showVariantInfo ? (
+          <>
+            <div className="product-card__color">
+              <span className="product-card__color-label">Color:</span>
+              <span className="product-card__color-value">
+                <span
+                  className="product-card__color-swatch"
+                  style={{ backgroundColor: selectedColor.hexCode }}
+                  aria-hidden="true"
+                />
+                <span>{selectedColor.displayName}</span>
+              </span>
+            </div>
+            <div className="product-card__storage">
+              <span className="product-card__color-label">Storage:</span>
+              <span>{formatStorageCapacity(selectedStorage)}</span>
+            </div>
+          </>
+        ) : null}
         <Typography
           className="product-card__price"
           component="p"

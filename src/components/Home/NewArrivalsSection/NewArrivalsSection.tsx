@@ -29,6 +29,7 @@ export const NewArrivalsSection = ({ products, onOpenProduct }: Props) => {
                 className="new-arrivals__product-card"
                 likeClassName="new-arrivals__product-card-like"
                 showBadge={false}
+                showVariantInfo={false}
                 onClick={() => onOpenProduct(product)}
               />
             ))}
