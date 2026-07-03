@@ -132,7 +132,7 @@ export type BrandInfo = {
   id: number;
   name: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
-  descr: string;
+  descr?: string;
 };
 
 export type CatalogApiSort =

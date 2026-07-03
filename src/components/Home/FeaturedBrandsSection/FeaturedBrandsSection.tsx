@@ -38,20 +38,6 @@ export const FeaturedBrandsSection = ({ brands }: Props) => {
                   <BrandIcon className="featured-brands__icon" />
                   {brand.name}
                 </Typography>
-
-                <Typography
-                  component="p"
-                  sx={{
-                    display: 'block',
-                    width: '100%',
-                    textAlign: 'center',
-                    marginTop: '10px',
-                    fontSize: '14px',
-                    lineHeight: '107%',
-                  }}
-                >
-                  {brand.descr}
-                </Typography>
               </div>
             );
           })}
