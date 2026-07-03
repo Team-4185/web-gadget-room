@@ -1,11 +1,19 @@
+﻿import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { Typography } from '@mui/material';
 import type { FieldError } from 'react-hook-form';
+import { divIcon, type LatLngBoundsExpression, type Marker as LeafletMarker } from 'leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 import { Button, Input, RadioButton, Select } from '@/components';
 import { Map } from '@/assets';
+import { UKRAINE_REGION_MAP_CONFIG } from '@/core/constants';
+import { deliveryMapService } from '@/core/services';
 import type {
   BranchSelectionMap,
   CourierAddressForm,
+  DeliveryBranchOption,
+  DeliveryBranchProvider,
   DeliveryCheckoutErrors,
   DeliveryBranchesMap,
   DeliveryMethod,
@@ -18,6 +26,7 @@ type DeliveryMethodSectionProps = {
   deliveryMethod: DeliveryMethod;
   onDeliveryMethodChange: (method: DeliveryMethod) => void;
   options: DeliveryOptionConfig[];
+  region: string;
   branchByMethod: BranchSelectionMap;
   errors?: DeliveryCheckoutErrors['delivery'];
   onBranchChange: (method: DeliveryMethod, branch: string) => void;
@@ -29,10 +38,64 @@ type DeliveryMethodSectionProps = {
 const toFieldError = (message?: string): FieldError | undefined =>
   message ? { type: 'manual', message } : undefined;
 
+const PROVIDER_BY_METHOD: Partial<Record<DeliveryMethod, DeliveryBranchProvider>> = {
+  nova: 'NOVA_POSHTA',
+  ukr: 'UKR_POSHTA',
+};
+
+const markerIcon = divIcon({
+  className: 'delivery-method-section__leaflet-marker',
+  html: '<span></span>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+});
+
+const selectedMarkerIcon = divIcon({
+  className: 'delivery-method-section__leaflet-marker delivery-method-section__leaflet-marker--selected',
+  html: '<span></span>',
+  iconSize: [32, 32],
+  iconAnchor: [16, 16],
+});
+
+const RegionBounds = ({ bounds }: { bounds: LatLngBoundsExpression }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    map.fitBounds(bounds, { padding: [24, 24] });
+  }, [bounds, map]);
+
+  return null;
+};
+
+type FocusBranchProps = {
+  branch?: DeliveryBranchOption;
+  markerRefs: MutableRefObject<Record<string, LeafletMarker | null>>;
+};
+
+const FocusBranch = ({ branch, markerRefs }: FocusBranchProps) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!branch || typeof branch.lat !== 'number' || typeof branch.lon !== 'number') return;
+
+    map.flyTo([branch.lat, branch.lon], Math.max(map.getZoom(), 16), {
+      animate: true,
+      duration: 0.6,
+    });
+
+    window.setTimeout(() => {
+      markerRefs.current[branch.value]?.openPopup();
+    }, 650);
+  }, [branch, map, markerRefs]);
+
+  return null;
+};
+
 export const DeliveryMethodSection = ({
   deliveryMethod,
   onDeliveryMethodChange,
   options,
+  region,
   branchByMethod,
   errors,
   onBranchChange,
@@ -40,6 +103,118 @@ export const DeliveryMethodSection = ({
   courierAddress,
   onCourierAddressChange,
 }: DeliveryMethodSectionProps) => {
+  const [mapMethod, setMapMethod] = useState<DeliveryMethod | null>(null);
+  const [loadedBranches, setLoadedBranches] = useState<Partial<Record<DeliveryMethod, DeliveryBranchOption[]>>>(
+    {}
+  );
+  const [loadingMethods, setLoadingMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
+  const [failedMethods, setFailedMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
+  const [focusedBranchValue, setFocusedBranchValue] = useState('');
+  const markerRefs = useRef<Record<string, LeafletMarker | null>>({});
+
+  const selectedMapOption = options.find((option) => option.id === mapMethod);
+  const selectedRegion = UKRAINE_REGION_MAP_CONFIG[region];
+
+  const getBranchesForMethod = (method: DeliveryMethod) =>
+    loadedBranches[method]?.length ? loadedBranches[method] : branchesByMethod[method];
+
+  const mapBranches = useMemo(
+    () =>
+      mapMethod
+        ? getBranchesForMethod(mapMethod).filter(
+            (branch) => typeof branch.lat === 'number' && typeof branch.lon === 'number'
+          )
+        : [],
+    [branchesByMethod, loadedBranches, mapMethod]
+  );
+  const focusedBranch = mapBranches.find((branch) => branch.value === focusedBranchValue);
+
+  useEffect(() => {
+    if (!mapMethod) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMapMethod(null);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mapMethod]);
+
+  useEffect(() => {
+    setLoadedBranches({});
+
+    if (!region) {
+      setFailedMethods({});
+      return;
+    }
+
+    const controller = new AbortController();
+    const methods = options
+      .map((option) => option.id)
+      .filter((method): method is 'nova' | 'ukr' => method === 'nova' || method === 'ukr');
+
+    methods.forEach((method) => {
+      const provider = PROVIDER_BY_METHOD[method];
+      const regionConfig = UKRAINE_REGION_MAP_CONFIG[region];
+
+      if (!provider || !regionConfig) return;
+
+      setLoadingMethods((prev) => ({ ...prev, [method]: true }));
+      setFailedMethods((prev) => ({ ...prev, [method]: false }));
+
+      deliveryMapService
+        .getBranches(provider, regionConfig, controller.signal)
+        .then((branches) => {
+          if (controller.signal.aborted) return;
+
+          setLoadedBranches((prev) => ({ ...prev, [method]: branches }));
+          setFailedMethods((prev) => ({ ...prev, [method]: !branches.length }));
+        })
+        .catch(() => {
+          if (controller.signal.aborted) return;
+
+          setFailedMethods((prev) => ({ ...prev, [method]: true }));
+        })
+        .finally(() => {
+          if (controller.signal.aborted) return;
+
+          setLoadingMethods((prev) => ({ ...prev, [method]: false }));
+        });
+    });
+
+    return () => {
+      controller.abort();
+    };
+  }, [options, region]);
+
+  const handleMapBranchSelect = (method: DeliveryMethod, branch: string) => {
+    onBranchChange(method, branch);
+    setMapMethod(null);
+  };
+
+  const handleOpenMap = (method: DeliveryMethod) => {
+    if (!selectedRegion) return;
+
+    setFocusedBranchValue(branchByMethod[method] || '');
+    setMapMethod(method);
+  };
+
+  const handleBranchFocus = (branch: DeliveryBranchOption) => {
+    if (typeof branch.lat !== 'number' || typeof branch.lon !== 'number') {
+      if (mapMethod) handleMapBranchSelect(mapMethod, branch.value);
+      return;
+    }
+
+    setFocusedBranchValue(branch.value);
+  };
+
   return (
     <div className="delivery-method-section">
       <Typography variant="h6" component="h2" sx={{ fontSize: '24px', fontWeight: 600 }}>
@@ -127,33 +302,46 @@ export const DeliveryMethodSection = ({
                 ) : (
                   <>
                     <Select
-                      data={branchesByMethod[option.id]}
+                      data={selectedRegion ? getBranchesForMethod(option.id) : []}
                       maxWidth="330px"
                       height="44px"
                       color="var(--black)"
                       fontSize="16px"
                       value={branchByMethod[option.id]}
                       onChange={(value) => onBranchChange(option.id, value)}
-                      placeholder="Select the appropriate branch"
+                      placeholder={
+                        selectedRegion
+                          ? loadingMethods[option.id]
+                            ? 'Loading branches...'
+                            : 'Select the appropriate branch'
+                          : 'Select region first'
+                      }
                       styleVariant="subtleBorder"
                       error={Boolean(errors?.branchByMethod?.[option.id])}
                     />
                     <Button
+                      type="button"
                       maxWidth="233px"
                       height="44px"
                       borderRadius="8px"
-                      border="none"
-                      sx={{
-                        background: 'var(--blue-violet)',
-                        color: 'var(--white)',
-                        '&:hover': { background: 'var(--blue-violet)', color: 'var(--white)' },
-                      }}
+                      disabled={!selectedRegion || Boolean(loadingMethods[option.id])}
+                      onClick={() => handleOpenMap(option.id)}
                     >
                       <div className="delivery-method-section__map-btn">
                         <Map width={18} height={18} fill="currentColor" />
                         <span>Select on the map</span>
                       </div>
                     </Button>
+                    {!selectedRegion && (
+                      <p className="delivery-method-section__branch-message">
+                        Please select region first.
+                      </p>
+                    )}
+                    {selectedRegion && failedMethods[option.id] && (
+                      <p className="delivery-method-section__branch-message">
+                        Branch map data is unavailable. Static branches are shown.
+                      </p>
+                    )}
                   </>
                 )}
               </div>
@@ -161,6 +349,136 @@ export const DeliveryMethodSection = ({
           </div>
         ))}
       </div>
+
+      {mapMethod && selectedMapOption && selectedRegion && (
+        <div className="delivery-method-section__map-modal-backdrop" role="presentation">
+          <section
+            className="delivery-method-section__map-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delivery-map-modal-title"
+          >
+            <header className="delivery-method-section__map-modal-header">
+              <div>
+                <Typography
+                  id="delivery-map-modal-title"
+                  component="h3"
+                  fontSize="28px"
+                  fontWeight={600}
+                  lineHeight={1.1}
+                >
+                  Select branch
+                </Typography>
+                <p>
+                  {selectedMapOption.title} - {selectedRegion.name}
+                </p>
+              </div>
+              <button
+                type="button"
+                aria-label="Close branch map"
+                className="delivery-method-section__map-modal-close"
+                onClick={() => setMapMethod(null)}
+              >
+                x
+              </button>
+            </header>
+
+            <div className="delivery-method-section__map-modal-content">
+              <div className="delivery-method-section__map-canvas">
+                <MapContainer
+                  center={selectedRegion.center}
+                  zoom={10}
+                  scrollWheelZoom
+                  className="delivery-method-section__leaflet-map"
+                >
+                  <RegionBounds bounds={selectedRegion.bounds} />
+                  <FocusBranch branch={focusedBranch} markerRefs={markerRefs} />
+                  <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  {mapBranches.map((branch) => {
+                    const isSelected = branchByMethod[mapMethod] === branch.value;
+
+                    return (
+                      <Marker
+                        key={branch.value}
+                        ref={(marker) => {
+                          markerRefs.current[branch.value] = marker;
+                        }}
+                        position={[branch.lat as number, branch.lon as number]}
+                        icon={isSelected ? selectedMarkerIcon : markerIcon}
+                        eventHandlers={{
+                          click: () => setFocusedBranchValue(branch.value),
+                        }}
+                      >
+                        <Popup>
+                          <div className="delivery-method-section__map-popup">
+                            <strong>{branch.name}</strong>
+                            {branch.address && <span>{branch.address}</span>}
+                            <button
+                              type="button"
+                              onClick={() => handleMapBranchSelect(mapMethod, branch.value)}
+                            >
+                              Select branch
+                            </button>
+                          </div>
+                        </Popup>
+                      </Marker>
+                    );
+                  })}
+                </MapContainer>
+                {!mapBranches.length && (
+                  <div className="delivery-method-section__map-empty">
+                    No map points found for this region. Use the branch list.
+                  </div>
+                )}
+              </div>
+
+              <div className="delivery-method-section__map-list">
+                {mapBranches.map((branch) => {
+                  const isSelected = branchByMethod[mapMethod] === branch.value;
+
+                  return (
+                    <button
+                      key={branch.value}
+                      type="button"
+                      className="delivery-method-section__map-list-item"
+                      data-selected={isSelected || undefined}
+                      data-focused={focusedBranchValue === branch.value || undefined}
+                      onClick={() => handleBranchFocus(branch)}
+                    >
+                      <span>{branch.name}</span>
+                      <small>
+                        {branch.address ?? (branch.source === 'osm' ? 'OpenStreetMap' : 'Fallback')}
+                      </small>
+                    </button>
+                  );
+                })}
+                {!mapBranches.length &&
+                  getBranchesForMethod(mapMethod).map((branch) => {
+                    const isSelected = branchByMethod[mapMethod] === branch.value;
+
+                    return (
+                      <button
+                        key={branch.value}
+                        type="button"
+                        className="delivery-method-section__map-list-item"
+                        data-selected={isSelected || undefined}
+                        onClick={() => handleMapBranchSelect(mapMethod, branch.value)}
+                      >
+                        <span>{branch.name}</span>
+                        <small>Fallback</small>
+                      </button>
+                    );
+                  })}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 };
+
+

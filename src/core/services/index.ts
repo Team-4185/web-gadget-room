@@ -19,3 +19,4 @@ export type { AdminCustomersPage, AdminCustomersRequestParams } from './adminCus
 export { favoritesService } from './favorites';
 export { ordersService } from './orders';
 export { usersService } from './users';
+export { deliveryMapService } from './deliveryMap';

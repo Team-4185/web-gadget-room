@@ -3,6 +3,11 @@ import * as z from 'zod';
 import { isValidPhoneNumber } from '@/core/utils/phoneFormat';
 
 const namePattern = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u;
+const regionPattern = /^[\p{L}\s'-]{2,50}$/u;
+const streetPattern = /^[\p{L}0-9.\s',/-]{2,100}$/u;
+const houseNumberPattern = /^[0-9]{1,5}(?:[\p{L}]|[/-][\p{L}0-9]{1,3})?$/u;
+const apartmentNumberPattern = /^[0-9]{1,5}[\p{L}]?$/u;
+const zipCodePattern = /^[0-9a-zA-Z\s-]{3,10}$/;
 
 const nameSchema = (fieldName: string) =>
   z
@@ -34,27 +39,42 @@ export const deliveryCheckoutSchema = z.object({
   }),
   delivery: z.object({
     courierAddress: z.object({
-      city: nameSchema('City'),
+      city: z
+        .string()
+        .trim()
+        .regex(regionPattern, {
+          error: 'City must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
+        }),
       street: z
         .string()
         .trim()
-        .min(3, { error: 'Street must be between 3 and 255 characters' })
-        .max(255, { error: 'Street must be between 3 and 255 characters' }),
+        .regex(streetPattern, {
+          error:
+            'Street must be 2-100 characters and contain only letters, numbers, spaces, dot, comma, apostrophe, slash, or hyphen',
+        }),
       houseNumber: z
         .string()
         .trim()
-        .min(1, { error: 'House number is required' })
-        .max(20, { error: 'House number must be up to 20 characters' }),
+        .regex(houseNumberPattern, { error: "Use house format like '10', '10A', '10/2', or '12-B'" }),
       apartmentNumber: z
         .string()
         .trim()
-        .max(20, { error: 'Apartment number must be up to 20 characters' })
+        .refine((value) => !value || apartmentNumberPattern.test(value), {
+          error: 'Apartment must be 1-5 digits, optionally followed by a letter',
+        })
         .optional(),
-      country: nameSchema('Country'),
+      country: z
+        .string()
+        .trim()
+        .regex(regionPattern, {
+          error: 'Country must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
+        }),
       zipCode: z
         .string()
         .trim()
-        .regex(/^\d{5}$/, { error: 'ZIP code must contain 5 digits' }),
+        .regex(zipCodePattern, {
+          error: 'ZIP code must be 3-10 alphanumeric characters, spaces, or hyphens',
+        }),
     }),
   }),
 });

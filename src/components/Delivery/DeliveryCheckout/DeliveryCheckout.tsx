@@ -96,6 +96,16 @@ export const DeliveryCheckout = () => {
         ...prev.recipient,
         [field]: value,
       },
+      ...(field === 'region' && {
+        delivery: {
+          ...prev.delivery,
+          branchByMethod: {
+            ...prev.delivery.branchByMethod,
+            nova: '',
+            ukr: '',
+          },
+        },
+      }),
     }));
   };
 
@@ -222,6 +232,7 @@ export const DeliveryCheckout = () => {
           deliveryMethod={form.delivery.method}
           onDeliveryMethodChange={handleDeliveryMethodChange}
           options={DELIVERY_OPTIONS}
+          region={form.recipient.region}
           branchByMethod={form.delivery.branchByMethod}
           errors={validationErrors.delivery}
           onBranchChange={handleBranchChange}
