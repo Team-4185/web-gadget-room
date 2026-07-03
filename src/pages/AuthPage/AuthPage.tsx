@@ -12,7 +12,7 @@ export const AuthPage: FC = () => {
   const location = useLocation();
   const currentUrl = location.pathname;
   const isLoginPage = currentUrl === '/' || currentUrl === '/login';
-  const [isResetDone, setIsResetDone] = useState(true);
+  const [isResetDone, setIsResetDone] = useState(false);
 
   useEffect(() => {
     if (currentUrl !== '/reset-password') {

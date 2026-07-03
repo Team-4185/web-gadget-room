@@ -24,7 +24,7 @@ export const ResetPassword: FC<IProps> = ({ className = '', onResetDone }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { enqueueSnackbar } = useSnackbar();
-  const [isResetDone, setIsResetDone] = useState(true);
+  const [isResetDone, setIsResetDone] = useState(false);
   const isLoading = useAppSelector((state) => state.auth.loading);
   const token = searchParams.get('token') ?? '';
   const hasToken = Boolean(token);
