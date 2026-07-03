@@ -26,6 +26,11 @@
   margin: 146px 40px 0 auto;
 }
 
+.auth__content--reset-password-done {
+  text-align: center;
+  margin-top: 143px;
+}
+
 .auth__media {
   position: absolute;
   top: 201px;

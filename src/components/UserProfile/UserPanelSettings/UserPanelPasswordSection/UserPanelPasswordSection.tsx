@@ -54,7 +54,7 @@ export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
           autoComplete="current-password"
         />
         <Input
-          label="New Password"
+          label="New password"
           placeholder="New password"
           size="medium"
           value={value.next}
@@ -63,7 +63,7 @@ export const UserPanelPasswordSection: FC<UserPanelPasswordSectionProps> = ({
           autoComplete="new-password"
         />
         <Input
-          label="Confirm New Password"
+          label="Confirm New password"
           placeholder="Confirm new password"
           size="medium"
           value={value.confirm}

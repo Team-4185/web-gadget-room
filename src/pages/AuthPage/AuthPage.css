@@ -38,6 +38,10 @@
   background-image: url('/changePasswordBackground.jpg');
 }
 
+.auth__switcher--done {
+  background-image: url('/allDoneBackground.jpg');
+}
+
 .auth__form {
   max-width: 549px;
   width: 100%;
