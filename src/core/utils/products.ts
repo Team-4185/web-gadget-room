@@ -65,12 +65,15 @@ export const mapApiPhoneToProduct = (phone: ApiPhone, img: string = FALLBACK_IMA
   );
 };
 
-const formatCameraValue = (value: string) =>
-  value
-    .split('+')
+const formatCameraValue = (value: string) => {
+  const cameraValues = value
+    .replace(/MP/gi, '')
+    .split(/[+-]/)
     .map((part) => part.trim())
-    .filter(Boolean)
-    .join('\n');
+    .filter(Boolean);
+
+  return cameraValues.length ? `${cameraValues.join('-')}MP` : value;
+};
 
 export const buildSpecs = (phone: ApiPhone) => [
   { label: 'Screen Size', value: phone.screenSize },

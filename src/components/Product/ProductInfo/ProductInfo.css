@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 34px;
   max-width: 536px;
 }
 
@@ -101,18 +101,7 @@
 .product-info__option-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.product-info__option-label {
-  color: var(--black);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.product-info__option-label b {
-  font-weight: 600;
+  gap: 20px;
 }
 
 .product-info__color-options {
@@ -156,25 +145,11 @@
 }
 
 .product-info__storage-option {
-  min-width: 54px;
-  height: 27px;
-  border: 1px solid var(--blue-violet);
-  border-radius: 5px;
-  background: var(--white);
-  color: var(--black);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 500;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
+  flex: 0 0 70px;
+  font-family: inherit;
 }
 
-.product-info__storage-option:hover,
-.product-info__storage-option--selected {
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
-  background: rgba(126, 125, 196, 0.12);
-  color: var(--black);
+.product-info__storage-option.MuiButton-root.product-info__storage-option--selected {
+  background: var(--blue-violet);
+  color: var(--white);
 }
-

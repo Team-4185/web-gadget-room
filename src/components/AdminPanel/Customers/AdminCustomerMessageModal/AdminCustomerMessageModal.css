@@ -46,6 +46,19 @@
   border-radius: 8px;
   box-shadow: 0 0 6.9px 0 var(--blue-violet);
   padding: 10px 12px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-customer-message-modal__message:focus-within {
+  border-color: var(--dark-yellow);
+  box-shadow: 0 0 6.9px 0 var(--dark-yellow);
+}
+
+.admin-customer-message-modal__message--filled:not(:focus-within) {
+  border-color: var(--chateau-green);
+  box-shadow: 0 0 6.9px 0 var(--chateau-green);
 }
 
 .admin-customer-message-modal__field span,

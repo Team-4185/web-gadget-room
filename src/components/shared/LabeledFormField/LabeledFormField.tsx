@@ -34,11 +34,12 @@ export const LabeledFormField = ({
   onChange,
 }: IProps) => {
   const tooltip = errorMessage ?? tooltipText ?? '';
+  const isFilled = value.trim().length > 0;
 
   return (
     <Tooltip title={tooltip} arrow>
       <label
-        className={`labeled-form-field ${errorMessage ? 'is-error' : ''} ${className ?? ''}`.trim()}
+        className={`labeled-form-field ${isFilled ? 'is-filled' : ''} ${errorMessage ? 'is-error' : ''} ${className ?? ''}`.trim()}
       >
         <span className="labeled-form-field__label">{label}</span>
 

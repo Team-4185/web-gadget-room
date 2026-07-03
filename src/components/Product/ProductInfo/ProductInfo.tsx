@@ -91,8 +91,12 @@ export const ProductInfo: FC<ProductInfoProps> = ({
       {error && <Typography color="error">{error}</Typography>}
       {colors.length ? (
         <div className="product-info__option-group" aria-label="Color options">
-          <Typography className="product-info__option-label" component="span">
-            Color: <b>{selectedColor?.displayName ?? colors[0]?.displayName}</b>
+          <Typography
+            className="product-info__option-label"
+            component="span"
+            sx={{ fontWeight: 600, fontSize: '24px' }}
+          >
+            Color: {selectedColor?.displayName ?? colors[0]?.displayName}
           </Typography>
           <div className="product-info__color-options">
             {colors.map((color) => {
@@ -118,8 +122,12 @@ export const ProductInfo: FC<ProductInfoProps> = ({
       ) : null}
       {product.storageCapacity?.length ? (
         <div className="product-info__option-group" aria-label="Storage options">
-          <Typography className="product-info__option-label" component="span">
-            Storage: <b>{formatStorageCapacity(selectedStorage ?? product.storageCapacity[0])}</b>
+          <Typography
+            className="product-info__option-label"
+            component="span"
+            sx={{ fontWeight: 600, fontSize: '24px' }}
+          >
+            Storage: {formatStorageCapacity(selectedStorage ?? product.storageCapacity[0])}
           </Typography>
           <div className="product-info__storage-options">
             {product.storageCapacity.map((storage) => {
@@ -127,9 +135,13 @@ export const ProductInfo: FC<ProductInfoProps> = ({
               const storageLabel = formatStorageCapacity(storage);
 
               return (
-                <button
+                <Button
                   key={storage.name}
                   type="button"
+                  maxWidth="70px"
+                  height="33px"
+                  fontSize="16px"
+                  fontWeight={500}
                   className={`product-info__storage-option ${
                     isSelected ? 'product-info__storage-option--selected' : ''
                   }`}
@@ -137,7 +149,7 @@ export const ProductInfo: FC<ProductInfoProps> = ({
                   onClick={() => onStorageSelect?.(storage)}
                 >
                   {storageLabel}
-                </button>
+                </Button>
               );
             })}
           </div>
