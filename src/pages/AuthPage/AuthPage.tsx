@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { motion } from 'framer-motion';
 import { Container } from '@mui/material';
 import { useLocation } from 'react-router';
@@ -12,13 +12,26 @@ export const AuthPage: FC = () => {
   const location = useLocation();
   const currentUrl = location.pathname;
   const isLoginPage = currentUrl === '/' || currentUrl === '/login';
+  const [isResetDone, setIsResetDone] = useState(true);
+
+  useEffect(() => {
+    if (currentUrl !== '/reset-password') {
+      setIsResetDone(false);
+    }
+  }, [currentUrl]);
 
   return (
     <section className="auth">
       <Container disableGutters>
         <div className="auth__wrapper">
           <motion.div
-            className={`auth__switcher ${isLoginPage || currentUrl === '/register' ? 'auth__switcher--primary' : 'auth__switcher--secondary'}`}
+            className={`auth__switcher ${
+              isResetDone
+                ? 'auth__switcher--done'
+                : isLoginPage || currentUrl === '/register'
+                  ? 'auth__switcher--primary'
+                  : 'auth__switcher--secondary'
+            }`}
             initial={currentUrl === '/register' ? { left: 0 } : { right: 0 }}
             animate={
               currentUrl === '/register' ? { right: 'unset', left: 0 } : { right: 0, left: 'unset' }
@@ -66,12 +79,23 @@ export const AuthPage: FC = () => {
 
           {currentUrl === '/reset-password' && (
             <>
-              <ResetPassword className="auth__form auth__form--reset-password" />
+              <ResetPassword
+                className="auth__form auth__form--reset-password"
+                onResetDone={() => setIsResetDone(true)}
+              />
               <WelcomeSection
-                title="Create new password "
-                subtitle="Choose a strong password to keep your account secure."
+                title={isResetDone ? 'All done!' : 'Create new password '}
+                subtitle={
+                  isResetDone
+                    ? 'Your password has been successfully reset. Welcome back!'
+                    : 'Choose a strong password to keep your account secure.'
+                }
                 icon={ArrowLeft}
-                className="auth__content--reset-password"
+                className={
+                  isResetDone
+                    ? 'auth__content--reset-password auth__content--reset-password-done'
+                    : 'auth__content--reset-password'
+                }
               />
             </>
           )}

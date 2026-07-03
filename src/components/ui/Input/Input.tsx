@@ -57,6 +57,7 @@ export const Input: FC<IProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const hasValue = typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
   const isVisuallyValid = !error && (success || hasValue);
+  const isPasswordField = isPassword || type === 'password';
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -70,7 +71,7 @@ export const Input: FC<IProps> = ({
 
   let endAdornment;
 
-  if (isPassword) {
+  if (isPasswordField) {
     endAdornment = (
       <InputAdornment position="end">
         <IconButton
@@ -102,7 +103,7 @@ export const Input: FC<IProps> = ({
 
   let computedType = type;
 
-  if (isPassword) computedType = showPassword ? 'text' : 'password';
+  if (isPasswordField) computedType = showPassword ? 'text' : 'password';
 
   return (
     <Tooltip title={tooltipText} arrow>

@@ -16,14 +16,15 @@ import './ResetPassword.css';
 
 interface IProps {
   className?: string;
+  onResetDone?: () => void;
 }
 
-export const ResetPassword: FC<IProps> = ({ className = '' }) => {
+export const ResetPassword: FC<IProps> = ({ className = '', onResetDone }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { enqueueSnackbar } = useSnackbar();
-  const [isResetDone, setIsResetDone] = useState(false);
+  const [isResetDone, setIsResetDone] = useState(true);
   const isLoading = useAppSelector((state) => state.auth.loading);
   const token = searchParams.get('token') ?? '';
   const hasToken = Boolean(token);
@@ -46,6 +47,7 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
 
     if (authActions.resetPassword.fulfilled.match(resultAction)) {
       setIsResetDone(true);
+      onResetDone?.();
       enqueueSnackbar('Password has been reset. Please log in with your new password.', {
         variant: 'success',
       });
@@ -84,7 +86,7 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
 
       <div className="reset-password__title">
         <Typography sx={{ fontWeight: '600', letterSpacing: '-1px' }} component="h5" variant="h5">
-          Reset Password
+          Set New Password
         </Typography>
         <Typography
           sx={{
@@ -144,63 +146,65 @@ export const ResetPassword: FC<IProps> = ({ className = '' }) => {
         </div>
       ) : (
         <form className="reset-password__form" onSubmit={handleSubmit(onSubmit)} noValidate>
-        <FormInput
-          type="password"
-          name="newPassword"
-          label="NEW PASSWORD"
-          tooltipText={PASSWORD_TOOLTIP}
-          control={control}
-          autoComplete="new-password"
-          required
-        />
+          <FormInput
+            type="password"
+            name="newPassword"
+            label="New password"
+            tooltipText={PASSWORD_TOOLTIP}
+            control={control}
+            autoComplete="new-password"
+            isPassword
+            required
+          />
 
-        <Typography
-          sx={{
-            marginTop: '12px',
-            fontWeight: 600,
-            fontSize: '12px',
-            color: 'var(--muted-violet)',
-            letterSpacing: '-1px',
-          }}
-        >
-          Use at least 8 characters, including uppercase, lowercase, number, and special symbol.
-        </Typography>
-
-        <FormInput
-          type="password"
-          name="confirmPassword"
-          label="CONFIRM PASSWORD"
-          tooltipText={PASSWORD_TOOLTIP}
-          control={control}
-          autoComplete="new-password"
-          required
-        />
-
-        {!hasToken ? (
           <Typography
             sx={{
               marginTop: '12px',
               fontWeight: 600,
               fontSize: '12px',
-              color: 'var(--coralRed)',
+              color: 'var(--muted-violet)',
               letterSpacing: '-1px',
             }}
           >
-            Password reset link is missing or invalid.
+            Use at least 8 characters, including uppercase, lowercase, number, and special symbol.
           </Typography>
-        ) : null}
 
-        <Button
-          type="submit"
-          maxWidth="549px"
-          height="36px"
-          textTransform="uppercase"
-          sx={{ marginTop: '40px' }}
-          disabled={!hasToken || isLoading}
-        >
-          Reset Password
-        </Button>
-      </form>
+          <FormInput
+            type="password"
+            name="confirmPassword"
+            label="Confirm password"
+            tooltipText={PASSWORD_TOOLTIP}
+            control={control}
+            autoComplete="new-password"
+            isPassword
+            required
+          />
+
+          {!hasToken ? (
+            <Typography
+              sx={{
+                marginTop: '12px',
+                fontWeight: 600,
+                fontSize: '12px',
+                color: 'var(--coralRed)',
+                letterSpacing: '-1px',
+              }}
+            >
+              Password reset link is missing or invalid.
+            </Typography>
+          ) : null}
+
+          <Button
+            type="submit"
+            maxWidth="549px"
+            height="36px"
+            textTransform="uppercase"
+            sx={{ marginTop: '40px' }}
+            disabled={!hasToken || isLoading}
+          >
+            Set New Password
+          </Button>
+        </form>
       )}
 
       <Typography
