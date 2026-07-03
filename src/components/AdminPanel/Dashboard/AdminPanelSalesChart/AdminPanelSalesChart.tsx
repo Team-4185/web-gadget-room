@@ -207,7 +207,7 @@ export const AdminPanelSalesChart = () => {
             aria-label="Sales trend lines"
             onMouseLeave={() => setTooltip(null)}
           >
-            <g stroke="rgba(119, 119, 191, 0.22)" strokeWidth="1">
+            <g stroke="var(--blue-violet-opacity-22)" strokeWidth="1">
               {chartModel.yAxisLabels.map((line) => (
                 <line key={line.id} x1={CHART.left} y1={line.y} x2={CHART.right} y2={line.y} />
               ))}
@@ -240,13 +240,13 @@ export const AdminPanelSalesChart = () => {
             {chartModel.revenueLine ? (
               <polyline
                 fill="none"
-                stroke="#6b6b6b"
+                stroke="var(--chart-revenue-line)"
                 strokeWidth="2"
                 points={chartModel.revenueLine}
               />
             ) : null}
 
-            <g fill="#f5a7a0" stroke="#f5a7a0">
+            <g fill="var(--chart-revenue-point)" stroke="var(--chart-revenue-point)">
               {chartModel.revenueDots.map((dot) => (
                 <circle
                   key={dot.key}

@@ -27,8 +27,8 @@
 .payment-page__tab {
   padding: 0 0 8px;
   border: 0;
-  border-bottom: 1px solid transparent;
-  background: transparent;
+  border-bottom: 1px solid var(--transparent);
+  background: var(--transparent);
   color: var(--black);
   font: inherit;
   font-size: 16px;
@@ -47,7 +47,7 @@
   margin-top: 20px;
   overflow: hidden;
   border-radius: 18px;
-  background: #2e2e2e;
+  background: var(--dark-charcoal);
   color: var(--white);
 }
 
@@ -58,7 +58,7 @@
   width: 20px;
   height: 15px;
   border-radius: 3px;
-  background: linear-gradient(90deg, #e5b94f, #f6d267);
+  background: linear-gradient(90deg, var(--card-chip-gold), var(--card-chip-light-gold));
 }
 
 .payment-card-preview__signal {
@@ -67,7 +67,7 @@
   left: 62px;
   width: 18px;
   height: 18px;
-  border-right: 2px solid rgba(255, 255, 255, 0.8);
+  border-right: 2px solid var(--white-opacity-80);
   border-radius: 50%;
 }
 
@@ -76,8 +76,8 @@
   inset: 0 56px 0 110px;
   transform: skewX(-28deg);
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 36px, transparent 36px 55px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 22px, transparent 22px 42px);
+    linear-gradient(90deg, var(--white-opacity-8) 0 36px, var(--transparent) 36px 55px),
+    linear-gradient(90deg, var(--white-opacity-12) 0 22px, var(--transparent) 22px 42px);
 }
 
 .payment-card-preview__number {
@@ -103,7 +103,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  color: #aeaeae;
+  color: var(--medium-gray);
   font-size: 14px;
   font-weight: 500;
   line-height: 16px;

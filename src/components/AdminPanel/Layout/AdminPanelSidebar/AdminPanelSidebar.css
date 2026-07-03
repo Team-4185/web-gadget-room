@@ -22,7 +22,7 @@
 
 .admin-panel-sidebar__item {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   border-radius: 12px;
   padding: 12px;
   display: flex;

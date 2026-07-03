@@ -28,7 +28,7 @@
 
 .admin-customer-message-modal__close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 34px;
   font-weight: 300;

@@ -34,7 +34,7 @@
 
 .recipient-section__change {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 15px;
   cursor: pointer;

@@ -58,7 +58,7 @@
 .admin-product-variants-editor__select-field .MuiInputBase-root {
   min-height: 20px;
   padding: 0;
-  background: transparent;
+  background: var(--transparent);
   font-family: inherit;
   font-size: 14px;
   line-height: 1.4;

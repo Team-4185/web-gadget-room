@@ -64,7 +64,7 @@
 .admin-panel-recent-orders__view-all {
   margin: 40px auto 22px;
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   cursor: pointer;
   display: block;

@@ -10,20 +10,20 @@ import type {
 export const DEFAULT_PHONE_COLOR: ApiPhoneColor = {
   name: 'BLACK',
   displayName: 'Black',
-  hexCode: '#000000',
+  hexCode: 'var(--phone-color-black)',
 };
 
 const PHONE_COLOR_BY_NAME: Record<ApiPhoneColorName, ApiPhoneColor> = {
   BLACK: DEFAULT_PHONE_COLOR,
-  WHITE: { name: 'WHITE', displayName: 'White', hexCode: '#ffffff' },
-  GRAY: { name: 'GRAY', displayName: 'Gray', hexCode: '#808080' },
-  SILVER: { name: 'SILVER', displayName: 'Silver', hexCode: '#c0c0c0' },
-  GOLD: { name: 'GOLD', displayName: 'Gold', hexCode: '#d4af37' },
-  RED: { name: 'RED', displayName: 'Red', hexCode: '#d93535' },
-  BLUE: { name: 'BLUE', displayName: 'Blue', hexCode: '#2f6bdc' },
-  GREEN: { name: 'GREEN', displayName: 'Green', hexCode: '#2f8f5b' },
-  YELLOW: { name: 'YELLOW', displayName: 'Yellow', hexCode: '#f2d13d' },
-  PINK: { name: 'PINK', displayName: 'Pink', hexCode: '#f2a4bd' },
+  WHITE: { name: 'WHITE', displayName: 'White', hexCode: 'var(--phone-color-white)' },
+  GRAY: { name: 'GRAY', displayName: 'Gray', hexCode: 'var(--phone-color-gray)' },
+  SILVER: { name: 'SILVER', displayName: 'Silver', hexCode: 'var(--phone-color-silver)' },
+  GOLD: { name: 'GOLD', displayName: 'Gold', hexCode: 'var(--phone-color-gold)' },
+  RED: { name: 'RED', displayName: 'Red', hexCode: 'var(--phone-color-red)' },
+  BLUE: { name: 'BLUE', displayName: 'Blue', hexCode: 'var(--phone-color-blue)' },
+  GREEN: { name: 'GREEN', displayName: 'Green', hexCode: 'var(--phone-color-green)' },
+  YELLOW: { name: 'YELLOW', displayName: 'Yellow', hexCode: 'var(--phone-color-yellow)' },
+  PINK: { name: 'PINK', displayName: 'Pink', hexCode: 'var(--phone-color-pink)' },
 };
 
 export const getDefaultPhoneColor = (colors: ApiPhoneColor[] = []) =>

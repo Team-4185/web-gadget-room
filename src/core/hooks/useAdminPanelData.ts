@@ -35,7 +35,13 @@ import type {
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { formatProductDisplayName } from '@/core/utils';
 
-const BRAND_COLORS = ['#4285f4', '#8a3ffc', '#d930b9', '#eaa60f', '#5f6b83'];
+const BRAND_COLORS = [
+  'var(--chart-brand-apple)',
+  'var(--chart-brand-samsung)',
+  'var(--chart-brand-xiaomi)',
+  'var(--chart-brand-google)',
+  'var(--chart-brand-other)',
+];
 const DASHBOARD_SIDE_LIST_LIMIT = 3;
 
 const formatCurrency = (value: number) =>

@@ -31,7 +31,7 @@
 
 .admin-product-modal__close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 36px;
   line-height: 1;

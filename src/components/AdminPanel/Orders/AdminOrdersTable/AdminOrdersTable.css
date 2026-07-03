@@ -100,7 +100,7 @@
 
 .admin-orders-table__actions button {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   cursor: pointer;
   padding: 0;

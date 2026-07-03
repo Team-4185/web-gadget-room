@@ -39,7 +39,7 @@
 
 .admin-order-details-modal__close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 32px;
   font-weight: 300;

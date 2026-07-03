@@ -146,7 +146,7 @@
 
 .admin-customers-table__actions button {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   padding: 0;
   line-height: 1;
   color: var(--chateau-green);

@@ -176,15 +176,15 @@ export const theme = createTheme({
         root: {
           borderRadius: '8px',
           boxShadow: '0 0 7px 0 var(--blue-violet)',
-          background: 'var(--white)',
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'transparent',
-          },
+            background: 'var(--white)',
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--transparent)',
+            },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: 'var(--blue-violet)',
           },
           '&:not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'transparent',
+            borderColor: 'var(--transparent)',
           },
         },
         select: {

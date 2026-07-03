@@ -143,7 +143,7 @@
 
 .delivery-method-section__map-modal-close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 34px;
   font-weight: 300;
@@ -284,7 +284,7 @@
 .delivery-method-section__map-list-item:hover,
 .delivery-method-section__map-list-item[data-selected='true'],
 .delivery-method-section__map-list-item[data-focused='true'] {
-  background: rgba(126, 125, 196, 0.12);
+  background: var(--soft-violet-opacity-12);
 }
 
 .delivery-method-section__map-list-item span {
