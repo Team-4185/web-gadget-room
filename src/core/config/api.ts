@@ -4,7 +4,7 @@ import { authService } from '@/core/services';
 import type { IJwtResponseDto } from '@/core/types';
 import { tokenStorage } from '@/core/utils/tokenStorage';
 
-interface IСustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
+interface ICustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
   _isRetry?: boolean;
 }
 
@@ -80,7 +80,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as IСustomInternalAxiosRequestConfig;
+    const originalRequest = error.config as ICustomInternalAxiosRequestConfig;
 
     if (
       isAxiosError(error) &&
@@ -91,16 +91,12 @@ api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
 
-      try {
-        const res = await refreshAuthSession();
+      const res = await refreshAuthSession();
 
-        originalRequest.headers = originalRequest.headers ?? {};
-        originalRequest.headers.Authorization = `Bearer ${res.accessToken}`;
+      originalRequest.headers = originalRequest.headers ?? {};
+      originalRequest.headers.Authorization = `Bearer ${res.accessToken}`;
 
-        return api.request(originalRequest);
-      } catch (e) {
-        throw e;
-      }
+      return api.request(originalRequest);
     }
 
     throw error;
