@@ -1,23 +1,14 @@
 import { useEffect, useMemo, useState, type FC, type SyntheticEvent } from 'react';
 
 import { FALLBACK_IMAGE } from '@/core/constants';
-import type { ApiPhoneColor } from '@/core/types';
 
 import './ProductGallery.css';
 
 interface ProductGalleryProps {
   images: string[];
-  colors?: ApiPhoneColor[];
-  selectedColorName?: string;
-  onColorSelect?: (color: ApiPhoneColor) => void;
 }
 
-export const ProductGallery: FC<ProductGalleryProps> = ({
-  images,
-  colors = [],
-  selectedColorName,
-  onColorSelect,
-}) => {
+export const ProductGallery: FC<ProductGalleryProps> = ({ images }) => {
   const safeImages = useMemo(() => (images.length ? images : [FALLBACK_IMAGE]), [images]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -50,25 +41,6 @@ export const ProductGallery: FC<ProductGalleryProps> = ({
           onError={handleImageError}
           alt="Product image"
         />
-
-        {colors.length ? (
-          <div className="product-gallery__colors" aria-label="Available colors">
-            {colors.map((color) => (
-              <button
-                type="button"
-                key={color.name}
-                className={`product-gallery__color ${
-                  selectedColorName === color.name ? 'product-gallery__color--selected' : ''
-                }`}
-                style={{ backgroundColor: color.hexCode }}
-                title={color.displayName}
-                aria-label={color.displayName}
-                aria-pressed={selectedColorName === color.name}
-                onClick={() => onColorSelect?.(color)}
-              />
-            ))}
-          </div>
-        ) : null}
       </div>
     </div>
   );
