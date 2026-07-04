@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { Typography } from '@mui/material';
 import type { FieldError } from 'react-hook-form';
 import { divIcon, type LatLngBoundsExpression, type Marker as LeafletMarker } from 'leaflet';
@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import { Button, Input, RadioButton, Select } from '@/components';
 import { Map } from '@/assets';
 import { UKRAINE_REGION_MAP_CONFIG } from '@/core/constants';
+import { useModalLifecycle } from '@/core/hooks';
 import { deliveryMapService } from '@/core/services';
 import type {
   BranchSelectionMap,
@@ -51,7 +52,8 @@ const markerIcon = divIcon({
 });
 
 const selectedMarkerIcon = divIcon({
-  className: 'delivery-method-section__leaflet-marker delivery-method-section__leaflet-marker--selected',
+  className:
+    'delivery-method-section__leaflet-marker delivery-method-section__leaflet-marker--selected',
   html: '<span></span>',
   iconSize: [32, 32],
   iconAnchor: [16, 16],
@@ -104,10 +106,12 @@ export const DeliveryMethodSection = ({
   onCourierAddressChange,
 }: DeliveryMethodSectionProps) => {
   const [mapMethod, setMapMethod] = useState<DeliveryMethod | null>(null);
-  const [loadedBranches, setLoadedBranches] = useState<Partial<Record<DeliveryMethod, DeliveryBranchOption[]>>>(
+  const [loadedBranches, setLoadedBranches] = useState<
+    Partial<Record<DeliveryMethod, DeliveryBranchOption[]>>
+  >({});
+  const [loadingMethods, setLoadingMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>(
     {}
   );
-  const [loadingMethods, setLoadingMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
   const [failedMethods, setFailedMethods] = useState<Partial<Record<DeliveryMethod, boolean>>>({});
   const [focusedBranchValue, setFocusedBranchValue] = useState('');
   const markerRefs = useRef<Record<string, LeafletMarker | null>>({});
@@ -115,9 +119,15 @@ export const DeliveryMethodSection = ({
   const selectedMapOption = options.find((option) => option.id === mapMethod);
   const selectedRegion = UKRAINE_REGION_MAP_CONFIG[region];
 
-  const getBranchesForMethod = (method: DeliveryMethod) =>
-    loadedBranches[method]?.length ? loadedBranches[method] : branchesByMethod[method];
+  const getBranchesForMethod = useCallback(
+    (method: DeliveryMethod) =>
+      loadedBranches[method]?.length ? loadedBranches[method] : branchesByMethod[method],
+    [branchesByMethod, loadedBranches]
+  );
 
+  const closeMap = useCallback(() => {
+    setMapMethod(null);
+  }, []);
   const mapBranches = useMemo(
     () =>
       mapMethod
@@ -125,27 +135,14 @@ export const DeliveryMethodSection = ({
             (branch) => typeof branch.lat === 'number' && typeof branch.lon === 'number'
           )
         : [],
-    [branchesByMethod, loadedBranches, mapMethod]
+    [getBranchesForMethod, mapMethod]
   );
   const focusedBranch = mapBranches.find((branch) => branch.value === focusedBranchValue);
 
-  useEffect(() => {
-    if (!mapMethod) return;
-
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMapMethod(null);
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [mapMethod]);
+  useModalLifecycle({
+    isOpen: Boolean(mapMethod),
+    onClose: closeMap,
+  });
 
   useEffect(() => {
     setLoadedBranches({});
@@ -196,7 +193,7 @@ export const DeliveryMethodSection = ({
 
   const handleMapBranchSelect = (method: DeliveryMethod, branch: string) => {
     onBranchChange(method, branch);
-    setMapMethod(null);
+    closeMap();
   };
 
   const handleOpenMap = (method: DeliveryMethod) => {
@@ -377,7 +374,7 @@ export const DeliveryMethodSection = ({
                 type="button"
                 aria-label="Close branch map"
                 className="delivery-method-section__map-modal-close"
-                onClick={() => setMapMethod(null)}
+                onClick={closeMap}
               >
                 x
               </button>
@@ -480,5 +477,3 @@ export const DeliveryMethodSection = ({
     </div>
   );
 };
-
-

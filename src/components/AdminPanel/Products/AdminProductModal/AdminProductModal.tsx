@@ -1,7 +1,8 @@
-import { useEffect, type ChangeEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { Typography } from '@mui/material';
 
 import { Button } from '@/components';
+import { useModalLifecycle } from '@/core/hooks';
 import type {
   AdminProductVariantDraft,
   AdminProductVariantErrors,
@@ -33,11 +34,7 @@ interface IProps {
   onSave: () => void;
   onTabChange: (tab: AdminProductModalTab) => void;
   onValueChange: (field: keyof IAdminProductFormState, value: string) => void;
-  onVariantChange?: (
-    clientId: string,
-    field: AdminProductVariantField,
-    value: string
-  ) => void;
+  onVariantChange?: (clientId: string, field: AdminProductVariantField, value: string) => void;
   onAddVariant?: () => void;
   onRemoveDraftVariant?: (clientId: string) => void;
   onRequestDeleteVariant?: (variant: AdminProductVariantDraft) => void;
@@ -69,17 +66,10 @@ export const AdminProductModal = ({
   onImageChange,
   onImageDelete,
 }: IProps) => {
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isOpen, onClose]);
+  useModalLifecycle({
+    isOpen,
+    onClose,
+  });
 
   if (!isOpen) return null;
 
@@ -131,10 +121,7 @@ export const AdminProductModal = ({
           ))}
         </div>
 
-        <form
-          className="admin-product-modal__form"
-          onSubmit={(event) => event.preventDefault()}
-        >
+        <form className="admin-product-modal__form" onSubmit={(event) => event.preventDefault()}>
           {activeTab === 'details' ? (
             <>
               <AdminProductModalFields
@@ -165,7 +152,6 @@ export const AdminProductModal = ({
               onRequestDeleteVariant={onRequestDeleteVariant}
             />
           ) : null}
-
         </form>
 
         <div className="admin-product-modal__actions">

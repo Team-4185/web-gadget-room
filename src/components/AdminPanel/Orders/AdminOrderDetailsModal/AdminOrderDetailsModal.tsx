@@ -4,6 +4,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import { ConfirmationModal } from '@/components/shared';
 import { Button } from '@/components/ui';
 import { FALLBACK_IMAGE } from '@/core/constants';
+import { useModalLifecycle } from '@/core/hooks';
 import {
   ADMIN_ORDER_PAYMENT_METHOD_LABELS,
   ADMIN_ORDER_PAYMENT_STATUS_LABELS,
@@ -55,23 +56,11 @@ export const AdminOrderDetailsModal: FC<IProps> = ({
 }) => {
   const [isCancelConfirmationOpen, setIsCancelConfirmationOpen] = useState(false);
 
-  useEffect(() => {
-    if (!order && !isLoading) return;
-
-    const previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousBodyOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [isLoading, onClose, order]);
+  useModalLifecycle({
+    isOpen: Boolean(order) || isLoading,
+    onClose,
+    closeOnEscape: !isCancelConfirmationOpen,
+  });
 
   useEffect(() => {
     if (!order) setIsCancelConfirmationOpen(false);
