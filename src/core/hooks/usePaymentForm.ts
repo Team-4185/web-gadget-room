@@ -77,8 +77,9 @@ export const usePaymentForm = () => {
       const methodErr = prev[method] ?? {};
       if (!methodErr[field]) return prev;
 
-      const { [field]: _, ...rest } = methodErr;
-      return { ...prev, [method]: rest };
+      const nextMethodErrors = { ...methodErr };
+      delete nextMethodErrors[field];
+      return { ...prev, [method]: nextMethodErrors };
     });
   };
 

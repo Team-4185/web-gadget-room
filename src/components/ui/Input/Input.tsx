@@ -16,7 +16,7 @@ interface IProps {
   tooltipText?: ReactNode;
   maxWidth?: string;
   type?: string;
-  ref?: Ref<any>;
+  ref?: Ref<HTMLInputElement>;
   label: string;
   placeholder?: string;
   success?: boolean;

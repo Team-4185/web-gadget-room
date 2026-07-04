@@ -7,7 +7,7 @@ type CheckBoxProps = {
   id: string | undefined;
   name: string;
   label: ReactNode;
-  ref?: Ref<any>;
+  ref?: Ref<HTMLInputElement>;
   labelSize?: string;
   checked?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;

@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent } from 'react';
+import { isAxiosError } from 'axios';
 import { useSnackbar } from 'notistack';
 
 import { EMPTY_ADMIN_PRODUCT_FORM } from '@/core/constants';
@@ -114,7 +115,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
         console.error('Failed to load product images', error);
         enqueueSnackbar('Failed to load product images.', { variant: 'warning' });
       }
-    } catch (error) {
+    } catch {
       setDraftProduct(mapAdminProductToDraft(product));
       enqueueSnackbar('Failed to load full product details for editing.', { variant: 'warning' });
     }
@@ -234,9 +235,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
       await adminProductsService.deleteVariant(Number(editingProduct.id), variantToDelete.id);
       setDraftProduct((prev) => ({
         ...prev,
-        variants: prev.variants.filter(
-          (variant) => variant.clientId !== variantToDelete.clientId
-        ),
+        variants: prev.variants.filter((variant) => variant.clientId !== variantToDelete.clientId),
       }));
       setVariantToDelete(null);
       enqueueSnackbar('Variant deleted.', { variant: 'success' });
@@ -283,7 +282,9 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
     try {
       if (editingProduct) {
         const productId = Number(editingProduct.id);
-        const { variants: _variants, ...productPayload } = payload;
+        const productPayload = Object.fromEntries(
+          Object.entries(payload).filter(([key]) => key !== 'variants')
+        ) as Omit<typeof payload, 'variants'>;
 
         await adminProductsService.update(productId, productPayload);
         await persistEditedProductVariants(productId);
@@ -297,8 +298,8 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
       onRefreshProducts();
     } catch (error) {
       console.error(`Failed to ${editingProduct ? 'update' : 'create'} product`, error);
-      if (error && typeof error === 'object' && 'response' in error) {
-        console.error('Product request response:', (error as any).response?.data);
+      if (isAxiosError(error)) {
+        console.error('Product request response:', error.response?.data);
       }
       enqueueSnackbar(`Failed to ${editingProduct ? 'update' : 'create'} product.`, {
         variant: 'error',
