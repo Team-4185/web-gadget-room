@@ -9,6 +9,8 @@ export { useAdminPanelData } from './useAdminPanelData';
 export { useAdminSalesAnalytics } from './useAdminSalesAnalytics';
 export { useAdminProductManagementData } from './useAdminProductManagementData';
 export { useAdminProductModal } from './useAdminProductModal';
+export { useAdminProductImages } from './useAdminProductImages';
+export { useAdminProductVariantDrafts } from './useAdminProductVariantDrafts';
 export { useAdminProductOverviewModal } from './useAdminProductOverviewModal';
 export { useAdminCustomersData } from './useAdminCustomersData';
 export { useAdminOrdersData } from './useAdminOrdersData';
