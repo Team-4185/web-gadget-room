@@ -17,6 +17,7 @@ export * from './adminAnalytics';
 export * from './adminOrders';
 export * from './error';
 export * from './fallbackPolicy';
+export * from './logger';
 export * from './phoneFormat';
 export * from './productFallbacks';
 export * from './authBootstrap';

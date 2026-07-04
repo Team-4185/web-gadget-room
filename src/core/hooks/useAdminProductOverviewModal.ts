@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 
 import { adminProductsService } from '@/core/services';
 import type { ApiPhone, IAdminPanelManagedProduct } from '@/core/types';
+import { logger } from '@/core/utils';
 
 export const useAdminProductOverviewModal = () => {
   const [product, setProduct] = useState<IAdminPanelManagedProduct | null>(null);
@@ -22,7 +23,9 @@ export const useAdminProductOverviewModal = () => {
       setProductDetails(phone);
       setDescription(phone.description?.trim() || 'No description provided.');
     } catch (error) {
-      console.error('Failed to load product overview details', error);
+      logger.error('Failed to load product overview details', error, {
+        productId: selectedProduct.id,
+      });
       setDescription('No description provided.');
       enqueueSnackbar('Failed to load product description.', { variant: 'warning' });
     } finally {

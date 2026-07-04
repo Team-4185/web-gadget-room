@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { isAxiosError } from 'axios';
 import { useSnackbar } from 'notistack';
 
 import { EMPTY_ADMIN_PRODUCT_FORM } from '@/core/constants';
@@ -12,6 +11,7 @@ import type {
 } from '@/core/types';
 import {
   buildAdminPhonePayload,
+  logger,
   mapAdminProductToDraft,
   mapPhoneToAdminProductDraft,
   validateAdminProductDraft,
@@ -108,7 +108,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
       try {
         await loadProductImages(Number(product.id));
       } catch (error) {
-        console.error('Failed to load product images', error);
+        logger.error('Failed to load product images', error, { productId: product.id });
         enqueueSnackbar('Failed to load product images.', { variant: 'warning' });
       }
     } catch {
@@ -143,7 +143,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
       setProductToDelete(null);
       onRefreshProducts();
     } catch (error) {
-      console.error('Failed to delete product', error);
+      logger.error('Failed to delete product', error, { productId: productToDelete.id });
       enqueueSnackbar('Failed to delete product.', { variant: 'error' });
     } finally {
       setIsDeleting(false);
@@ -187,10 +187,9 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
       closeProductModal(true);
       onRefreshProducts();
     } catch (error) {
-      console.error(`Failed to ${editingProduct ? 'update' : 'create'} product`, error);
-      if (isAxiosError(error)) {
-        console.error('Product request response:', error.response?.data);
-      }
+      logger.error(`Failed to ${editingProduct ? 'update' : 'create'} product`, error, {
+        productId: editingProduct?.id,
+      });
       enqueueSnackbar(`Failed to ${editingProduct ? 'update' : 'create'} product.`, {
         variant: 'error',
       });

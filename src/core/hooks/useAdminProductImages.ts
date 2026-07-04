@@ -3,6 +3,7 @@ import { useSnackbar } from 'notistack';
 
 import { adminProductsService, phonesService } from '@/core/services';
 import type { IAdminPanelManagedProduct, IAdminProductModalImage } from '@/core/types';
+import { logger } from '@/core/utils';
 
 type UseAdminProductImagesOptions = {
   editingProduct: IAdminPanelManagedProduct | null;
@@ -59,7 +60,10 @@ export const useAdminProductImages = ({
       setProductImages((prev) => prev.filter((image) => image.id !== imageId));
       onRefreshProducts();
     } catch (error) {
-      console.error('Failed to delete product image', error);
+      logger.error('Failed to delete product image', error, {
+        imageId,
+        productId: editingProduct.id,
+      });
       enqueueSnackbar('Failed to delete product image.', { variant: 'error' });
     }
   };

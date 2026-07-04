@@ -9,7 +9,7 @@ import type {
   IAdminPanelManagedProduct,
   IAdminProductFormState,
 } from '@/core/types';
-import { buildVariantPayloads, createAdminProductVariantDraft } from '@/core/utils';
+import { buildVariantPayloads, createAdminProductVariantDraft, logger } from '@/core/utils';
 
 type UseAdminProductVariantDraftsOptions = {
   draftProduct: IAdminProductFormState;
@@ -108,7 +108,10 @@ export const useAdminProductVariantDrafts = ({
       enqueueSnackbar('Variant deleted.', { variant: 'success' });
       onRefreshProducts();
     } catch (error) {
-      console.error('Failed to delete product variant', error);
+      logger.error('Failed to delete product variant', error, {
+        productId: editingProduct.id,
+        variantId: variantToDelete.id,
+      });
       enqueueSnackbar('Failed to delete variant.', { variant: 'error' });
     } finally {
       setIsDeletingVariant(false);
