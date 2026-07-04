@@ -13,6 +13,7 @@ export { useAdminProductImages } from './useAdminProductImages';
 export { useAdminProductVariantDrafts } from './useAdminProductVariantDrafts';
 export { useAdminProductOverviewModal } from './useAdminProductOverviewModal';
 export { useAdminCustomersData } from './useAdminCustomersData';
+export { useAdminOrderActions } from './useAdminOrderActions';
 export { useAdminOrdersData } from './useAdminOrdersData';
 export { useModalLifecycle } from './useModalLifecycle';
 export { useDeliveryBranches } from './useDeliveryBranches';

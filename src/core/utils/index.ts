@@ -14,6 +14,7 @@ export * from './catalogFilters';
 export * from './adminProductManagement';
 export * from './phone';
 export * from './adminAnalytics';
+export * from './adminOrders';
 export * from './error';
 export * from './phoneFormat';
 export * from './authBootstrap';
