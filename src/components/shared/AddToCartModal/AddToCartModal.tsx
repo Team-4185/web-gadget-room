@@ -1,9 +1,10 @@
-import { useEffect, type SyntheticEvent } from 'react';
+import { useCallback, type SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 import { Check, Plus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
+import { useModalLifecycle } from '@/core/hooks';
 import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
 import {
   formatStorageCapacity,
@@ -25,15 +26,15 @@ export const AddToCartModal = () => {
   const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.cart.lastAddedProduct);
   const selectedColor = product
-    ? product.selectedColor ?? getDefaultPhoneColor(product.colors)
+    ? (product.selectedColor ?? getDefaultPhoneColor(product.colors))
     : null;
   const selectedStorage = product
-    ? product.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity)
+    ? (product.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity))
     : null;
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     dispatch(cartActions.closeAddToCartModal());
-  };
+  }, [dispatch]);
 
   const goToCart = () => {
     closeModal();
@@ -44,17 +45,10 @@ export const AddToCartModal = () => {
     event.currentTarget.src = FALLBACK_IMAGE;
   };
 
-  useEffect(() => {
-    if (!product) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeModal();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [product]);
+  useModalLifecycle({
+    isOpen: Boolean(product),
+    onClose: closeModal,
+  });
 
   if (!product) return null;
 

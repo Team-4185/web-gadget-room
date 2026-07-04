@@ -1,8 +1,9 @@
-import { useEffect, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Typography } from '@mui/material';
 
 import { Button } from '@/components/ui';
 import { AlertConfirmation } from '@/assets';
+import { useModalLifecycle } from '@/core/hooks';
 
 import './ConfirmationModal.css';
 
@@ -27,17 +28,11 @@ export const ConfirmationModal = ({
   onCancel,
   onConfirm,
 }: IProps) => {
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && !isLoading) onCancel();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [isLoading, isOpen, onCancel]);
+  useModalLifecycle({
+    isOpen,
+    onClose: onCancel,
+    closeOnEscape: !isLoading,
+  });
 
   if (!isOpen) return null;
 
