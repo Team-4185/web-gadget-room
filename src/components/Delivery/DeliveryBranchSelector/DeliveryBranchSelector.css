@@ -1,0 +1,12 @@
+.delivery-branch-selector__map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-branch-selector__message {
+  grid-column: 1 / -1;
+  margin: -8px 0 0;
+  color: var(--coralRed);
+  font-size: 13px;
+}

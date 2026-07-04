@@ -13,3 +13,4 @@ export { useAdminProductOverviewModal } from './useAdminProductOverviewModal';
 export { useAdminCustomersData } from './useAdminCustomersData';
 export { useAdminOrdersData } from './useAdminOrdersData';
 export { useModalLifecycle } from './useModalLifecycle';
+export { useDeliveryBranches } from './useDeliveryBranches';
