@@ -7,6 +7,8 @@ export * from './formatDisplayName';
 export * from './products';
 export * from './cartStorage';
 export * from './cart';
+export * from './cartLocalState';
+export * from './cartRequests';
 export * from './orders';
 export * from './catalogFilters';
 export * from './adminProductManagement';
