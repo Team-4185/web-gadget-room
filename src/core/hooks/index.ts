@@ -5,6 +5,7 @@ export { usePaymentForm } from './usePaymentForm';
 export { usePaymentCheckout } from './usePaymentCheckout';
 export { useProduct } from './useProduct';
 export { useUserPanelData } from './useUserPanelData';
+export { useUserProfilePage } from './useUserProfilePage';
 export { useUserOrders } from './useUserOrders';
 export { useAdminPanelData } from './useAdminPanelData';
 export { useAdminSalesAnalytics } from './useAdminSalesAnalytics';
