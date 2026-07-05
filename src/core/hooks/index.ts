@@ -2,6 +2,7 @@ export { useCatalogState } from './useCatalogState';
 export { useCatalogProducts } from './useCatalogProducts';
 export { usePagination } from './usePagination';
 export { usePaymentForm } from './usePaymentForm';
+export { usePaymentCheckout } from './usePaymentCheckout';
 export { useProduct } from './useProduct';
 export { useUserPanelData } from './useUserPanelData';
 export { useUserOrders } from './useUserOrders';
