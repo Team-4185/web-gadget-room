@@ -1,7 +1,7 @@
 .labeled-form-field {
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
   min-height: 56px;
   width: 100%;
   padding: 9px 10px 8px;
