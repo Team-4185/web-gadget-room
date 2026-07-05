@@ -17,7 +17,7 @@
 .user-profile__hero {
   background: var(--white);
   border-radius: 14px;
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 18px 25px;
 }
 

@@ -7,7 +7,7 @@
   padding: 12px;
   background: var(--white);
   border-radius: 20px;
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   cursor: pointer;
 }
 

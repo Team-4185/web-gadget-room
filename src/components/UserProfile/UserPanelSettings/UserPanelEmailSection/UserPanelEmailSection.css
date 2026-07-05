@@ -5,9 +5,9 @@
 }
 
 .user-profile__settings-text-input {
-  border: 1px solid var(--blue-violet);
+  border: var(--field-border);
   border-radius: 8px;
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 13px 14px;
   display: flex;
   flex-direction: column;

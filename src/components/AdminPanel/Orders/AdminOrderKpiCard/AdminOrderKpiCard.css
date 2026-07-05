@@ -1,7 +1,7 @@
 .admin-order-kpi-card {
   background: var(--white);
   border-radius: 12px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 12px;
 }
 
@@ -20,5 +20,5 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
 }
