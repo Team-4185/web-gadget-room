@@ -55,6 +55,10 @@
   --product-specs-background: #f2f2fe;
   --box-summary-background: rgba(249, 249, 249, 0.2);
   --inputs-box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  --field-border: 1px solid var(--blue-violet);
+  --field-shadow: 0 0 6.9px 0 var(--blue-violet);
+  --modal-radius: 35px;
+  --control-radius: 8px;
   --light-violet: #9595ef;
   --very-light-violet: #e8e8f0;
   --muted-violet: #8f8faf;

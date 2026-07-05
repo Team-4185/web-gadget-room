@@ -11,6 +11,7 @@ import type {
   DeliveryOptionConfig,
   DeliveryRegionMapConfig,
 } from '@/core/types';
+import { Button } from '@/components';
 
 import './DeliveryBranchMapModal.css';
 
@@ -180,9 +181,16 @@ export const DeliveryBranchMapModal = ({
                       <div className="delivery-branch-map-modal__popup">
                         <strong>{branch.name}</strong>
                         {branch.address && <span>{branch.address}</span>}
-                        <button type="button" onClick={() => handleSelect(branch.value)}>
+                        <Button
+                          type="button"
+                          maxWidth="100%"
+                          height="32px"
+                          fontSize="13px"
+                          fontWeight={600}
+                          onClick={() => handleSelect(branch.value)}
+                        >
                           Select branch
-                        </button>
+                        </Button>
                       </div>
                     </Popup>
                   </Marker>
