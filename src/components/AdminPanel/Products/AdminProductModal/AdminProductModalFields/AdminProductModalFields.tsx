@@ -118,9 +118,7 @@ export const AdminProductModalFields = ({
       placeholder="5000"
       errorMessage={fieldErrors?.batteryCapacity}
       tooltipText={fieldTooltips?.batteryCapacity}
-      onChange={(value) =>
-        onValueChange('batteryCapacity', formatAdminBatteryCapacityInput(value))
-      }
+      onChange={(value) => onValueChange('batteryCapacity', formatAdminBatteryCapacityInput(value))}
     />
 
     <LabeledFormField

@@ -32,7 +32,9 @@ export const ProductPage: FC = () => {
 
   useEffect(() => {
     const storageCapacity = product.storageCapacity ?? [];
-    const stillAvailable = storageCapacity.some((storage) => storage.name === selectedStorage?.name);
+    const stillAvailable = storageCapacity.some(
+      (storage) => storage.name === selectedStorage?.name
+    );
 
     if (!stillAvailable) {
       setSelectedStorage(getDefaultStorageCapacity(storageCapacity));

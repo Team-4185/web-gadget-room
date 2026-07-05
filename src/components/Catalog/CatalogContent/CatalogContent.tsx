@@ -45,11 +45,7 @@ export const CatalogContent: FC<IProps> = ({
   return (
     <div className="catalog__content">
       <CatalogHeader sortBy={sortBy} onSortChange={onSortChange} />
-      <CatalogProductGrid
-        items={items}
-        isLoading={isLoading}
-        onProductClick={handleProductClick}
-      />
+      <CatalogProductGrid items={items} isLoading={isLoading} onProductClick={handleProductClick} />
       <CatalogPagination
         currentPage={currentPage}
         totalPages={totalPages}

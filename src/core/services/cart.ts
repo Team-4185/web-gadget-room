@@ -38,4 +38,3 @@ export const cartService = {
     await api.post<void>('/api/v1/me/cart/clear');
   },
 };
-

@@ -23,7 +23,10 @@ export const ProductsCart = () => {
   return (
     <>
       {products.map((product, idx) => (
-        <article key={`${product.id}-${product.selectedVariantId ?? 'phone'}`} className="cart-item">
+        <article
+          key={`${product.id}-${product.selectedVariantId ?? 'phone'}`}
+          className="cart-item"
+        >
           {idx === 0 ? null : <div className="cart-item__divider" />}
 
           <div className="cart-item__main">
@@ -136,4 +139,3 @@ export const ProductsCart = () => {
     </>
   );
 };
-

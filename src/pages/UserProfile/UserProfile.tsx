@@ -33,7 +33,12 @@ export const UserProfile = () => {
     phoneNumber: '',
   });
   const [profileEmail, setProfileEmail] = useState('');
-  const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
+  const {
+    orders,
+    totalElements,
+    loading: ordersLoading,
+    error: ordersError,
+  } = useUserOrders(0, 10);
   const requestedTab = searchParams.get('tab');
   const initialTab: UserPanelTab = requestedTab === 'favorite' ? 'favorite' : 'overview';
   const { greeting, subtitle, menu, stats, profile } = useUserPanelData(

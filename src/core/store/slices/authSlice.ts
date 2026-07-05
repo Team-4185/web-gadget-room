@@ -1,11 +1,7 @@
 import axios from 'axios';
 
 import { createAppSlice } from '@/core/store/createAppSlice';
-import type {
-  FormRegisterValuesDto,
-  IJwtResponseDto,
-  IErrorResponse,
-} from '@/core/types';
+import type { FormRegisterValuesDto, IJwtResponseDto, IErrorResponse } from '@/core/types';
 import { authService } from '@/core/services';
 import type { FormForgotPassword, FormLoginValues } from '@/core/schemas';
 import type { ResetPasswordPayload } from '@/core/services/auth';

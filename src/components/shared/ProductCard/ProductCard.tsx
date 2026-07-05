@@ -5,7 +5,12 @@ import { CartAdd, Like, Liked } from '@/assets';
 import { useAppDispatch, useAppSelector, cartActions, wishListActions } from '@/core/store';
 import { Button } from '@/components';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { applySelectedProductVariant, formatStorageCapacity, getDefaultPhoneColor, getDefaultStorageCapacity } from '@/core/utils';
+import {
+  applySelectedProductVariant,
+  formatStorageCapacity,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from '@/core/utils';
 import type { IProduct } from '@/core/types';
 
 import './ProductCard.css';
@@ -51,7 +56,8 @@ export const ProductCard: FC<IProps> = ({
   const selectedColor =
     productWithSelectedVariant.selectedColor ?? getDefaultPhoneColor(product.colors);
   const selectedStorage =
-    productWithSelectedVariant.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity);
+    productWithSelectedVariant.selectedStorage ??
+    getDefaultStorageCapacity(product.storageCapacity);
   const productCardClassName = `product-card ${className}`.trim();
   const likeIconClassName =
     `product-card__like ${isLiked ? 'is-active' : ''} ${likeClassName}`.trim();

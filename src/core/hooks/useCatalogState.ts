@@ -34,10 +34,7 @@ const areCatalogActiveItemsEqual = (
   return firstKeys.every((key) => firstItems[key] === secondItems[key]);
 };
 
-export const useCatalogState = ({
-  brandOptions,
-  maxPrice,
-}: CatalogStateOptions) => {
+export const useCatalogState = ({ brandOptions, maxPrice }: CatalogStateOptions) => {
   const [sortBy, setSortBy] = useState<SortOption>(CATALOG_DEFAULT_SORT);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeItems, setActiveItems] = useState<Record<string, boolean>>(() =>

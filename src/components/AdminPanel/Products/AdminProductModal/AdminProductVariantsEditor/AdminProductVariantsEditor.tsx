@@ -2,10 +2,7 @@ import { FormControl, MenuItem, Select } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
 import { Button, LabeledFormField } from '@/components';
-import {
-  ADMIN_PRODUCT_COLOR_OPTIONS,
-  ADMIN_PRODUCT_STORAGE_OPTIONS,
-} from '@/core/constants';
+import { ADMIN_PRODUCT_COLOR_OPTIONS, ADMIN_PRODUCT_STORAGE_OPTIONS } from '@/core/constants';
 import type {
   AdminProductVariantDraft,
   AdminProductVariantErrors,
@@ -17,11 +14,7 @@ import './AdminProductVariantsEditor.css';
 interface IProps {
   variants: AdminProductVariantDraft[];
   errors?: AdminProductVariantErrors;
-  onVariantChange?: (
-    clientId: string,
-    field: AdminProductVariantField,
-    value: string
-  ) => void;
+  onVariantChange?: (clientId: string, field: AdminProductVariantField, value: string) => void;
   onAddVariant?: () => void;
   onRemoveDraftVariant?: (clientId: string) => void;
   onRequestDeleteVariant?: (variant: AdminProductVariantDraft) => void;
@@ -65,16 +58,11 @@ export const AdminProductVariantsEditor = ({
         {variants.map((variant) => {
           const rowErrors = errors[variant.clientId] ?? {};
           const rowError =
-            rowErrors.color ??
-            rowErrors.storageCapacity ??
-            rowErrors.price ??
-            rowErrors.stock;
+            rowErrors.color ?? rowErrors.storageCapacity ?? rowErrors.price ?? rowErrors.stock;
 
           return (
             <div
-              className={`admin-product-variants-editor__row ${
-                rowError ? 'is-error' : ''
-              }`.trim()}
+              className={`admin-product-variants-editor__row ${rowError ? 'is-error' : ''}`.trim()}
               key={variant.clientId}
             >
               <label className="admin-product-variants-editor__select-field">

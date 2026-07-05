@@ -31,4 +31,3 @@ export type ICartDto = {
   totalAmount: number;
   cartItems: ICartItemDto[];
 };
-

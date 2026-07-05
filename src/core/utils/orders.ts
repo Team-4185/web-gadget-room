@@ -115,7 +115,11 @@ export const createCheckoutPayloadFromDeliveryAndPayment = (
   cartItems: ICartItemDto[],
   paymentDetails?: OrderPaymentDetailsPayload
 ): CheckoutOrderPayload => {
-  const { items, ...orderDetails } = createOrderPayloadFromCheckout(form, cartItems, paymentDetails);
+  const { items, ...orderDetails } = createOrderPayloadFromCheckout(
+    form,
+    cartItems,
+    paymentDetails
+  );
 
   return {
     ...orderDetails,

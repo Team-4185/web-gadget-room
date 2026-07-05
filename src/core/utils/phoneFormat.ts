@@ -5,7 +5,10 @@ const getLocalPhoneDigits = (value: string) => {
   const digits = value.replace(/\D/g, '');
 
   if (digits.startsWith(UKRAINE_COUNTRY_CODE)) {
-    return digits.slice(UKRAINE_COUNTRY_CODE.length, UKRAINE_COUNTRY_CODE.length + LOCAL_PHONE_LENGTH);
+    return digits.slice(
+      UKRAINE_COUNTRY_CODE.length,
+      UKRAINE_COUNTRY_CODE.length + LOCAL_PHONE_LENGTH
+    );
   }
 
   if (digits.startsWith('0')) {

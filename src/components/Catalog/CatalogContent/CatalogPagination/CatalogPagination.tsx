@@ -49,11 +49,7 @@ const renderPaginationItem = (item: PaginationRenderItemParams) => {
   return <PaginationItem {...item} />;
 };
 
-export const CatalogPagination: FC<IProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => (
+export const CatalogPagination: FC<IProps> = ({ currentPage, totalPages, onPageChange }) => (
   <Pagination
     page={currentPage}
     count={totalPages}

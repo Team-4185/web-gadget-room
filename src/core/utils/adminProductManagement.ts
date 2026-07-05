@@ -1,7 +1,11 @@
 import { api } from '@/core/config';
 import { EMPTY_ADMIN_PRODUCT_VARIANT, FALLBACK_IMAGE } from '@/core/constants';
 import { phonesService } from '@/core/services';
-import { buildProductSku, buildVariantPayloads, getDerivedProductTotals } from './adminProductVariants';
+import {
+  buildProductSku,
+  buildVariantPayloads,
+  getDerivedProductTotals,
+} from './adminProductVariants';
 import { formatProductDisplayName } from './products';
 import type {
   AdminProductFormErrors,
@@ -192,7 +196,10 @@ export const formatAdminBatteryCapacityInput = (value: string) => {
 };
 
 export const formatAdminCpuInput = (value: string) =>
-  value.replace(/[^A-Za-z0-9\s-]/g, '').replace(/\s+/g, ' ').slice(0, 30);
+  value
+    .replace(/[^A-Za-z0-9\s-]/g, '')
+    .replace(/\s+/g, ' ')
+    .slice(0, 30);
 
 const toBackendScreenSize = (value: string) => {
   const screenSize = formatAdminScreenSizeInput(value);
@@ -205,10 +212,7 @@ const toBackendCamera = (value: string) => {
 };
 
 const toBackendMainCamera = (value: string) => {
-  const camera = formatAdminMainCameraInput(value)
-    .split('-')
-    .filter(Boolean)
-    .join('-');
+  const camera = formatAdminMainCameraInput(value).split('-').filter(Boolean).join('-');
   return camera ? `${camera} MP` : '';
 };
 
@@ -281,10 +285,7 @@ export const mapPhoneToAdminProductDraft = (
       ],
 });
 
-export const buildAdminPhonePayload = (
-  draft: IAdminProductFormState,
-  _status: AdminProductStatus
-): CreatePhonePayload => {
+export const buildAdminPhonePayload = (draft: IAdminProductFormState): CreatePhonePayload => {
   const totals = getDerivedProductTotals(draft.variants);
 
   return {

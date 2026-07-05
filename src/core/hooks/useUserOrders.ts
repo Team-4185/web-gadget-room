@@ -84,7 +84,10 @@ const mapOrderToUserPanelOrder = async (
       quantity: item.quantity,
       color: formatOrderItemColor(item.variant?.color ?? item.selectedColor ?? item.color),
       storage: formatOrderItemStorage(
-        item.variant?.storageCapacity ?? item.selectedStorage ?? item.storageCapacity ?? item.storage
+        item.variant?.storageCapacity ??
+          item.selectedStorage ??
+          item.storageCapacity ??
+          item.storage
       ),
       price: item.totalPrice,
       image: await getOrderItemImage(item.phone?.images?.[0]?.url, signal),
