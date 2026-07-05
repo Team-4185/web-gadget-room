@@ -20,6 +20,7 @@ import {
   formatCardPreview,
   formatPaymentField,
   INITIAL_CARD_PAYMENT_FORM,
+  mapProductsToCheckoutItems,
   toErrorMessage,
   validateCardPaymentForm,
 } from '@/core/utils';
@@ -38,15 +39,13 @@ export const usePaymentCheckout = () => {
   const selectedDeliveryPrice =
     DELIVERY_OPTIONS.find((option) => option.id === deliveryForm?.delivery.method)?.price ?? 0;
 
-  const cartItems = cartProducts.map((product) => ({
-    phoneId: product.id,
-    variantId: product.selectedVariantId,
-    amount: product.amount,
-    selectedColor: product.selectedColor,
-    selectedStorage: product.selectedStorage,
-    colors: product.colors,
-    storageCapacity: product.storageCapacity,
-  }));
+  const cartItems = mapProductsToCheckoutItems(
+    cartProducts.map((product) => ({
+      ...product,
+      phoneId: product.id,
+      variantId: product.selectedVariantId,
+    }))
+  );
 
   const cardPreviewNumbers = formatCardPreview(form.cardNumber);
 

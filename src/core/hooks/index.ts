@@ -18,3 +18,4 @@ export { useAdminOrderActions } from './useAdminOrderActions';
 export { useAdminOrdersData } from './useAdminOrdersData';
 export { useModalLifecycle } from './useModalLifecycle';
 export { useDeliveryBranches } from './useDeliveryBranches';
+export { useDeliveryCheckout } from './useDeliveryCheckout';

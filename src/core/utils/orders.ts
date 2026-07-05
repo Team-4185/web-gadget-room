@@ -55,6 +55,17 @@ const getCheckoutItemStorage = (item: ICartItemDto) =>
 
 const getCheckoutItemQuantity = (item: ICartItemDto) => item.amount ?? item.quantity ?? 0;
 
+export const mapProductsToCheckoutItems = (products: ICartItemDto[]): ICartItemDto[] =>
+  products.map((product) => ({
+    phoneId: product.phoneId,
+    variantId: product.variantId,
+    amount: product.amount,
+    selectedColor: product.selectedColor,
+    selectedStorage: product.selectedStorage,
+    colors: product.colors,
+    storageCapacity: product.storageCapacity,
+  }));
+
 export const createOrderPayloadFromCheckout = (
   form: DeliveryCheckoutForm,
   cartItems: ICartItemDto[],
