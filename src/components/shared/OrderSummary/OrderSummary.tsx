@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { Typography } from '@mui/material';
 
 import { Lock } from '@/assets';
-import { useAppSelector } from '@/core/store';
+import { selectCartTotalAmount, selectCartTotalPrice, useAppSelector } from '@/core/store';
 import { Button } from '@/components';
 
 import './OrderSummary.css';
@@ -35,8 +35,8 @@ export const OrderSummary = ({
   shippingAmount = 0,
   className,
 }: OrderSummaryProps) => {
-  const amountOfProducts = useAppSelector((state) => state.cart.totalAmount);
-  const subTotal = useAppSelector((state) => state.cart.totalPrice);
+  const amountOfProducts = useAppSelector(selectCartTotalAmount);
+  const subTotal = useAppSelector(selectCartTotalPrice);
 
   const total = taxAmount + shippingAmount + subTotal;
 

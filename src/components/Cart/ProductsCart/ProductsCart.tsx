@@ -1,7 +1,13 @@
 import { type SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
-import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
+import {
+  cartActions,
+  selectCartLoading,
+  selectCartProducts,
+  useAppSelector,
+  useAppDispatch,
+} from '@/core/store';
 import { Trash, Plus, Minus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import {
@@ -12,8 +18,8 @@ import {
 import './ProductsCart.css';
 
 export const ProductsCart = () => {
-  const products = useAppSelector((state) => state.cart.cart);
-  const cartLoading = useAppSelector((state) => state.cart.loading);
+  const products = useAppSelector(selectCartProducts);
+  const cartLoading = useAppSelector(selectCartLoading);
   const dispatch = useAppDispatch();
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {

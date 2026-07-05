@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router';
 
 import { Check, Plus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
+import {
+  cartActions,
+  selectCartLastAddedProduct,
+  useAppDispatch,
+  useAppSelector,
+} from '@/core/store';
 import {
   formatStorageCapacity,
   getDefaultPhoneColor,
@@ -24,7 +29,7 @@ const formatPrice = (price: number) =>
 export const AddToCartModal = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state) => state.cart.lastAddedProduct);
+  const product = useAppSelector(selectCartLastAddedProduct);
   const selectedColor = product
     ? (product.selectedColor ?? getDefaultPhoneColor(product.colors))
     : null;

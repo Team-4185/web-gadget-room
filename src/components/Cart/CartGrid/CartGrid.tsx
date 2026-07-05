@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
 import { ProductsCart } from '@/components';
-import { useAppSelector } from '@/core/store';
+import { selectCartTotalAmount, useAppSelector } from '@/core/store';
 
 import './CartGrid.css';
 
@@ -10,7 +10,7 @@ const headerTextSx = { fontWeight: 600, lineHeight: 1 };
 const headerSubtotalSx = { ...headerTextSx, textAlign: 'right' as const };
 
 export const CartGrid = () => {
-  const cartLength = useAppSelector((state) => state.cart.totalAmount);
+  const cartLength = useAppSelector(selectCartTotalAmount);
 
   return (
     <div className="cart__grid">

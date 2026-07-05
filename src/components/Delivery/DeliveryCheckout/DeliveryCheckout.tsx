@@ -15,7 +15,7 @@ import {
   DELIVERY_OPTIONS,
   INITIAL_DELIVERY_CHECKOUT_FORM,
 } from '@/core/constants';
-import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { cartActions, selectCartProducts, useAppDispatch, useAppSelector } from '@/core/store';
 import { cartService, ordersService, usersService } from '@/core/services';
 import {
   cartStorage,
@@ -41,7 +41,7 @@ export const DeliveryCheckout = () => {
   const [form, setForm] = useState<DeliveryCheckoutForm>(INITIAL_DELIVERY_CHECKOUT_FORM);
   const [validationErrors, setValidationErrors] = useState<DeliveryCheckoutErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const cartProducts = useAppSelector((state) => state.cart.cart);
+  const cartProducts = useAppSelector(selectCartProducts);
   const userId = useAppSelector((state) => state.auth.userId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

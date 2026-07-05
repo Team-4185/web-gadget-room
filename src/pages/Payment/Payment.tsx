@@ -6,7 +6,13 @@ import { useSnackbar } from 'notistack';
 
 import { MasterCard } from '@/assets';
 import { Input, OrderSummary } from '@/components';
-import { cartActions, useAppDispatch, useAppSelector } from '@/core/store';
+import {
+  cartActions,
+  selectCartProducts,
+  selectCartTotalAmount,
+  useAppDispatch,
+  useAppSelector,
+} from '@/core/store';
 import { DELIVERY_OPTIONS } from '@/core/constants';
 import {
   cartStorage,
@@ -109,8 +115,8 @@ export const Payment = () => {
   const [errors, setErrors] = useState<PaymentFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const deliveryForm = useMemo(() => checkoutStorage.getDelivery(), []);
-  const cartProducts = useAppSelector((state) => state.cart.cart);
-  const totalAmount = useAppSelector((state) => state.cart.totalAmount);
+  const cartProducts = useAppSelector(selectCartProducts);
+  const totalAmount = useAppSelector(selectCartTotalAmount);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();

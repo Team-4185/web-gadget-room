@@ -3,7 +3,7 @@ import { Container, Badge } from '@mui/material';
 import { Link as RouterLink, matchPath, NavLink, useLocation } from 'react-router';
 
 import { BreadCrumbs, Stepper } from '@/components';
-import { useAppSelector } from '@/core/store';
+import { selectCartTotalAmount, useAppSelector } from '@/core/store';
 import {
   AUTHBUTTON,
   ADMIN_PANEL_ICONS,
@@ -24,7 +24,7 @@ export const Header: FC = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const cartLength = useAppSelector((state) => state.cart.totalAmount);
+  const cartLength = useAppSelector(selectCartTotalAmount);
   const user = useAppSelector((state) => state.auth.userId);
 
   const authPage = ['/', '/login', '/register', '/forgot-password', '/reset-password'].includes(
