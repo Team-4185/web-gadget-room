@@ -16,6 +16,8 @@ export * from './adminProductForm';
 export * from './adminProductSku';
 export * from './phone';
 export * from './adminAnalytics';
+export * from './adminDashboardFormatters';
+export * from './adminDashboardMappers';
 export * from './adminOrders';
 export * from './error';
 export * from './fallbackPolicy';
