@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 import {
   Stepper as StepperMUI,
   Step,
@@ -7,8 +7,6 @@ import {
   StepLabel,
   Typography,
   type StepIconProps,
-  type SxProps,
-  type Theme,
 } from '@mui/material';
 import { useNavigate } from 'react-router';
 
@@ -21,7 +19,7 @@ interface IProps {
   showStepConnector: boolean;
   steps: { label: string; href?: string }[];
   activeStep?: number;
-  sx?: SxProps<Theme>;
+  sx?: CSSProperties;
 }
 
 export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep, sx }) => {
@@ -30,6 +28,7 @@ export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep
   return (
     <StepperMUI
       activeStep={activeStep}
+      style={sx}
       connector={
         showStepConnector ? (
           <StepConnector
@@ -51,7 +50,6 @@ export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep
           />
         ) : null
       }
-      sx={sx as never}
     >
       {steps.map((step, idx) => {
         return (
@@ -71,7 +69,8 @@ export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep
                         width={14}
                         height={10}
                         customColor="var(--black)"
-                        sx={{ fontWeight: 600, color: 'var(--black)' }}
+                        fontWeight={600}
+                        textColor="var(--black)"
                       />
                     ),
                   }}
@@ -99,7 +98,9 @@ export const Stepper: FC<IProps> = ({ mode, showStepConnector, steps, activeStep
                       width={11}
                       height={8}
                       customColor="var(--blue-violet)"
-                      sx={{ fontWeight: 600, color: 'var(--gray-violet)', fontSize: '11px' }}
+                      fontWeight={600}
+                      textColor="var(--gray-violet)"
+                      textFontSize="11px"
                     />
                   ),
                 }}

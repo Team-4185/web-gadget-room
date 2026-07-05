@@ -21,7 +21,6 @@ import {
   type AdminDashboardSummary,
   type AdminDashboardTopProduct,
 } from '@/core/services';
-import { useAppSelector } from '@/core/store';
 import type {
   AdminOrderStatus,
   ApiAdminSidebarCounters,
@@ -33,9 +32,15 @@ import type {
   IAdminPanelStatItem,
 } from '@/core/types';
 import { FALLBACK_IMAGE } from '@/core/constants';
-import { formatProductDisplayName } from '@/core/utils';
+import { formatProductDisplayName, isDemoFallbackEnabled } from '@/core/utils';
 
-const BRAND_COLORS = ['#4285f4', '#8a3ffc', '#d930b9', '#eaa60f', '#5f6b83'];
+const BRAND_COLORS = [
+  'var(--chart-brand-apple)',
+  'var(--chart-brand-samsung)',
+  'var(--chart-brand-xiaomi)',
+  'var(--chart-brand-google)',
+  'var(--chart-brand-other)',
+];
 const DASHBOARD_SIDE_LIST_LIMIT = 3;
 
 const formatCurrency = (value: number) =>
@@ -127,10 +132,22 @@ const mapSummaryToStats = (summary: AdminDashboardSummary): IAdminPanelStatItem[
   },
 ];
 
-const mapBrandSales = (items: AdminDashboardBrandSale[]): IAdminPanelBrandItem[] => {
+const getEmptyStats = (): IAdminPanelStatItem[] =>
+  ADMIN_PANEL_STATS.map((item) => ({
+    ...item,
+    value: '-',
+    subtitle: '',
+    trend: '0%',
+    isPositive: true,
+  }));
+
+const mapBrandSales = (
+  items: AdminDashboardBrandSale[],
+  useFallbackData: boolean
+): IAdminPanelBrandItem[] => {
   const totalUnitsSold = items.reduce((sum, item) => sum + item.unitsSold, 0);
 
-  if (!totalUnitsSold) return ADMIN_PANEL_BRANDS;
+  if (!totalUnitsSold) return useFallbackData ? ADMIN_PANEL_BRANDS : [];
 
   const sortedItems = [...items].sort((a, b) => b.unitsSold - a.unitsSold);
   const topBrands = sortedItems.slice(0, 4);
@@ -197,16 +214,22 @@ const mapSidebarCountersToMenu = (counters: ApiAdminSidebarCounters): IAdminPane
   });
 
 export const useAdminPanelData = () => {
-  const email = useAppSelector((state) => state.auth.email);
+  const demoFallbackEnabled = isDemoFallbackEnabled();
   const [menu, setMenu] = useState<IAdminPanelMenuItem[]>(ADMIN_PANEL_MENU);
-  const [stats, setStats] = useState<IAdminPanelStatItem[]>(ADMIN_PANEL_STATS);
-  const [brands, setBrands] = useState<IAdminPanelBrandItem[]>(ADMIN_PANEL_BRANDS);
-  const [topProducts, setTopProducts] = useState<IAdminPanelProductItem[]>(ADMIN_PANEL_PRODUCTS);
+  const [stats, setStats] = useState<IAdminPanelStatItem[]>(
+    demoFallbackEnabled ? ADMIN_PANEL_STATS : getEmptyStats
+  );
+  const [brands, setBrands] = useState<IAdminPanelBrandItem[]>(
+    demoFallbackEnabled ? ADMIN_PANEL_BRANDS : []
+  );
+  const [topProducts, setTopProducts] = useState<IAdminPanelProductItem[]>(
+    demoFallbackEnabled ? ADMIN_PANEL_PRODUCTS : []
+  );
   const [recentOrders, setRecentOrders] = useState<IAdminPanelOrderItem[]>(
-    ADMIN_PANEL_RECENT_ORDERS.slice(0, DASHBOARD_SIDE_LIST_LIMIT)
+    demoFallbackEnabled ? ADMIN_PANEL_RECENT_ORDERS.slice(0, DASHBOARD_SIDE_LIST_LIMIT) : []
   );
   const [lowStock, setLowStock] = useState<IAdminPanelLowStockItem[]>(
-    ADMIN_PANEL_LOW_STOCK.slice(0, DASHBOARD_SIDE_LIST_LIMIT)
+    demoFallbackEnabled ? ADMIN_PANEL_LOW_STOCK.slice(0, DASHBOARD_SIDE_LIST_LIMIT) : []
   );
 
   useEffect(() => {
@@ -230,7 +253,7 @@ export const useAdminPanelData = () => {
       }
 
       if (brandSales.status === 'fulfilled') {
-        setBrands(mapBrandSales(brandSales.value));
+        setBrands(mapBrandSales(brandSales.value, demoFallbackEnabled));
       }
 
       if (topSellingProducts.status === 'fulfilled') {
@@ -255,7 +278,7 @@ export const useAdminPanelData = () => {
     });
 
     return () => controller.abort();
-  }, []);
+  }, [demoFallbackEnabled]);
 
   return useMemo(() => {
     return {
@@ -268,5 +291,5 @@ export const useAdminPanelData = () => {
       recentOrders,
       lowStock,
     };
-  }, [brands, email, lowStock, menu, recentOrders, stats, topProducts]);
+  }, [brands, lowStock, menu, recentOrders, stats, topProducts]);
 };

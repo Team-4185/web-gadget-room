@@ -28,7 +28,7 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  background: transparent;
+  background: var(--transparent);
   color: var(--black);
   font-family: inherit;
   font-size: 14px;
@@ -42,12 +42,10 @@
 
 .labeled-form-field:focus-within {
   border-color: var(--dark-yellow);
-  box-shadow: 0 0 6.9px 0 var(--dark-yellow);
 }
 
 .labeled-form-field.is-filled:not(.is-error):not(:focus-within) {
   border-color: var(--chateau-green);
-  box-shadow: 0 0 6.9px 0 var(--chateau-green);
 }
 
 .labeled-form-field input::placeholder,
@@ -58,7 +56,6 @@
 
 .labeled-form-field.is-error {
   border-color: var(--coralRed);
-  box-shadow: 0 0 6.9px 0 var(--coralRed);
 }
 
 .labeled-form-field.is-error .labeled-form-field__label {

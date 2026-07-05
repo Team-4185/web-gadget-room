@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 
 import {
@@ -6,6 +5,7 @@ import {
   ADMIN_PRODUCT_STATUS_LABELS,
   ADMIN_PRODUCT_STORAGE_OPTIONS,
 } from '@/core/constants';
+import { useModalLifecycle } from '@/core/hooks';
 import type { ApiPhone, IAdminPanelManagedProduct } from '@/core/types';
 
 import './AdminProductOverviewModal.css';
@@ -30,17 +30,10 @@ export const AdminProductOverviewModal = ({
   isLoading = false,
   onClose,
 }: IProps) => {
-  useEffect(() => {
-    if (!product) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [product, onClose]);
+  useModalLifecycle({
+    isOpen: Boolean(product),
+    onClose,
+  });
 
   if (!product) return null;
 

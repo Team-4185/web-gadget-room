@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { Button } from '@/components/ui';
+import { useModalLifecycle } from '@/core/hooks';
 import type { IAdminCustomerItem } from '@/core/types';
 
 import './AdminCustomerMessageModal.css';
@@ -15,19 +16,16 @@ interface IProps {
 export const AdminCustomerMessageModal = ({ customer, onClose, onSend }: IProps) => {
   const [message, setMessage] = useState('');
 
+  useModalLifecycle({
+    isOpen: Boolean(customer),
+    onClose,
+  });
+
   useEffect(() => {
     if (!customer) return;
 
     setMessage('');
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [customer, onClose]);
+  }, [customer]);
 
   if (!customer) return null;
 

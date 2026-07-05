@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { Typography, type StepIconProps, type SxProps, type Theme } from '@mui/material';
+import { Typography, type StepIconProps } from '@mui/material';
 
 import { Check } from '@/assets';
 
@@ -7,13 +7,26 @@ interface IProps extends Omit<StepIconProps, 'sx'> {
   customColor: string;
   width: number;
   height: number;
-  sx?: SxProps<Theme>;
+  fontWeight?: number;
+  textColor?: string;
+  textFontSize?: string;
 }
 
-export const CustomStepIcon: FC<IProps> = ({ completed, icon, width, height, customColor, sx }) => {
+export const CustomStepIcon: FC<IProps> = ({
+  completed,
+  icon,
+  width,
+  height,
+  customColor,
+  fontWeight,
+  textColor,
+  textFontSize,
+}) => {
   if (completed) {
     return <Check width={width} height={height} style={{ color: customColor }} />;
   }
 
-  return <Typography sx={sx as never}>{icon}</Typography>;
+  return (
+    <Typography sx={{ fontWeight, color: textColor, fontSize: textFontSize }}>{icon}</Typography>
+  );
 };

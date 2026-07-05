@@ -1,5 +1,6 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Container, Typography } from '@mui/material';
+import type { FieldError } from 'react-hook-form';
 import { Navigate, useNavigate } from 'react-router';
 import { useSnackbar } from 'notistack';
 
@@ -31,6 +32,9 @@ type PaymentForm = {
 };
 
 type PaymentFormErrors = Partial<Record<keyof PaymentForm, string>>;
+
+const toFieldError = (message?: string): FieldError | undefined =>
+  message ? { type: 'manual', message } : undefined;
 
 const formatExpiry = (value: string) => {
   const digits = onlyDigits(value).slice(0, 4);
@@ -226,14 +230,14 @@ export const Payment = () => {
                 label="Cardholder Name"
                 value={form.cardHoldName}
                 onChange={setField('cardHoldName')}
-                error={errors.cardHoldName ? ({ message: errors.cardHoldName } as any) : undefined}
+                error={toFieldError(errors.cardHoldName)}
                 autoComplete="cc-name"
               />
               <Input
                 label="Card Number"
                 value={form.cardNumber}
                 onChange={setField('cardNumber')}
-                error={errors.cardNumber ? ({ message: errors.cardNumber } as any) : undefined}
+                error={toFieldError(errors.cardNumber)}
                 autoComplete="cc-number"
               />
               <div className="payment-page__field-row">
@@ -241,14 +245,14 @@ export const Payment = () => {
                   label="MM/YY"
                   value={form.expiry}
                   onChange={setField('expiry')}
-                  error={errors.expiry ? ({ message: errors.expiry } as any) : undefined}
+                  error={toFieldError(errors.expiry)}
                   autoComplete="cc-exp"
                 />
                 <Input
                   label="CVV"
                   value={form.cardCvv}
                   onChange={setField('cardCvv')}
-                  error={errors.cardCvv ? ({ message: errors.cardCvv } as any) : undefined}
+                  error={toFieldError(errors.cardCvv)}
                   autoComplete="cc-csc"
                 />
               </div>

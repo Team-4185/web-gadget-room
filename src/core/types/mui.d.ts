@@ -1,5 +1,6 @@
 import '@mui/material/styles';
 import '@mui/material/Typography';
+import '@mui/material/Select';
 import type { TypographyStyleOptions } from '@mui/material/styles/createTypography';
 
 declare module '@mui/material/styles' {
@@ -18,5 +19,11 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     aboutHeading: true;
     aboutSectionHeading: true;
+  }
+}
+
+declare module '@mui/material/Select' {
+  interface BaseSelectProps {
+    'data-style-variant'?: 'subtleBorder';
   }
 }

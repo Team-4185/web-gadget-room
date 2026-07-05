@@ -81,11 +81,11 @@ export const ADMIN_PANEL_STATS: IAdminPanelStatItem[] = [
 ];
 
 export const ADMIN_PANEL_BRANDS: IAdminPanelBrandItem[] = [
-  { id: 'apple', label: 'Apple', share: 35, color: '#4285f4' },
-  { id: 'samsung', label: 'Samsung', share: 28, color: '#8a3ffc' },
-  { id: 'xiaomi', label: 'Xiaomi', share: 18, color: '#d930b9' },
-  { id: 'google', label: 'Google', share: 12, color: '#eaa60f' },
-  { id: 'other', label: 'Other', share: 7, color: '#5f6b83' },
+  { id: 'apple', label: 'Apple', share: 35, color: 'var(--chart-brand-apple)' },
+  { id: 'samsung', label: 'Samsung', share: 28, color: 'var(--chart-brand-samsung)' },
+  { id: 'xiaomi', label: 'Xiaomi', share: 18, color: 'var(--chart-brand-xiaomi)' },
+  { id: 'google', label: 'Google', share: 12, color: 'var(--chart-brand-google)' },
+  { id: 'other', label: 'Other', share: 7, color: 'var(--chart-brand-other)' },
 ];
 
 export const ADMIN_PANEL_PRODUCTS: IAdminPanelProductItem[] = [

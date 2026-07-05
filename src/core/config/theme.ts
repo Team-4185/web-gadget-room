@@ -152,7 +152,7 @@ export const theme = createTheme({
     MuiSelect: {
       variants: [
         {
-          props: { 'data-style-variant': 'subtleBorder' } as never,
+          props: { 'data-style-variant': 'subtleBorder' },
           style: {
             borderRadius: '8px',
             boxShadow: '0 0 6.9px 0 var(--blue-violet)',
@@ -178,13 +178,13 @@ export const theme = createTheme({
           boxShadow: '0 0 7px 0 var(--blue-violet)',
           background: 'var(--white)',
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'transparent',
+            borderColor: 'var(--transparent)',
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: 'var(--blue-violet)',
           },
           '&:not(.Mui-focused):hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'transparent',
+            borderColor: 'var(--transparent)',
           },
         },
         select: {

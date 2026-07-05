@@ -19,8 +19,8 @@
   padding: 16px 20px 14px;
   background: var(--white);
   border: 0;
-  border-radius: 35px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--field-shadow);
 }
 
 .admin-order-details-modal__header {
@@ -39,7 +39,7 @@
 
 .admin-order-details-modal__close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 32px;
   font-weight: 300;
@@ -75,9 +75,9 @@
 
 .admin-order-details-modal__summary-card,
 .admin-order-details-modal__section {
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
   background: var(--white);
 }
 
@@ -99,7 +99,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--control-radius);
   padding: 7px 10px;
   color: var(--white);
   font-size: 12px;
@@ -179,9 +179,9 @@
   align-items: center;
   gap: 12px;
   padding: 9px 10px;
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
 }
 
 .admin-order-details-modal__item-image {

@@ -39,8 +39,8 @@
   place-items: center;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: #ecfff1;
-  color: #39b864;
+  background: var(--light-green);
+  color: var(--success-green);
 }
 
 .add-to-cart-modal__success svg {
@@ -60,7 +60,7 @@
   flex: 0 0 auto;
   padding: 0;
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   cursor: pointer;
 }
@@ -117,7 +117,7 @@
   align-items: center;
   gap: 7px;
   width: fit-content;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-opacity-70);
   font-size: 14px;
   line-height: 1.2;
 }
@@ -127,7 +127,7 @@
   align-items: center;
   gap: 7px;
   width: fit-content;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-opacity-70);
   font-size: 14px;
   line-height: 1.2;
 }

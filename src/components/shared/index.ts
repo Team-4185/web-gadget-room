@@ -7,3 +7,4 @@ export { LabeledFormField } from './LabeledFormField/LabeledFormField';
 export { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
 export { AddToCartModal } from './AddToCartModal/AddToCartModal';
 export { AdminPagination } from './AdminPagination/AdminPagination';
+export { ModalShell } from './ModalShell/ModalShell';

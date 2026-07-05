@@ -4,7 +4,12 @@ import axios from 'axios';
 import { CATALOG_PAGE_SIZE, PRODUCTS } from '@/core/constants';
 import { phonesService } from '@/core/services';
 import type { CatalogApiSort, IProduct, SortOption } from '@/core/types';
-import { getFallbackCatalogProductsPage, mapApiPhoneToProduct } from '@/core/utils';
+import {
+  getFallbackCatalogProductsPage,
+  isDemoFallbackEnabled,
+  isForcedTestingFallback,
+  mapApiPhoneToProduct,
+} from '@/core/utils';
 
 export const useCatalogProducts = ({
   currentPage,
@@ -23,23 +28,30 @@ export const useCatalogProducts = ({
   maxPrice: number;
   enabled?: boolean;
 }) => {
-  const [products, setProducts] = useState<IProduct[]>(PRODUCTS.slice(0, CATALOG_PAGE_SIZE));
-  const [totalProducts, setTotalProducts] = useState(PRODUCTS.length);
-  const [totalPages, setTotalPages] = useState(Math.ceil(PRODUCTS.length / CATALOG_PAGE_SIZE));
+  const demoFallbackEnabled = isDemoFallbackEnabled();
+  const forcedTestingFallback = isForcedTestingFallback();
+  const [products, setProducts] = useState<IProduct[]>(
+    demoFallbackEnabled ? PRODUCTS.slice(0, CATALOG_PAGE_SIZE) : []
+  );
+  const [totalProducts, setTotalProducts] = useState(demoFallbackEnabled ? PRODUCTS.length : 0);
+  const [totalPages, setTotalPages] = useState(
+    demoFallbackEnabled ? Math.ceil(PRODUCTS.length / CATALOG_PAGE_SIZE) : 1
+  );
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const brandsKey = brands.join('|');
+  const selectedBrands = useMemo(() => (brandsKey ? brandsKey.split('|') : []), [brandsKey]);
 
   useEffect(() => {
     if (!enabled) return;
 
-    if (import.meta.env.VITE_USE_TESTING_FALLBACK === 'true') {
+    if (forcedTestingFallback) {
       const fallback = getFallbackCatalogProductsPage({
         products: PRODUCTS,
         page: currentPage,
         sortBy,
-        selectedBrands: brands,
+        selectedBrands,
         maxPrice,
       });
 
@@ -62,7 +74,7 @@ export const useCatalogProducts = ({
           {
             page: currentPage,
             size: CATALOG_PAGE_SIZE,
-            brands,
+            brands: selectedBrands,
             minPrice,
             maxPrice,
             sort,
@@ -97,19 +109,27 @@ export const useCatalogProducts = ({
 
         if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
 
-        const fallback = getFallbackCatalogProductsPage({
-          products: PRODUCTS,
-          page: currentPage,
-          sortBy,
-          selectedBrands: brands,
-          maxPrice,
-        });
+        if (demoFallbackEnabled) {
+          const fallback = getFallbackCatalogProductsPage({
+            products: PRODUCTS,
+            page: currentPage,
+            sortBy,
+            selectedBrands,
+            maxPrice,
+          });
 
-        setProducts(fallback.products);
-        setTotalProducts(fallback.totalElements);
-        setTotalPages(fallback.totalPages);
-        setIsFirstPage(fallback.first);
-        setIsLastPage(fallback.last);
+          setProducts(fallback.products);
+          setTotalProducts(fallback.totalElements);
+          setTotalPages(fallback.totalPages);
+          setIsFirstPage(fallback.first);
+          setIsLastPage(fallback.last);
+        } else {
+          setProducts([]);
+          setTotalProducts(0);
+          setTotalPages(1);
+          setIsFirstPage(true);
+          setIsLastPage(true);
+        }
       } finally {
         if (isActive && !controller.signal.aborted) {
           setIsLoading(false);
@@ -124,11 +144,13 @@ export const useCatalogProducts = ({
       controller.abort();
     };
   }, [
-    brandsKey,
     currentPage,
+    demoFallbackEnabled,
     enabled,
+    forcedTestingFallback,
     maxPrice,
     minPrice,
+    selectedBrands,
     sort,
     sortBy,
   ]);

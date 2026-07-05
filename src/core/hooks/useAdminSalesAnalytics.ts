@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ADMIN_SALES_ANALYTICS_MOCK } from '@/core/constants';
 import { adminDashboardService, type AdminDashboardSalesPoint } from '@/core/services';
 import type { AdminAnalyticsRange, IAdminSalesAnalyticsPoint } from '@/core/types';
+import { isDemoFallbackEnabled } from '@/core/utils';
 
 const PERIOD_COUNT = 7;
 
@@ -109,9 +110,10 @@ const mapSalesPoints = (
 };
 
 export const useAdminSalesAnalytics = (range: AdminAnalyticsRange) => {
+  const demoFallbackEnabled = isDemoFallbackEnabled();
   const [apiPoints, setApiPoints] = useState<AdminDashboardSalesPoint[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFallbackData, setIsFallbackData] = useState(true);
+  const [isFallbackData, setIsFallbackData] = useState(demoFallbackEnabled);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -130,7 +132,7 @@ export const useAdminSalesAnalytics = (range: AdminAnalyticsRange) => {
         if (axios.isAxiosError(error) && error.code === 'ERR_CANCELED') return;
 
         setApiPoints([]);
-        setIsFallbackData(true);
+        setIsFallbackData(demoFallbackEnabled);
       } finally {
         if (!controller.signal.aborted) {
           setIsLoading(false);
@@ -141,11 +143,14 @@ export const useAdminSalesAnalytics = (range: AdminAnalyticsRange) => {
     loadSalesAnalytics();
 
     return () => controller.abort();
-  }, []);
+  }, [demoFallbackEnabled]);
 
   const points = useMemo<IAdminSalesAnalyticsPoint[]>(
-    () => (isFallbackData ? ADMIN_SALES_ANALYTICS_MOCK[range] : mapSalesPoints(apiPoints, range)),
-    [apiPoints, isFallbackData, range]
+    () =>
+      isFallbackData && demoFallbackEnabled
+        ? ADMIN_SALES_ANALYTICS_MOCK[range]
+        : mapSalesPoints(apiPoints, range),
+    [apiPoints, demoFallbackEnabled, isFallbackData, range]
   );
 
   return {

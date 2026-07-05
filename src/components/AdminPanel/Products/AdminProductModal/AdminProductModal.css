@@ -15,8 +15,8 @@
   height: min(760px, calc(100vh - 40px));
   background: var(--white);
   border: 0;
-  border-radius: 35px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--field-shadow);
   padding: 34px 32px 22px;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@
 
 .admin-product-modal__close {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--blue-violet);
   font-size: 36px;
   line-height: 1;
@@ -48,10 +48,10 @@
 
 .admin-product-modal__tab {
   height: 36px;
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
+  border: var(--field-border);
+  border-radius: var(--control-radius);
   background: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   color: var(--black);
   font: inherit;
   font-size: 14px;

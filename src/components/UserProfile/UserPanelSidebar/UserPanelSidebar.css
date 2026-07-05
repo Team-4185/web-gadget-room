@@ -37,8 +37,8 @@
 
 .user-panel-sidebar__item {
   border-radius: 12px;
-  border: 1px solid transparent;
-  background: transparent;
+  border: 1px solid var(--transparent);
+  background: var(--transparent);
   color: var(--black);
   display: flex;
   align-items: center;
@@ -91,7 +91,7 @@
 
 .user-panel-sidebar__logout {
   border: 0;
-  background: transparent;
+  background: var(--transparent);
   color: var(--red);
   display: inline-flex;
   align-items: center;

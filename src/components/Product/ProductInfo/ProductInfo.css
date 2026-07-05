@@ -19,7 +19,7 @@
   border: 0;
   padding: 0;
   width: fit-content;
-  background: transparent;
+  background: var(--transparent);
   cursor: pointer;
   font-size: 14px;
   line-height: 171.429%;
@@ -127,7 +127,7 @@
 .product-info__color-option:hover,
 .product-info__color-option:focus-visible {
   border-color: var(--blue-violet);
-  box-shadow: 0 0 0 3px rgba(119, 119, 191, 0.12);
+  box-shadow: 0 0 0 3px var(--blue-violet-opacity-12);
   outline: none;
 }
 
@@ -135,7 +135,7 @@
   border: 2px solid var(--blue-violet);
   box-shadow:
     0 0 0 2px var(--white),
-    0 0 0 4px rgba(119, 119, 191, 0.25);
+    0 0 0 4px var(--blue-violet-opacity-25);
 }
 
 .product-info__storage-options {

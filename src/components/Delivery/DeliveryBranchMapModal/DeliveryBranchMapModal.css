@@ -1,0 +1,205 @@
+.delivery-branch-map-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--black-opacity-25);
+  backdrop-filter: blur(3px);
+}
+
+.delivery-branch-map-modal {
+  width: min(100%, 760px);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  background: var(--white);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--field-shadow);
+  font-family: inherit;
+  padding: 26px 30px;
+}
+
+.delivery-branch-map-modal * {
+  font-family: inherit;
+}
+
+.delivery-branch-map-modal .leaflet-container,
+.delivery-branch-map-modal .leaflet-popup-content,
+.delivery-branch-map-modal .leaflet-control {
+  font-family: inherit;
+}
+
+.delivery-branch-map-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.delivery-branch-map-modal__header p {
+  margin: 6px 0 0;
+  color: var(--black-opacity-65);
+  font-size: 15px;
+}
+
+.delivery-branch-map-modal__close {
+  border: 0;
+  background: var(--transparent);
+  color: var(--blue-violet);
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.delivery-branch-map-modal__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  align-items: start;
+  gap: 18px;
+  height: min(540px, calc(100vh - 172px));
+  margin-top: 20px;
+}
+
+.delivery-branch-map-modal__canvas {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
+}
+
+.delivery-branch-map-modal__leaflet-map {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+.delivery-branch-map-modal__leaflet-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--white);
+  border-radius: 999px;
+  box-shadow: 0 0 8px 0 var(--blue-violet);
+  background: var(--blue-violet);
+}
+
+.delivery-branch-map-modal__leaflet-marker span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--white);
+}
+
+.delivery-branch-map-modal__leaflet-marker--selected {
+  background: var(--coralRed);
+}
+
+.delivery-branch-map-modal__empty {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 500;
+  width: min(80%, 320px);
+  transform: translate(-50%, -50%);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
+  background: var(--white);
+  padding: 12px;
+  color: var(--black-opacity-65);
+  font-size: 14px;
+  text-align: center;
+}
+
+.delivery-branch-map-modal__popup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.delivery-branch-map-modal__popup strong {
+  color: var(--black);
+  font-size: 14px;
+}
+
+.delivery-branch-map-modal__popup span {
+  color: var(--black-opacity-65);
+  font-size: 13px;
+}
+
+.delivery-branch-map-modal__popup button:active {
+  transform: translateY(1px);
+}
+
+.delivery-branch-map-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.delivery-branch-map-modal__list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-height: 92px;
+  padding: 12px;
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
+  background: var(--white);
+  color: var(--black);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delivery-branch-map-modal__list-item:hover,
+.delivery-branch-map-modal__list-item[data-selected='true'],
+.delivery-branch-map-modal__list-item[data-focused='true'] {
+  background: var(--soft-violet-opacity-12);
+}
+
+.delivery-branch-map-modal__list-item span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.delivery-branch-map-modal__list-item small {
+  display: block;
+  color: var(--black-opacity-65);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+@media (max-width: 760px) {
+  .delivery-branch-map-modal {
+    border-radius: 24px;
+    padding: 22px 18px;
+  }
+
+  .delivery-branch-map-modal__content {
+    grid-template-columns: 1fr;
+    height: min(620px, calc(100vh - 150px));
+  }
+
+  .delivery-branch-map-modal__canvas {
+    height: 300px;
+  }
+
+  .delivery-branch-map-modal__list {
+    max-height: 260px;
+  }
+}
