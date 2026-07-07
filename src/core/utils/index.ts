@@ -19,6 +19,7 @@ export * from './phone';
 export * from './adminAnalytics';
 export * from './adminDashboardFormatters';
 export * from './adminDashboardMappers';
+export * from './adminChartGeometry';
 export * from './adminOrders';
 export * from './error';
 export * from './fallbackPolicy';
