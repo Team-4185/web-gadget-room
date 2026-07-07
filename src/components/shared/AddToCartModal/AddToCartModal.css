@@ -15,7 +15,7 @@
   padding: 15px 20px 30px;
   border-radius: 31px;
   background: var(--white);
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
 }
 
 .add-to-cart-modal__header {

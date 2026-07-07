@@ -1,102 +1,39 @@
-import { useEffect, useState } from 'react';
-import { Container, Typography } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router';
+import { Container } from '@mui/material';
 
-import { ChevronRight } from '@/assets';
 import {
-  CircularProgress,
-  UserFavoriteProductCard,
-  UserPanelOrderCard,
   UserPanelSettings,
   UserPanelSidebar,
-  UserPanelStatCard,
+  UserProfileFavoritesTab,
+  UserProfileOrdersTab,
+  UserProfileOverviewTab,
 } from '@/components';
-import { useUserOrders, useUserPanelData } from '@/core/hooks';
-import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
-import { usersService } from '@/core/services';
-import type { UpdateUserProfilePayload, UserPanelTab } from '@/core/types';
+import { useUserProfilePage } from '@/core/hooks';
 
 import './UserProfile.css';
 
 export const UserProfile = () => {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useAppDispatch();
-  const userId = useAppSelector((state) => state.auth.userId);
-  const favorites = useAppSelector((state) => state.wishList.wishList);
-  const favoritesLoading = useAppSelector((state) => state.wishList.loading);
-  const favoritesError = useAppSelector((state) => state.wishList.error);
-  const [profileInfo, setProfileInfo] = useState<UpdateUserProfilePayload>({
-    firstName: '',
-    lastName: '',
-    city: '',
-    phoneNumber: '',
-  });
-  const [profileEmail, setProfileEmail] = useState('');
-  const { orders, totalElements, loading: ordersLoading, error: ordersError } = useUserOrders(0, 10);
-  const requestedTab = searchParams.get('tab');
-  const initialTab: UserPanelTab = requestedTab === 'favorite' ? 'favorite' : 'overview';
-  const { greeting, subtitle, menu, stats, profile } = useUserPanelData(
+  const {
+    activeTab,
+    userId,
+    profile,
     profileInfo,
-    totalElements,
-    favorites.length,
-    profileEmail
-  );
-  const [activeTab, setActiveTab] = useState<UserPanelTab>(initialTab);
-
-  useEffect(() => {
-    if (!userId) return;
-
-    const controller = new AbortController();
-
-    usersService
-      .getCurrentUser(controller.signal)
-      .then((user) => {
-        if (controller.signal.aborted) return;
-
-        setProfileInfo({
-          firstName: user.firstName ?? '',
-          lastName: user.lastName ?? '',
-          city: user.city ?? '',
-          phoneNumber: user.phoneNumber ?? '',
-        });
-        setProfileEmail(user.email ?? '');
-      })
-      .catch(() => {
-        if (controller.signal.aborted) return;
-      });
-
-    return () => {
-      controller.abort();
-    };
-  }, [userId]);
-
-  useEffect(() => {
-    if (requestedTab === 'favorite') {
-      setActiveTab('favorite');
-    }
-  }, [requestedTab]);
-
-  const handleTabChange = (tab: UserPanelTab) => {
-    setActiveTab(tab);
-
-    if (tab === 'favorite') {
-      setSearchParams({ tab: 'favorite' }, { replace: true });
-    } else {
-      setSearchParams({}, { replace: true });
-    }
-  };
-
-  const handleLogout = async () => {
-    await dispatch(authActions.logout());
-    navigate('/login');
-  };
-
-  const recentOrders = orders.slice(0, 2);
-  const isOverviewTab = activeTab === 'overview';
-  const isOrdersTab = activeTab === 'orders';
-  const isFavoriteTab = activeTab === 'favorite';
-  const isSettingsTab = activeTab === 'settings';
+    greeting,
+    subtitle,
+    menu,
+    stats,
+    orders,
+    recentOrders,
+    ordersLoading,
+    ordersError,
+    favorites,
+    favoritesLoading,
+    favoritesError,
+    handleTabChange,
+    handleLogout,
+    setProfileInfo,
+    setProfileEmail,
+    openProduct,
+  } = useUserProfilePage();
 
   return (
     <section className="user-profile" aria-label="User Profile Page">
@@ -112,138 +49,36 @@ export const UserProfile = () => {
           />
 
           <div className="user-profile__content">
-            {isOverviewTab && (
-              <>
-                <div className="user-profile__hero">
-                  <Typography
-                    component="h2"
-                    sx={{
-                      marginBottom: '4px',
-                      fontSize: '24px',
-                      fontWeight: 600,
-                      lineHeight: 1,
-                    }}
-                  >
-                    {greeting}
-                  </Typography>
-                  <Typography
-                    component="p"
-                    sx={{
-                      margin: 0,
-                      fontSize: '14px',
-                    }}
-                  >
-                    {subtitle}
-                  </Typography>
-                </div>
-
-                <div className="user-profile__stats" aria-label="Account overview">
-                  {stats.map((item) => (
-                    <UserPanelStatCard key={item.id} item={item} />
-                  ))}
-                </div>
-
-                <div className="user-profile__orders" aria-label="Recent Orders">
-                  <div className="user-profile__orders-header">
-                    <Typography
-                      component="h2"
-                      variant="h6"
-                      sx={{
-                        fontWeight: 600,
-                        lineHeight: 1,
-                      }}
-                    >
-                      Recent Orders
-                    </Typography>
-                    <button
-                      type="button"
-                      className="user-profile__view-all"
-                      onClick={() => handleTabChange('orders')}
-                    >
-                      <Typography component="span" sx={{ fontSize: '20px', color: 'inherit' }}>
-                        View All
-                      </Typography>
-                      <ChevronRight width={18} height={18} />
-                    </button>
-                  </div>
-
-                  <div className="user-profile__orders-list">
-                    {ordersLoading ? <CircularProgress /> : null}
-                    {!ordersLoading && ordersError ? (
-                      <Typography component="p">{ordersError}</Typography>
-                    ) : null}
-                    {!ordersLoading && !ordersError && !recentOrders.length ? (
-                      <Typography component="p">No recent orders yet.</Typography>
-                    ) : null}
-                    {!ordersLoading &&
-                      !ordersError &&
-                      recentOrders.map((order) => (
-                        <UserPanelOrderCard key={order.id} order={order} />
-                      ))}
-                  </div>
-                </div>
-              </>
+            {activeTab === 'overview' && (
+              <UserProfileOverviewTab
+                greeting={greeting}
+                subtitle={subtitle}
+                stats={stats}
+                recentOrders={recentOrders}
+                ordersLoading={ordersLoading}
+                ordersError={ordersError}
+                onViewAllOrders={() => handleTabChange('orders')}
+              />
             )}
 
-            {isOrdersTab && (
-              <div className="user-profile__orders" aria-label="My Orders">
-                <div className="user-profile__orders-header">
-                  <Typography
-                    component="h2"
-                    sx={{ fontSize: '32px', fontWeight: 700, lineHeight: 1 }}
-                  >
-                    My Orders
-                  </Typography>
-                </div>
-
-                <div className="user-profile__orders-list">
-                  {ordersLoading ? <CircularProgress /> : null}
-                  {!ordersLoading && ordersError ? (
-                    <Typography component="p">{ordersError}</Typography>
-                  ) : null}
-                  {!ordersLoading && !ordersError && !orders.length ? (
-                    <Typography component="p">No orders yet.</Typography>
-                  ) : null}
-                  {!ordersLoading &&
-                    !ordersError &&
-                    orders.map((order) => <UserPanelOrderCard key={order.id} order={order} />)}
-                </div>
-              </div>
+            {activeTab === 'orders' && (
+              <UserProfileOrdersTab
+                orders={orders}
+                ordersLoading={ordersLoading}
+                ordersError={ordersError}
+              />
             )}
 
-            {isFavoriteTab && (
-              <div className="user-profile__orders" aria-label="My Favorites">
-                <div className="user-profile__orders-header">
-                  <Typography
-                    component="h2"
-                    sx={{ fontSize: '32px', fontWeight: 700, lineHeight: 1 }}
-                  >
-                    My Favorites
-                  </Typography>
-                </div>
-
-                <div className="user-profile__favorites-grid">
-                  {favoritesLoading ? <CircularProgress /> : null}
-                  {!favoritesLoading && favoritesError ? (
-                    <Typography component="p">{favoritesError}</Typography>
-                  ) : null}
-                  {!favoritesLoading && !favoritesError && !favorites.length ? (
-                    <Typography component="p">No favorites yet.</Typography>
-                  ) : null}
-                  {!favoritesLoading &&
-                    !favoritesError &&
-                    favorites.map((product) => (
-                      <UserFavoriteProductCard
-                        key={product.id}
-                        product={product}
-                        onClick={() => navigate(`/product/${product.id}`)}
-                      />
-                    ))}
-                </div>
-              </div>
+            {activeTab === 'favorite' && (
+              <UserProfileFavoritesTab
+                favorites={favorites}
+                favoritesLoading={favoritesLoading}
+                favoritesError={favoritesError}
+                onProductClick={openProduct}
+              />
             )}
 
-            {isSettingsTab && (
+            {activeTab === 'settings' && (
               <UserPanelSettings
                 userId={userId}
                 email={profile.email}

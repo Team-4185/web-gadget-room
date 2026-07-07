@@ -1,15 +1,15 @@
 .admin-customers-table {
   background: var(--white);
   border-radius: 18px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 30px 40px;
 }
 
 .admin-customers-table__search {
   margin-top: 20px;
-  border: 1px solid var(--blue-violet);
+  border: var(--field-border);
   border-radius: 12px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   background: var(--white);
   min-height: 44px;
   padding: 0 12px;

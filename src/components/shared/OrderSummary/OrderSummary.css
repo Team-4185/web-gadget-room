@@ -4,7 +4,7 @@
   margin-top: 60px;
   padding: 29px 30px;
   border-radius: 37px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   background: var(--box-summary-background);
 }
 

@@ -116,8 +116,8 @@
 
 .product-card__color-menu {
   margin-top: 4px;
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
 }
 
 .product-card__color-menu .MuiMenuItem-root {

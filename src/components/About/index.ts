@@ -7,4 +7,3 @@ export { AboutTeamSection } from './AboutTeamSection/AboutTeamSection';
 export { AboutTestimonialsSection } from './AboutTestimonialsSection/AboutTestimonialsSection';
 export { AboutBrandsSection } from './AboutBrandsSection/AboutBrandsSection';
 export { AboutCTASection } from './AboutCTASection/AboutCTASection';
-

@@ -21,4 +21,3 @@ export const cartStorage = {
     localStorage.removeItem(CART_KEY);
   },
 };
-

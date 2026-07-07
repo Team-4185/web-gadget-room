@@ -1,0 +1,167 @@
+import type {
+  AdminOrderStatus,
+  ApiAdminPaymentStatus,
+  IAdminManagedOrderItem,
+  IAdminOrderKpiItem,
+} from '@/core/types';
+import { SmallClock, SmallTruck, StatusCancelled, StatusDelivered } from '@/assets';
+
+export const ADMIN_ORDER_KPIS: IAdminOrderKpiItem[] = [
+  { id: 'confirmed', title: 'Confirmed', value: '23', icon: StatusDelivered },
+  { id: 'processing', title: 'Processing', value: '856', icon: SmallClock },
+  { id: 'delivered', title: 'Delivered', value: '60', icon: SmallTruck },
+  { id: 'cancelled', title: 'Cancelled', value: '23', icon: StatusCancelled },
+];
+
+export const ADMIN_ORDER_STATUS_LABELS: Record<AdminOrderStatus, string> = {
+  new: 'New',
+  confirmed: 'Confirmed',
+  processing: 'Processing',
+  shipped: 'Shipped',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled',
+};
+
+export const ADMIN_ORDER_PAYMENT_METHOD_LABELS = {
+  CARD: 'Card online',
+  CASH_ON_DELIVERY: 'Cash on delivery',
+} as const;
+
+export const ADMIN_ORDER_PAYMENT_STATUS_LABELS: Record<ApiAdminPaymentStatus, string> = {
+  PENDING: 'Pending',
+  PAID: 'Paid',
+  FAILED: 'Failed',
+  REFUNDED: 'Refunded',
+};
+
+export const ADMIN_ORDER_FILTER_TABS = [
+  { id: 'all', label: 'All orders' },
+  { id: 'new', label: 'New' },
+  { id: 'confirmed', label: 'Confirmed' },
+  { id: 'processing', label: 'Processing' },
+  { id: 'shipped', label: 'Shipped' },
+  { id: 'delivered', label: 'Delivered' },
+  { id: 'cancelled', label: 'Cancelled' },
+] as const;
+
+export type AdminOrderFilterId = (typeof ADMIN_ORDER_FILTER_TABS)[number]['id'];
+
+export const ADMIN_MANAGED_ORDERS: IAdminManagedOrderItem[] = [
+  {
+    id: '1',
+    orderNumber: '#ORD-8472',
+    customer: 'Ivan Petrov',
+    email: 'ivan@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '12 Oct 2025',
+    time: '14:30',
+    status: 'new',
+  },
+  {
+    id: '2',
+    orderNumber: '#ORD-8471',
+    customer: 'Maria Ivanova',
+    email: 'mari@gmail.com',
+    paymentMethod: 'CASH_ON_DELIVERY',
+    paymentStatus: 'PENDING',
+    deliveryMethod: 'COURIER',
+    itemsCount: 1,
+    date: '12 Oct 2025',
+    time: '13:45',
+    status: 'confirmed',
+  },
+  {
+    id: '3',
+    orderNumber: '#ORD-8470',
+    customer: 'Alexey Smirov',
+    email: 'smir@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 2,
+    date: '12 Oct 2025',
+    time: '11:20',
+    status: 'shipped',
+  },
+  {
+    id: '4',
+    orderNumber: '#ORD-8469',
+    customer: 'Elena Kozlova',
+    email: 'elen@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '16:15',
+    status: 'delivered',
+  },
+  {
+    id: '5',
+    orderNumber: '#ORD-8468',
+    customer: 'Dmitry Volkov',
+    email: 'gima@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'FAILED',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '10:00',
+    status: 'cancelled',
+  },
+  {
+    id: '6',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CASH_ON_DELIVERY',
+    paymentStatus: 'PENDING',
+    deliveryMethod: 'COURIER',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+  {
+    id: '7',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'delivered',
+  },
+  {
+    id: '8',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+  {
+    id: '9',
+    orderNumber: '#ORD-8467',
+    customer: 'Anna Sokolova',
+    email: 'anna@gmail.com',
+    paymentMethod: 'CARD',
+    paymentStatus: 'PAID',
+    deliveryMethod: 'POST_OFFICE',
+    itemsCount: 1,
+    date: '11 Oct 2025',
+    time: '15:30',
+    status: 'confirmed',
+  },
+];

@@ -65,7 +65,8 @@ const formatBranchLabel = (place: NominatimPlace, provider: DeliveryBranchProvid
   const name = normalizeProviderName(rawName, provider);
   const branchNumber = name.match(/(?:#|\u2116)\s*\d+/)?.[0];
 
-  if (branchNumber) return `${PROVIDER_DISPLAY_NAME[provider]} ${branchNumber.replace('#', 'No. ')}`;
+  if (branchNumber)
+    return `${PROVIDER_DISPLAY_NAME[provider]} ${branchNumber.replace('#', 'No. ')}`;
 
   const address = place.address;
   const street = address?.road;

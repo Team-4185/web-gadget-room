@@ -151,8 +151,7 @@ export const useAdminProductModal = ({ onRefreshProducts }: IProps) => {
   };
 
   const saveProductModal = async () => {
-    const resolvedStatus = editingProduct?.status ?? 'IN_STOCK';
-    const payload = buildAdminPhonePayload(draftProduct, resolvedStatus);
+    const payload = buildAdminPhonePayload(draftProduct);
 
     const validationErrors = validateAdminProductDraft(draftProduct, payload);
     const nextVariantErrors = validateAdminProductVariants(draftProduct.variants);

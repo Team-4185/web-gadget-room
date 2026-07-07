@@ -18,12 +18,9 @@ export const userProfileSchema = z.object({
   firstName: profileNameSchema('First name'),
   lastName: profileNameSchema('Last name'),
   city: profileNameSchema('City'),
-  phoneNumber: z
-    .string()
-    .trim()
-    .refine(isValidPhoneNumber, {
-      error: 'Phone number must be in the format +380 (50) 555-55-55',
-    }),
+  phoneNumber: z.string().trim().refine(isValidPhoneNumber, {
+    error: 'Phone number must be in the format +380 (50) 555-55-55',
+  }),
 });
 
 export type UserProfileFormValues = z.infer<typeof userProfileSchema>;

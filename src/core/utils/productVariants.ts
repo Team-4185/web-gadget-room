@@ -80,8 +80,13 @@ export const formatStorageCapacity = (storage?: ApiStorageCapacity) =>
 const uniqueByName = <T extends { name: string }>(items: T[]) =>
   Array.from(new Map(items.map((item) => [item.name, item])).values());
 
-export const getPhoneColorFromVariant = (colorName: ApiPhoneColorName, colors: ApiPhoneColor[] = []) =>
-  colors.find((color) => color.name === colorName) ?? PHONE_COLOR_BY_NAME[colorName] ?? DEFAULT_PHONE_COLOR;
+export const getPhoneColorFromVariant = (
+  colorName: ApiPhoneColorName,
+  colors: ApiPhoneColor[] = []
+) =>
+  colors.find((color) => color.name === colorName) ??
+  PHONE_COLOR_BY_NAME[colorName] ??
+  DEFAULT_PHONE_COLOR;
 
 export const getStorageCapacityFromVariant = (
   storageName: ApiStorageCapacityName,
@@ -94,12 +99,12 @@ export const getStorageCapacityFromVariant = (
 export const getProductColorOptions = (product: Pick<IProduct, 'colors' | 'variants'>) =>
   uniqueByName([
     ...(product.colors ?? []),
-    ...(product.variants ?? []).map((variant) => getPhoneColorFromVariant(variant.color, product.colors)),
+    ...(product.variants ?? []).map((variant) =>
+      getPhoneColorFromVariant(variant.color, product.colors)
+    ),
   ]);
 
-export const getProductStorageOptions = (
-  product: Pick<IProduct, 'storageCapacity' | 'variants'>
-) =>
+export const getProductStorageOptions = (product: Pick<IProduct, 'storageCapacity' | 'variants'>) =>
   uniqueByName([
     ...(product.storageCapacity ?? []),
     ...(product.variants ?? []).map((variant) =>
@@ -158,7 +163,10 @@ export const applySelectedProductVariant = (
     ...product,
     selectedVariantId: variant.id,
     selectedColor: getPhoneColorFromVariant(variant.color, product.colors),
-    selectedStorage: getStorageCapacityFromVariant(variant.storageCapacity, product.storageCapacity),
+    selectedStorage: getStorageCapacityFromVariant(
+      variant.storageCapacity,
+      product.storageCapacity
+    ),
     price: variant.price,
     stock: variant.stock,
     status: variant.status,

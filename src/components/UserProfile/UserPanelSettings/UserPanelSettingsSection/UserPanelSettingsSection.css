@@ -1,7 +1,7 @@
 .user-profile__settings-card {
   background: var(--white);
   border-radius: 25px;
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 20px 30px;
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   background: var(--light-violet);
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
 }
 
 .user-profile__settings-icon svg {

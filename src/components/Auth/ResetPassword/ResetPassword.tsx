@@ -6,11 +6,13 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 
-import { PASSWORD_TOOLTIP, FADEUP, PASSWORD_RESET_STEPS } from '@/core/constants';
+import { FADEUP, PASSWORD_RESET_STEPS } from '@/core/constants';
 import { ChevronLeft } from '@/assets';
-import { Button, FormInput, Stepper } from '@/components';
+import { Stepper } from '@/components';
 import { resetPasswordSchema, type FormResetPassword } from '@/core/schemas';
 import { authActions, useAppDispatch, useAppSelector } from '@/core/store';
+import { ResetPasswordDoneStep } from './ResetPasswordDoneStep';
+import { ResetPasswordFormStep } from './ResetPasswordFormStep';
 
 import './ResetPassword.css';
 
@@ -122,89 +124,14 @@ export const ResetPassword: FC<IProps> = ({ className = '', onResetDone }) => {
       </div>
 
       {isResetDone ? (
-        <div className="reset-password__done">
-          <Typography
-            sx={{
-              fontWeight: 600,
-              fontSize: '14px',
-              color: 'var(--muted-violet)',
-              letterSpacing: '-1px',
-            }}
-          >
-            You can now log in with your new password.
-          </Typography>
-          <Button
-            type="button"
-            maxWidth="549px"
-            height="36px"
-            textTransform="uppercase"
-            sx={{ marginTop: '40px' }}
-            onClick={() => navigate('/login', { replace: true })}
-          >
-            Back to Login
-          </Button>
-        </div>
+        <ResetPasswordDoneStep onBackToLogin={() => navigate('/login', { replace: true })} />
       ) : (
-        <form className="reset-password__form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormInput
-            type="password"
-            name="newPassword"
-            label="New password"
-            tooltipText={PASSWORD_TOOLTIP}
-            control={control}
-            autoComplete="new-password"
-            isPassword
-            required
-          />
-
-          <Typography
-            sx={{
-              marginTop: '12px',
-              fontWeight: 600,
-              fontSize: '12px',
-              color: 'var(--muted-violet)',
-              letterSpacing: '-1px',
-            }}
-          >
-            Use at least 8 characters, including uppercase, lowercase, number, and special symbol.
-          </Typography>
-
-          <FormInput
-            type="password"
-            name="confirmPassword"
-            label="Confirm password"
-            tooltipText={PASSWORD_TOOLTIP}
-            control={control}
-            autoComplete="new-password"
-            isPassword
-            required
-          />
-
-          {!hasToken ? (
-            <Typography
-              sx={{
-                marginTop: '12px',
-                fontWeight: 600,
-                fontSize: '12px',
-                color: 'var(--coralRed)',
-                letterSpacing: '-1px',
-              }}
-            >
-              Password reset link is missing or invalid.
-            </Typography>
-          ) : null}
-
-          <Button
-            type="submit"
-            maxWidth="549px"
-            height="36px"
-            textTransform="uppercase"
-            sx={{ marginTop: '40px' }}
-            disabled={!hasToken || isLoading}
-          >
-            Set New Password
-          </Button>
-        </form>
+        <ResetPasswordFormStep
+          control={control}
+          hasToken={hasToken}
+          isLoading={isLoading}
+          onSubmit={handleSubmit(onSubmit)}
+        />
       )}
 
       <Typography

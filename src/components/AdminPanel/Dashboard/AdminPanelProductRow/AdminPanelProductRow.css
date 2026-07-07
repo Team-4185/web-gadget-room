@@ -1,7 +1,7 @@
 .admin-panel-product-row {
   background: var(--white);
   border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 6px;
   display: flex;
   justify-content: space-between;

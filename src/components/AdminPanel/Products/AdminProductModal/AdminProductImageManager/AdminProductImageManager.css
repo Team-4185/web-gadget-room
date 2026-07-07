@@ -33,8 +33,8 @@
 
 .admin-product-image-manager__upload-inner {
   border: 1px dashed var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
   min-height: 122px;
   height: 100%;
   display: grid;
@@ -60,9 +60,9 @@
 }
 
 .admin-product-image-manager__image-list {
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
   min-height: 122px;
   height: 100%;
   padding: 14px 16px;

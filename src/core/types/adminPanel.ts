@@ -1,6 +1,11 @@
 import type { ComponentType } from 'react';
 import type { SvgIconProps } from '@mui/material';
-import type { ApiPhoneColorName, ApiPhoneImage, ApiStorageCapacityName, PhoneStockStatus } from './product';
+import type {
+  ApiPhoneColorName,
+  ApiPhoneImage,
+  ApiStorageCapacityName,
+  PhoneStockStatus,
+} from './product';
 import type { OrderDeliveryMethod, OrderPaymentMethod } from './order';
 
 export type AdminPanelTab = 'dashboard' | 'product' | 'orders' | 'customers';

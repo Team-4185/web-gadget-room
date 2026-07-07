@@ -90,54 +90,72 @@ export const mapCartDtoToProducts = async (
         return product;
       }
 
-    const backendProduct = backendProducts.find((product) => product.id === phoneId);
-    if (backendProduct) {
-      return applySelectedProductVariant({
-        ...backendProduct,
+      const backendProduct = backendProducts.find((product) => product.id === phoneId);
+      if (backendProduct) {
+        return applySelectedProductVariant(
+          {
+            ...backendProduct,
+            amount,
+            selectedVariantId: variantId ?? variant?.id ?? backendProduct.selectedVariantId,
+            selectedColor:
+              (variant && getPhoneColorFromVariant(variant.color, backendProduct.colors)) ??
+              selectedColor ??
+              backendProduct.selectedColor ??
+              getDefaultPhoneColor(backendProduct.colors),
+            selectedStorage:
+              (variant &&
+                getStorageCapacityFromVariant(
+                  variant.storageCapacity,
+                  backendProduct.storageCapacity
+                )) ??
+              selectedStorage ??
+              backendProduct.selectedStorage ??
+              getDefaultStorageCapacity(backendProduct.storageCapacity),
+          },
+          variant?.color ?? selectedColor?.name,
+          variant?.storageCapacity ?? selectedStorage?.name
+        );
+      }
+
+      const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
+
+      if (sourceProduct) {
+        return applySelectedProductVariant(
+          {
+            ...sourceProduct,
+            amount,
+            selectedVariantId: variantId ?? variant?.id ?? sourceProduct.selectedVariantId,
+            selectedColor:
+              (variant && getPhoneColorFromVariant(variant.color, sourceProduct.colors)) ??
+              selectedColor ??
+              sourceProduct.selectedColor ??
+              getDefaultPhoneColor(sourceProduct.colors),
+            selectedStorage:
+              (variant &&
+                getStorageCapacityFromVariant(
+                  variant.storageCapacity,
+                  sourceProduct.storageCapacity
+                )) ??
+              selectedStorage ??
+              sourceProduct.selectedStorage ??
+              getDefaultStorageCapacity(sourceProduct.storageCapacity),
+          },
+          variant?.color ?? selectedColor?.name,
+          variant?.storageCapacity ?? selectedStorage?.name
+        );
+      }
+
+      return {
+        id: phoneId,
+        name: `Phone #${phoneId}`,
+        price: 0,
+        img: FALLBACK_IMAGE,
         amount,
-        selectedVariantId: variantId ?? variant?.id ?? backendProduct.selectedVariantId,
-        selectedColor:
-          (variant && getPhoneColorFromVariant(variant.color, backendProduct.colors)) ??
-          selectedColor ?? backendProduct.selectedColor ?? getDefaultPhoneColor(backendProduct.colors),
-        selectedStorage:
-          (variant &&
-            getStorageCapacityFromVariant(variant.storageCapacity, backendProduct.storageCapacity)) ??
-          selectedStorage ??
-          backendProduct.selectedStorage ??
-          getDefaultStorageCapacity(backendProduct.storageCapacity),
-      }, variant?.color ?? selectedColor?.name, variant?.storageCapacity ?? selectedStorage?.name);
-    }
-
-    const sourceProduct = PRODUCTS.find((product) => product.id === phoneId);
-
-    if (sourceProduct) {
-      return applySelectedProductVariant({
-        ...sourceProduct,
-        amount,
-        selectedVariantId: variantId ?? variant?.id ?? sourceProduct.selectedVariantId,
-        selectedColor:
-          (variant && getPhoneColorFromVariant(variant.color, sourceProduct.colors)) ??
-          selectedColor ?? sourceProduct.selectedColor ?? getDefaultPhoneColor(sourceProduct.colors),
-        selectedStorage:
-          (variant &&
-            getStorageCapacityFromVariant(variant.storageCapacity, sourceProduct.storageCapacity)) ??
-          selectedStorage ??
-          sourceProduct.selectedStorage ??
-          getDefaultStorageCapacity(sourceProduct.storageCapacity),
-      }, variant?.color ?? selectedColor?.name, variant?.storageCapacity ?? selectedStorage?.name);
-    }
-
-    return {
-      id: phoneId,
-      name: `Phone #${phoneId}`,
-      price: 0,
-      img: FALLBACK_IMAGE,
-      amount,
-      variants: variant ? [variant] : [],
-      selectedVariantId: variantId ?? variant?.id,
-      selectedColor: selectedColor ?? getDefaultPhoneColor(),
-      selectedStorage: selectedStorage ?? getDefaultStorageCapacity(),
-    };
+        variants: variant ? [variant] : [],
+        selectedVariantId: variantId ?? variant?.id,
+        selectedColor: selectedColor ?? getDefaultPhoneColor(),
+        selectedStorage: selectedStorage ?? getDefaultStorageCapacity(),
+      };
     })
   );
 

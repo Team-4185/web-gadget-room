@@ -31,3 +31,12 @@ export type PaymentFormErrors = {
 };
 
 export type SetField = (method: PaymentMethod, field: PaymentFieldsKey, value: string) => void;
+
+export type CardPaymentForm = {
+  cardHoldName: string;
+  cardNumber: string;
+  expiry: string;
+  cardCvv: string;
+};
+
+export type CardPaymentFormErrors = Partial<Record<keyof CardPaymentForm, string>>;

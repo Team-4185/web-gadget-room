@@ -3,14 +3,11 @@ import { CircularProgress, Typography } from '@mui/material';
 
 import { ConfirmationModal } from '@/components/shared';
 import { Button } from '@/components/ui';
-import { FALLBACK_IMAGE } from '@/core/constants';
 import { useModalLifecycle } from '@/core/hooks';
-import {
-  ADMIN_ORDER_PAYMENT_METHOD_LABELS,
-  ADMIN_ORDER_PAYMENT_STATUS_LABELS,
-  ADMIN_ORDER_STATUS_LABELS,
-} from '@/core/constants';
 import type { AdminOrderAction, IAdminOrderDetails } from '@/core/types';
+import { AdminOrderDeliveryInfo } from './AdminOrderDeliveryInfo';
+import { AdminOrderItemsList } from './AdminOrderItemsList';
+import { AdminOrderSummary } from './AdminOrderSummary';
 
 import './AdminOrderDetailsModal.css';
 
@@ -38,14 +35,6 @@ const FALLBACK_ACTIONS_BY_STATUS: Partial<
   processing: ['ship', 'cancel'],
   shipped: ['deliver'],
 };
-
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
 
 export const AdminOrderDetailsModal: FC<IProps> = ({
   order,
@@ -139,128 +128,9 @@ export const AdminOrderDetailsModal: FC<IProps> = ({
           </div>
         ) : order ? (
           <div className="admin-order-details-modal__content">
-            <div className="admin-order-details-modal__summary">
-              <div className="admin-order-details-modal__summary-card">
-                <Typography component="span" fontSize="13px" fontWeight={600}>
-                  Status
-                </Typography>
-                <div className={`admin-order-details-modal__status is-${order.status}`}>
-                  {ADMIN_ORDER_STATUS_LABELS[order.status]}
-                </div>
-              </div>
-              <div className="admin-order-details-modal__summary-card">
-                <Typography component="span" fontSize="14px" fontWeight={600}>
-                  Payment
-                </Typography>
-                <Typography component="p" fontSize="13px" fontWeight={500}>
-                  {ADMIN_ORDER_PAYMENT_STATUS_LABELS[order.paymentStatus]}
-                </Typography>
-                <Typography component="p" fontSize="13px" color="var(--black-opacity-65)">
-                  {ADMIN_ORDER_PAYMENT_METHOD_LABELS[order.paymentMethod]}
-                </Typography>
-              </div>
-              <div className="admin-order-details-modal__summary-card">
-                <Typography component="span" fontSize="14px" fontWeight={600}>
-                  Total
-                </Typography>
-                <Typography component="p" fontSize="20px" fontWeight={600}>
-                  {formatCurrency(order.total)}
-                </Typography>
-              </div>
-            </div>
-
-            <section className="admin-order-details-modal__section">
-              <Typography component="h4" fontSize="16px" fontWeight={600}>
-                Customer
-              </Typography>
-              <div className="admin-order-details-modal__field-grid">
-                <div>
-                  <Typography component="span" fontSize="14px" fontWeight={500}>
-                    Name
-                  </Typography>
-                  <Typography component="p" fontSize="13px" fontWeight={400}>
-                    {order.customer}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography component="span" fontSize="14px" fontWeight={500}>
-                    Phone
-                  </Typography>
-                  <Typography component="p" fontSize="13px" fontWeight={400}>
-                    {order.phone}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography component="span" fontSize="14px" fontWeight={500}>
-                    Email
-                  </Typography>
-                  <Typography component="p" fontSize="13px" fontWeight={400}>
-                    {order.email}
-                  </Typography>
-                </div>
-              </div>
-            </section>
-
-            <section className="admin-order-details-modal__section">
-              <Typography component="h4" fontSize="16px" fontWeight={600}>
-                Delivery
-              </Typography>
-              <div className="admin-order-details-modal__field-grid admin-order-details-modal__field-grid--delivery">
-                <div>
-                  <Typography component="span" fontSize="14px" fontWeight={600}>
-                    Method
-                  </Typography>
-                  <Typography component="p" fontSize="13px" fontWeight={400}>
-                    {order.deliveryMethod}
-                  </Typography>
-                </div>
-                <div>
-                  <Typography component="span" fontSize="14px" fontWeight={600}>
-                    Address
-                  </Typography>
-                  <Typography component="p" fontSize="13px" fontWeight={400}>
-                    {order.shippingAddress}
-                  </Typography>
-                </div>
-              </div>
-            </section>
-
-            <div className="admin-order-details-modal__items">
-              <Typography component="h4" fontSize="20px" fontWeight={600}>
-                Ordered items
-              </Typography>
-
-              <div className="admin-order-details-modal__items-list">
-                {order.items.map((item) => (
-                  <div className="admin-order-details-modal__item" key={item.id}>
-                    <img
-                      className="admin-order-details-modal__item-image"
-                      src={item.image || FALLBACK_IMAGE}
-                      alt={item.title}
-                      onError={(event) => {
-                        event.currentTarget.src = FALLBACK_IMAGE;
-                      }}
-                    />
-                    <div className="admin-order-details-modal__item-info">
-                      <Typography component="p" fontSize="16px" fontWeight={600}>
-                        {item.title}
-                      </Typography>
-                      <Typography component="p" fontSize="13px" color="var(--black-opacity-65)">
-                        SKU: {item.sku}
-                      </Typography>
-                      <div className="admin-order-details-modal__item-details">
-                        <span>Quantity: {item.quantity}</span>
-                        {item.color ? <span>Color: {item.color}</span> : null}
-                        {item.storage ? <span>Storage: {item.storage}</span> : null}
-                      </div>
-                    </div>
-                    <div className="admin-order-details-modal__item-price">
-                      <strong>{formatCurrency(item.totalPrice)}</strong>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <AdminOrderSummary order={order} />
+            <AdminOrderDeliveryInfo order={order} />
+            <AdminOrderItemsList items={order.items} />
 
             {actions.length ? (
               <div className="admin-order-details-modal__actions">

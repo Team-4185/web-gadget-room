@@ -1,7 +1,7 @@
 .admin-product-management {
   background: var(--white);
   border-radius: 18px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 40px;
 }
 
@@ -20,9 +20,9 @@
 }
 
 .admin-product-management__search {
-  border: 1px solid var(--blue-violet);
-  border-radius: 8px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  border: var(--field-border);
+  border-radius: var(--control-radius);
+  box-shadow: var(--field-shadow);
   background: var(--white);
   display: inline-flex;
   align-items: center;

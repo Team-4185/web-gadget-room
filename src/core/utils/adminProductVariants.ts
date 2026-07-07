@@ -1,18 +1,12 @@
 import type {
   AdminProductVariantDraft,
   AdminProductVariantErrors,
-  ApiStorageCapacityName,
   CreatePhonePayload,
   IAdminProductFormState,
   PhoneStockStatus,
 } from '@/core/types';
 
-const normalizeSkuPart = (value: string) =>
-  value
-    .trim()
-    .toUpperCase()
-    .replace(/[^A-Z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+import { buildProductSku, buildVariantSku } from './adminProductSku';
 
 const getNumberValue = (value: string) => {
   const parsed = Number(value.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
@@ -23,20 +17,6 @@ const getIntegerValue = (value: string) => {
   const parsed = Number(value.replace(/[^\d]/g, ''));
   return Number.isFinite(parsed) ? parsed : 0;
 };
-
-export const getStorageSkuPart = (storage: ApiStorageCapacityName) =>
-  storage.replace('CAPACITY_', '');
-
-export const buildProductSku = (brand: string, name: string) => {
-  const sku = [normalizeSkuPart(brand), normalizeSkuPart(name)].filter(Boolean).join('-');
-  return sku.slice(0, 64);
-};
-
-export const buildVariantSku = (
-  productSku: string,
-  color: string,
-  storageCapacity: ApiStorageCapacityName
-) => `${productSku}-${normalizeSkuPart(color)}-${getStorageSkuPart(storageCapacity)}`.slice(0, 64);
 
 export const resolveProductStatus = (stock: number): PhoneStockStatus => {
   if (stock <= 0) return 'OUT_OF_STOCK';

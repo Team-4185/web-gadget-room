@@ -5,7 +5,12 @@ import { Liked } from '@/assets';
 import { Button } from '@/components';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import { cartActions, useAppDispatch, useAppSelector, wishListActions } from '@/core/store';
-import { applySelectedProductVariant, formatStorageCapacity, getDefaultPhoneColor, getDefaultStorageCapacity } from '@/core/utils';
+import {
+  applySelectedProductVariant,
+  formatStorageCapacity,
+  getDefaultPhoneColor,
+  getDefaultStorageCapacity,
+} from '@/core/utils';
 import type { IProduct } from '@/core/types';
 
 import './UserFavoriteProductCard.css';
@@ -32,7 +37,8 @@ export const UserFavoriteProductCard: FC<IProps> = ({ product, onClick }) => {
   const selectedColor =
     productWithSelectedVariant.selectedColor ?? getDefaultPhoneColor(product.colors);
   const selectedStorage =
-    productWithSelectedVariant.selectedStorage ?? getDefaultStorageCapacity(product.storageCapacity);
+    productWithSelectedVariant.selectedStorage ??
+    getDefaultStorageCapacity(product.storageCapacity);
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.src = FALLBACK_IMAGE;

@@ -14,28 +14,15 @@ interface IProps {
   onProductClick: (product: IProduct) => void;
 }
 
-const catalogProductSkeletons = Array.from(
-  { length: CATALOG_PAGE_SIZE },
-  (_, index) => index
-);
+const catalogProductSkeletons = Array.from({ length: CATALOG_PAGE_SIZE }, (_, index) => index);
 
-export const CatalogProductGrid: FC<IProps> = ({
-  items,
-  isLoading,
-  onProductClick,
-}) => (
+export const CatalogProductGrid: FC<IProps> = ({ items, isLoading, onProductClick }) => (
   <div className="catalog__products">
     {isLoading ? (
-      catalogProductSkeletons.map((item) => (
-        <CatalogProductCardSkeleton key={item} />
-      ))
+      catalogProductSkeletons.map((item) => <CatalogProductCardSkeleton key={item} />)
     ) : items.length ? (
       items.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onClick={() => onProductClick(product)}
-        />
+        <ProductCard key={product.id} product={product} onClick={() => onProductClick(product)} />
       ))
     ) : (
       <p className="catalog__products-status">No products found.</p>

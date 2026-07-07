@@ -47,7 +47,7 @@ const normalizePoint = (
 export const normalizeAdminSalesAnalyticsResponse = (
   payload: IAdminSalesAnalyticsApiResponse | IAdminSalesAnalyticsApiPoint[]
 ): IAdminSalesAnalyticsPoint[] => {
-  const source = Array.isArray(payload) ? payload : payload.points ?? [];
+  const source = Array.isArray(payload) ? payload : (payload.points ?? []);
 
   return source.map((point, index) => normalizePoint(point, index));
 };

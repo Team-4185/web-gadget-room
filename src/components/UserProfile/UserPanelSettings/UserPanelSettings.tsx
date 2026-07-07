@@ -11,7 +11,12 @@ import {
   UserPanelPersonalInfoSection,
 } from '@/components';
 import { usersService } from '@/core/services';
-import { normalizePhoneNumber, tokenStorage, toErrorMessage, toValidationMessages } from '@/core/utils';
+import {
+  normalizePhoneNumber,
+  tokenStorage,
+  toErrorMessage,
+  toValidationMessages,
+} from '@/core/utils';
 import { authActions, useAppDispatch } from '@/core/store';
 import type { UpdateUserProfilePayload } from '@/core/types';
 import { type UserProfileFormValues, userProfileSchema } from '@/core/schemas';
@@ -237,7 +242,10 @@ export const UserPanelSettings: FC<UserPanelSettingsProps> = ({
         onChange={handlePasswordChange}
         onSubmit={() => void handlePasswordSave()}
       />
-      <UserPanelNotificationsSection value={notificationState} onToggle={handleNotificationToggle} />
+      <UserPanelNotificationsSection
+        value={notificationState}
+        onToggle={handleNotificationToggle}
+      />
     </div>
   );
 };

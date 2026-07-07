@@ -1,7 +1,13 @@
 import { type SyntheticEvent } from 'react';
 import { Typography } from '@mui/material';
 
-import { cartActions, useAppSelector, useAppDispatch } from '@/core/store';
+import {
+  cartActions,
+  selectCartLoading,
+  selectCartProducts,
+  useAppSelector,
+  useAppDispatch,
+} from '@/core/store';
 import { Trash, Plus, Minus } from '@/assets';
 import { FALLBACK_IMAGE } from '@/core/constants';
 import {
@@ -12,8 +18,8 @@ import {
 import './ProductsCart.css';
 
 export const ProductsCart = () => {
-  const products = useAppSelector((state) => state.cart.cart);
-  const cartLoading = useAppSelector((state) => state.cart.loading);
+  const products = useAppSelector(selectCartProducts);
+  const cartLoading = useAppSelector(selectCartLoading);
   const dispatch = useAppDispatch();
 
   const handleImageError = (event: SyntheticEvent<HTMLImageElement>) => {
@@ -23,7 +29,10 @@ export const ProductsCart = () => {
   return (
     <>
       {products.map((product, idx) => (
-        <article key={`${product.id}-${product.selectedVariantId ?? 'phone'}`} className="cart-item">
+        <article
+          key={`${product.id}-${product.selectedVariantId ?? 'phone'}`}
+          className="cart-item"
+        >
           {idx === 0 ? null : <div className="cart-item__divider" />}
 
           <div className="cart-item__main">
@@ -136,4 +145,3 @@ export const ProductsCart = () => {
     </>
   );
 };
-

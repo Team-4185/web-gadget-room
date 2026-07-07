@@ -19,7 +19,7 @@
 .admin-dashboard-tab__products {
   background: var(--white);
   border-radius: 18px;
-  box-shadow: 0 0 6.9px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 24px 19px;
   max-width: 588px;
 }

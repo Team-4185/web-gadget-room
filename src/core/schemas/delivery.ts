@@ -29,33 +29,24 @@ export const deliveryCheckoutSchema = z.object({
       .min(10, { error: 'Email must be between 10 and 100 characters' })
       .max(100, { error: 'Email must be between 10 and 100 characters' })
       .email({ error: 'Enter a valid email address' }),
-    phone: z
-      .string()
-      .trim()
-      .refine(isValidPhoneNumber, {
-        error: 'Phone number must be in the format +380 (50) 555-55-55',
-      }),
+    phone: z.string().trim().refine(isValidPhoneNumber, {
+      error: 'Phone number must be in the format +380 (50) 555-55-55',
+    }),
     region: z.string().trim().min(1, { error: 'Please select a region' }),
   }),
   delivery: z.object({
     courierAddress: z.object({
-      city: z
-        .string()
-        .trim()
-        .regex(regionPattern, {
-          error: 'City must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
-        }),
-      street: z
-        .string()
-        .trim()
-        .regex(streetPattern, {
-          error:
-            'Street must be 2-100 characters and contain only letters, numbers, spaces, dot, comma, apostrophe, slash, or hyphen',
-        }),
-      houseNumber: z
-        .string()
-        .trim()
-        .regex(houseNumberPattern, { error: "Use house format like '10', '10A', '10/2', or '12-B'" }),
+      city: z.string().trim().regex(regionPattern, {
+        error:
+          'City must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
+      }),
+      street: z.string().trim().regex(streetPattern, {
+        error:
+          'Street must be 2-100 characters and contain only letters, numbers, spaces, dot, comma, apostrophe, slash, or hyphen',
+      }),
+      houseNumber: z.string().trim().regex(houseNumberPattern, {
+        error: "Use house format like '10', '10A', '10/2', or '12-B'",
+      }),
       apartmentNumber: z
         .string()
         .trim()
@@ -63,18 +54,13 @@ export const deliveryCheckoutSchema = z.object({
           error: 'Apartment must be 1-5 digits, optionally followed by a letter',
         })
         .optional(),
-      country: z
-        .string()
-        .trim()
-        .regex(regionPattern, {
-          error: 'Country must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
-        }),
-      zipCode: z
-        .string()
-        .trim()
-        .regex(zipCodePattern, {
-          error: 'ZIP code must be 3-10 alphanumeric characters, spaces, or hyphens',
-        }),
+      country: z.string().trim().regex(regionPattern, {
+        error:
+          'Country must be 2-50 characters and contain only letters, spaces, hyphens, or apostrophes',
+      }),
+      zipCode: z.string().trim().regex(zipCodePattern, {
+        error: 'ZIP code must be 3-10 alphanumeric characters, spaces, or hyphens',
+      }),
     }),
   }),
 });

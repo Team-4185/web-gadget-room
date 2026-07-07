@@ -2,7 +2,7 @@
   min-width: 240px;
   background: var(--white);
   border-radius: 22px;
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
   padding: 45px 23px;
   display: flex;
   flex-direction: column;
@@ -74,7 +74,7 @@
 }
 
 .user-panel-sidebar__item.is-active {
-  box-shadow: 0 0 7px 0 var(--blue-violet);
+  box-shadow: var(--field-shadow);
 }
 
 .user-panel-sidebar__badge {
