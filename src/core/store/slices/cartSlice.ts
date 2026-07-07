@@ -3,8 +3,10 @@ import type { ApiPhoneColor, ApiStorageCapacity, ICartDto, IProduct } from '@/co
 import {
   MISSING_USER_CART_ERROR,
   addProductLocally,
+  addCartLineAndFetchProducts,
   applySelectedProductVariant,
   cartStorage,
+  decreaseCartLineAndFetchProducts,
   decreaseProductLocally,
   fetchAndStoreServerCartWithProducts,
   getCartLineRequest,
@@ -12,14 +14,15 @@ import {
   getDefaultStorageCapacity,
   getProductFromCartPayload,
   increaseProductLocally,
+  increaseCartLineAndFetchProducts,
   isMissingUserCartError,
   isSameCartLine,
   mapCartDtoToProducts,
+  normalizeAddProductArg,
   persistLocalCartState,
-  putCartLineAndFetchProducts,
   removeCartItemAndFetchProducts,
-  removeCartLineAndFetchProducts,
   toErrorMessage,
+  type AddProductArg,
   type CartLinePayload,
   type CartProductsPayload,
   type CartProductPayload,
@@ -39,13 +42,6 @@ type RemoveProductPayload = {
   phoneId: number;
   variantId?: number;
   amount: number;
-};
-
-type AddProductPayload = CartProductPayload;
-
-type AddProductArg = {
-  product: AddProductPayload;
-  showConfirmation?: boolean;
 };
 
 type UpdateProductColorPayload = {
@@ -100,11 +96,6 @@ const applyCartState = (state: CartState, cart: ICartDto, products: IProduct[] =
   persistLocalCartState(state);
 };
 
-const normalizeAddProductArg = (payload: AddProductPayload | AddProductArg) =>
-  typeof payload === 'object' && 'product' in payload
-    ? payload
-    : { product: payload, showConfirmation: true };
-
 const cartSlice = createAppSlice({
   name: 'cart',
   initialState,
@@ -158,14 +149,14 @@ const cartSlice = createAppSlice({
     ),
     addProduct: create.asyncThunk<
       CartProductsPayload,
-      AddProductPayload | AddProductArg,
+      CartProductPayload | AddProductArg,
       { rejectValue: string }
     >(
       async (payload, { rejectWithValue }) => {
         const { product } = normalizeAddProductArg(payload);
 
         try {
-          return await putCartLineAndFetchProducts(product);
+          return await addCartLineAndFetchProducts(product);
         } catch (error) {
           if (isMissingUserCartError(error)) {
             return rejectWithValue(MISSING_USER_CART_ERROR);
@@ -237,7 +228,7 @@ const cartSlice = createAppSlice({
     >(
       async (payload, { rejectWithValue }) => {
         try {
-          return await putCartLineAndFetchProducts(payload);
+          return await increaseCartLineAndFetchProducts(payload);
         } catch (error) {
           if (isMissingUserCartError(error)) {
             return rejectWithValue(MISSING_USER_CART_ERROR);
@@ -275,7 +266,7 @@ const cartSlice = createAppSlice({
     >(
       async (payload, { rejectWithValue }) => {
         try {
-          return await removeCartLineAndFetchProducts(payload);
+          return await decreaseCartLineAndFetchProducts(payload);
         } catch (error) {
           if (isMissingUserCartError(error)) {
             return rejectWithValue(MISSING_USER_CART_ERROR);

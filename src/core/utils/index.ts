@@ -8,6 +8,7 @@ export * from './products';
 export * from './cartStorage';
 export * from './cart';
 export * from './cartLocalState';
+export * from './cartActionPayloads';
 export * from './cartRequests';
 export * from './orders';
 export * from './catalogFilters';

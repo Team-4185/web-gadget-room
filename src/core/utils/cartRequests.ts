@@ -4,6 +4,7 @@ import { cartService } from '@/core/services';
 import type { IProduct } from '@/core/types';
 
 import { fetchAndStoreServerCartWithProducts } from './cart';
+import type { CartProductPayload } from './cartLocalState';
 
 export const MISSING_USER_CART_ERROR = 'MISSING_USER_CART';
 
@@ -38,6 +39,15 @@ export const removeCartLineAndFetchProducts = async (product: CartLinePayload, a
   await cartService.removeItem(getCartLineRequest(product, amount));
   return fetchAndStoreServerCartWithProducts();
 };
+
+export const addCartLineAndFetchProducts = (product: CartProductPayload) =>
+  putCartLineAndFetchProducts(product);
+
+export const increaseCartLineAndFetchProducts = (payload: CartLinePayload) =>
+  putCartLineAndFetchProducts(payload);
+
+export const decreaseCartLineAndFetchProducts = (payload: CartLinePayload) =>
+  removeCartLineAndFetchProducts(payload);
 
 export const removeCartItemAndFetchProducts = async (payload: CartLineRequest) => {
   await cartService.removeItem(payload);
