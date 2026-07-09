@@ -98,6 +98,10 @@ export const phonesService = {
 
     return request;
   },
+  async getNewArrivals(signal?: AbortSignal) {
+    const { data } = await api.get<ApiPhone[]>('/api/v1/phones/new-arrivals', { signal });
+    return data;
+  },
   async getById(id: number, signal?: AbortSignal) {
     const { data } = await api.get<ApiPhone>(`/api/v1/phones/${id}`, { signal });
     return data;

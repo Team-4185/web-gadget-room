@@ -13,7 +13,7 @@ export type PromoContent = {
 type PromoGridItemProps = {
   item: PromoContent;
   variant: 'lead' | 'small-left' | 'small-right' | 'right-big';
-  onBuyNow?: () => void;
+  onBuyNow?: (productId: number) => void;
   onOpenProduct?: (productId: number) => void;
   getProductById?: (id: number) => IProduct;
 };
@@ -74,7 +74,7 @@ const LeadPromoItem = ({ item, onBuyNow }: Pick<PromoGridItemProps, 'item' | 'on
         maxWidth="170px"
         height="50px"
         fontSize="20px"
-        onClick={onBuyNow}
+        onClick={() => onBuyNow?.(item.productId)}
         sx={{ marginTop: '48px' }}
       >
         Buy Now

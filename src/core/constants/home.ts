@@ -20,7 +20,7 @@ export const HOME_HERO = {
 } as const;
 
 export const HOME_PROMO_LEAD = {
-  productId: 2,
+  productId: 1,
   title: {
     regular: 'iPhone 17',
     bold: 'Pro',
@@ -30,7 +30,7 @@ export const HOME_PROMO_LEAD = {
 } as const;
 
 export const HOME_PROMO_LEFT_SMALL = {
-  productId: 3,
+  productId: 2,
   title: {
     regular: 'Xiaomi 15',
     bold: 'Pro',
@@ -40,7 +40,7 @@ export const HOME_PROMO_LEFT_SMALL = {
 } as const;
 
 export const HOME_PROMO_RIGHT_SMALL = {
-  productId: 4,
+  productId: 3,
   title: {
     regular: 'Google Pixel 10',
     bold: 'Pro',
@@ -50,7 +50,7 @@ export const HOME_PROMO_RIGHT_SMALL = {
 } as const;
 
 export const HOME_PROMO_RIGHT_BIG = {
-  productId: 5,
+  productId: 1,
   title: {
     regular: 'iPhone 17',
     bold: 'Pro',
