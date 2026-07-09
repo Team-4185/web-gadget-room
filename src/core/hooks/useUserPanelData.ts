@@ -15,7 +15,8 @@ export const useUserPanelData = (
   profileInfo: UpdateUserProfilePayload = EMPTY_PROFILE,
   ordersCount = 0,
   favoritesCount = 0,
-  profileEmail?: string
+  profileEmail?: string,
+  displayNameOverride?: string
 ) => {
   const authEmail = useAppSelector((state) => state.auth.email);
   const email = profileEmail || authEmail;
@@ -23,7 +24,7 @@ export const useUserPanelData = (
 
   return useMemo(() => {
     const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
-    const displayName = fullName || 'Guest';
+    const displayName = displayNameOverride || fullName || 'Guest';
 
     return {
       ...USER_PANEL_DATA,
@@ -51,5 +52,14 @@ export const useUserPanelData = (
         email: email || 'UserAll@gmail.com',
       },
     };
-  }, [city, email, favoritesCount, firstName, lastName, ordersCount, phoneNumber]);
+  }, [
+    city,
+    displayNameOverride,
+    email,
+    favoritesCount,
+    firstName,
+    lastName,
+    ordersCount,
+    phoneNumber,
+  ]);
 };

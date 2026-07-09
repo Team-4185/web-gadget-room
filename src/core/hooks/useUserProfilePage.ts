@@ -34,6 +34,7 @@ export const useUserProfilePage = () => {
   const favoritesError = useAppSelector(selectWishListError);
   const [profileInfo, setProfileInfo] = useState<UpdateUserProfilePayload>(EMPTY_PROFILE_INFO);
   const [profileEmail, setProfileEmail] = useState('');
+  const [isAdminProfile, setIsAdminProfile] = useState(false);
   const {
     orders,
     totalElements,
@@ -46,7 +47,8 @@ export const useUserProfilePage = () => {
     profileInfo,
     totalElements,
     favorites.length,
-    profileEmail
+    profileEmail,
+    isAdminProfile ? 'Team' : undefined
   );
 
   useEffect(() => {
@@ -66,6 +68,7 @@ export const useUserProfilePage = () => {
           phoneNumber: user.phoneNumber ?? '',
         });
         setProfileEmail(user.email ?? '');
+        setIsAdminProfile((user.role?.name ?? '').toUpperCase().includes('ADMIN'));
       })
       .catch(() => {
         if (controller.signal.aborted) return;

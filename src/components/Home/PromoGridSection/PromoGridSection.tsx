@@ -1,4 +1,4 @@
-import { PRODUCTS } from '@/core/constants';
+import type { IProduct } from '@/core/types';
 
 import { PromoGridItem, type PromoContent } from './PromoGridItem';
 import './PromoGridSection.css';
@@ -8,8 +8,9 @@ type Props = {
   leftSmall: PromoContent;
   rightSmall: PromoContent;
   rightBig: PromoContent;
-  onBuyNow: () => void;
-  onOpenProduct: (product: (typeof PRODUCTS)[0]) => void;
+  onBuyNow: (productId: number) => void;
+  onOpenProduct: (product: IProduct) => void;
+  getProductById: (id: number) => IProduct;
 };
 
 export const PromoGridSection = ({
@@ -19,10 +20,8 @@ export const PromoGridSection = ({
   rightBig,
   onBuyNow,
   onOpenProduct,
+  getProductById,
 }: Props) => {
-  const getProductById = (id: number) =>
-    PRODUCTS.find((product) => product.id === id) ?? PRODUCTS[0];
-
   return (
     <section className="promo-grid" aria-label="Promotions">
       <div className="promo-grid__wrapper">
