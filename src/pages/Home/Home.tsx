@@ -116,7 +116,6 @@ export const Home = () => {
 
   const addPhone = async (productId: number = HOME_HERO.productId) => {
     await dispatch(cartActions.addProduct(getHomeProductById(productId)));
-    navigate('/cart');
   };
 
   const openProduct = (product: IProduct) => {
